@@ -260,6 +260,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
             NSNotificationCenter.defaultCenter().postNotificationName(messageKey, object: nil,
                 userInfo: userInfo)
             // [END_EXCLUDE]
+            
+            //different
     }
     
     func application( application: UIApplication,
