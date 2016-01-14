@@ -1,0 +1,546 @@
+<resources>
+    <string name="app_name">PicPic</string>
+    <string name="facebook_app_id">1610072682575169</string>
+    <string name="server_client_id">108654133036-kg35s6ituupm4jl6mugppgrft08sugdo.apps.googleusercontent.com</string>
+    <string name="kakao_app_key">8ec460cd84b247fd1c99577845da2950</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_camera_test">CameraTestActivity</string>
+    <string name="title_activity_gif_camera">GifCameraActivity</string>
+    <string name="title_activity_gif_editor">GifEditorActivity</string>
+    <string name="title_activity_new_gifcamera">NewGIFCameraActivity</string>
+    <string name="title_activity_new_editor">NewEditorActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_join">JoinActivity</string>
+    <string name="demo_min_label">Min</string>
+    <string name="demo_max_label">Max</string>
+
+    <string name="please_wait_next_version">다음버전까지는 준비해볼게요ㅜ</string>
+
+    <string name="already_email_with_facebook">이용하시려는 Facebook email이 이미 일반 Email로 가입되어있습니다.</string>
+
+    <string name="friends_google_title">Google+ 친구 : </string>
+    <string name="friends_facebook_title">Facebook 친구 : </string>
+    <string name="friends_suggestion">추천친구 : </string>
+
+    <string name="tutorial_ment_1">언제 어디서든&#xD;일상을 GIF로 담아보세요</string>
+    <string name="tutorial_ment_2">GIF를 친구,가족들과&#xD;나눠보세요</string>
+    <string name="tutorial_ment_3">해쉬태그를 이용하여&#xD;관심사를 팔로우해보세요</string>
+    <string name="tutorial_ment_4">원하는 GIF를 다운받거나&#xD;다른 SNS에 공유해보세요</string>
+    <string name="tutorial_ment_5">지금 바로, 당신의 일상을&#xD;생동감 넘치게 만들어보세요</string>
+
+    <string name="log_in_using_tumblr">Log in using Tumblr</string>
+    <string name="log_out">Log out</string>
+    <string name="login_tumblr_using_signpost">Login Tumblr using SignPost</string>
+    <string name="login_tumblr_using_signpost_library">Login Tumblr Using SignPost Library</string>
+    <string name="by_http_www_android_ios_tutorials_com">by http://www.android-ios-tutorials.com</string>
+    <string name="hello_blank_fragment">...</string>
+    <string name="comming_soon">준비중</string>
+
+    <string name="login_isforgot">비밀번호를 잊으셨나요?</string>
+    <string name="login_isExits">계정이 있으신가요?</string>
+    <string name="login_login">로그인</string>
+    <string name="login_with_facebook">Facebook 계정으로 로그인</string>
+    <string name="login_with_google">Google 계정으로 로그인</string>
+    
+    <string name="login_already_google">해당 이메일은 일반계정으로 이미 가입되어 있습니다.</string>
+
+    <string name="new_login_wrong">아이디 or 비밀번호를 잘못입력하셨습니다.</string>
+    <string name="new_login_error">아이디 or 비밀번호를 확인해주세요.</string>
+
+    <string name="join_bottom">가입하면 PicPic의 이용약관 및 &#xD;개인정보취급방침에 동의하게됩니다.</string>
+    <string name="join_term1">이용약관</string>
+    <string name="join_term2">개인정보취급방침</string>
+
+    <string name="join_email">이메일</string>
+    <string name="join_password">비밀번호</string>
+    <string name="join_password_confirm">비밀번호 확인</string>
+    <string name="join_next">다음</string>
+    <string name="join_birthday">생년월일</string>
+    <string name="join_id">아이디</string>
+    <string name="join_sex">성별</string>
+    
+    <string name="join_birthday_errorMessage">현재날자 이후로는 선택하실 수 없습니다</string>
+
+    <string name="join_hint_email_empty">이메일을 입력해주세요.</string>
+    <string name="join_hint_email_check">이메일을 확인해주세요.</string>
+    <string name="join_hint_email_pattern">이메일 형식이 아닙니다.</string>
+    <string name="join_hint_email_already">이미 사용중인 이메일 입니다.</string>
+
+    <string name="join_hint_id_empty">아이디를 입력해주세요.</string>
+    <string name="join_hint_id_pattern">사용할수 없는 아이디입니다.</string>
+    <string name="join_hint_id_already">이미 사용중인 아이디 입니다.</string>
+    <string name="popup_id_already_title">아이디 변경</string>
+    <string name="popup_id_change_complete">아이디가 성공적으로 변경되었습니다</string>
+    
+    
+
+    <string name="join_hint_password_empty">비밀번호를 입력해주세요.</string>
+    <string name="join_hint_password_pattern">영어+숫자를 조합하여 6~15자 사이로 입력하세요.</string>
+    <string name="join_hint_password_disaccord">비밀번호가 일치하지 않습니다.</string>
+
+    <string name="join_hint_birth_empty">생일을 선택해주세요.</string>
+
+    <string name="join_complete">가입완료</string>
+    <string name="title_activity_profile_picture">프로필사진변경</string>
+
+    <string name="new_login_forgot_popup_up">가입하신 이메일로&#xD;비밀번호를 전송하였습니다.</string>
+
+    <string name="find_friend">친구찾기</string>
+    <string name="find_friend_facebook">페이스북</string>
+    <string name="find_friend_google">구글+</string>
+    <string name="find_friend_recommend">추천친구</string>
+    <string name="find_friend_friend">친구</string>
+    <string name="find_friend_head_count">명</string>
+    <string name="find_friend_all_following">모두팔로잉</string>
+
+    <string name="popup3_kakao">카카오톡 공유하기</string>
+    <string name="popup3_facebook">페이스북 공유하기</string>
+    <string name="popup3_twitter">트위터 공유하기</string>
+    <string name="popup3_tumblr">텀블러 공유하기</string>
+    <string name="popup3_pinterest">핀터레스트 공유하기</string>
+    <string name="popup3_link">링크 복사하기</string>
+
+    <string name="popup_is_logout">로그아웃 하시겠습니까?</string>
+    <string name="popup_is_pw">비밀번호를 잊어버리셨어요?</string>
+    <string name="popup_not_join">해당 이메일은 가입되지 않았습니다!</string>
+    <string name="popup_empty_email">가입하신 이메일을 입력해주세요.</string>
+    <string name="popup_join_email">가입이메일</string>
+    <string name="popup_is_sign_out">탈퇴 하시겠습니까?</string>
+    <string name="popup_sign_out_str">탈퇴 시, 수집한 개인 정보는 지체없이 파기되며 계정은&#xD;삭제되어 해당 계정으로는 서비스 접근이 불가능 합니다.</string>
+    <string name="popup_confirm">확인</string>
+    <string name="popup_cancel">취소</string>
+    
+    
+    <string name="popup2_edit">수정하기</string>
+    <string name="popup2_delete">삭제하기</string>
+    <string name="popup2_block">차단하기</string>
+    <string name="popup2_report">신고하기</string>
+    <string name="popup2_gif_download">GIF 다운로드</string>
+    <string name="popup2_email_send">이메일을 발송하였습니다.</string>
+
+    <string name="notification_all">전체</string>
+    <string name="notification_my">내소식</string>
+    <string name="notification_follow">팔로잉</string>
+
+    <string name="like">좋아요</string>
+    <string name="like_cancel">좋아요 취소</string>
+    <string name="block">차단</string>
+    <string name="block_cancel">해제</string>
+    <string name="comment">댓글</string>
+    <string name="month">월</string>
+    <string name="day">일</string>
+    <string name="join_people">이은사람</string>
+
+    <string name="facebook">페이스북</string>
+    <string name="twitter">트위터</string>
+    <string name="pinterest">핀터레스트</string>
+    <string name="tumblr">텀블러</string>
+
+    <string name="complete">업로드</string>
+    <string name="complete1">완료</string>
+    <string name="post_write">글쓰기</string>
+
+    <string name="id_check_return_exists">중복된아이디 입니다. 다른아이디를 사용해주세요.</string>
+    <string name="id_change_return_success">아이디가 변경되었습니다.</string>
+
+    <string name="and_tag_relay">&amp;태그 릴레이</string>
+
+    <string name="friend_tag">친구 태그하기</string>
+
+    <string name="notification">알림</string>
+    <string name="notification_noting">알림이 없습니다</string>
+
+    <string name="post">포스트</string>
+    <string name="posting">포스팅</string>
+    <string name="follower">팔로워</string>
+    <string name="following">팔로잉</string>
+    <string name="follow_plus">+ 팔로잉</string>
+
+    <string name="follow_me_list">나를 팔로우한 사람</string>
+    <string name="follow_he_list">내가 팔로우한 사람</string>
+
+    <string name="user">사용자</string>
+    <string name="repic">리픽</string>
+    <string name="repic_store">리픽 보관하기</string>
+    <string name="repic_delete">리픽 삭제하기</string>
+
+    <string name="interest_search_tag">#태그</string>
+    <string name="interest_search_user">사용자</string>
+    <string name="interest_search_and">&amp;태그</string>
+
+    <string name="timeline_non_msg">지금도 전 세계사람들이 PicPic에서&#xD; 특별한 순간을 만들고 있습니다.</string>
+
+    <string name="timeline_before_year">년전</string>
+    <string name="timeline_before_month">달전</string>
+    <string name="timeline_before_day">일전</string>
+    <string name="timeline_before_hour">시간전</string>
+    <string name="timeline_before_minute">분전</string>
+    <string name="timeline_before_second">초전</string>
+
+    <string name="timeline_count">회</string>
+    <string name="timeline_repic_ok">해당 게시물이 리픽되었습니다.</string>
+    <string name="timeline_like_user">좋아하는 사람</string>
+
+    <string name="report_it">신고하기</string>
+    <string name="whats_the_problem">무엇이 문제인가요?</string>
+    <string name="report_1">외설적이거나 성적인 콘텐츠입니다.</string>
+    <string name="report_2">욕설 및 비방하는 공격적인 콘텐츠입니다.</string>
+    <string name="report_3">스팸입니다.</string>
+    <string name="report_4">기타 : </string>
+    <string name="report_etc">직접입력</string>
+    <string name="report_complete">신고하기가 완료되었습니다.</string>
+
+    <string name="user_follow">팔로우한 사람</string>
+    <string name="user_following">팔로잉한 사람</string>
+    <string name="tag_following">태그 팔로잉한 사람</string>
+
+    <string name="setting">설정</string>
+
+    <string name="settings_private">개인</string>
+    <string name="settings_myinfo">내 정보</string>
+    <string name="settings_public_setting">공개설정</string>
+    <string name="settings_protect_account">비공개 계정</string>
+    <string name="settings_protect_account_script">계정이 비공개인 경우 회원님이 승인한 사람만 회원님의 포스팅을 볼 수 있습니다. 기존 팔로워는 영향을 받지 않습니다.</string>
+    <string name="settings_noraml">일반</string>
+    <string name="settings_alarm">알림</string>
+    <string name="settings_social">소셜네트워크 연결</string>
+    <string name="settings_invite">초대하기</string>
+    <string name="settings_find_friend">친구찾기</string>
+    <string name="settings_protect_id_manage">차단한 아이디 관리</string>
+    <string name="settings_program">프로그램</string>
+    <string name="settings_notice">공지사항</string>
+    <string name="settings_program_info">프로그램 정보</string>
+    <string name="settings_logout">로그아웃</string>
+    <string name="settings_signout">탈퇴</string>
+
+    <string name="settings_myinfo_email">이메일</string>
+    <string name="settings_myinfo_change_profile">프로필 변경</string>
+    <string name="settings_myinfo_change_password">비밀번호 변경</string>
+    <string name="settings_myinfo_change_nation">나라 변경</string>
+
+    <string name="settings_myinfo_change_profile_user_name">사용자 이름</string>
+    <string name="settings_myinfo_change_profile_my_email">내 계정</string>
+
+    <string name="settings_myinfo_change_password_now">현재 비밀번호</string>
+    <string name="settings_myinfo_change_password_new">새로운 비밀번호</string>
+    <string name="settings_myinfo_change_password_new_confirm">비밀번호 확인</string>
+    <string name="settings_myinfo_change_password_complete">비밀번호 변경이 완료되었습니다.</string>
+
+    <string name="settings_public_setting_myinfo">내정보</string>
+    <string name="settings_public_setting_search_yn">사용자이름 검색</string>
+
+    <string name="settings_public_setting_act_list">내 활동내역</string>
+    <string name="settings_public_setting_change_profile">프로필사진 변경</string>
+    <string name="settings_public_setting_change_id">사용자이름 변경</string>
+    <string name="settings_public_setting_like_post">게시글 좋아요</string>
+    <string name="settings_public_setting_like_comment">댓글 좋아요</string>
+    <string name="settings_public_setting_post_comment">게시물 댓글</string>
+    <string name="settings_public_setting_create_andtag">개설한 &amp;태그</string>
+    <string name="settings_public_setting_join_andtag">참여한 &amp;태그</string>
+    <string name="settings_public_setting_repic">리픽</string>
+
+    <string name="settings_alarm_whole">전체 알림</string>
+    <string name="settings_alarm_each">각각 알림</string>
+    <string name="settings_alarm_pl">내 포스트 좋아요 알림</string>
+    <string name="settings_alarm_cl">내 댓글 좋아요 알림</string>
+    <string name="settings_alarm_pc">내 포스트 댓글 알림</string>
+    <string name="settings_alarm_fm">나를 팔로우 알림</string>
+    <string name="settings_alarm_rm">내 글 리픽 알림</string>
+    <string name="settings_alarm_cmp">내 글 신고 알림</string>
+    <string name="settings_alarm_cmc">내 댓글 신고 알림</string>
+    <string name="settings_alarm_fp">내 팔로워 프로필사진 변경 알림</string>
+    <string name="settings_alarm_fi">내 팔로워 아이디 변경 알림</string>
+    <string name="settings_alarm_fja">내 팔로워 앤드태그 참여 알림</string>
+    <string name="settings_alarm_fca">내 팔로워 앤드태그 만들기 알림</string>
+
+    <string name="settings_program_info_version_info">버전정보</string>
+    <string name="settings_program_info_service_agreement">서비스 이용약관</string>
+    <string name="settings_program_info_privacy_policy">개인정보 보호방침</string>
+    <string name="settings_program_info_operational_policy">운영정책</string>
+
+    <string name="settings_program_info_version_info_now">현재버전</string>
+    <string name="settings_program_info_version_info_new">최신버전</string>
+    <string name="settings_program_info_version_info_no_update">최신버전입니다</string>
+    <string name="settings_program_info_version_info_update">업데이트 하기</string>
+
+    <string name="notification_post_like_ment"> 님이 회원님의 포스트에 좋아요 했습니다.</string>
+    <string name="notification_comment_like_ment"> 님이 회원님의 댓글에 좋아요 했습니다.</string>
+    <string name="notification_post_comment_ment"> 님이 회원님의 포스트에 댓글을 달았습니다.</string>
+    <string name="notification_follow_me_ment"> 님이 회원님을 팔로우하기 시작했습니다.</string>
+    <string name="notification_post_repic_ment"> 님이 회원님의 포스트를 리픽했습니다.</string>
+    <string name="notification_report_post_ment">회원님의 게시물이 신고 처리 되었습니다.</string>
+    <string name="notification_report_comment_ment">회원님의 댓글이 신고처리되었습니다.</string>
+    <string name="notification_profile_change_ment"> 님이 프로필사진을 변경했습니다.</string>
+    <string name="notification_comment_tag_ment"> 님이 회원님을 댓글에서 언급했습니다.</string>
+    <string name="notification_post_tag_ment"> 님이 회원님을 포스트에서 언급했습니다.</string>
+    <string name="notification_replay_comment_ment"> 님도 회원님과 같은글에 댓글을 달았습니다.</string>
+    
+    
+    
+    
+    <string name="notification_id_change_ment"> 님이 아이디를 변경했습니다.</string>
+    <string name="notification_and_join_1_ment"> 님이 </string>
+    <string name="notification_and_join_2_ment">에 참여했습니다.</string>
+    <string name="notification_and_create_1_ment"> 님이 </string>
+    <string name="notification_and_create_2_ment">(을)를 만들었습니다.</string>
+
+    <string name="toast_msg_not_exists_user">탈퇴하거나 아이디를 변경한 유저입니다.</string>
+    <string name="toast_msg_not_exists_tag">삭제되거나 존재하지 않는 태그입니다.</string>
+    <string name="toast_msg_cut_y">차단된 사용자입니다.</string>
+    <string name="toast_msg_is_closed_y">비공개 사용자 입니다.</string>
+
+    <string name="btn_following_1">+ 팔 로 잉</string>
+    <string name="btn_following_2">팔 로 잉</string>
+
+    <string name="find_follow">팔로우할 사람 찾기</string>
+
+    <string name="no_post">글이 없습니다.</string>
+
+    <string name="repic_add_complete">리픽에 추가하기가 완료되었습니다</string>
+    <string name="repic_add_aleady">이미 리픽된 글입니다.</string>
+    <string name="repic_del_complete">리픽에서 삭제하기가 완료되었습니다</string>
+
+    <string name="write_andtag_exists">&amp;태그는 1번만 사용할수있습니다.</string>
+
+    <string name="write_andtag_make">&amp;태그 릴레이 만들기</string>
+    <string name="write_andtag_make_title">&amp;태그의 제목을 써주세요.</string>
+    <string name="write_andtag_make_body">&amp;태그 릴레이에 대한 설명을 적어주세요!&#xD;재밌는 설명으로 많은 참여를 유도해보아요~</string>
+    <string name="write_andtag_isexists">이미 생성된 &amp;태그입니다. 다른이름을 사용해주세요.</string>
+
+    <string name="andtag_join">참여하기</string>
+
+    <string name="post_delete">글이 삭제되었습니다.</string>
+    <string name="post_edit_title">글 수정하기</string>
+
+    <string name="post_write_friend_tag">친구태그</string>
+    <string name="post_write_friend_tag_search">검색하기</string>
+    <string name="post_write_friend_tag_search_not_exists">검색결과가 없습니다.</string>
+
+    <string name="search_tag">태그 검색하기</string>
+    <string name="search_user">유저 검색하기</string>
+    <string name="search_and_tag">&amp;태그 검색하기</string>
+
+    <string name="mypage_no_post">PicPic으로 특별한 순간을 만들어보세요!</string>
+
+    <string name="download_start">GIF 다운로드를 시작합니다.</string>
+    <string name="download_completed">GIF 다운로드 완료.</string>
+    <string name="download_fail">GIF 다운로드 실패.</string>
+
+    <string name="add_not_gif">촬영 중에는 GIF를 추가 하실 수 없습니다.</string>
+    <string name="add_not_images">촬영가능한 시간을 초과하여 추가할수 없습니다.</string>
+    
+    
+    <string name="camera_startMent">시작 위치</string>
+    <string name="camera_endMent">종료 위치</string>
+    <string name="camera_loop">구간 재생</string>
+    
+    <string name="camera_tempsave">임시저장이 완료되었습니다</string>
+    
+    
+    <string name="app_error">서비스 점검중입니다&amp;잠시후에 다시 실행 해 주세요</string>
+    <string name="network_error_title">네트워크 에러</string>
+    <string name="network_error_message">비행기 모드입니다&amp;네크워크를 활성화후에 다시 시도해 주세요</string>
+    <string name="network_warning_title">경고</string>
+    <string name="network_warning_message">와이파이가 아닙니다&amp;요금이 많이 발생될 수 있습니다</string>
+    
+    
+    
+
+    
+    
+
+    <string name="title_activity_gif_viewer">GifViewerActivity</string>
+    <string name="title_activity_find_friend_from_sns">FindFriendFromSNSActivity</string>
+    <string name="title_activity_friend_result">FriendResultActivity</string>
+    <string name="title_activity_tag_details">TagDetailsActivity</string>
+    <string name="title_activity_popup">PopupActivity</string>
+    <string name="title_activity_popup2">Popup2Activity</string>
+    <string name="title_activity_popup3">Popup3Activity</string>
+    <string name="title_activity_comment">CommentActivity</string>
+    <string name="title_activity_user_list">UserListActivity</string>
+    <string name="title_activity_interest_search">InterestSearchActivity</string>
+    <string name="title_activity_write_post">WritePostActivity</string>
+    <string name="title_activity_and_tag_setting">AndTagSettingActivity</string>
+    <string name="title_activity_friend_tag">FriendTagActivity</string>
+    <string name="title_activity_notification">NotificationActivity</string>
+    <string name="title_activity_and_tag">AndTagActivity</string>
+    <string name="title_activity_and_tag_search">AndTagSearchActivity</string>
+    <string name="title_activity_and_tag_single_contents">AndTagSingleContentsActivity</string>
+    <string name="title_activity_binding">BindingActivity</string>
+    <string name="title_activity_data_loading">DataLoadingActivity</string>
+    <string name="title_activity_file_upload">FileUploadActivity</string>
+    <string name="title_activity_gifcamera">GIFCameraActivity</string>
+    <string name="title_activity_user_feed">UserFeedActivity</string>
+    <string name="title_activity_tag_feed">TagFeedActivity</string>
+    <string name="title_activity_single_post_content">SinglePostContentActivity</string>
+    <string name="title_activity_user_feed_for_id">UserFeedForIdActivity</string>
+    <string name="title_activity_and_tag_feed">AndTagFeedActivity</string>
+    <string name="title_activity_tumblr_test">TumblrTestActivity</string>
+    <string name="title_activity_tumblr">TumblrActivity</string>
+    <string name="title_activity_draw_test">DrawTestActivity</string>
+    <string name="title_activity_gif_camera_editor">GifCameraEditorActivity</string>
+    <string name="title_activity_time_line">TimeLineActivity</string>
+    <string name="title_activity_interest_feed">InterestFeedActivity</string>
+    <string name="title_activity_my_page">MyPageActivity</string>
+    <string name="title_activity_new_login">NewLoginActivity</string>
+
+    <string name="demo_title_basic">Basic</string>
+    <string name="demo_title_smart_indicator">Smart Indicator</string>
+    <string name="demo_title_distribute_evenly">Distribute Evenly</string>
+    <string name="demo_title_always_in_center">Always In Center</string>
+    <string name="demo_title_custom_tab_text">Custom Tab Text</string>
+    <string name="demo_title_custom_tab_margin">Custom Tab Margin (since 1.2~)</string>
+    <string name="demo_title_custom_tab_colors">Custom Tab Colors</string>
+    <string name="demo_title_custom_tab_icons1">Custom Tab Icons 1</string>
+    <string name="demo_title_custom_tab_icons2">Custom Tab Icons 2 (since 1.2~)</string>
+    <string name="demo_title_indicator_trick1">Indicator Thickness Trick 1</string>
+    <string name="demo_title_indicator_trick2">Indicator Thickness Trick 2</string>
+    <string name="demo_title_right_to_left">RTL support</string>
+    <string name="demo_title_advanced_medium">Advanced: Like a Medium Tag (since 1.2~)</string>
+
+    <string name="demo_tab_1">Cupcake</string>
+    <string name="demo_tab_2">Donut</string>
+    <string name="demo_tab_3">Eclair</string>
+    <string name="demo_tab_4">Froyo</string>
+    <string name="demo_tab_5">Gingerbread</string>
+    <string name="demo_tab_6">Honeycomb</string>
+    <string name="demo_tab_7">Ice Cream Sandwich</string>
+    <string name="demo_tab_8">Jelly Bean</string>
+    <string name="demo_tab_9">KitKat</string>
+    <string name="demo_tab_10">Lollipop</string>
+
+    <string name="demo_tab_no_title">No Title</string>
+    <string name="demo_tab_like_a_medium_top">Top</string>
+    <string name="demo_tab_like_a_medium_latest">Latest</string>
+    <string name="title_activity_report">ReportActivity</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_settings_my_info">SettingsMyInfoActivity</string>
+    <string name="title_activity_settings_change_profile">SettingsChangeProfileActivity</string>
+    <string name="title_activity_settings_change_password">SettingsChangePasswordActivity</string>
+    <string name="title_activity_profile_picture2">ProfilePicture2Activity</string>
+    <string name="title_activity_settings_public_setting">SettingsPublicSettingActivity</string>
+    <string name="title_activity_settings_program_info">SettingsProgramInfoActivity</string>
+    <string name="title_activity_settings_alarm">SettingsAlarmActivity</string>
+    <string name="title_activity_settings_social">SettingsSocialActivity</string>
+    <string name="title_activity_settings_program_info_version">SettingsProgramInfoVersionActivity
+    </string>
+    <string name="title_activity_settings_protect_id_manage">SettingsProtectIdManageActivity
+    </string>
+    <string name="title_activity_tutorial">TutorialActivity</string>
+    <string name="title_activity_settings_notice">SettingsNoticeActivity</string>
+    <string name="title_activity_make_and_tag">MakeAndTagActivity</string>
+    <string name="title_activity_friend_tag_return">FriendTagReturnActivity</string>
+    <string name="title_activity_forgot_pop_up">ForgotPopUpActivity</string>
+    <string name="title_activity_forgot_confirm">ForgotConfirmActivity</string>
+    <string name="title_activity_term">TermActivity</string>
+    <string name="title_activity_logout_pop_up">LogoutPopUpActivity</string>
+    <string name="title_activity_sign_out_pop_up">SignOutPopUpActivity</string>
+    <string name="timeline_count_like">likes</string>
+    <string name="timeline_count_comment">comments</string>
+    <string name="intro_message">
+        <![CDATA[
+
+
+            A basic sample which shows how to use SlidingTabLayout to display a custom
+            ViewPager title strip which gives continuous feedback to the user when scrolling.
+
+
+        ]]>
+    </string>
+    <string name="title_activity_join_email">JoinEmailActivity</string>
+    <string name="title_activity_join_pass_word">JoinPassWordActivity</string>
+    <string name="title_activity_join_birth">JoinBirthActivity</string>
+    <string name="title_activity_join_sex">JoinSexActivity</string>
+    <string name="title_activity_join_id">JoinIdActivity</string>
+    <string name="title_activity_giftest">GIFTestActivity</string>
+    <string name="title_activity_hlist_test">HListTestActivity</string>
+    <string name="title_activity_dndtest">DNDTestActivity</string>
+
+    <string name="number_of_frame">프레임수</string>
+    <string name="play_speed">재생속도</string>
+
+    <string name="unservice_wait">서비스 준비중입니다. 조금만 기다려주세요.</string>
+
+    <string name="please_wait">잠시만 기다려주세요.</string>
+    <string name="title_activity_progress">ProgressActivity</string>
+    <string name="join_siginin">가입하기</string>
+    
+    <string name="comment_edit">수정</string>
+    <string name="comment_delete">삭제</string>
+    <string name="comment_tag">태그</string>
+    <string name="comment_report">신고</string>
+    
+    <string name="camera_addText_alertMessage">5개 이상 추가 하실 수 없습니다</string>
+    
+    <string name="camera_addText_select">선택된 텍스트가 없습니다</string>
+    <string name="camera_not_frame">선택된 프레임이 없습니다</string>
+    <string name="camera_allframe">프레임을 선택해 주세요</string>
+    
+    <string name="font_yache">야체</string>
+    <string name="font_gotinc">나눔바른고딕체</string>
+    <string name="font_hanna">한나체</string>
+    <string name="font_brush">나눔손글씨체</string>
+    <string name="font_dohyeon">도현체</string>
+    <string name="font_pen">나눔바른펜체</string>
+    <string name="font_jua">주아체</string>
+    
+    <string name="delete_all">전체삭제 하시겠습니까?</string>
+    <string name="profile_complete">업로드가 완료되었습니다</string>
+    <string name="profile_nopicture">프로필 사진이 없습니다.</string>
+    <string name="profile_tryagain">다시 시도해 주세요</string>
+    
+    <string name="not_supported_kakao">아이폰에서 gif 공유하는것을 카카오톡이 지원하지 않습니다ㅠㅠ 링크라도 보낼까요?</string>
+    
+    <string name="access_error">사진에 접근 권한이 없습니다</string>
+    
+    <string name="data_error">데이터를 불러오지 못하였습니다.</string>
+    
+    <string name="camera_video_setting">5초이상 설정하실 수 없습니다.</string>
+    <string name="camera_startpoint_setting">시작이 종료보다 클 수 없습니다.</string>
+    <string name="camera_endpoint_setting">종료가 시작보다 작을 수 없습니다.</string>
+
+
+    <string name="category_0">선택안함</string>
+    <string name="category_1">일상</string>
+    <string name="category_2">동물</string>
+    <string name="category_3">연예인</string>
+    <string name="category_4">감정</string>
+    <string name="category_5">애니</string>
+    <string name="category_6">푸드</string>
+    <string name="category_7">패션</string>
+    <string name="category_8">뷰티</string>
+    <string name="category_9">예술</string>
+    <string name="category_10">스포츠</string>
+    <string name="category_11">영화</string>
+    <string name="category_12">TV</string>
+    <string name="category_13">게임</string>
+    <string name="category_14">만화</string>
+    <string name="category_15">반응</string>
+    <string name="category_16">운송수단</string>
+    <string name="category_17">음악</string>
+    <string name="category_18">표현</string>
+    <string name="category_19">행동</string>
+    <string name="category_20">관심사</string>
+    <string name="category_21">년대</string>
+    <string name="category_22">자연</string>
+    <string name="category_23">스티커</string>
+    <string name="category_24">과학</string>
+    <string name="category_25">특별한날</string>
+
+    <string name="category_select_ment">카테고리를 선택해주세요.</string>
+    <string name="timeline_following">팔로우</string>
+    <string name="timeline_all">전체</string>
+    <string name="timeline_category">카테고리</string>
+    
+    <string name="delete_post">삭제된 게시물입니다</string>
+    
+    
+    
+    <string name="camera_edit_partial">부분GIF를 적용한 상태로 필터를 적용 할 시, 적용된 부분GIF가 사라집니다.&amp; 필터를 적용하시겠습니까?</string>
+
+    
+
+</resources>

@@ -1,0 +1,605 @@
+<resources>
+    <!--<string name="ip">58.229.105.157</string>-->
+    <string name="ip">lb44196316nntH.hscc.hostwaycloud.co.kr</string>
+    <string name="sender_id">108654133036</string>
+    <string name="app_name">PicPic</string>
+    <string name="facebook_app_id">1610072682575169</string>
+    <string name="server_client_id">108654133036-kg35s6ituupm4jl6mugppgrft08sugdo.apps.googleusercontent.com</string>
+    <string name="kakao_app_key">8ec460cd84b247fd1c99577845da2950</string>
+    <string name="TUMBLR_CONSUMER_KEY">oBJJofWSIO85DX23USoW52ZYkkMQEiHePYthDrLDsePZ9UAwK6</string>
+    <string name="TUMBLR_CONSUMER_SECRET">y2w9Au8SGcU0PEnCJvJX6TQYwggPEpCgyZiGoCqdDpAuINCKAL</string>
+    <string name="PINTEREST_APP_ID">1446591</string>
+
+    <!--<string name="s_url">http://gif.picpic.world/img/picpic/</string>-->
+    <!--<string name="share_link">http://link.picpic.world/singleLinkSNS_for_picpic.php?pId=</string>-->
+    <!--<string name="logo_link">http://gif.picpic.world/img/picpic/picpic_logo.png</string>-->
+    <!--<string name="upload_server_url">http://gif.picpic.world/apis/uploadToServerForPicPic.php</string>-->
+    <string name="s_url">http://gif.picpic.world/</string>
+    <string name="share_link">http://link.picpic.world/singleLinkSNS_for_picpic.php?pId=</string>
+    <string name="logo_link">http://gif.picpic.world/picpic_logo.png</string>
+    <string name="upload_server_url">http://gif.picpic.world/uploadToServerForPicPic.php</string>
+
+    <string name="market_link">market://details?id=sikkle.devmin.picpic</string>
+
+    <string name="term_link_1_ko">http://gif.picpic.world/picpic_term_kr_1.php</string>
+    <string name="term_link_1_en">http://gif.picpic.world/picpic_term_en_1.php</string>
+    <string name="term_link_2_ko">http://gif.picpic.world/picpic_term_kr_2.php</string>
+    <string name="term_link_2_en">http://gif.picpic.world/picpic_term_en_2.php</string>
+    <string name="term_link_3_ko">http://gif.picpic.world/picpic_term_kr_3.php</string>
+    <string name="term_link_3_en">http://gif.picpic.world/picpic_term_en_3.php</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_camera_test">CameraTestActivity</string>
+    <string name="title_activity_gif_camera">GifCameraActivity</string>
+    <string name="title_activity_gif_editor">GifEditorActivity</string>
+    <string name="title_activity_new_gifcamera">NewGIFCameraActivity</string>
+    <string name="title_activity_new_editor">NewEditorActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_join">JoinActivity</string>
+    <string name="demo_min_label">Min</string>
+    <string name="demo_max_label">Max</string>
+
+    <string name="please_wait_next_version">We will be ready in next version ;)</string>
+
+    <string name="already_email_with_facebook">Your Facebook Email is already registered as a normal sign up.</string>
+
+    <string name="friends_google_title">Google+ Friends : </string>
+    <string name="friends_facebook_title">Facebook Friends : </string>
+    <string name="friends_suggestion">Friend Suggestions : </string>
+
+    <string name="tutorial_ment_1">Create GIFs&#xD;whenever, wherever you are</string>
+    <string name="tutorial_ment_2">Share GIFs with &#xD; your friends and family</string>
+    <string name="tutorial_ment_3">Follow your interest&#xD; using hashtags</string>
+    <string name="tutorial_ment_4">Download GIFs &#xD; or share them to other SNS</string>
+    <string name="tutorial_ment_5">Right now, turn you life &#xD; into dynamic GIFs</string>
+
+    <string name="log_in_using_tumblr">Log in using Tumblr</string>
+    <string name="log_out">Log out</string>
+    <string name="login_tumblr_using_signpost">Login Tumblr using SignPost</string>
+    <string name="login_tumblr_using_signpost_library">Login Tumblr Using SignPost Library</string>
+    <string name="by_http_www_android_ios_tutorials_com">by http://www.android-ios-tutorials.com</string>
+    <string name="hello_blank_fragment">...</string>
+    <string name="comming_soon">Coming Soon</string>
+
+    <string name="login_isforgot">Have you forgot your password?</string>
+    <string name="login_isExits">Do you have an account?</string>
+    <string name="login_login">Login</string>
+    <string name="login_with_facebook">Login with Facebook</string>
+    <string name="login_with_google">Login with Google</string>
+    
+    <string name="login_already_google">This email is already registered as general email account.</string>
+
+    <string name="new_login_wrong">Please enter your username or email again.</string>
+
+    <string name="join_bottom">By signing up, you agree to the &#xD;Terms of Service and Privacy Policy.</string>
+    <string name="join_term1">Terms of Service</string>
+    <string name="join_term2">Privacy Policy</string>
+
+    <string name="join_email">Email</string>
+    <string name="join_password">Password</string>
+    <string name="join_password_confirm">Confirm Password</string>
+    <string name="join_next">Continue</string>
+    <string name="join_birthday">Date of Birth</string>
+    <string name="join_id">Username</string>
+    <string name="join_sex">Gender</string>
+    
+    <string name="delete_all">Delete All?</string>
+    <string name="profile_complete">Upload Complete</string>
+    <string name="profile_nopicture">Empty Profile Picture</string>
+    <string name="profile_tryagain">Try Again</string>
+
+    
+    <string name="popup_id_already_title">Change UserName</string>
+    <string name="popup_id_change_complete">Success Change UserName</string>
+    
+    <string name="notification_noting">Empty Norification</string>
+    <string name="new_login_error">Please check your username or email again.</string>
+    
+    <string name="join_birthday_errorMessage">Since the current date can not be selected</string>
+
+    <string name="join_hint_email_empty">Please enter your email address.</string>
+    <string name="join_hint_email_check">Please check your email</string>
+    <string name="join_hint_email_pattern">Please enter a valid email address.</string>
+    <string name="join_hint_email_already">This email is already in use.</string>
+
+    <string name="join_hint_id_empty">Please enter a username.</string>
+    <string name="join_hint_id_pattern">Failed to continue with this username.</string>
+    <string name="join_hint_id_already">This username is already in use.</string>
+
+    <string name="join_hint_password_empty">Please enter a password.</string>
+    <string name="join_hint_password_pattern">Please use 6~15 words in English, numerical combination</string>
+    <string name="join_hint_password_disaccord">Passwords must match.</string>
+
+    <string name="join_hint_birth_empty">Please choose your date of birth.</string>
+
+    <string name="join_complete">Finish</string>
+    <string name="complete1">Complete</string>
+    <string name="title_activity_profile_picture">Change Profile Picture</string>
+
+    <string name="find_friend">Find friends</string>
+    <string name="find_friend_facebook">Facebook</string>
+    <string name="find_friend_google">Google+</string>
+    <string name="find_friend_recommend">Suggestion</string>
+    <string name="find_friend_friend">Friends</string>
+    <string name="find_friend_head_count">People</string>
+    <string name="find_friend_all_following">Follow All</string>
+
+    <string name="popup3_link">Copy Links</string>
+    <string name="popup3_kakao">Share it on KakaoTalk</string>
+    <string name="popup3_facebook">Share it on Facebook</string>
+    <string name="popup3_twitter">Share it on Twitter</string>
+    <string name="popup3_tumblr">Share it on Tumblr</string>
+    <string name="popup3_pinterest">Share it on Pinterest</string>
+
+    <string name="popup_is_logout">Log out?</string>
+    <string name="popup_is_pw">Have you forgot your password?</string>
+    <string name="popup_not_join">This email has not been registered!</string>
+    <string name="popup_join_email">Account Email</string>
+    <string name="popup_is_sign_out">Delete your account?</string>
+    <string name="popup_sign_out_str">When deleted, collected user information will be &#xD;erased permanently and you will not be accessible &#xD;to your account anymore.</string>
+    <string name="popup_confirm">Confirm</string>
+    
+    
+    
+    <string name="popup2_edit">Edit</string>
+    <string name="popup2_delete">Delete</string>
+    <string name="popup2_block">Block</string>
+    <string name="popup2_report">Flag</string>
+    <string name="popup2_gif_download">Download GIF</string>
+    <string name="popup2_email_send">Email has been sent.</string>
+
+    <string name="notification_all">All</string>
+    <string name="notification_my">You</string>
+    <string name="notification_follow">Following</string>
+
+    <string name="like">Like</string>
+    <string name="like_cancel">Unlike</string>
+    <string name="block">Block</string>
+    <string name="block_cancel">Unblock</string>
+    <string name="comment">Comment</string>
+    <string name="month">월</string>
+    <string name="day">일</string>
+    <string name="join_people">Participated Users</string>
+
+    <string name="facebook">Facebook</string>
+    <string name="twitter">Twitter</string>
+    <string name="pinterest">Pinterest</string>
+    <string name="tumblr">Tumblr</string>
+
+    <string name="complete">Post</string>
+    <string name="post_write">Post to PicPic</string>
+
+    <string name="id_check_return_exists">Username is used by someone else. Please think of another one.</string>
+    <string name="id_change_return_success">Username successfully changed.</string>
+
+    <string name="and_tag_relay">&amp;tag ralay</string>
+
+    <string name="friend_tag">Tag Friends</string>
+
+    <string name="notification">Notifications</string>
+
+    <string name="post">Post</string>
+    <string name="posting">Posting</string>
+    <string name="follower">Follower</string>
+    <string name="following">Following</string>
+    <string name="follow_plus">+ Follow</string>
+
+    <string name="follow_me_list">Follower List</string>
+    <string name="follow_he_list">Following List</string>
+
+    <string name="user">You</string>
+    <string name="repic">RePic</string>
+    <string name="repic_store">RePic</string>
+    <string name="repic_delete">Remove RePic</string>
+
+    <string name="interest_search_tag">&#35; Tag</string>
+    <string name="interest_search_user">User</string>
+    <string name="interest_search_and">&amp;Tag</string>
+
+    <string name="timeline_non_msg">Even right this moment, people around the world&#xD; are making special moments with PicPic.</string>
+
+    <string name="timeline_before_year">years ago</string>
+    <string name="timeline_before_month">months ago</string>
+    <string name="timeline_before_day">days ago</string>
+    <string name="timeline_before_hour">hours ago</string>
+    <string name="timeline_before_minute">minutes ago</string>
+    <string name="timeline_before_second">seconds ago</string>
+
+    <string name="timeline_count_like">likes</string>
+    <string name="timeline_count_comment">comments</string>
+    <string name="timeline_repic_ok">RePic is successfully done.</string>
+    <string name="timeline_like_user">People who like the post</string>
+
+    <string name="report_it">Flag</string>
+    <string name="whats_the_problem">What is wrong?</string>
+    <string name="report_1">It contains suggestive or sexual contents.</string>
+    <string name="report_2">It contains abusing words or offensive contents.</string>
+    <string name="report_3">Spam.</string>
+    <string name="report_4">Other : </string>
+    <string name="report_etc">Tell us your story</string>
+    <string name="report_complete">Flag reported.</string>
+
+    <string name="user_follow">Follower</string>
+    <string name="user_following">Following</string>
+    <string name="tag_following">Tag Followers</string>
+    <string name="tag_join">Tag Joined Users</string>
+
+    <string name="setting">Settings</string>
+
+    <string name="settings_private">Private</string>
+    <string name="settings_myinfo">Private Information</string>
+    <string name="settings_public_setting">Privacy Setting</string>
+    <string name="settings_protect_account">Private Account</string>
+    <string name="settings_protect_account_script">If you have private account, only approved followers can see your posts. Current followers are not affected at this change.</string>
+    <string name="settings_noraml">General</string>
+    <string name="settings_alarm">Push Notifications</string>
+    <string name="settings_social">Social Network</string>
+    <string name="settings_invite">Invite Friends</string>
+    <string name="settings_find_friend">Search Frineds</string>
+    <string name="settings_protect_id_manage">Blocked Friends</string>
+    <string name="settings_program">Program</string>
+    <string name="settings_notice">Notices</string>
+    <string name="settings_program_info">Program Information</string>
+    <string name="settings_logout">Log Out</string>
+    <string name="settings_signout">Delete Account</string>
+
+    <string name="settings_myinfo_email">Email</string>
+    <string name="settings_myinfo_change_profile">Edit Profile</string>
+    <string name="settings_myinfo_change_password">Change Password</string>
+    <string name="settings_myinfo_change_nation">Change Country</string>
+
+    <string name="settings_myinfo_change_profile_user_name">Username</string>
+    <string name="settings_myinfo_change_profile_my_email">Email</string>
+
+    <string name="settings_myinfo_change_password_now">Current Password</string>
+    <string name="settings_myinfo_change_password_new">New Password</string>
+    <string name="settings_myinfo_change_password_new_confirm">Confirm Password</string>
+    <string name="settings_myinfo_change_password_complete">Password has been successfully changed.</string>
+
+    <string name="settings_public_setting_myinfo">Private information</string>
+    <string name="settings_public_setting_search_yn">Search Username</string>
+
+    <string name="settings_public_setting_act_list">My Activity Log</string>
+    <string name="settings_public_setting_change_profile">Profile Picture Change</string>
+    <string name="settings_public_setting_change_id">Username Change</string>
+    <string name="settings_public_setting_like_post">Post Likes</string>
+    <string name="settings_public_setting_like_comment">Comment Likes</string>
+    <string name="settings_public_setting_post_comment">Post Comments</string>
+    <string name="settings_public_setting_create_andtag">Opening &amp;Tag</string>
+    <string name="settings_public_setting_join_andtag">Participating &amp;Tag</string>
+    <string name="settings_public_setting_repic">RePic</string>
+
+    <string name="settings_alarm_whole">Notifications</string>
+    <string name="settings_alarm_each">Each Push</string>
+    <string name="settings_alarm_pl">My Post Likes</string>
+    <string name="settings_alarm_cl">My Comment Likes</string>
+    <string name="settings_alarm_pc">My Comments in My Post</string>
+    <string name="settings_alarm_fm">Someone Following Me</string>
+    <string name="settings_alarm_rm">RePic of My Post</string>
+    <string name="settings_alarm_cmp">Post Report</string>
+    <string name="settings_alarm_cmc">Comment Report</string>
+    <string name="settings_alarm_fp">Follower Profile Change</string>
+    <string name="settings_alarm_fi">Follewer Username Change</string>
+    <string name="settings_alarm_fja">Follower &amp;Tag Participation</string>
+    <string name="settings_alarm_fca">Follower Opening &amp;Tag</string>
+
+    <string name="settings_program_info_version_info">Version</string>
+    <string name="settings_program_info_service_agreement">Terms of Service</string>
+    <string name="settings_program_info_privacy_policy">Privacy Policy</string>
+    <string name="settings_program_info_operational_policy">Operation Policy</string>
+
+    <string name="settings_program_info_version_info_now">Current Version</string>
+    <string name="settings_program_info_version_info_new">Latest Version</string>
+    <string name="settings_program_info_version_info_no_update">Latest Version</string>
+    <string name="settings_program_info_version_info_update">Update</string>
+
+    <string name="notification_post_like_ment">&#160;liked your post.</string>
+    <string name="notification_comment_like_ment">&#160;liked your comment.</string>
+    <string name="notification_post_comment_ment">&#160;commented on your post.</string>
+    <string name="notification_follow_me_ment">&#160;started to follow you.</string>
+    <string name="notification_post_repic_ment">&#160;RePic-ed your post.</string>
+    <string name="notification_report_post_ment">Your post has been flagged.</string>
+    <string name="notification_report_comment_ment">Your comment has been flagged.</string>
+    <string name="notification_profile_change_ment">&#160;changed profile picture.</string>
+    <string name="notification_id_change_ment">&#160;changed username.</string>
+    <string name="notification_and_join_1_ment">&#160;participated in </string>
+    <string name="notification_and_join_2_ment"></string>
+    <string name="notification_and_create_1_ment">&#160; started </string>
+    <string name="notification_and_create_2_ment"></string>
+    
+    <string name="notification_comment_tag_ment"> mentioned you in the comment.</string>
+    <string name="notification_post_tag_ment"> mentioned you in the post.</string>
+    <string name="notification_replay_comment_ment"> commented on the same post.</string>
+    
+    
+
+    <string name="toast_msg_not_exists_user">This username has been changed or deleted.</string>
+    <string name="toast_msg_not_exists_tag">This tag has been deleted or is not available.</string>
+    <string name="toast_msg_cut_y">Blocked User.</string>
+    <string name="toast_msg_is_closed_y">Private Account</string>
+
+    <string name="btn_following_1">+ Following</string>
+    <string name="btn_following_2">Following</string>
+
+    <string name="find_follow">Find People to Follow</string>
+
+    <string name="no_post">He or She did not post any GIFs yet.</string>
+    <string name="repic_add_complete">RePic is successfully done.</string>
+    <string name="repic_add_aleady">You can only RePic the post once.</string>
+    <string name="repic_del_complete">Your RePic has been deleted.</string>
+
+    <string name="write_andtag_exists">You can only use &amp;Tag once.</string>
+
+    <string name="write_andtag_make">Create &amp;Tag Relay</string>
+    <string name="write_andtag_make_title">Give a name to your &amp;Tag</string>
+    <string name="write_andtag_make_body">Tell me your about this &amp;Tag!&#xD;Make it look interesting.</string>
+    <string name="write_andtag_isexists">This &amp;Tag already exist. Please use another name.</string>
+
+    <string name="post_delete">The post has been deleted.</string>
+    <string name="post_edit_title">Edit Post</string>
+
+    <string name="post_write_friend_tag">Tag Friends</string>
+    <string name="post_write_friend_tag_search">Search Tags</string>
+    <string name="post_write_friend_tag_search_not_exists">No Result</string>
+
+    <string name="search_tag">Search Tags</string>
+    <string name="search_user">Search Users</string>
+    <string name="search_and_tag">Search &amp;Tags</string>
+
+    <string name="add_not_gif">You cannot add GIFs during filming.</string>
+    <string name="add_not_gif_size">Upload file size must under 5MB.</string>
+    <string name="add_not_images">You cannot add more images.</string>
+    
+    
+    <string name="camera_startMent">Start Point</string>
+    <string name="camera_endMent">End Point</string>
+    <string name="camera_loop">Loop Play</string>
+    
+    <string name="camera_tempsave">Success Temporary Save</string>
+    
+    <string name="app_error">Under Construction&amp;come back soon</string>
+    <string name="network_error_title">Network Error</string>
+    <string name="network_error_message">Air plane mode is on&amp;Please try after activating the network.</string>
+    <string name="network_warning_title">Warning</string>
+    <string name="network_warning_message">Wifi is not activated&amp;This may cost a lot of data costs.</string>
+    
+    
+    
+
+    <string name="title_activity_gif_viewer">GifViewerActivity</string>
+    <string name="title_activity_find_friend_from_sns">FindFriendFromSNSActivity</string>
+    <string name="title_activity_friend_result">FriendResultActivity</string>
+    <string name="title_activity_tag_details">TagDetailsActivity</string>
+    <string name="title_activity_popup">PopupActivity</string>
+    <string name="title_activity_popup2">Popup2Activity</string>
+    <string name="title_activity_popup3">Popup3Activity</string>
+    <string name="title_activity_comment">CommentActivity</string>
+    <string name="title_activity_user_list">UserListActivity</string>
+    <string name="title_activity_interest_search">InterestSearchActivity</string>
+    <string name="title_activity_write_post">WritePostActivity</string>
+    <string name="title_activity_and_tag_setting">AndTagSettingActivity</string>
+    <string name="title_activity_friend_tag">FriendTagActivity</string>
+    <string name="title_activity_notification">NotificationActivity</string>
+    <string name="title_activity_and_tag">AndTagActivity</string>
+    <string name="title_activity_and_tag_search">AndTagSearchActivity</string>
+    <string name="title_activity_and_tag_single_contents">AndTagSingleContentsActivity</string>
+    <string name="title_activity_binding">BindingActivity</string>
+    <string name="title_activity_data_loading">DataLoadingActivity</string>
+    <string name="title_activity_file_upload">FileUploadActivity</string>
+    <string name="title_activity_gifcamera">GIFCameraActivity</string>
+    <string name="title_activity_user_feed">UserFeedActivity</string>
+    <string name="title_activity_tag_feed">TagFeedActivity</string>
+    <string name="title_activity_single_post_content">SinglePostContentActivity</string>
+    <string name="title_activity_user_feed_for_id">UserFeedForIdActivity</string>
+    <string name="title_activity_and_tag_feed">AndTagFeedActivity</string>
+    <string name="title_activity_tumblr_test">TumblrTestActivity</string>
+    <string name="title_activity_tumblr">TumblrActivity</string>
+    <string name="title_activity_draw_test">DrawTestActivity</string>
+    <string name="title_activity_gif_camera_editor">GifCameraEditorActivity</string>
+    <string name="title_activity_time_line">TimeLineActivity</string>
+    <string name="title_activity_interest_feed">InterestFeedActivity</string>
+    <string name="title_activity_my_page">MyPageActivity</string>
+    <string name="title_activity_new_login">NewLoginActivity</string>
+
+    <string name="download_start">GIF started to download</string>
+
+    <string name="download_completed">GIF download completed.</string>
+    <string name="download_fail">GIF download fail.</string>
+
+    <string name="demo_title_basic">Basic</string>
+    <string name="demo_title_smart_indicator">Smart Indicator</string>
+    <string name="demo_title_distribute_evenly">Distribute Evenly</string>
+    <string name="demo_title_always_in_center">Always In Center</string>
+    <string name="demo_title_custom_tab_text">Custom Tab Text</string>
+    <string name="demo_title_custom_tab_margin">Custom Tab Margin (since 1.2~)</string>
+    <string name="demo_title_custom_tab_colors">Custom Tab Colors</string>
+    <string name="demo_title_custom_tab_icons1">Custom Tab Icons 1</string>
+    <string name="demo_title_custom_tab_icons2">Custom Tab Icons 2 (since 1.2~)</string>
+    <string name="demo_title_indicator_trick1">Indicator Thickness Trick 1</string>
+    <string name="demo_title_indicator_trick2">Indicator Thickness Trick 2</string>
+    <string name="demo_title_right_to_left">RTL support</string>
+    <string name="demo_title_advanced_medium">Advanced: Like a Medium Tag (since 1.2~)</string>
+
+
+    <string name="demo_tab_1">Cupcake</string>
+    <string name="demo_tab_2">Donut</string>
+    <string name="demo_tab_3">Eclair</string>
+    <string name="demo_tab_4">Froyo</string>
+    <string name="demo_tab_5">Gingerbread</string>
+    <string name="demo_tab_6">Honeycomb</string>
+    <string name="demo_tab_7">Ice Cream Sandwich</string>
+    <string name="demo_tab_8">Jelly Bean</string>
+    <string name="demo_tab_9">KitKat</string>
+    <string name="demo_tab_10">Lollipop</string>
+
+    <string name="demo_tab_no_title">No Title</string>
+    <string name="demo_tab_like_a_medium_top">Top</string>
+    <string name="demo_tab_like_a_medium_latest">Latest</string>
+    <string name="title_activity_report">ReportActivity</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_settings_my_info">SettingsMyInfoActivity</string>
+    <string name="title_activity_settings_change_profile">SettingsChangeProfileActivity</string>
+    <string name="title_activity_settings_change_password">SettingsChangePasswordActivity</string>
+    <string name="title_activity_profile_picture2">ProfilePicture2Activity</string>
+    <string name="title_activity_settings_public_setting">SettingsPublicSettingActivity</string>
+    <string name="title_activity_settings_program_info">SettingsProgramInfoActivity</string>
+    <string name="title_activity_settings_alarm">SettingsAlarmActivity</string>
+    <string name="title_activity_settings_social">SettingsSocialActivity</string>
+    <string name="title_activity_settings_program_info_version">SettingsProgramInfoVersionActivity
+    </string>
+    <string name="title_activity_settings_protect_id_manage">SettingsProtectIdManageActivity
+    </string>
+    <string name="title_activity_tutorial">TutorialActivity</string>
+    <string name="title_activity_settings_notice">SettingsNoticeActivity</string>
+    <string name="title_activity_make_and_tag">MakeAndTagActivity</string>
+    <string name="title_activity_friend_tag_return">FriendTagReturnActivity</string>
+
+    <string name="intro_message">
+        <![CDATA[
+
+
+            A basic sample which shows how to use SlidingTabLayout to display a custom
+            ViewPager title strip which gives continuous feedback to the user when scrolling.
+
+
+        ]]>
+    </string>
+
+    <string name="new_login_forgot_popup_up">Password has been sent to your Email.</string>
+
+    <string name="popup_empty_email">Please write your Email.</string>
+
+    <string name="popup_cancel">Cancel</string>
+
+    <string name="timeline_count"></string>
+
+    <string name="andtag_join">Paticipate</string>
+
+    <string name="mypage_no_post">Turn your ordinary life into dynamic GIFs!</string>
+
+    <string name="title_activity_forgot_pop_up">ForgotPopUpActivity</string>
+
+    <string name="title_activity_forgot_confirm">ForgotConfirmActivity</string>
+
+    <string name="title_activity_term">TermActivity</string>
+
+    <string name="title_activity_logout_pop_up">LogoutPopUpActivity</string>
+    <string name="title_activity_sign_out_pop_up">SignOutPopUpActivity</string>
+
+    <string name="title_activity_join_email">JoinEmailActivity</string>
+    <string name="title_activity_join_pass_word">JoinPassWordActivity</string>
+    <string name="title_activity_join_birth">JoinBirthActivity</string>
+    <string name="title_activity_join_sex">JoinSexActivity</string>
+    <string name="title_activity_join_id">JoinIdActivity</string>
+    <string name="title_activity_giftest">GIFTestActivity</string>
+    <string name="title_activity_hlist_test">HListTestActivity</string>
+    <string name="title_activity_dndtest">DNDTestActivity</string>
+
+    <string name="number_of_frame">Frames</string>
+    <string name="play_speed">Speeds</string>
+
+    <string name="unservice_wait">Service in development. Please wait.</string>
+
+    <string name="please_wait">Please wait.</string>
+    <string name="title_activity_progress">ProgressActivity</string>
+
+    <string name="recommand_friends">Friend Suggestions</string>
+    <string name="recommand_friends_1">Recommend Friends 1</string>
+    <string name="recommand_friends_2">Recommend Friends 2</string>
+    <string name="pop_tag">Trending Tags</string>
+
+    <string name="follow_over_count_today"></string>
+    <string name="is_delete"></string>
+    <string name="is_block"></string>
+
+    <string name="post_not_exist">This post does not exist.</string>
+
+    <string name="edit_list_size_0">Editing has been discarded since due to empty frame box.</string>
+
+    <string name="copy_complete">Link has been copied.</string>
+    <string name="cant_shoot">You can not film after adding a picture.</string>
+    <string name="cant_shoot2">You can not add any picture when started filming.</string>
+
+    <string name="touch_to_start_film">Touch to start film</string>
+
+    <string name="camera_next">next</string>
+    <string name="camera_complete">done</string>
+
+    <string name="server_stop">Service Maintenance in Progress</string>
+
+    <string name="is_gif_download">Would you like to download?</string>
+
+    <string name="tooltip_ment_1">What kind of fun GIF will you make today?</string>
+    <string name="tooltip_ment_2">It has been long time~ lets film a GIF!</string>
+    <string name="join_siginin">Sign In</string>
+    
+    <string name="comment_edit">Edit</string>
+    <string name="comment_delete">Delete</string>
+    <string name="comment_tag">Tag</string>
+    <string name="comment_report">Report</string>
+    
+    <string name="camera_addText_alertMessage">Text is 5 limits</string>
+    
+    <string name="camera_addText_select">Not Selected Text</string>
+    <string name="camera_not_frame">Not Selected frame</string>
+    <string name="camera_allframe">Please, Select frame</string>
+    
+    <string name="font_yache">Yache</string>
+    <string name="font_gotinc">NanumBarunGothic</string>
+    <string name="font_hanna">Hanna</string>
+    <string name="font_brush">NanumBrushScript</string>
+    <string name="font_dohyeon">DoHyeon</string>
+    <string name="font_pen">NanumBarunpen</string>
+    <string name="font_jua">JUA</string>
+
+    <string name="not_supported_kakao">KakaoTalk does not support GIF sharing in iPhone. Would you like to send a link instead?</string>
+    
+    <string name="access_error">Has Not Permission</string>
+    
+    <string name="data_error">Not called Data.</string>
+    
+    <string name="delete_post">Deleted Post</string>
+    
+    <string name="camera_video_setting">5초이상 설정하실 수 없습니다.</string>
+    <string name="camera_startpoint_setting">시작이 종료보다 클 수 없습니다.</string>
+    <string name="camera_endpoint_setting">종료가 시작보다 작을 수 없습니다.</string>
+    
+    
+    <string name="category_0">No Category</string>
+    <string name="category_1">Daily Life</string>
+    <string name="category_2">Animals</string>
+    <string name="category_3">Celebrities</string>
+    <string name="category_4">Emotions</string>
+    <string name="category_5">Anime</string>
+    <string name="category_6">Food</string>
+    <string name="category_7">Fashion</string>
+    <string name="category_8">Beauty</string>
+    <string name="category_9">Art</string>
+    <string name="category_10">Sports</string>
+    <string name="category_11">Movie</string>
+    <string name="category_12">TV</string>
+    <string name="category_13">Games</string>
+    <string name="category_14">Cartoons</string>
+    <string name="category_15">Reaction</string>
+    <string name="category_16">Transportation</string>
+    <string name="category_17">Music</string>
+    <string name="category_18">Expressions</string>
+    <string name="category_19">Actions</string>
+    <string name="category_20">Interest</string>
+    <string name="category_21">Decades</string>
+    <string name="category_22">Nature</string>
+    <string name="category_23">Stickers</string>
+    <string name="category_24">Science</string>
+    <string name="category_25">Holidays</string>
+    
+    <string name="category_select_ment">Please choose the category.</string>
+    
+    <string name="timeline_following">Follow</string>
+    <string name="timeline_all">All</string>
+    <string name="timeline_category">Category</string>
+    
+    <string name="camera_edit_partial">What you have worked on partial GIFs will be erased when applying filters after partial GIFs.&amp; Would you like to continue?</string>
+    
+</resources>

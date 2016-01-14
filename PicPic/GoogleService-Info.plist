@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>108654133036-ltf3ng577cu8fkvpmbqbqclfg0ub6817.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.108654133036-ltf3ng577cu8fkvpmbqbqclfg0ub6817</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>108654133036-kg35s6ituupm4jl6mugppgrft08sugdo.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB9CA3TligQCirEzKubYHYo6pbq3IWBdAc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>108654133036</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>picpic.sikkle</string>
+	<key>IS_ADS_ENABLED</key>
+	<false/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:108654133036:ios:9bc548287ba704bb</string>
+</dict>
+</plist>
