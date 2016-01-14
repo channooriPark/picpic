@@ -720,6 +720,7 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
             self.ghostLayer.removeFromSuperview()
             self.ghostLayer = nil
         }
+        self.removeTempLoadView()
         self.navigationController?.navigationBarHidden = false
         if !self.appdelegate.myfeed.view.hidden {
             self.navigationController?.navigationBarHidden = true
@@ -1109,6 +1110,7 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
             self.btnNext.frame = CGRectMake(225, 34, 80, 40)
             self.nextWid.constant = 80
         }
+        self.editBarView.contentOffset = CGPoint(x: 0, y: 0)
         
         self.editBar.setImage(UIImage(named: "plus"),forState: .Normal)
         self.editBarView.hidden = true
@@ -1146,6 +1148,7 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         let width = self.editBarView.frame.size.width/5
         self.editBarView.contentSize = CGSize(width: width*7, height: 50)
         self.editBarView.contentInset = UIEdgeInsetsZero
+        self.editBarView.contentOffset = CGPoint(x: 0, y: 0)
         log.log("ajdgasasdfhefsdhfkasdhfalksd            \(self.editBarView.contentSize)")
     }
     

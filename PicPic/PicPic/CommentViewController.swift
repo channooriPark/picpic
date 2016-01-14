@@ -208,7 +208,7 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
     }
     
     @IBAction func gallery(sender: AnyObject) {
-        let gifList = GifListViewController()
+        let gifList = self.storyboard?.instantiateViewControllerWithIdentifier("GifListViewController")as! GifListViewController
         self.navigationController?.pushViewController(gifList, animated: true)
     }
     
