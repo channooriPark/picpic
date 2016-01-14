@@ -642,10 +642,10 @@
 		E4C510FB1C0D641700E0642B /* GifView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GifView.swift; sourceTree = "<group>"; };
 		E4C6C33D1C2ABF690075038A /* TagPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagPageViewController.swift; sourceTree = "<group>"; };
 		E4D230A51C17177000B838C3 /* CategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
-		E4D382681C3F3DF000800239 /* SaveCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SaveCell.xib; path = ../../../../Downloads/picpic_0108/SaveCell.xib; sourceTree = "<group>"; };
-		E4D382691C3F3DF000800239 /* TempLoadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TempLoadView.xib; path = ../../../../Downloads/picpic_0108/TempLoadView.xib; sourceTree = "<group>"; };
-		E4D382721C3F3E3F00800239 /* TempLoadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TempLoadView.swift; path = ../../../../Downloads/picpic_0108/TempLoadView.swift; sourceTree = "<group>"; };
-		E4D382741C3F409500800239 /* SaveCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SaveCell.swift; path = ../../../../Downloads/picpic_0108/SaveCell.swift; sourceTree = "<group>"; };
+		E4D382681C3F3DF000800239 /* SaveCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SaveCell.xib; sourceTree = "<group>"; };
+		E4D382691C3F3DF000800239 /* TempLoadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TempLoadView.xib; sourceTree = "<group>"; };
+		E4D382721C3F3E3F00800239 /* TempLoadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempLoadView.swift; sourceTree = "<group>"; };
+		E4D382741C3F409500800239 /* SaveCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveCell.swift; sourceTree = "<group>"; };
 		E4D4EAD31C112EAD00616C2E /* GLProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLProgram.h; sourceTree = "<group>"; };
 		E4D4EAD41C112EAD00616C2E /* GLProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLProgram.m; sourceTree = "<group>"; };
 		E4D4EAD51C112EAD00616C2E /* GPUImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImage.h; sourceTree = "<group>"; };
