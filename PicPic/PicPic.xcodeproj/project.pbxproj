@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		254009E8A84B58AD4A88908B /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C43EA758E0DE01CCC4DEBB61 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		6CEDBA551C475791000C32F9 /* PPMosaicLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEDBA541C475791000C32F9 /* PPMosaicLayout.swift */; };
+		6CEDBA581C4757C6000C32F9 /* HomeNativeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEDBA561C4757C6000C32F9 /* HomeNativeViewController.swift */; };
+		6CEDBA591C4757C6000C32F9 /* HomeNativeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CEDBA571C4757C6000C32F9 /* HomeNativeViewController.xib */; };
 		E401A8D41BEE4E1800D34B3E /* TabBarTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401A8D31BEE4E1800D34B3E /* TabBarTestViewController.swift */; };
 		E401A8D61BEE4E3500D34B3E /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401A8D51BEE4E3500D34B3E /* ContentViewController.swift */; };
 		E401A8D81BEE4F4000D34B3E /* MainInterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401A8D71BEE4F4000D34B3E /* MainInterViewController.swift */; };
@@ -413,6 +416,9 @@
 
 /* Begin PBXFileReference section */
 		08A1789DB2BC839084B50B61 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		6CEDBA541C475791000C32F9 /* PPMosaicLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPMosaicLayout.swift; sourceTree = "<group>"; };
+		6CEDBA561C4757C6000C32F9 /* HomeNativeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeNativeViewController.swift; sourceTree = "<group>"; };
+		6CEDBA571C4757C6000C32F9 /* HomeNativeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeNativeViewController.xib; sourceTree = "<group>"; };
 		C43EA758E0DE01CCC4DEBB61 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEC09761CC89527D058E7F4A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E401A8D31BEE4E1800D34B3E /* TabBarTestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarTestViewController.swift; sourceTree = "<group>"; };
@@ -1254,6 +1260,8 @@
 				E401A8D71BEE4F4000D34B3E /* MainInterViewController.swift */,
 				E4A8C7371BEF5ABF008EA6F7 /* TestSecondViewController.swift */,
 				E4A8C7391BEF7B1D008EA6F7 /* MyFeedPageViewController.swift */,
+				6CEDBA561C4757C6000C32F9 /* HomeNativeViewController.swift */,
+				6CEDBA571C4757C6000C32F9 /* HomeNativeViewController.xib */,
 				E44C9C421BEBB337000DB5CA /* subView */,
 			);
 			name = MainView;
@@ -1810,6 +1818,7 @@
 		E4F3DD4F1BE390260063F29B /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				6CEDBA541C475791000C32F9 /* PPMosaicLayout.swift */,
 				E4532E3B1C02FFEC00AFF019 /* Reachability.h */,
 				E4532E3C1C02FFEC00AFF019 /* Reachability.m */,
 				E4DF1DEA1BE733C700451800 /* gifImage */,
@@ -2020,6 +2029,7 @@
 				E4AB45361C16668C002EA053 /* earlybirdBlowout.png in Resources */,
 				E4D3826E1C3F3DF000800239 /* TempLoadView.xib in Resources */,
 				E4AB453E1C16668C002EA053 /* hefeSoftLight.png in Resources */,
+				6CEDBA591C4757C6000C32F9 /* HomeNativeViewController.xib in Resources */,
 				E4C0CEC51C091D7D001C9AA7 /* 야체.otf in Resources */,
 				E4AB45321C16668C002EA053 /* brannanContrast.png in Resources */,
 				E4AB45381C16668C002EA053 /* earlybirdMap.png in Resources */,
@@ -2231,6 +2241,7 @@
 				E42CDE981BEC7FFA00C35419 /* NoticsViewController.swift in Sources */,
 				E4AA368B1BEC2D5C00EDD164 /* UserPageViewController.swift in Sources */,
 				E4D4EC801C112EAF00616C2E /* GPUImageOutput.m in Sources */,
+				6CEDBA581C4757C6000C32F9 /* HomeNativeViewController.swift in Sources */,
 				E4D4EC691C112EAF00616C2E /* GPUImageLocalBinaryPatternFilter.m in Sources */,
 				E4F3DD451BE38EC20063F29B /* URLConnection.swift in Sources */,
 				E416CC1C1C38F2BF001E488E /* GifListViewController.swift in Sources */,
@@ -2339,6 +2350,7 @@
 				E4AB44E41C16667A002EA053 /* GPUImageMovieWriter1.m in Sources */,
 				E4AB44EA1C16667A002EA053 /* GPUImageVideoCamera1.m in Sources */,
 				E4D4EC9C1C112EAF00616C2E /* GPUImageSketchFilter.m in Sources */,
+				6CEDBA551C475791000C32F9 /* PPMosaicLayout.swift in Sources */,
 				E40DA7C51BE9D74400C0E7F1 /* ProgramInfoTableViewController.swift in Sources */,
 				E4D4ECA91C112EAF00616C2E /* GPUImageTextureOutput.m in Sources */,
 				E4AB45001C16667A002EA053 /* IFXproIIFilter.m in Sources */,
