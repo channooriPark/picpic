@@ -298,6 +298,9 @@ class TempLoadView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         cell.layer.borderColor = UIColor.blackColor().CGColor
         cell.delegate = self
         //cell.layer.borderColor = UIColor.blueColor().CGColor
+        cell.btnAdd.hidden = true
+        cell.btnDelete.hidden = true
+        
         
         return cell
     }
@@ -315,11 +318,11 @@ class TempLoadView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         print(self.selectedIndex!)
     }
     
-    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
-        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! SaveCell
-        cell.btnAdd.hidden = true
-        cell.btnDelete.hidden = true
-    }
+//    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+//        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! SaveCell
+//        cell.btnAdd.hidden = true
+//        cell.btnDelete.hidden = true
+//    }
     
     
     func addSelected()
@@ -411,13 +414,25 @@ class TempLoadView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     
     func deleteSelected()
     {
-        collectionView(self.collectionView, didDeselectItemAtIndexPath: NSIndexPath(index: selectedIndex!))
-        let documentDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-        let path = String(format: "%@/%@", arguments: [documentDirectory,list_work[selectedIndex!]])
+        
+        print(type_arr)
+        
+        var path : String!
+        if type_arr[selectedIndex!] == 0 {
+            let documentDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+            path = String(format: "%@/%@", arguments: [documentDirectory,list_work[selectedIndex!]])
+        }else {
+            path = String(format: "%@", arguments: [list_work[selectedIndex!]])
+        }
+        
+        
+        
+        print("path ",path)
         do {
             try fileManager.removeItemAtPath(path)
             list_work.removeAtIndex(selectedIndex!)
             collections.removeAtIndex(selectedIndex!)
+            type_arr.removeAtIndex(selectedIndex!)
             
         } catch let error as NSError {
             print(error.localizedDescription);

@@ -673,6 +673,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
         print("url  host              ",url.host)
         print("url  scheme            ",url.scheme)
         if url.scheme == "fb1610072682575169" {
+            
             return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
         }else if url.scheme == "" {
             return GIDSignIn.sharedInstance().handleURL(url,

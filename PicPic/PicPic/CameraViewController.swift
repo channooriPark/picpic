@@ -1352,6 +1352,10 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         editBar.setImage(UIImage(named: "plus"), forState: .Normal)
         editBarView.hidden = true
         
+        gridBtn.enabled = true
+        btnLoad.enabled = true
+        btn_picker.enabled = true
+        
         self.navigationController?.navigationBarHidden = true
         self.navigationController?.pushViewController(moviePreviewVC!, animated: true)
         

@@ -251,15 +251,16 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate,GIDSignInDelega
     }
     
     @IBAction func facebookLogined(sender: AnyObject) {
+        
         let login : FBSDKLoginManager = FBSDKLoginManager()
         login.logInWithReadPermissions(["public_profile","email","user_friends","user_about_me","user_birthday"], fromViewController: self) { (result, error) -> Void in
             if error != nil {
-//                NSLog("Process error")
+                NSLog("Process error")
             }else if result.isCancelled {
-//                NSLog("Cancelled")
+                NSLog("Cancelled")
             }else {
-//                NSLog("Logged in")
-//                NSLog("HI")
+                NSLog("Logged in")
+                NSLog("HI")
                 self.settingData()
 //                NSThread.sleepForTimeInterval(1.0)
 //                NSLog("user id : \(FBSDKAccessToken.currentAccessToken().userID)")
