@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="gTV-IL-0wX" customClass="SaveCell" customModule="PicPic" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wEE-DU-HHd">
+                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2GS-13-0Us">
+                        <rect key="frame" x="0.0" y="0.0" width="25" height="50"/>
+                        <state key="normal" image="add"/>
+                        <connections>
+                            <action selector="actAdd" destination="gTV-IL-0wX" eventType="touchUpInside" id="8cE-e0-1uw"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rL7-cw-gkE">
+                        <rect key="frame" x="25" y="0.0" width="25" height="50"/>
+                        <state key="normal" image="temp_delete"/>
+                        <connections>
+                            <action selector="actDelete" destination="gTV-IL-0wX" eventType="touchUpInside" id="86z-T5-ITP"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="rL7-cw-gkE" secondAttribute="bottom" id="3uu-N0-i5I"/>
+                <constraint firstItem="wEE-DU-HHd" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="7ms-t2-gRT"/>
+                <constraint firstAttribute="trailing" secondItem="wEE-DU-HHd" secondAttribute="trailing" id="9EI-dt-FdL"/>
+                <constraint firstAttribute="trailing" secondItem="rL7-cw-gkE" secondAttribute="trailing" id="JY7-8b-ZCa"/>
+                <constraint firstItem="wEE-DU-HHd" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="L4t-jo-Wmx"/>
+                <constraint firstAttribute="bottom" secondItem="2GS-13-0Us" secondAttribute="bottom" id="R9m-C1-mSH"/>
+                <constraint firstItem="2GS-13-0Us" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Sxx-2E-w4e"/>
+                <constraint firstItem="rL7-cw-gkE" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="eJS-7M-4u2"/>
+                <constraint firstItem="rL7-cw-gkE" firstAttribute="leading" secondItem="2GS-13-0Us" secondAttribute="trailing" id="oZx-5Q-AkX"/>
+                <constraint firstItem="2GS-13-0Us" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="qQJ-tZ-qix"/>
+                <constraint firstItem="2GS-13-0Us" firstAttribute="width" secondItem="rL7-cw-gkE" secondAttribute="width" id="tRh-9o-mJ0"/>
+                <constraint firstAttribute="bottom" secondItem="wEE-DU-HHd" secondAttribute="bottom" id="zAI-fN-cXi"/>
+            </constraints>
+            <connections>
+                <outlet property="btnAdd" destination="2GS-13-0Us" id="JX4-WK-KUb"/>
+                <outlet property="btnDelete" destination="rL7-cw-gkE" id="aqI-JK-bSC"/>
+                <outlet property="imageView" destination="wEE-DU-HHd" id="N6j-oG-IUq"/>
+            </connections>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="add" width="119" height="238"/>
+        <image name="temp_delete" width="119" height="238"/>
+    </resources>
+</document>
