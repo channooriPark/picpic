@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class TempLoadView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, SaveCellDelegate {
-
+    
     @IBOutlet weak var panningView: UIView!
     @IBOutlet weak var panGestureRecognizer: UIPanGestureRecognizer!
     var parentViewController: CameraViewController?
@@ -24,10 +25,12 @@ class TempLoadView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     var collections:[UIImage] = []
     var list_work:[String] = []
     var selectedIndex: Int?
+    var type_arr : [Int] = [Int]()
     
     let fileManager = NSFileManager.defaultManager()
     
     let documentDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+    let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     
     class func instanceFromNib() -> UIView {
@@ -48,6 +51,7 @@ class TempLoadView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     
     @IBAction func closeView() {
         self.parentViewController!.removeTempLoadView()
+        print("workFolder",self.parentViewController?.workFolder)
     }
     
     @IBAction func tapToOpenView(sender: AnyObject) {
@@ -60,7 +64,7 @@ class TempLoadView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         case UIGestureRecognizerState.Began:
             panStartPoint = self.frame.origin
         case UIGestureRecognizerState.Changed:
-
+            
             //print(sender.translationInView(self).y)
             
             if self.frame.origin.y + sender.translationInView(self).y < fullOpenY// too high
@@ -124,7 +128,7 @@ class TempLoadView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         UIView.animateWithDuration(duration, delay: 0, options: UIViewAnimationOptions.CurveEaseOut, animations: {() -> Void in
             
             self.parentViewController!.view.layoutIfNeeded()
-
+            
             }, completion: completion)
         
     }
@@ -138,8 +142,8 @@ class TempLoadView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         
         self.frame.origin.y = fullOpenY - kBounceValue
         UIView.animateWithDuration(duration, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {_ in
-                self.frame.origin.y = self.fullOpenY
-                self.parentViewController!.view.layoutIfNeeded()
+            self.frame.origin.y = self.fullOpenY
+            self.parentViewController!.view.layoutIfNeeded()
             }, completion: {_ in self.panImage.image = UIImage(named: "white_arrow_down") })
         
     }
@@ -191,6 +195,7 @@ class TempLoadView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
                                     list_work.append(file_name)
                                     let img = UIImage(contentsOfFile: imgPath)
                                     self.collections.append(img!)
+                                    self.type_arr.append(0)
                                     //self.selectArr.append(0)
                                 }
                                 else
@@ -200,12 +205,12 @@ class TempLoadView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
                             }
                             else
                             {
-                                do {
-                                    try fileManager.removeItemAtPath(path)
-                                    print(file_name, " is removed")
-                                } catch let error as NSError {
-                                    print(error.localizedDescription);
-                                }
+//                                do {
+//                                    try fileManager.removeItemAtPath(path)
+//                                    print(file_name, " is removed")
+//                                } catch let error as NSError {
+//                                    print(error.localizedDescription);
+//                                }
                             }
                         }
                     }
@@ -217,30 +222,67 @@ class TempLoadView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         catch let error as NSError {
             print(error.localizedDescription);
         }
+        
+        do {
+            let flist = try fileManager.contentsOfDirectoryAtPath(documentDirectory)
+            for file_name in flist {
+                
+                
+                if(file_name.hasPrefix("tempSave")) {
+                    let path = String(format: "%@/%@", arguments: [documentDirectory,file_name])
+                    print("path    ",path)
+                    
+                    
+                    let list = try fileManager.contentsOfDirectoryAtPath(path)
+                    print("list   ",list)
+                    for filepath in list {
+                        let fileName = String(format: "%@/tempSave/%@", arguments: [documentDirectory,filepath])
+                        let jsonName = String(format: "%@/tempSave/%@/save.json", arguments: [documentDirectory,filepath])
+                        if fileManager.fileExistsAtPath(jsonName) {
+                            print("aaaaaaaasdfe     ",filepath)
+                            let path = String(format: "%@/tempSave/%@/save.jpg", arguments: [documentDirectory,filepath])
+                            list_work.append(fileName)
+                            let imgPath = String(format:"%@",arguments:[path])
+                            print("imgPath          ",imgPath)
+                            let img = UIImage(contentsOfFile: imgPath)
+                            self.collections.append(img!)
+                            self.type_arr.append(1)
+                            //self.selectArr.append(0)
+                        }else {
+                            
+                        }
+                    }
+                }
+            }
+            print("collections.count   ",self.collections.count)
+            self.collectionView.reloadData()
+        } catch let error as NSError {
+            print(error.localizedDescription);
+        }
     }
     
     
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-    let screenWidth = CGRectGetWidth(UIScreen.mainScreen().bounds)
-    let threePiecesWidth = floor(screenWidth / 3.0 - ((2.0 / 3) * 2))
-    return CGSizeMake(threePiecesWidth, threePiecesWidth)
+        let screenWidth = CGRectGetWidth(UIScreen.mainScreen().bounds)
+        let threePiecesWidth = floor(screenWidth / 3.0 - ((2.0 / 3) * 2))
+        return CGSizeMake(threePiecesWidth, threePiecesWidth)
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
-    return 2.0
+        return 2.0
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
-    return 2.0
+        return 2.0
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-    return 1
+        return 1
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
-    return UIEdgeInsetsMake(0, 0, 2.0, 0)
+        return UIEdgeInsetsMake(0, 0, 2.0, 0)
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -259,7 +301,7 @@ class TempLoadView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
         
         return cell
     }
-
+    
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if self.collectionView.indexPathsForSelectedItems()?.count > 1
@@ -283,23 +325,90 @@ class TempLoadView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
     func addSelected()
     {
         self.closeView()
-
-        let path = self.list_work[selectedIndex!]
-        print(path)
+        if self.type_arr[selectedIndex!] == 0 {
+            let path = self.list_work[selectedIndex!]
+            print(path)
+            
+            let path_gifs = String(format: "%@/gifs", arguments: [documentDirectory])
+            
+            let gifMakerVC = self.parentViewController!.storyboard?.instantiateViewControllerWithIdentifier("GifMakerViewController") as? GifMakerViewController
+            
+            gifMakerVC?.workFolder = String(format: "%@/%@", arguments: [documentDirectory, path])
+            gifMakerVC?.gifsFolder = path_gifs
+            gifMakerVC?.gifName = documentDirectory+self.list_work[selectedIndex!]
+            
+            self.parentViewController!.appdelegate.testNavi.navigationBar.barTintColor = Config.getInstance().color
+            self.parentViewController!.appdelegate.testNavi.navigationBarHidden = true
+            self.parentViewController!.appdelegate.testNavi.pushViewController(gifMakerVC!, animated: true)
+            self.appdelegate.camera.workFolder = nil
+        }else {
+            var total_recording_time : Double = 0.0
+            var num_of_capture : Int = 0
+            var arr_recording_time : [Double] = [Double]()
+            var dateText : String!
+            var tmpFolder : String!
+            var workFolder : String!
+            var gifsFolder : String!
+            var ratio : String!
+            
+            do{
+                let list = try fileManager.contentsOfDirectoryAtPath(list_work[selectedIndex!])
+                let json_path = String(format: "%@/save.json", arguments: [list_work[selectedIndex!]])
+                
+                if fileManager.fileExistsAtPath(json_path) {
+                    let jsonData:NSData = NSData(contentsOfFile: json_path)!
+                    let json = JSON(data:jsonData)
+                    total_recording_time = json["total_recording_time"].doubleValue
+                    num_of_capture = json["num_of_capture"].int!
+                    arr_recording_time = json["arr_recording_time"].arrayObject as! [Double]
+                    ratio = json["ratio"].stringValue
+                }
+                
+                let dateFormatter = NSDateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd_HHmmss"
+                let date = dateFormatter.stringFromDate(NSDate())
+                
+                let documentDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+                
+                dateText = date
+                tmpFolder = "\(NSTemporaryDirectory())\(date)"
+                workFolder = "\(documentDirectory)/\(date)"
+                gifsFolder = "\(documentDirectory)/gifs"
+                print(list_work[selectedIndex!])
+                try fileManager.copyItemAtPath(list_work[selectedIndex!], toPath: workFolder)
+//                try fileManager.removeItemAtPath(list_work[selectedIndex!])
+            }catch {
+                
+            }
+            
+            
+            let camera = self.appdelegate.camera
+            camera.dateText = dateText
+            camera.tmpFolder = tmpFolder
+            camera.workFolder = workFolder
+            camera.gifsFolder = gifsFolder
+            camera.total_recording_time = total_recording_time
+            camera.num_of_capture = num_of_capture
+            camera.arr_recording_time = arr_recording_time
+            camera.ratio = ratio
+            camera.loadType = 1
+            for var i = 0; i<arr_recording_time.count; i++ {
+                camera.captureBar.addBar()
+                camera.captureBar.update(arr_recording_time[i])
+            }
+            camera.videoRatioBtn.enabled = false
+            camera.btn_picker.enabled = false
+            camera.btnLoad.enabled = false
+            if camera.total_recording_time > 0.6 {
+                camera.btnNext.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            }else {
+                camera.btnNext.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
+            }
+            self.removeFromSuperview()
+        }
         
-        let path_gifs = String(format: "%@/gifs", arguments: [documentDirectory])
-        
-        let gifMakerVC = self.parentViewController!.storyboard?.instantiateViewControllerWithIdentifier("GifMakerViewController") as? GifMakerViewController
-        
-        gifMakerVC?.workFolder = String(format: "%@/%@", arguments: [documentDirectory, path])
-        gifMakerVC?.gifsFolder = path_gifs
-        gifMakerVC?.gifName = self.list_work[selectedIndex!]
-        
-        self.parentViewController!.appdelegate.testNavi.navigationBar.barTintColor = Config.getInstance().color
-        self.parentViewController!.appdelegate.testNavi.navigationBarHidden = true
-        self.parentViewController!.appdelegate.testNavi.pushViewController(gifMakerVC!, animated: true)
     }
-
+    
     func deleteSelected()
     {
         collectionView(self.collectionView, didDeselectItemAtIndexPath: NSIndexPath(index: selectedIndex!))
@@ -309,13 +418,14 @@ class TempLoadView: UIView, UICollectionViewDelegate, UICollectionViewDataSource
             try fileManager.removeItemAtPath(path)
             list_work.removeAtIndex(selectedIndex!)
             collections.removeAtIndex(selectedIndex!)
-
+            
         } catch let error as NSError {
             print(error.localizedDescription);
         }
-    
-    self.collectionView.reloadData()
+        print("remove")
+        
+        self.collectionView.reloadData()
     }
-
+    
 }
 

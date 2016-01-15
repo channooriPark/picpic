@@ -189,6 +189,8 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
     
     func showCategoryView(){
         dismissKeyboard()
+        self.view.bringSubviewToFront(categoryBack)
+        self.view.bringSubviewToFront(categoryView)
         self.categoryBack.hidden = false
         self.categoryView.hidden = false
     }

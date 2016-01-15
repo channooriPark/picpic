@@ -1149,7 +1149,6 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         self.editBarView.contentSize = CGSize(width: width*7, height: 50)
         self.editBarView.contentInset = UIEdgeInsetsZero
         self.editBarView.contentOffset = CGPoint(x: 0, y: 0)
-        log.log("ajdgasasdfhefsdhfkasdhfalksd            \(self.editBarView.contentSize)")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -1161,6 +1160,21 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         flashBtn.setImage(UIImage(named: "icon_camera_flash"), forState: .Normal)
         gridToggle = false
         flash_toggle = false
+        let avDevice = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
+        do {
+            try avDevice.lockForConfiguration()
+            if(avDevice.torchActive) {
+                avDevice.torchMode = AVCaptureTorchMode.Off;
+            }
+        }catch {}
+        
+        
+        if gridLayer != nil {
+            self.gridLayer.removeFromSuperview()
+            self.gridLayer = nil
+        }
+        
+        
         
         if workFolder == nil {
             let dateFormatter = NSDateFormatter()
@@ -1198,15 +1212,13 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
             total_recording_time = 0
             self.btnNext.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
         }else {
-            if loadType == 1 {
-                self.videoRatioBtn.enabled = false
-                self.btn_picker.enabled = false
-                self.btnLoad.enabled = false
-                if total_recording_time > 0.6 {
-                    self.btnNext.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-                }else {
-                    self.btnNext.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
-                }
+            self.videoRatioBtn.enabled = false
+            self.btn_picker.enabled = false
+            self.btnLoad.enabled = false
+            if total_recording_time > 0.6 {
+                self.btnNext.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            }else {
+                self.btnNext.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
             }
             if self.ratio != nil {
                 Config.getInstance().videoRatio = self.ratio

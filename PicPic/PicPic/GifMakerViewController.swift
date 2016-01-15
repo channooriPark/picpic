@@ -1597,6 +1597,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         let fileManager = NSFileManager.defaultManager()
         
         if in_type == 0 {
+            //편집 불러오기로 들어왔을 때
             let db = String(format: "%@/db.json", arguments: [workFolder!])
             if fileManager.fileExistsAtPath(db) {
                 self.navigationController?.navigationBarHidden = false
@@ -1617,16 +1618,19 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                 frontImage.image = nil
                 self.navigationController?.popToRootViewControllerAnimated(true)
             }else {
+                //카메라로 촬영 후에 들어왔을 때
                 let count = movNames.count - ori_mov.count
-                for var i = count; i<movNames.count; i++ {
-                    do {
-                        
-                        try fileManager.removeItemAtPath(movNames[i])
-                        log.log("folder Name \(movNames[i])")
-                        let path = String(format: "%@.mov", arguments: [movNames[i]])
-                        log.log("mov Name \(path)")
-                        try fileManager.removeItemAtPath(path)
-                    }catch {}
+                if count > 0 {
+                    //프레임을 복사했다가 다시 뒤로 돌아 갈때
+                    for var i = count; i<movNames.count; i++ {
+                        do {
+                            try fileManager.removeItemAtPath(movNames[i])
+                            log.log("folder Name \(movNames[i])")
+                            let path = String(format: "%@.mov", arguments: [movNames[i]])
+                            log.log("mov Name \(path)")
+                            try fileManager.removeItemAtPath(path)
+                        }catch {}
+                    }
                 }
                 self.appdelegate.camera.workFolder = self.workFolder
                 self.navigationController?.popViewControllerAnimated(true)
@@ -2103,21 +2107,24 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         previewTimer?.invalidate()
         previewTimer = nil
         previewTimer = NSTimer.scheduledTimerWithTimeInterval(interval, target: self, selector: Selector("nextImage"), userInfo: nil, repeats: true)
+        log.log("\(playImageArr[0][0].size)")
         log.log("image frame   \(image.frame)")
         log.log("image width :  \(self.image.frame.size.width)   image height : \(self.image.frame.size.height)")
-        if self.image.image?.size.width > self.image.image?.size.height {
+        if playImageArr[0][0].size.width > playImageArr[0][0].size.height {
             let nWidth = UIScreen.mainScreen().bounds.width;
             let nHeight = nWidth * (imgSize.height) / (imgSize.width)
-            let posY = (Config.getInstance().wid/8)*3
+            let posY = Config.getInstance().wid/8*2-10
             self.gifView.frame = CGRectMake(0, posY, nWidth, nHeight)
-            log.log("\(self.gifView.frame)")
+            log.log("gif View frame     \(self.gifView.frame)")
             self.imageHei.constant = nHeight
             self.imagePosY.constant = posY
         }else if playImageArr[0][0].size.width == playImageArr[0][0].size.height {
+            log.log("gif View hahahahahahahahaha")
             self.image.frame.origin.y = (UIScreen.mainScreen().bounds.width/8)*2
             self.imagePosY.constant = (UIScreen.mainScreen().bounds.width/8)*2
             self.gifView.frame.origin.y = (UIScreen.mainScreen().bounds.width/8)*2
         }
+        log.log("gifView frame        \(gifView.frame)")
         self.view.bringSubviewToFront(self.waterMark)
         
     }

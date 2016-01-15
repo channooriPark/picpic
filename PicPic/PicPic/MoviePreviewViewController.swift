@@ -253,7 +253,7 @@ class MoviePreviewViewController : SubViewController, UIImagePickerControllerDel
     
     func playVideo() {
         
-        //print("moviePath)
+        print("moviePath")
         
         
         moviePlayer = AVPlayer(URL: moviePath!)
@@ -277,22 +277,23 @@ class MoviePreviewViewController : SubViewController, UIImagePickerControllerDel
             movieFrameRect = CGRectMake(0, 0, Config.getInstance().wid, Config.getInstance().wid)
         } else {
             if(ratio == "1:1") {
-                //////print(""1:1")
+                print("1:1")
                 playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
                 movieFrameRect = CGRectMake(0, 0, Config.getInstance().wid, Config.getInstance().wid)
             } else {
-                //////print(""3:4")
+                print("3:4")
                 playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
                 
                 //print("assetTrack.naturalSize)
                 
                 if(assetTrack.naturalSize.width>assetTrack.naturalSize.height) {
-                    //////print(""aaaaaaa")
+                    print("aaaaaaa")
                     let posX = Config.getInstance().wid/8
                     movieFrameRect = CGRectMake(posX, 0, Config.getInstance().wid*3/4, Config.getInstance().wid)
                 } else {
-                    //////print(""bbbbbbbbbb")
+                    print("bbbbbbbbbb")
                     let posY = Config.getInstance().wid/8
+                    print(posY)
                     movieFrameRect = CGRectMake(0, posY, Config.getInstance().wid, Config.getInstance().wid*3/4)
                     
                 }
@@ -302,7 +303,7 @@ class MoviePreviewViewController : SubViewController, UIImagePickerControllerDel
         //        //print("movieFrameRect)
         
         playerLayer.frame = movieFrameRect!
-        //        //print("playerLayer.frame)
+        print("playerLayer",playerLayer.frame)
         
         
         movieView.layer.addSublayer(playerLayer)
@@ -335,7 +336,7 @@ class MoviePreviewViewController : SubViewController, UIImagePickerControllerDel
         self.labelEnd.text = "1"
         
         let imgPath = String(format: "%@/ghost.jpg", arguments:[workFolder!])
-        setGhost(imgPath,frame: movieFrameRect!)
+//        setGhost(imgPath,frame: movieFrameRect!)
         
         
         
@@ -353,7 +354,7 @@ class MoviePreviewViewController : SubViewController, UIImagePickerControllerDel
             self.btn_next.frame = CGRectMake(225, 34, 80, 33)
             self.nextWid.constant = 80
         }
-        
+        print("moviePreview")
         
         _hud = MBProgressHUD()
         _hud!.mode = MBProgressHUDModeIndeterminate
