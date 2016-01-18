@@ -498,9 +498,8 @@
     
     <string name="data_error">데이터를 불러오지 못하였습니다.</string>
     
-    <string name="camera_video_setting">5초이상 설정하실 수 없습니다.</string>
-    <string name="camera_startpoint_setting">시작이 종료보다 클 수 없습니다.</string>
-    <string name="camera_endpoint_setting">종료가 시작보다 작을 수 없습니다.</string>
+    <string name="camera_setting">1초 이하는 설정할 수 없습니다.</string>
+    <string name="camera_endpoint">영상의 끝입니다.</string>
 
 
     <string name="category_0">선택안함</string>

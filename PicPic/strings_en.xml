@@ -562,9 +562,8 @@
     
     <string name="delete_post">Deleted Post</string>
     
-    <string name="camera_video_setting">5초이상 설정하실 수 없습니다.</string>
-    <string name="camera_startpoint_setting">시작이 종료보다 클 수 없습니다.</string>
-    <string name="camera_endpoint_setting">종료가 시작보다 작을 수 없습니다.</string>
+    <string name="camera_setting">The GIF has to be longer than 1 second.</string>
+    <string name="camera_endpoint">This is end of the clip.</string>
     
     
     <string name="category_0">No Category</string>

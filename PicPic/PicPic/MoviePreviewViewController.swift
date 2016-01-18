@@ -82,6 +82,9 @@ class MoviePreviewViewController : SubViewController, UIImagePickerControllerDel
         moviePlayer = nil
         asset = nil
         
+        print("workfolder = ",self.appdelegate.camera.workFolder)
+        self.appdelegate.camera.workFolder = nil
+        
         // tmp폴더의 추출되었던 mov나 jpg 등 삭제 코드 추가
         self.appdelegate.testNavi.navigationBarHidden = false
         if !self.appdelegate.myfeed.view.hidden {
@@ -109,12 +112,12 @@ class MoviePreviewViewController : SubViewController, UIImagePickerControllerDel
         
         
         
-        if ((self.sliderStart.value)>timeLimit) {
-            let alert = UIAlertController(title: "", message: self.appdelegate.ment["camera_video_setting"].stringValue, preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: self.appdelegate.ment["popup_confirm"].stringValue, style: UIAlertActionStyle.Default, handler: nil))
-            presentViewController(alert, animated: true, completion: nil)
-            return
-        }
+        //        if ((self.sliderStart.value)>timeLimit) {
+        //            let alert = UIAlertController(title: "", message: self.appdelegate.ment["camera_video_setting"].stringValue, preferredStyle: UIAlertControllerStyle.Alert)
+        //            alert.addAction(UIAlertAction(title: self.appdelegate.ment["popup_confirm"].stringValue, style: UIAlertActionStyle.Default, handler: nil))
+        //            presentViewController(alert, animated: true, completion: nil)
+        //            return
+        //        }
         
         
         let start = Double(self.sliderStart.value)
@@ -192,14 +195,21 @@ class MoviePreviewViewController : SubViewController, UIImagePickerControllerDel
         
     }
     
+    
+    
+    
     @IBAction func sliderStartValueChange(sender: UISlider) {
         self.moviePlayer?.rate = 0
         let asset = AVAsset(URL: moviePath!)
+        
+        //영상의 끝
         if(Double(sender.value + self.sliderEnd.value) > CMTimeGetSeconds(asset.duration) - 0.1) {
-            let alert = UIAlertController(title: "", message: "영상의 끝입니다.", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: self.appdelegate.ment["popup_confirm"].stringValue, style: UIAlertActionStyle.Default, handler: nil))
+            let alert = UIAlertController(title: "", message: self.appdelegate.ment["camera_setting"].stringValue, preferredStyle: UIAlertControllerStyle.Alert)
+            let ok = UIAlertAction(title: self.appdelegate.ment["popup_confirm"].stringValue, style: UIAlertActionStyle.Default, handler: { (act) -> Void in
+                sender.value = self.sliderStart.value - 0.1
+            })
+            alert.addAction(ok)
             self.presentViewController(alert, animated: true, completion: nil)
-            sender.value = self.sliderStart.value - 0.1
         }
         
         //btnPlaySetTitle()
@@ -223,19 +233,26 @@ class MoviePreviewViewController : SubViewController, UIImagePickerControllerDel
     @IBAction func sliderEndValueChange(sender: UISlider) {
         moviePlayer?.rate = 0
         let asset = AVAsset(URL: moviePath!)
+        
+        //영상의 끝
         if(Double(sender.value + self.sliderStart.value) > CMTimeGetSeconds(asset.duration) - 0.1) {
-            let alert = UIAlertController(title: "", message: "영상의 끝입니다.", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: self.appdelegate.ment["popup_confirm"].stringValue, style: UIAlertActionStyle.Default, handler: nil))
+            let alert = UIAlertController(title: "", message: self.appdelegate.ment["camera_setting"].stringValue, preferredStyle: UIAlertControllerStyle.Alert)
+            let ok = UIAlertAction(title: self.appdelegate.ment["popup_confirm"].stringValue, style: UIAlertActionStyle.Default, handler: { (act) -> Void in
+                sender.value = self.sliderEnd.value - 0.1
+            })
+            alert.addAction(ok)
             self.presentViewController(alert, animated: true, completion: nil)
-            sender.value = self.sliderEnd.value - 0.1
         }
         
+        //1초 이하
         if(sender.value < 1)
         {
-            let alert = UIAlertController(title: "", message: "1초 이하는 설정할 수 없습니다.", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: self.appdelegate.ment["popup_confirm"].stringValue, style: UIAlertActionStyle.Default, handler: nil))
+            let alert = UIAlertController(title: "", message: self.appdelegate.ment["camera_endpoint"].stringValue, preferredStyle: UIAlertControllerStyle.Alert)
+            let ok = UIAlertAction(title: self.appdelegate.ment["popup_confirm"].stringValue, style: UIAlertActionStyle.Default, handler: { (act) -> Void in
+                sender.value = self.sliderEnd.value + 0.1
+            })
+            alert.addAction(ok)
             self.presentViewController(alert, animated: true, completion: nil)
-            sender.value = self.sliderEnd.value + 0.1
         }
         
         
@@ -336,7 +353,7 @@ class MoviePreviewViewController : SubViewController, UIImagePickerControllerDel
         self.labelEnd.text = "1"
         
         let imgPath = String(format: "%@/ghost.jpg", arguments:[workFolder!])
-//        setGhost(imgPath,frame: movieFrameRect!)
+        //        setGhost(imgPath,frame: movieFrameRect!)
         
         
         
