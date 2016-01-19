@@ -197,6 +197,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
     // [START connect_gcm_service]
     func applicationDidBecomeActive( application: UIApplication) {
         // Connect to the GCM server to receive non-APNS notifications
+        FBSDKAppEvents.activateApp()
         GCMService.sharedInstance().connectWithHandler({
             (NSError error) -> Void in
             if error != nil {
@@ -209,6 +210,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
                 // [END_EXCLUDE]
             }
         })
+        
     }
     // [END connect_gcm_service]
     
@@ -670,28 +672,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
         default:
             break;
         }
-        print("url  host              ",url.host)
-        print("url  scheme            ",url.scheme)
-        if url.scheme == "fb1610072682575169" {
-            
-            return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
-        }else if url.scheme == "" {
-            return GIDSignIn.sharedInstance().handleURL(url,
-                sourceApplication: sourceApplication,
-                annotation: annotation)
-        }else {
-            return GIDSignIn.sharedInstance().handleURL(url,
-                sourceApplication: sourceApplication,
-                annotation: annotation)
-        }
+        
+        return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }
     
     @available(iOS 9.0, *)
     func application(application: UIApplication,
         openURL url: NSURL, options: [String: AnyObject]) -> Bool {
-            return GIDSignIn.sharedInstance().handleURL(url,
-                sourceApplication: options[UIApplicationOpenURLOptionsSourceApplicationKey]as! String?,
-                annotation: options[UIApplicationOpenURLOptionsAnnotationKey])
+            if url.scheme == "fb1610072682575169" {
+                return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: options[UIApplicationOpenURLOptionsSourceApplicationKey]as! String?, annotation: options[UIApplicationOpenURLOptionsAnnotationKey])
+            }else {
+                return GIDSignIn.sharedInstance().handleURL(url,
+                    sourceApplication: options[UIApplicationOpenURLOptionsSourceApplicationKey]as! String?,
+                    annotation: options[UIApplicationOpenURLOptionsAnnotationKey])
+            }
     }
     
 

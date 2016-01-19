@@ -14,7 +14,7 @@ import CryptoSwift
 import SpringIndicator
 
 
-class ViewController: UIViewController, FBSDKLoginButtonDelegate,GIDSignInDelegate, GIDSignInUIDelegate{
+class ViewController: UIViewController,GIDSignInDelegate, GIDSignInUIDelegate{
     var navi:UINavigationController!
     var loginButton : UIButton!
 //    @IBOutlet weak var facebookLoginButton: FBSDKLoginButton!
@@ -118,7 +118,6 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate,GIDSignInDelega
     func signIn(signIn: GIDSignIn!, didSignInForUser user: GIDGoogleUser!, withError error: NSError!) {
         print("signIn google                   yes")
         if error == nil {
-            
             //sign in success
             let userId = user.userID
             let idToken = user.authentication.idToken
@@ -197,8 +196,6 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate,GIDSignInDelega
     
     @IBAction func googleLogin(sender: AnyObject) {
         GIDSignIn.sharedInstance().signIn()
-//        let user = GIDGoogleUser()
-//        print("userid",user.userID)
     }
     
     
@@ -206,53 +203,10 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate,GIDSignInDelega
         self.performSegueWithIdentifier("GoToEmail", sender: self)
     }
     
-    
-    
-    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
-//        if error != nil {
-//            print(error.localizedDescription)
-//            return
-//        }
-//        
-//        if let userToken = result.token {
-//            
-//            print("fffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
-//            
-//            settingData()
-//            
-//            
-//            filename = "\(FBSDKAccessToken.currentAccessToken().userID)\(self.currentDate).jpg"
-//            myImageUploadRequest()
-//            let accessToken:FBSDKAccessToken = result.token
-//            self.appdelegate.email = FBSDKAccessToken.currentAccessToken().userID
-//            accessToken
-//            if self.appdelegate.standardUserDefaults.objectForKey("id") == nil {
-//                
-//                let message : JSON = ["email":self.appdelegate.email,"password":self.appdelegate.email,"id":id,"profile_picture":filename,"sex":sex,"bir_year":bir_year,"bir_mon":bir_mon,"bir_day":bir_day,"register_form":register_form,"country":self.language,"device_id":"","push_token":token,"regist_day":currentDate]
-//                print("facebook message : ",message)
-//                appdelegate.userData = message
-////                let connection = URLConnection(serviceCode: 201, message: message)
-////                let readData = connection.connection()
-////                if readData["msg"].string! == "success" {
-////                    self.appdelegate.standardUserDefaults.setValue(FBSDKAccessToken.currentAccessToken().userID, forKey: "id")
-////                    self.appdelegate.standardUserDefaults.setValue(FBSDKAccessToken.currentAccessToken().userID, forKey: "password")
-////                    self.appdelegate.standardUserDefaults.synchronize()
-//                
-//                    let profile = self.storyboard?.instantiateViewControllerWithIdentifier("FacebookJoinViewController")as! FacebookJoinViewController
-//                    self.appdelegate.window?.rootViewController = profile
-////                }
-//            }
-//            print("Token : \(FBSDKAccessToken.currentAccessToken().tokenString)")
-//            print("UserID : \(FBSDKAccessToken.currentAccessToken().userID)")
-//            
-//            
-//        }
-        
-    }
-    
     @IBAction func facebookLogined(sender: AnyObject) {
-        
+        print("facebookLogin")
         let login : FBSDKLoginManager = FBSDKLoginManager()
+        
         login.logInWithReadPermissions(["public_profile","email","user_friends","user_about_me","user_birthday"], fromViewController: self) { (result, error) -> Void in
             if error != nil {
                 NSLog("Process error")
@@ -262,19 +216,11 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate,GIDSignInDelega
                 NSLog("Logged in")
                 NSLog("HI")
                 self.settingData()
-//                NSThread.sleepForTimeInterval(1.0)
-//                NSLog("user id : \(FBSDKAccessToken.currentAccessToken().userID)")
-//                NSLog("\(self.language)")
-//                NSLog("\(self.currentDate)")
                 let message : JSON = ["email":FBSDKAccessToken.currentAccessToken().userID,"password":FBSDKAccessToken.currentAccessToken().userID,"register_form":self.register_form,"country":self.language,"device_id":self.appdelegate.deviceId,"push_token":self.appdelegate.token,"regist_day":self.currentDate]
                 
                 self.log.log("\(message)")
-//                NSLog("message : \(message)")
-//                let connection = URLConnection(serviceCode: 202, message: message)
-//                let readData : JSON = connection.connection()
                 self.appdelegate.doIt(202, message: message, callback: { (readData) -> () in
                     if readData["msg"].string! == "success" {
-//                        NSLog("success")
                         self.log.log("success")
                         self.appdelegate.email = FBSDKAccessToken.currentAccessToken().userID
                         if self.appdelegate.standardUserDefaults.objectForKey("id") == nil {
@@ -285,10 +231,6 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate,GIDSignInDelega
                         }
                         self.appdelegate.window?.rootViewController = self.appdelegate.testNavi
                     }else{
-//                        NSLog("없어\(FBSDKAccessToken.currentAccessToken().userID)")
-                        //                    self.settingData()
-                        //                    NSThread.sleepForTimeInterval(0.5)
-                        
                         self.log.log("fail")
                         self.joinSetInfo()
                     }
@@ -306,11 +248,6 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate,GIDSignInDelega
         }else {
             language = "en_US"
         }
-//        }else if nation == "zh" {
-//            language = "zh_CN"
-//        }else if nation == "ja" {
-//            language = "ja_JP"
-//        }
         return language
     }
     
@@ -377,13 +314,10 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate,GIDSignInDelega
         let req = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"email,name,picture,birthday,gender"], tokenString: FBSDKAccessToken.currentAccessToken().tokenString, version: nil, HTTPMethod: "GET")
         req.startWithCompletionHandler { (connection, result, error : NSError!) -> Void in
             if error == nil {
-//                print(result)
                 if let name = result.valueForKey("name"){
                     let temp = name.stringByReplacingOccurrencesOfString(" ", withString: "_")
-                    
                     self.log.log(temp)
                         self.id = temp
-                    
                 }
                 if let birth = result.valueForKey("birthday") {
                     let day = birth as! String
@@ -409,7 +343,6 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate,GIDSignInDelega
                 profile.filename = self.filename
                 self.presentViewController(profile, animated: true, completion: nil)
             }else {
-//                print("error \(error)")
             }
         }
     }
