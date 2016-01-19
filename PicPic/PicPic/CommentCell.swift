@@ -55,6 +55,7 @@ class CommentCell: UITableViewCell {
     @IBOutlet weak var profileHei: NSLayoutConstraint!
     @IBOutlet weak var profileWid: NSLayoutConstraint!
     var cellIndex : NSIndexPath!
+    var imageCom : UIImage!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -102,8 +103,33 @@ class CommentCell: UITableViewCell {
         
         bodyLabel.scrollEnabled = false
         bodyLabel.sizeToFit()
-        
         self.height = 70 + (bodyLabel.frame.size.height - 27)
+        
+        if urlString != nil {
+            var image = UIImage()
+            let imageView = UIImageView(image: image)
+            image = UIImage.gifWithData(NSData(contentsOfURL: NSURL(string: self.self.imageURL.gifImageUrl(urlString))!)!)!
+            imageView.image = image
+            let width = self.upperContentView.frame.size.width - 56 - 10
+            var imagewidth = image.size.width - width
+            var imageHeight = image.size.height - (image.size.width - imagewidth)
+            if image.size.width > image.size.height {
+                imagewidth = width
+                imageHeight = imagewidth/4*3
+            }else if image.size.width < image.size.height {
+                imagewidth = width
+                imageHeight = imagewidth/3*4
+            }else {
+                imagewidth = width
+                imageHeight = width
+            }
+            let posY = self.bodyLabel.frame.size.height + self.bodyLabel.frame.origin.y
+            imageView.frame = CGRectMake(self.bodyLabel.frame.origin.x, posY, self.bodyLabel.frame.size.width, imageHeight)
+            self.upperContentView.addSubview(imageView)
+            imageView.frame = CGRectMake(self.bodyLabel.frame.origin.x, posY, width, imageHeight)
+            self.height = 70 + (self.bodyLabel.frame.size.height - 27) + imageView.frame.size.height + 10
+        }
+        
         
         let uploadDateText = data["time"].string!
         
@@ -131,8 +157,6 @@ class CommentCell: UITableViewCell {
         let dateString : NSString = uploadTimeLabel.text!
         let dateSize = dateString.sizeWithAttributes([NSFontAttributeName:UIFont.systemFontOfSize(10)])
         dateWid.constant = dateSize.width + 7
-        
-//        userIDText.putText(data["id"].string!)
         
         var attrString = NSAttributedString()
         let para = NSMutableAttributedString()

@@ -354,7 +354,7 @@
     
     
     <string name="camera_startMent">Start Point</string>
-    <string name="camera_endMent">End Point</string>
+    <string name="camera_endMent">Play Time</string>
     <string name="camera_loop">Loop Play</string>
     
     <string name="camera_tempsave">Success Temporary Save</string>

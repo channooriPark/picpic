@@ -334,7 +334,7 @@
     
     
     <string name="camera_startMent">시작 위치</string>
-    <string name="camera_endMent">종료 위치</string>
+    <string name="camera_endMent">지속 시간</string>
     <string name="camera_loop">구간 재생</string>
     
     <string name="camera_tempsave">임시저장이 완료되었습니다</string>

@@ -201,12 +201,13 @@ class MoviePreviewViewController : SubViewController, UIImagePickerControllerDel
     @IBAction func sliderStartValueChange(sender: UISlider) {
         self.moviePlayer?.rate = 0
         let asset = AVAsset(URL: moviePath!)
-        
+        //시작 시간 value
         //영상의 끝
         if(Double(sender.value + self.sliderEnd.value) > CMTimeGetSeconds(asset.duration) - 0.1) {
-            let alert = UIAlertController(title: "", message: self.appdelegate.ment["camera_setting"].stringValue, preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "", message: self.appdelegate.ment["camera_endpoint"].stringValue, preferredStyle: UIAlertControllerStyle.Alert)
             let ok = UIAlertAction(title: self.appdelegate.ment["popup_confirm"].stringValue, style: UIAlertActionStyle.Default, handler: { (act) -> Void in
                 sender.value = self.sliderStart.value - 0.1
+                self.labelStart.text = NSString(format: "%.1f", sender.value) as String
             })
             alert.addAction(ok)
             self.presentViewController(alert, animated: true, completion: nil)
@@ -224,21 +225,23 @@ class MoviePreviewViewController : SubViewController, UIImagePickerControllerDel
     }
     
     func btnPlaySetTitle() {
-        let txt = "구간재생 (" + self.labelEnd.text! + ")"
+        let txt = self.appdelegate.ment["camera_loop"].stringValue + " (" + self.labelEnd.text! + ")"
         
         self.btn_play_select.setTitle(txt, forState: UIControlState.Normal)
     }
     
     
     @IBAction func sliderEndValueChange(sender: UISlider) {
+        //지속시간 value
         moviePlayer?.rate = 0
         let asset = AVAsset(URL: moviePath!)
         
         //영상의 끝
         if(Double(sender.value + self.sliderStart.value) > CMTimeGetSeconds(asset.duration) - 0.1) {
-            let alert = UIAlertController(title: "", message: self.appdelegate.ment["camera_setting"].stringValue, preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "", message: self.appdelegate.ment["camera_endpoint"].stringValue, preferredStyle: UIAlertControllerStyle.Alert)
             let ok = UIAlertAction(title: self.appdelegate.ment["popup_confirm"].stringValue, style: UIAlertActionStyle.Default, handler: { (act) -> Void in
                 sender.value = self.sliderEnd.value - 0.1
+                self.labelEnd.text = NSString(format: "%.1f", sender.value) as String
             })
             alert.addAction(ok)
             self.presentViewController(alert, animated: true, completion: nil)
@@ -247,9 +250,11 @@ class MoviePreviewViewController : SubViewController, UIImagePickerControllerDel
         //1초 이하
         if(sender.value < 1)
         {
-            let alert = UIAlertController(title: "", message: self.appdelegate.ment["camera_endpoint"].stringValue, preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "", message: self.appdelegate.ment["camera_setting"].stringValue, preferredStyle: UIAlertControllerStyle.Alert)
             let ok = UIAlertAction(title: self.appdelegate.ment["popup_confirm"].stringValue, style: UIAlertActionStyle.Default, handler: { (act) -> Void in
                 sender.value = self.sliderEnd.value + 0.1
+                self.labelEnd.text = NSString(format: "%.1f", sender.value) as String
+                
             })
             alert.addAction(ok)
             self.presentViewController(alert, animated: true, completion: nil)
@@ -259,7 +264,7 @@ class MoviePreviewViewController : SubViewController, UIImagePickerControllerDel
         
         self.labelEnd.text = NSString(format: "%.1f", sender.value) as String
         
-        let txt = "구간재생 (" + String(format: "%.1f", sender.value) + ")"
+        let txt = self.appdelegate.ment["camera_loop"].stringValue + " (" + String(format: "%.1f", sender.value) + ")"
         self.btn_play_select.setTitle(txt, forState: UIControlState.Normal)
         
         moviePlayer?.rate = 0 // stop
@@ -364,7 +369,7 @@ class MoviePreviewViewController : SubViewController, UIImagePickerControllerDel
         super.viewDidLoad()
         self.type = "movie"
         self.startMent.text = self.appdelegate.ment["camera_startMent"].stringValue
-        self.endMent.text = "지속시간"
+        self.endMent.text = self.appdelegate.ment["camera_endMent"].stringValue
         self.btn_next.setTitle(self.appdelegate.ment["join_next"].stringValue, forState: .Normal)
         
         if self.appdelegate.locale != "ko_KR" {

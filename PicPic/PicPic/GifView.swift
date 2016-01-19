@@ -279,7 +279,7 @@ class GifView : UIImageView {
 //    func enterBackground() {
 //        print("enterBackground")
 //        print("animation",self.animation)
-//        is_background = true
+//        is_background ㅌ= true
 //        
 //        if(self.layer.speed == 1) {
 //            backgroundType = 1
@@ -304,6 +304,11 @@ class GifView : UIImageView {
         play()
     }
     
+    
+    func gifRemoveObserver() {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationDidEnterBackgroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillEnterForegroundNotification, object: nil)
+    }
 
 
     
