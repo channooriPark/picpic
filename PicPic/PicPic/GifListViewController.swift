@@ -14,19 +14,30 @@ class GifListViewController: UIViewController , RAReorderableLayoutDelegate, RAR
     
     var collectionType = 0 // 0:임시저장 1:gifs
     var collections:[UIImage] = []
+    var assetArr:[PHAsset] = []
     var list_gif:[String] = []
     var list_work:[String] = []
     let fileManager = NSFileManager.defaultManager()
     var selectMode = 0 // 0:일반 1:선택
     var selectArr:[Int] = []
+    var commentView : CommentViewController?
+    var delegate : GifListDelegate?
     
     let documentDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
     let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     @IBOutlet weak var collectionView: UICollectionView!
     
-
+    let asset = ALAssetsLibrary()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        let nib = UINib(nibName: "SaveCell", bundle: nil)
+        self.collectionView.registerNib(nib, forCellWithReuseIdentifier: "cell")
+        collectionView.delegate = self
+        collectionView.dataSource = self
         
         let image = UIImageView(frame: CGRectMake(0, 0, 30, 30))
         image.image = UIImage(named: "back_white")
@@ -35,40 +46,71 @@ class GifListViewController: UIViewController , RAReorderableLayoutDelegate, RAR
         image.addGestureRecognizer(tap)
         self.navigationItem.leftBarButtonItem = backButton
         
+        /*
+        asset.enumerateGroupsWithTypes(ALAssetsGroupSavedPhotos, usingBlock: { (group, stop) -> Void in
+            if group != nil {
+                print(group)
+                group.enumerateAssetsUsingBlock({ (asset, index, stop) -> Void in
+                    if (asset != nil) {
+                        print(asset)
+                        print(asset.thumbnail())
+                        if let a = asset.thumbnail() {
+                            let image = UIImage(CGImage: a.takeUnretainedValue())
+                            self.collections.append(image)
+                        }
+                    }
+                })
+            }
+            self.collectionView.reloadData()
+            }) { (error) -> Void in
+                print(error)
+        }
+        */
         
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
         let images = PHAsset.fetchAssetsWithMediaType(.Image, options: nil)
         print("images.count            ",images.count)
-        
-        
-        for var i=0;i<images.count;i++ {
+        for var i=1800;i<images.count;i++ {
             let img = images[i] as! PHAsset
             print("img            ",img)
+            
             if #available(iOS 9.0, *) {
-                let resources = PHAssetResource.assetResourcesForAsset(img)
-                print("resources.count       ",resources.count,"          ", resources)
-                if resources.count > 0 {
-                    let filename = (resources[0] as PHAssetResource).originalFilename
+                //let resources = PHAssetResource.assetResourcesForAsset(img)
+                //print("resources.count       ",resources.count,"          ", resources)
+                //if resources.count > 0 {
+                   if let filename = img.valueForKey("filename")
+                   {
                     print(filename)
                     if filename.lowercaseString.hasSuffix(".gif") {
                         print(filename," is gif ")
                         img.requestContentEditingInputWithOptions(PHContentEditingInputRequestOptions()) { (input, _) in
                             let url = input!.fullSizeImageURL
                             print(url) // 배열에 담아 콜렉션 뷰에 로드하면 됨.
+                            self.assetArr.append(img)
                             self.collections.append(UIImage(data: NSData(contentsOfURL: url!)!)!)
                         }
                     } else {
                         print("not gif ",i)
                     }
+                
+                
                 }
             } else {
             }
             
         }
-        collectionView.reloadData()
+            dispatch_async(dispatch_get_main_queue(), {
+                print("collections count      ",self.collections.count)
+                
+        self.collectionView.reloadData()
+            })
+        })
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
     }
     
     func backToMyFeed() {
@@ -81,7 +123,9 @@ class GifListViewController: UIViewController , RAReorderableLayoutDelegate, RAR
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
-        
+        print("deselect22222 ",indexPath.item)
+        delegate?.addSelected(self.collections[indexPath.item],asset: self.assetArr[indexPath.item])
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath){
@@ -116,6 +160,7 @@ class GifListViewController: UIViewController , RAReorderableLayoutDelegate, RAR
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("numberofiteminsection   ",collections.count)
         return collections.count
     }
     
@@ -135,8 +180,9 @@ class GifListViewController: UIViewController , RAReorderableLayoutDelegate, RAR
     }
     
     
+    
     func scrollTrigerEdgeInsetsInCollectionView(collectionView: UICollectionView) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(100.0, 100.0, 100.0, 100.0)
+        return UIEdgeInsetsMake(0.0, 100.0, 100.0, 100.0)
     }
     
     func collectionView(collectionView: UICollectionView, reorderingItemAlphaInSection section: Int) -> CGFloat {
@@ -152,3 +198,10 @@ class GifListViewController: UIViewController , RAReorderableLayoutDelegate, RAR
     }
     
 }
+
+protocol GifListDelegate
+{
+    func addSelected(image : UIImage,asset:PHAsset)
+}
+
+

@@ -46,17 +46,17 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var captureTypeBtn: UIButton!
     @IBOutlet weak var videoRatioBtn: UIButton!
-//    @IBOutlet weak var cameraWid: NSLayoutConstraint!
-//    @IBOutlet weak var cameraHei: NSLayoutConstraint!
+    //    @IBOutlet weak var cameraWid: NSLayoutConstraint!
+    //    @IBOutlet weak var cameraHei: NSLayoutConstraint!
     @IBOutlet weak var gridBtn:UIButton!
     @IBOutlet weak var flashBtn:UIButton!
     @IBOutlet weak var selfiBtn:UIButton!
     @IBOutlet weak var btnGhost: UIButton!
     @IBOutlet weak var btnLoad: UIButton!
     @IBOutlet weak var btnCapture: UIButton!
-//    @IBOutlet weak var editPlusHei: NSLayoutConstraint!
+    //    @IBOutlet weak var editPlusHei: NSLayoutConstraint!
     @IBOutlet weak var editPlusView: UIView!
-//    @IBOutlet weak var cameraViewPosY: NSLayoutConstraint!
+    //    @IBOutlet weak var cameraViewPosY: NSLayoutConstraint!
     
     let fileManager = NSFileManager.defaultManager()
     
@@ -104,9 +104,9 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
     @IBOutlet weak var btnNext: UIButton!
     
     @IBOutlet weak var backView: UIView!
-   
+    
     @IBOutlet weak var spring: SpringIndicator!
-//    @IBOutlet weak var spring: UIActivityIndicatorView!
+    //    @IBOutlet weak var spring: UIActivityIndicatorView!
     var deleteState = 0
     var deleteToggle = false
     var ratio : String!
@@ -165,7 +165,7 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 for movName in flist {
-//                    print("get ",movName)
+                    //                    print("get ",movName)
                     if movName.hasSuffix(".mov") {
                         let name = movName.stringByReplacingOccurrencesOfString(".mov", withString: "")
                         let movPath = String(format:"%@/%@",arguments: [self.workFolder!,movName])
@@ -183,7 +183,7 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
                         movieArr.append(movPath)
                         do {
                             if(movName == "00.mov") {
-//                                print("make Thumb")
+                                //                                print("make Thumb")
                                 try self.fileManager.copyItemAtPath(String(format:"%@/000.jpg", jpgPath), toPath: String(format:"%@/thumb.jpg", self.workFolder!))
                             }
                         }catch {
@@ -228,7 +228,7 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         deleteToggle = true
         let alert = UIAlertView(title: "", message: self.appdelegate.ment["delete_all"].stringValue, delegate: self, cancelButtonTitle: self.appdelegate.ment["popup_confirm"].stringValue, otherButtonTitles: self.appdelegate.ment["popup_cancel"].stringValue)
         alert.show()
-//        print("longPress on")
+        //        print("longPress on")
     }
     
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
@@ -385,14 +385,14 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         }
         
         if(total_recording_time>=max_recording_time) {
-//            print("max!!!")
+            //            print("max!!!")
             return
         }
         
-//        print("start")
+        //        print("start")
         is_saved = false;
         let outputPath = String(format: "%@/%02d.mov", arguments: [workFolder!,num_of_capture])
-//        print("capture : ",outputPath)
+        //        print("capture : ",outputPath)
         
         let outputURL = NSURL(fileURLWithPath: outputPath)
         videoDataOutput.startRecordingToOutputFileURL(outputURL, recordingDelegate: self)
@@ -401,11 +401,11 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         timer = NSTimer.scheduledTimerWithTimeInterval(0.02, target: self, selector: "updateTime", userInfo: nil, repeats: true)
         
         captureBar.addBar()
-//        print("max_recording_this_frame ",max_recording_this_frame)
+        //        print("max_recording_this_frame ",max_recording_this_frame)
     }
     
     @IBAction func actCaptureStop(sender: AnyObject) {
-//        print("end")
+        //        print("end")
         print("",is_saved)
         if(is_saved) {
             
@@ -518,7 +518,7 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
             if arr_recording_time.count-1 > 0 {
                 count = arr_recording_time.count-1
             }
-                
+            
             for movName in flist {
                 if movName.hasSuffix(".mov") {
                     mov.append(movName)
@@ -576,16 +576,21 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         
         
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.SavedPhotosAlbum){
-//            print("Galeria Imagen")
+            //            print("Galeria Imagen")
             
-            imagePicker!.delegate = self
-            imagePicker!.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-            imagePicker!.mediaTypes = [kUTTypeMovie as String] // 5s 이상에서 연사 지원하므로, 연사 옵션 넣어야 함.
-            imagePicker!.allowsEditing = false
-            imagePicker?.navigationBar.barTintColor = Config.getInstance().color
-            imagePicker?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
-            //picker!.modalPresentationStyle = .Custom
-            self.presentViewController(imagePicker!, animated: true, completion: nil)
+            //            imagePicker!.delegate = self
+            //            imagePicker!.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+            //            imagePicker!.mediaTypes = [kUTTypeMovie as String] // 5s 이상에서 연사 지원하므로, 연사 옵션 넣어야 함.
+            //            imagePicker!.allowsEditing = false
+            //            imagePicker?.navigationBar.barTintColor = Config.getInstance().color
+            //            imagePicker?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
+            
+            
+            
+            print("videopicker            adsf;lejfioadsjfeakldjsfe;ioj")
+            let videoPicker = self.storyboard?.instantiateViewControllerWithIdentifier("VideoGalleryViewController") as? VideoGalleryViewController
+            videoPicker?.delegate = self
+            self.presentViewController(videoPicker!, animated: true, completion: nil)
         }
     }
     
@@ -720,6 +725,7 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
             self.ghostLayer.removeFromSuperview()
             self.ghostLayer = nil
         }
+        self.removeTempLoadView()
         self.navigationController?.navigationBarHidden = false
         if !self.appdelegate.myfeed.view.hidden {
             self.navigationController?.navigationBarHidden = true
@@ -738,7 +744,7 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
             toggle = !toggle
         }
         controlRecording()
-//        print("start recording")
+        //        print("start recording")
     }
     var flash_toggle = false
     @IBAction func flash_on(sender: UIButton) {
@@ -746,7 +752,7 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         // check if the device has torch
         
         log.log("cameraview  \(self.cameraView.frame)  bounds   \(cameraView.bounds)")
-//        log.log("\(cameraViewPosY.constant)")
+        //        log.log("\(cameraViewPosY.constant)")
         if(captureDevice.position == AVCaptureDevicePosition.Front) {
             return
         }
@@ -794,11 +800,11 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         do {
             let flist = try self.fileManager.contentsOfDirectoryAtPath(workFolder!)
             
-               for movName in flist {
-                    if movName.hasSuffix(".mov") {
-                        mov.append(movName)
-                    }
+            for movName in flist {
+                if movName.hasSuffix(".mov") {
+                    mov.append(movName)
                 }
+            }
             print("mov Array        ",mov)
             self.log.log("mov[count]   \(mov[count])")
             let movPath = String(format:"%@/%@",arguments: [self.workFolder!,mov[count]])
@@ -830,7 +836,7 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
             self.log.log("aaaaaaaaaaaaaaa")
             let imageRef = try imageGenerator.copyCGImageAtTime(time, actualTime: nil)
             self.log.log("\(imageRef)")
-                 var image = UIImage(CGImage: imageRef)
+            var image = UIImage(CGImage: imageRef)
             if Config.getInstance().videoRatio == "1:1" {
                 image = image.cropToBounds(480, height: 480)
                 image = image.resizeImage(CGSize(width: 480, height: 480))
@@ -844,7 +850,7 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
             self.ghostLayer = UIImageView(frame: self.cameraView.bounds)
             ghostToggle = true
             let offset:CGFloat = (self.view.frame.height - self.cameraView.frame.height) / CGFloat(2)
-                
+            
             self.ghostLayer.frame.origin.y = lowerCameraCoverViewHeight.constant
             
             self.ghostLayer.image = image.alpha(Config.getInstance().ghostAlpha)
@@ -1021,12 +1027,12 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
             let avDevice = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
             do {
                 try avDevice.lockForConfiguration()
-//                if(avDevice.torchActive) {
-//                    avDevice.torchMode = AVCaptureTorchMode.Off;
-//                } else {
-                    avDevice.torchMode = AVCaptureTorchMode.On
-                    try avDevice.setTorchModeOnWithLevel(1.0)
-//                }
+                //                if(avDevice.torchActive) {
+                //                    avDevice.torchMode = AVCaptureTorchMode.Off;
+                //                } else {
+                avDevice.torchMode = AVCaptureTorchMode.On
+                try avDevice.setTorchModeOnWithLevel(1.0)
+                //                }
                 //avDevice.torchMode = avDevice.torchActive ? AVCaptureTorchMode.Off : AVCaptureTorchMode.On
                 avDevice.unlockForConfiguration()
             } catch {
@@ -1049,10 +1055,10 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         self.btnLoad.enabled = true
         self.btn_picker.enabled = true
         
-//        let load = self.storyboard?.instantiateViewControllerWithIdentifier("TempSaveListViewController")as! TempSaveListViewController
-//        self.navigationController?.navigationBarHidden = false
-//        self.navigationController?.navigationBar.barTintColor = UIColor.blackColor()
-//        self.navigationController?.pushViewController(load, animated: true)
+        //        let load = self.storyboard?.instantiateViewControllerWithIdentifier("TempSaveListViewController")as! TempSaveListViewController
+        //        self.navigationController?.navigationBarHidden = false
+        //        self.navigationController?.navigationBar.barTintColor = UIColor.blackColor()
+        //        self.navigationController?.pushViewController(load, animated: true)
         
         if self.editBarViewBottomConst.constant == 0.0// toggle on
         {
@@ -1091,8 +1097,8 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         log.log("viewDidLoad")
         let width = self.editBarView.frame.size.width/5
         
-//        self.editButtonWid.constant = width
-//        let width = (self.editBarView.frame.size.width)/5
+        //        self.editButtonWid.constant = width
+        //        let width = (self.editBarView.frame.size.width)/5
         self.videoRatioBtn.frame = CGRectMake(width*0, 0, width, 50)
         
         self.gridBtn.frame = CGRectMake(width*1, 0, width, 50)
@@ -1109,6 +1115,7 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
             self.btnNext.frame = CGRectMake(225, 34, 80, 40)
             self.nextWid.constant = 80
         }
+        self.editBarView.contentOffset = CGPoint(x: 0, y: 0)
         
         self.editBar.setImage(UIImage(named: "plus"),forState: .Normal)
         self.editBarView.hidden = true
@@ -1124,7 +1131,7 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         self.backView.hidden = true
         
         
-//        self.btn_picker.hidden = true
+        //        self.btn_picker.hidden = true
         
         setupAVCapture()
         self.view.bringSubviewToFront(self.btnback)
@@ -1146,20 +1153,37 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         let width = self.editBarView.frame.size.width/5
         self.editBarView.contentSize = CGSize(width: width*7, height: 50)
         self.editBarView.contentInset = UIEdgeInsetsZero
-        log.log("ajdgasasdfhefsdhfkasdhfalksd            \(self.editBarView.contentSize)")
+        self.editBarView.contentOffset = CGPoint(x: 0, y: 0)
     }
     
     override func viewWillAppear(animated: Bool) {
         
         log.log("다시 로드중")
         videoRatioBtn.enabled = true
+        gridBtn.enabled = true
+        btnLoad.enabled = true
+        btn_picker.enabled = true
         btnGhost.setImage(UIImage(named: "icon_camera_ghost"), forState: .Normal)
         gridBtn.setImage(UIImage(named: "icon_camera_grid"), forState: .Normal)
         flashBtn.setImage(UIImage(named: "icon_camera_flash"), forState: .Normal)
         gridToggle = false
         flash_toggle = false
+        let avDevice = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
+        do {
+            try avDevice.lockForConfiguration()
+            if(avDevice.torchActive) {
+                avDevice.torchMode = AVCaptureTorchMode.Off;
+            }
+        }catch {}
+        
+        if gridLayer != nil {
+            self.gridLayer.removeFromSuperview()
+            self.gridLayer = nil
+        }
         
         if workFolder == nil {
+            //workfolder가 없으면 다시 생성하는 코드
+            print("workfolder empty")
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd_HHmmss"
             let date = dateFormatter.stringFromDate(NSDate())
@@ -1185,9 +1209,6 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
             if Config.getInstance().videoRatio == "1:1" {
                 changeRatio(self.videoRatioBtn)
             }
-            
-            
-            
             captureBar.deleteAll()
             num_of_capture = 0
             arr_recording_time.removeAll()
@@ -1195,7 +1216,9 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
             total_recording_time = 0
             self.btnNext.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
         }else {
+            print("workfolder ")
             if loadType == 1 {
+                //임시저장에서 불러올 때
                 self.videoRatioBtn.enabled = false
                 self.btn_picker.enabled = false
                 self.btnLoad.enabled = false
@@ -1216,8 +1239,8 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
             
         }
         
-//        cameraView.frame.size.width = Config.getInstance().wid
-//        cameraView.frame.size.height = Config.getInstance().hei
+        //        cameraView.frame.size.width = Config.getInstance().wid
+        //        cameraView.frame.size.height = Config.getInstance().hei
         
         self.captureBar.frame.origin.y = cameraView.frame.size.height
         self.editPlusView.frame.origin.y = self.captureBar.frame.origin.y+10
@@ -1252,19 +1275,19 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: AnyObject]){
-//        print("Picker returned successfully")
+        //        print("Picker returned successfully")
         
         let mediaType = info[UIImagePickerControllerMediaType] as! NSString
         self.dismissViewControllerAnimated(true, completion: nil)
         if mediaType.isEqualToString(kUTTypeMovie as NSString as String) {
-//            print("동영상 관련 전처리")
+            //            print("동영상 관련 전처리")
             // 이미지 추출 및 편집 뷰 컨트롤러로 이동
             
             let url = info[UIImagePickerControllerMediaURL] as! NSURL
-            Config.getInstance().dataType = 1 
+            Config.getInstance().dataType = 1
             openMoviePreview(url)
         } else {
-//            print("연사 관련 전처리")
+            //            print("연사 관련 전처리")
             // 이미지 추출 및 편집 뷰 컨트롤러로 이동
         }
     }
@@ -1273,22 +1296,22 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
     func captureGhost() {
         
         capturePictureWithCompletition({ (image, error) -> Void in
-//            print("videoRatio ",Config.getInstance().videoRatio)
-//            print("capture image ok, image.width: \(image?.size.width), image.height: \(image?.size.height)")
+            //            print("videoRatio ",Config.getInstance().videoRatio)
+            //            print("capture image ok, image.width: \(image?.size.width), image.height: \(image?.size.height)")
             let outputPath = String(format: "%@/ghost.jpg", arguments: [self.workFolder!])
             //UIImagePNGRepresentation(image!)!.writeToFile(outputPath, atomically: true)
             
             if Config.getInstance().videoRatio == "1:1" {
                 image?.cropToBounds(480, height: 480)
-               image?.resizeImage(CGSize(width: 480, height: 480))
+                image?.resizeImage(CGSize(width: 480, height: 480))
             }else {
                 image?.cropToBounds(480, height: 640)
                 image?.resizeImage(CGSize(width: 480, height: 640))
             }
             UIImageJPEGRepresentation(image!, 80)!.writeToFile(outputPath, atomically: true)
-                self.session.removeOutput(self.stillImageOutput)
-                self.session.commitConfiguration()
-                self.getMovieOutput()
+            self.session.removeOutput(self.stillImageOutput)
+            self.session.commitConfiguration()
+            self.getMovieOutput()
             
             self.ghostLayer = UIImageView(frame: self.cameraView.bounds)
             
@@ -1313,13 +1336,13 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         
         do {
             let flist = try fileManager.contentsOfDirectoryAtPath(workFolder!)
-                for movName in flist {
-                    if movName.hasSuffix(".mov") {
-                        let name = movName.stringByReplacingOccurrencesOfString(".mov", withString: "")
-                        let Path = String(format:"%@/%@.mov", arguments:[self.workFolder!, name])
-                        try fileManager.removeItemAtPath(Path)
-                    }
+            for movName in flist {
+                if movName.hasSuffix(".mov") {
+                    let name = movName.stringByReplacingOccurrencesOfString(".mov", withString: "")
+                    let Path = String(format:"%@/%@.mov", arguments:[self.workFolder!, name])
+                    try fileManager.removeItemAtPath(Path)
                 }
+            }
         }catch {
             
         }
@@ -1333,9 +1356,16 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         moviePreviewVC?.gifsFolder = gifsFolder
         moviePreviewVC?.gifName = gifName
         
+        gridBtn.enabled = true
+        btnLoad.enabled = true
+        btn_picker.enabled = true
+        
+        
         btnGhost.setImage(UIImage(named: "icon_camera_ghost"), forState: .Normal)
         editBar.setImage(UIImage(named: "plus"), forState: .Normal)
         editBarView.hidden = true
+        print("dddddddddda;lskdfjew;foiasdj;ojf;lsajf;oasdifsajd;lkjlk;j")
+        
         
         self.navigationController?.navigationBarHidden = true
         self.navigationController?.pushViewController(moviePreviewVC!, animated: true)
@@ -1344,6 +1374,7 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
     
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        print("imagepickercontroller cancel")
         self.btn_picker.enabled = true
         self.btnLoad.enabled = true
         self.videoRatioBtn.enabled = true
@@ -1371,7 +1402,7 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
     
     func capturePhoto() {
         capturePictureWithCompletition({ (image, error) -> Void in
-//            print("capture image ok, image.width: \(image?.size.width), image.height: \(image?.size.height)")
+            //            print("capture image ok, image.width: \(image?.size.width), image.height: \(image?.size.height)")
             Config.getInstance().photoDataArr.append(image!)
         })
     }
@@ -1382,8 +1413,8 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         //let gifVC = self.storyboard?.instantiateViewControllerWithIdentifier("gifVC") as? GIFViewController
         //self.navigationController?.pushViewController(gifVC!, animated: true)
         
-//        print("동글뱅이")
-//        controlLoading(true)
+        //        print("동글뱅이")
+        //        controlLoading(true)
         
         let gifMaker = GifMaker()
         gifMaker.save(Config.getInstance().photoDataArr, outPath: tmpFolder!)
@@ -1396,12 +1427,12 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         gifMakerVC?.workFolder = workFolder
         gifMakerVC?.gifsFolder = gifsFolder
         gifMakerVC?.gifName = gifName
-//        controlLoading(false)
+        //        controlLoading(false)
         
         
         captureTypeBtn.enabled = true
         videoRatioBtn.enabled = true
-//        btn_picker.enabled = true
+        //        btn_picker.enabled = true
         
         
         self.navigationController?.navigationBarHidden = true
@@ -1415,7 +1446,7 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         if isRecord {
             captureTypeBtn.enabled = false
             videoRatioBtn.enabled = false
-//            btn_picker.enabled = false
+            //            btn_picker.enabled = false
             if captureType == "video" {
                 //let outputPath = "\(NSTemporaryDirectory())output.mov"
                 let outputPath = String(format: "%@/%@.mov", arguments: [tmpFolder!,dateText!])
@@ -1432,7 +1463,7 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         else {
             captureTypeBtn.enabled = true
             videoRatioBtn.enabled = true
-//            btn_picker.enabled = true
+            //            btn_picker.enabled = true
             if captureType == "video" {
                 videoDataOutput.stopRecording()
             }
@@ -1459,10 +1490,10 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
     
     // 영상 편집이 끝나고 미리보기로 넘어가는 메소드
     func exportDidFinish(session: AVAssetExportSession) {
-//        controlLoading(false)
+        //        controlLoading(false)
         stopCamera()
         let outputFileURL = session.outputURL
-//        print("exportDidFinish = outputFileURL: \(outputFileURL)")
+        //        print("exportDidFinish = outputFileURL: \(outputFileURL)")
         // 전승일씨 코드
         //let previewVC = self.storyboard?.instantiateViewControllerWithIdentifier("previewVC") as? PreviewViewController
         // previewVC?.moviePath = outputFileURL
@@ -1509,7 +1540,7 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
             deviceInput = nil
         }
         if err != nil {
-//            print("error: \(err?.localizedDescription)")
+            //            print("error: \(err?.localizedDescription)")
         }
         session.beginConfiguration()
         session.sessionPreset = AVCaptureSessionPreset1280x720   //AVCaptureSessionPresetHigh
@@ -1521,7 +1552,7 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         if session.canAddOutput(videoDataOutput){
             session.addOutput(videoDataOutput)
         }
-//        print(videoDataOutput)
+        //        print(videoDataOutput)
         session.commitConfiguration()
         videoDataOutput.connectionWithMediaType(AVMediaTypeVideo).enabled = true
         
@@ -1556,7 +1587,7 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         if !shouldReinitializeMovieOutput {
             if let connection = videoDataOutput!.connectionWithMediaType(AVMediaTypeVideo) {
                 shouldReinitializeMovieOutput = shouldReinitializeMovieOutput || !connection.active
-//                print("_getMovieOutput, shouldReinitializeMovieOutput: \(shouldReinitializeMovieOutput), connection.active: \(connection.active), shouldReinitializeMovieOutput: \(shouldReinitializeMovieOutput)")
+                //                print("_getMovieOutput, shouldReinitializeMovieOutput: \(shouldReinitializeMovieOutput), connection.active: \(connection.active), shouldReinitializeMovieOutput: \(shouldReinitializeMovieOutput)")
             }
         }
         if shouldReinitializeMovieOutput {
@@ -1573,7 +1604,7 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         //controlLoading(true)
         //editMovie(outputFileURL) 승일씨 코드 사용 안함.
         
-//        print("saveed...")
+        //        print("saveed...")
         is_camera_ready = true
         //openMoviePreview(outputFileURL)
     }
@@ -1583,7 +1614,7 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         let avAsset = AVAsset(URL: url)
         let mixComposition = AVMutableComposition()
         let videoTime = Double(Int(avAsset.duration.value)/Int(avAsset.duration.timescale))
-//        print("editMovie, videoTime: \(videoTime), avAsset.duration: \(avAsset.duration)")
+        //        print("editMovie, videoTime: \(videoTime), avAsset.duration: \(avAsset.duration)")
         let assetTime: CMTime
         if videoTime > 15 {
             assetTime = CMTimeMake(9000, 600)
@@ -1599,21 +1630,21 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
                 ofTrack: avAsset.tracksWithMediaType(AVMediaTypeVideo)[0] ,
                 atTime: kCMTimeZero)
         } catch _ {
-//            controlLoading(false)
-//            print("error")
+            //            controlLoading(false)
+            //            print("error")
         }
         let mainInstruction = AVMutableVideoCompositionInstruction()
         mainInstruction.timeRange = CMTimeRangeMake(kCMTimeZero, assetTime)
         
-//        print("width: \(Config.getInstance().wid), height: \(Config.getInstance().hei)")
+        //        print("width: \(Config.getInstance().wid), height: \(Config.getInstance().hei)")
         mainInstruction.layerInstructions = [videoCompositionInstructionForTrack(track, asset: avAsset)]
         let mainComposition = AVMutableVideoComposition()
         mainComposition.instructions = [mainInstruction]
         mainComposition.frameDuration = CMTimeMake(1, 8)
         
-//        print("aaaaaaaaaa=================")
-//        print(Config.getInstance().wid)
-//        print(Config.getInstance().hei)
+        //        print("aaaaaaaaaa=================")
+        //        print(Config.getInstance().wid)
+        //        print(Config.getInstance().hei)
         
         var r_wid = Config.getInstance().wid
         var r_hei = Config.getInstance().hei
@@ -1674,7 +1705,7 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
     // 라이브러리에서 가져온 동영상을 5초와 사이즈 조건에 맞게 편집
     func videoCompositionInstructionForTrack(track: AVCompositionTrack, asset: AVAsset) -> AVMutableVideoCompositionLayerInstruction {
         
-//        print("videoCompositionInstructionForTrack====================")
+        //        print("videoCompositionInstructionForTrack====================")
         
         let instruction = AVMutableVideoCompositionLayerInstruction(assetTrack: track)
         let assetTrack = asset.tracksWithMediaType(AVMediaTypeVideo)[0]
@@ -1684,7 +1715,7 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         
         var scaleToFitRatio = UIScreen.mainScreen().bounds.width / assetTrack.naturalSize.width
         
-//        print(scaleToFitRatio);
+        //        print(scaleToFitRatio);
         
         
         if assetInfo.isPortrait {
@@ -1692,20 +1723,20 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
             
             //scaleToFitRatio = scaleToFitRatio/2
             
-//            print((Config.getInstance().hei-UIScreen.mainScreen().bounds.height)/2)
+            //            print((Config.getInstance().hei-UIScreen.mainScreen().bounds.height)/2)
             
             let scaleFactor = CGAffineTransformMakeScale(scaleToFitRatio, scaleToFitRatio)
-//            print("scaleToFitRatio",scaleToFitRatio)
-//            print("scaleFactor ",scaleFactor)
+            //            print("scaleToFitRatio",scaleToFitRatio)
+            //            print("scaleFactor ",scaleFactor)
             
             let concat = CGAffineTransformConcat(CGAffineTransformConcat(assetTrack.preferredTransform, scaleFactor), CGAffineTransformMakeTranslation(0, (Config.getInstance().hei-UIScreen.mainScreen().bounds.height)/2))
             instruction.setTransform(concat, atTime: kCMTimeZero)
             
-//            print("=======================")
+            //            print("=======================")
         } else {
             let scaleFactor = CGAffineTransformMakeScale(scaleToFitRatio, scaleToFitRatio)
             
-//            print("scaleFactor ",scaleFactor)
+            //            print("scaleFactor ",scaleFactor)
             
             var concat = CGAffineTransformConcat(CGAffineTransformConcat(assetTrack.preferredTransform, scaleFactor), CGAffineTransformMakeTranslation(0, UIScreen.mainScreen().bounds.width / 2))
             if assetInfo.orientation == .Down {
@@ -1722,14 +1753,14 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
     }
     
     // 메인 인디케이터 호출해주는 메소드
-//    func controlLoading(val: Bool) {
-//        if val {
-//            _hud!.show(true)
-//        }
-//        else {
-//            _hud!.hide(true)
-//        }
-//    }
+    //    func controlLoading(val: Bool) {
+    //        if val {
+    //            _hud!.show(true)
+    //        }
+    //        else {
+    //            _hud!.hide(true)
+    //        }
+    //    }
     
     
     
@@ -1853,8 +1884,8 @@ extension UIImage {
             }
             else {
                 viewSize = CGSizeMake(size.width, size.width)
-//                print("UIImage======================")
-//                print(size.width)
+                //                print("UIImage======================")
+                //                print(size.width)
             }
         }
         else {

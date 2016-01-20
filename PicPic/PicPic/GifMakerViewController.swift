@@ -31,7 +31,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     var imagePicker: UIImagePickerController?
-//    var ghostLayer:UIImageView?
+    //    var ghostLayer:UIImageView?
     var _hud: MBProgressHUD?
     var alert : UIAlertView!
     var progressView : UIProgressView!
@@ -167,6 +167,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     var progressContainerView : UIView!
     var arr_recoding_time:[Double] = [Double]()
     var in_type : Int = 0 // 0이면 카메라 1이면 저장리스트
+    var addImage : Bool = false
     
     override func viewDidDisappear(animated: Bool) {
         self.view = nil
@@ -608,7 +609,11 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                     log.log("imagePathArr.count \(pathArr.count)")
                 }
             }
-            ori_mov = movNames
+            
+            if !addImage {
+                ori_mov = movNames
+            }
+            
             make_gif()
             var mask = UIImage(named:"mask.jpg") // 기본 마스크 이미지,
             
@@ -701,20 +706,20 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         
         
         
-            var json:JSON = ["version":true,"name":filename!,"filter":self.filterCurrent,"files":files,"delay":slider_value,"direction":direction,"subtitle":"","watermark":self.waterToggle,"allText":""]
-            
-            var arr = textArr
-            var json_arr:JSON = [[""],[""],[""],[""],[""]]
-            if(arr.count == 4) {
-                json_arr = [[""],[""],[""],[""]]
-            } else if(arr.count == 3) {
-                json_arr = [[""],[""],[""]]
-            }else if(arr.count == 2) {
-                json_arr = [[""],[""]]
-            } else if(arr.count == 1) {
-                json_arr = [[""]]
-            }
-            json["subtitle"] = json_arr
+        var json:JSON = ["version":true,"name":filename!,"filter":self.filterCurrent,"files":files,"delay":slider_value,"direction":direction,"subtitle":"","watermark":self.waterToggle,"allText":""]
+        
+        var arr = textArr
+        var json_arr:JSON = [[""],[""],[""],[""],[""]]
+        if(arr.count == 4) {
+            json_arr = [[""],[""],[""],[""]]
+        } else if(arr.count == 3) {
+            json_arr = [[""],[""],[""]]
+        }else if(arr.count == 2) {
+            json_arr = [[""],[""]]
+        } else if(arr.count == 1) {
+            json_arr = [[""]]
+        }
+        json["subtitle"] = json_arr
         for var i=0; i<arr.count; i++ {
             for var j=0;j<arr[i].count;j++ {
                 let v = arr[i][j]
@@ -744,34 +749,34 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         }
         json["allText"] = alljson_arr
         for var i=0; i<allarr.count; i++ {
-                let v = allarr[i]
-                json["allText"][i] = JSON(["text":v.text,"color":v.color,"font":v.fontName,"frame":"","bounds":"","transform":""])
+            let v = allarr[i]
+            json["allText"][i] = JSON(["text":v.text,"color":v.color,"font":v.fontName,"frame":"","bounds":"","transform":""])
             
-                json["allText"][i]["frame"] = JSON(["x":v.frame.origin.x,"y":v.frame.origin.y,"width":v.frame.size.width,"height":v.frame.size.height])
+            json["allText"][i]["frame"] = JSON(["x":v.frame.origin.x,"y":v.frame.origin.y,"width":v.frame.size.width,"height":v.frame.size.height])
             
-                json["allText"][i]["bounds"] = JSON(["x":v.bounds.origin.x,"y":v.bounds.origin.y,"width":v.bounds.size.width,"height":v.bounds.size.height])
+            json["allText"][i]["bounds"] = JSON(["x":v.bounds.origin.x,"y":v.bounds.origin.y,"width":v.bounds.size.width,"height":v.bounds.size.height])
             
-                json["allText"][i]["transform"] = JSON(["a":v.transform.a,"b":v.transform.b,"c":v.transform.c,"d":view.transform.d,"tx":v.transform.tx,"ty":v.transform.ty])
+            json["allText"][i]["transform"] = JSON(["a":v.transform.a,"b":v.transform.b,"c":v.transform.c,"d":view.transform.d,"tx":v.transform.tx,"ty":v.transform.ty])
         }
         
-            
-            
-            print("save to file s",json)
-            do {
         
-                let data = try json.rawData()
-                //Do something you want
-                if(fileManager.fileExistsAtPath(json_path)) {
-                    try fileManager.removeItemAtPath(json_path)
-                }
-                fileManager.createFileAtPath(json_path, contents: data, attributes: nil)
-            } catch let error as NSError {
-            }
-            savePaths.removeAll()
+        
+        print("save to file s",json)
+        do {
             
-            alert = UIAlertView(title: "", message: self.appdelegate.ment["camera_tempsave"].stringValue, delegate: self, cancelButtonTitle: nil)
-            alert.show()
-            NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("clearAlert:"), userInfo: nil, repeats: false)
+            let data = try json.rawData()
+            //Do something you want
+            if(fileManager.fileExistsAtPath(json_path)) {
+                try fileManager.removeItemAtPath(json_path)
+            }
+            fileManager.createFileAtPath(json_path, contents: data, attributes: nil)
+        } catch let error as NSError {
+        }
+        savePaths.removeAll()
+        
+        alert = UIAlertView(title: "", message: self.appdelegate.ment["camera_tempsave"].stringValue, delegate: self, cancelButtonTitle: nil)
+        alert.show()
+        NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("clearAlert:"), userInfo: nil, repeats: false)
         
     }
     
@@ -807,16 +812,16 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     
     
     @IBAction func actEraser(sender: AnyObject) {
-//        self.canvas.hidden = true
+        //        self.canvas.hidden = true
         eraserD = false
         if self.view.frame.size.width == 320.0 {
-                textEditViewHei.constant = 70
-                addTextHei.constant = 70
-                changeFontHei.constant = 70
-                
-                conformViewHei.constant = 50
-                completeHei.constant = 50
-                cancleHei.constant = 50
+            textEditViewHei.constant = 70
+            addTextHei.constant = 70
+            changeFontHei.constant = 70
+            
+            conformViewHei.constant = 50
+            completeHei.constant = 50
+            cancleHei.constant = 50
         }
         
         self.btnNext.enabled = false
@@ -856,7 +861,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     }
     
     @IBAction func actBasic(sender: AnyObject) {
-//        //print("재생 속도만 보이게 함")
+        //        //print("재생 속도만 보이게 함")
         self.collectionView.hidden = true
         self.editplus.hidden = true
         self.playSpeed.hidden = false
@@ -1109,10 +1114,10 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     }
     
     @IBAction func actUndo(sender: AnyObject) {
-//        if(historyImg.count > 0) {
-//            frontImage.image = historyImg[historyImg.count-1]
-//            historyImg.removeAtIndex(historyImg.count-1)
-//        }
+        //        if(historyImg.count > 0) {
+        //            frontImage.image = historyImg[historyImg.count-1]
+        //            historyImg.removeAtIndex(historyImg.count-1)
+        //        }
         if(historyImg.count > 0) {
             print("undo ")
             print(historyImg.count)
@@ -1136,7 +1141,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         if name == "None" {
             return nil
         }
-//        //print("getFilterByName is ",name)
+        //        //print("getFilterByName is ",name)
         let filter = CIFilter(name: name)
         if(name == "CIVignette") {
             filter!.setValue(2, forKey: kCIInputIntensityKey)
@@ -1152,11 +1157,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         if(playType == 0) { // 역방향 재생
             self.btnPlayType.setImage(UIImage(named: "icon_control_reverseplay_c"), forState: .Normal)
             playType = 1
-//            images = images.reverse()
             imagePaths = imagePaths.reverse();
-//            make_gif()
-            //setPlayArr()
-//            replay()
             for view in self.canvas.subviews {
                 view.removeFromSuperview()
             }
@@ -1171,11 +1172,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         } else {
             self.btnPlayType.setImage(UIImage(named: "icon_control_reverseplay"), forState: .Normal)
             playType = 0 // 순방향 재생
-//            images = images.reverse()
             imagePaths = imagePaths.reverse();
-//            make_gif()
-            //setPlayArr()
-//            replay()
             frameIndex = 0
             currentIndex1 = 0
             for view in self.canvas.subviews {
@@ -1188,7 +1185,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         }
     }
     @IBAction func actEditor(sender: UIButton) {
-//        //print("에디터 오픈")
+        //        //print("에디터 오픈")
         self.collectionView.hidden = false
         self.editplus.hidden = false
         self.playSpeed.hidden = true
@@ -1202,7 +1199,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         
         var mArr:[UIImage] = []
         for movName in movNames {
-//            //print(movName)
+            //            //print(movName)
             let movPath = String(format:"%@/000.jpg", arguments:[movName])
             if let img = UIImage(contentsOfFile: movPath){
                 mArr.append(img)
@@ -1348,66 +1345,66 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     
     var filterState = false
     @IBAction func actFilter(sender: UIButton) {
-            collectionType = 0
-            selectedCellIndex = -1
-            collections = []
-            
-            
-            self.collectionView.hidden = false
-            self.editplus.hidden = true
-            self.playSpeed.hidden = true
-            self.basicButtonView.hidden = false
-            filterState = true
-            
-            self.btnFilters.setImage(UIImage(named: "icon_control_filter_c"), forState: .Normal)
-            self.btnBasic.setImage(UIImage(named: "icon_control_control"), forState: .Normal)
-            
-            
-            for filterName in filterButtonName {
-                var image = playImageArr[0][0]
-                if filterName == "None"  {
-                }else {
-                    applyFilter(&image, filterName: filterName)
-                }
-                collections.append(image)
+        collectionType = 0
+        selectedCellIndex = -1
+        collections = []
+        
+        
+        self.collectionView.hidden = false
+        self.editplus.hidden = true
+        self.playSpeed.hidden = true
+        self.basicButtonView.hidden = false
+        filterState = true
+        
+        self.btnFilters.setImage(UIImage(named: "icon_control_filter_c"), forState: .Normal)
+        self.btnBasic.setImage(UIImage(named: "icon_control_control"), forState: .Normal)
+        
+        
+        for filterName in filterButtonName {
+            var image = playImageArr[0][0]
+            if filterName == "None"  {
+            }else {
+                applyFilter(&image, filterName: filterName)
+            }
+            collections.append(image)
         }
         self.collectionView.reloadData()
         frameIndex = 0
         currentIndex1 = 0
     }
     
-//    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-//        if buttonIndex == alertView.cancelButtonIndex {
-//            collectionType = 0
-//            selectedCellIndex = -1
-//            collections = []
-//            frontImage.image = nil
-//            tempFront = nil
-//            
-//            self.collectionView.hidden = false
-//            self.editplus.hidden = true
-//            self.playSpeed.hidden = true
-//            self.basicButtonView.hidden = false
-//            filterState = true
-//            
-//            self.btnFilters.setImage(UIImage(named: "icon_control_filter_c"), forState: .Normal)
-//            self.btnBasic.setImage(UIImage(named: "icon_control_control"), forState: .Normal)
-//            
-//            
-//            for filterName in filterButtonName {
-//                var image = playImageArr[0][0]
-//                if filterName == "None"  {
-//                }else {
-//                    applyFilter(&image, filterName: filterName)
-//                }
-//                collections.append(image)
-//        }
-//    }
-//        
-//        self.collectionView.reloadData()
-//        frameIndex = 0
-//        currentIndex1 = 0
-//    }
+    //    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+    //        if buttonIndex == alertView.cancelButtonIndex {
+    //            collectionType = 0
+    //            selectedCellIndex = -1
+    //            collections = []
+    //            frontImage.image = nil
+    //            tempFront = nil
+    //
+    //            self.collectionView.hidden = false
+    //            self.editplus.hidden = true
+    //            self.playSpeed.hidden = true
+    //            self.basicButtonView.hidden = false
+    //            filterState = true
+    //
+    //            self.btnFilters.setImage(UIImage(named: "icon_control_filter_c"), forState: .Normal)
+    //            self.btnBasic.setImage(UIImage(named: "icon_control_control"), forState: .Normal)
+    //
+    //
+    //            for filterName in filterButtonName {
+    //                var image = playImageArr[0][0]
+    //                if filterName == "None"  {
+    //                }else {
+    //                    applyFilter(&image, filterName: filterName)
+    //                }
+    //                collections.append(image)
+    //        }
+    //    }
+    //
+    //        self.collectionView.reloadData()
+    //        frameIndex = 0
+    //        currentIndex1 = 0
+    //    }
     
     
     //프레임 복사
@@ -1422,115 +1419,116 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         var patharr = [String]()
         //total time이 5초 미만일때만 가능
         
-            let fileManager = NSFileManager.defaultManager()
-            do {
-                let enumerator:NSDirectoryEnumerator = fileManager.enumeratorAtPath(workFolder!)!
-                var aaa = 0
-                while let element = enumerator.nextObject() as? String {
-                    if element.hasSuffix("mov") {
-                        let imgPath = element.stringByReplacingOccurrencesOfString(".mov", withString: "")
-                        let _imgPath = Int(imgPath)
-                        if _imgPath > aaa {
-                            aaa = _imgPath!
-                        }
+        let fileManager = NSFileManager.defaultManager()
+        do {
+            let enumerator:NSDirectoryEnumerator = fileManager.enumeratorAtPath(workFolder!)!
+            var aaa = 0
+            while let element = enumerator.nextObject() as? String {
+                if element.hasSuffix("mov") {
+                    let imgPath = element.stringByReplacingOccurrencesOfString(".mov", withString: "")
+                    let _imgPath = Int(imgPath)
+                    if _imgPath > aaa {
+                        aaa = _imgPath!
                     }
                 }
-                aaa += 1
-                let fileManager = NSFileManager.defaultManager()
-                var imageName = 0
-                
-                if selectedCellIndex == 0 {
-                    //전체프레임
-                    total_time = total_time * 2
-                    if total_time <= 5.0 {
-                        let count = imagePathArr.count
-                        for var i = 0 ; i<count; i++ {
-                            imgarr = [UIImage]()
-                            patharr = [String]()
-                            self.log.log("\(imagePathArr.count)     \(i)       \(count)")
-                            var fileName = String(format: "%@/%02d",arguments:[workFolder!,aaa])
-                            if(!fileManager.fileExistsAtPath(fileName)) {
-                                try fileManager.copyItemAtPath(movNames[i]+".mov", toPath: fileName+".mov")
-                                movNames.append(fileName)
-                                arr_recoding_time.append(arr_recoding_time[i])
-                                fileName = String(format: "%@/%02d",arguments:[workFolder!,aaa])
-                                log.log("fileName  \(fileName)")
-                                try fileManager.createDirectoryAtPath(fileName, withIntermediateDirectories: false, attributes: nil)
-                            }
-                            imageName = 0
-                            if textArr[i].count > 0 {
-                                textArr.append(textArr[i])
-                            }
-                            
-                            
-                            for var j=0; j<imagePathArr[i].count; j++ {
-                                self.log.log("imagePath    \(imagePathArr[i][j])")
-                                fileName = String(format: "%@/%02d",arguments:[workFolder!,aaa])
-                                fileName = String(format: "%@/%03d.jpg", arguments: [fileName,imageName])
-                                try fileManager.copyItemAtPath(imagePathArr[i][j], toPath: fileName)
-                                imgarr.append(UIImage(contentsOfFile: fileName)!)
-                                patharr.append(fileName)
-                                imageName++
-                            }
-                            collections.append(UIImage(contentsOfFile: imagePathArr[i][0])!)
-                            imageArr.append(imgarr)
-                            imagePathArr.append(patharr)
-                            aaa++
-                        }
-                        make_gif()
-                        collectionView.reloadData()
-                    }else {
-                        //5초 이상일시 alert 띄우기
-                        self.log.log("5초 이상")
-                        alert = UIAlertView(title: "", message: self.appdelegate.ment["add_not_images"].stringValue, delegate: self, cancelButtonTitle: nil)
-                        alert.show()
-                        NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("clearAlert:"), userInfo: nil, repeats: false)
-                    }
-                    log.log("\(movNames)")
-                }else {
-                    //각 프레임별로 선택했을시
-                    total_time = total_time + arr_recoding_time[selectedCellIndex-1]
-                    if total_time <= 5.0 {
+            }
+            aaa += 1
+            let fileManager = NSFileManager.defaultManager()
+            var imageName = 0
+            
+            if selectedCellIndex == 0 {
+                //전체프레임
+                total_time = total_time * 2
+                if total_time <= 5.0 {
+                    let count = imagePathArr.count
+                    for var i = 0 ; i<count; i++ {
+                        imgarr = [UIImage]()
+                        patharr = [String]()
+                        self.log.log("\(imagePathArr.count)     \(i)       \(count)")
                         var fileName = String(format: "%@/%02d",arguments:[workFolder!,aaa])
-                        log.log("fileName      \(fileName)")
                         if(!fileManager.fileExistsAtPath(fileName)) {
-                            try fileManager.copyItemAtPath(movNames[selectedCellIndex-1]+".mov", toPath: fileName+".mov")
+                            try fileManager.copyItemAtPath(movNames[i]+".mov", toPath: fileName+".mov")
                             movNames.append(fileName)
-                            arr_recoding_time.append(arr_recoding_time[selectedCellIndex-1])
+                            arr_recoding_time.append(arr_recoding_time[i])
                             fileName = String(format: "%@/%02d",arguments:[workFolder!,aaa])
                             log.log("fileName  \(fileName)")
                             try fileManager.createDirectoryAtPath(fileName, withIntermediateDirectories: false, attributes: nil)
                         }
-                        for var j=0; j<imagePathArr[selectedCellIndex-1].count; j++ {
-//                            self.log.log("image path count  \(imagePathArr[selectedCellIndex-1].count)")
-//                            self.log.log("frame image Path      \(imagePathArr[selectedCellIndex-1][j])")
+                        imageName = 0
+                        if textArr[i].count > 0 {
+                            textArr.append(textArr[i])
+                        }
+                        
+                        
+                        for var j=0; j<imagePathArr[i].count; j++ {
+                            self.log.log("imagePath    \(imagePathArr[i][j])")
                             fileName = String(format: "%@/%02d",arguments:[workFolder!,aaa])
-                            self.log.log("fileName \(fileName)")
                             fileName = String(format: "%@/%03d.jpg", arguments: [fileName,imageName])
-                            try fileManager.copyItemAtPath(imagePathArr[selectedCellIndex-1][j], toPath: fileName)
+                            try fileManager.copyItemAtPath(imagePathArr[i][j], toPath: fileName)
                             imgarr.append(UIImage(contentsOfFile: fileName)!)
                             patharr.append(fileName)
                             imageName++
                         }
-                        if textArr[selectedCellIndex-1].count > 0 {
-                            textArr.append(textArr[selectedCellIndex-1])
-                        }
+                        collections.append(UIImage(contentsOfFile: imagePathArr[i][0])!)
                         imageArr.append(imgarr)
                         imagePathArr.append(patharr)
-                        collections.append(UIImage(contentsOfFile: imagePathArr[selectedCellIndex-1][0])!)
-                        make_gif()
-                        collectionView.reloadData()
-                    }else {
-                        //5초 이상일시 alert 띄우기
-                        self.log.log("5초 이상")
-                        alert = UIAlertView(title: "", message: self.appdelegate.ment["add_not_images"].stringValue, delegate: self, cancelButtonTitle: nil)
-                        alert.show()
-                        NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("clearAlert:"), userInfo: nil, repeats: false)
+                        aaa++
                     }
+                    make_gif()
+                    collectionView.reloadData()
+                }else {
+                    //5초 이상일시 alert 띄우기
+                    self.log.log("5초 이상")
+                    alert = UIAlertView(title: "", message: self.appdelegate.ment["add_not_images"].stringValue, delegate: self, cancelButtonTitle: nil)
+                    alert.show()
+                    NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("clearAlert:"), userInfo: nil, repeats: false)
                 }
-            }catch {
-                log.log("Error      \(error)")
+                log.log("\(movNames)")
+            }else {
+                //각 프레임별로 선택했을시
+                total_time = total_time + arr_recoding_time[selectedCellIndex-1]
+                if total_time <= 5.0 {
+                    var fileName = String(format: "%@/%02d",arguments:[workFolder!,aaa])
+                    log.log("fileName      \(fileName)")
+                    if(!fileManager.fileExistsAtPath(fileName)) {
+                        try fileManager.copyItemAtPath(movNames[selectedCellIndex-1]+".mov", toPath: fileName+".mov")
+                        movNames.append(fileName)
+                        arr_recoding_time.append(arr_recoding_time[selectedCellIndex-1])
+                        fileName = String(format: "%@/%02d",arguments:[workFolder!,aaa])
+                        log.log("fileName  \(fileName)")
+                        try fileManager.createDirectoryAtPath(fileName, withIntermediateDirectories: false, attributes: nil)
+                    }
+                    for var j=0; j<imagePathArr[selectedCellIndex-1].count; j++ {
+                        //                            self.log.log("image path count  \(imagePathArr[selectedCellIndex-1].count)")
+                        //                            self.log.log("frame image Path      \(imagePathArr[selectedCellIndex-1][j])")
+                        fileName = String(format: "%@/%02d",arguments:[workFolder!,aaa])
+                        self.log.log("fileName \(fileName)")
+                        fileName = String(format: "%@/%03d.jpg", arguments: [fileName,imageName])
+                        try fileManager.copyItemAtPath(imagePathArr[selectedCellIndex-1][j], toPath: fileName)
+                        imgarr.append(UIImage(contentsOfFile: fileName)!)
+                        patharr.append(fileName)
+                        imageName++
+                    }
+                    if textArr[selectedCellIndex-1].count > 0 {
+                        textArr.append(textArr[selectedCellIndex-1])
+                    }
+                    imageArr.append(imgarr)
+                    imagePathArr.append(patharr)
+                    collections.append(UIImage(contentsOfFile: imagePathArr[selectedCellIndex-1][0])!)
+                    make_gif()
+                    collectionView.reloadData()
+                    addImage = true
+                }else {
+                    //5초 이상일시 alert 띄우기
+                    self.log.log("5초 이상")
+                    alert = UIAlertView(title: "", message: self.appdelegate.ment["add_not_images"].stringValue, delegate: self, cancelButtonTitle: nil)
+                    alert.show()
+                    NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("clearAlert:"), userInfo: nil, repeats: false)
+                }
             }
+        }catch {
+            log.log("Error      \(error)")
+        }
         
         
     }
@@ -1603,6 +1601,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         let fileManager = NSFileManager.defaultManager()
         
         if in_type == 0 {
+            //카메라로 촬영 후에 들어왔을 때
             let db = String(format: "%@/db.json", arguments: [workFolder!])
             if fileManager.fileExistsAtPath(db) {
                 self.navigationController?.navigationBarHidden = false
@@ -1623,21 +1622,27 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                 frontImage.image = nil
                 self.navigationController?.popToRootViewControllerAnimated(true)
             }else {
+                //카메라로 촬영 후에 들어왔을 때
                 let count = movNames.count - ori_mov.count
-                for var i = count; i<movNames.count; i++ {
-                    do {
-                        
-                        try fileManager.removeItemAtPath(movNames[i])
-                        log.log("folder Name \(movNames[i])")
-                        let path = String(format: "%@.mov", arguments: [movNames[i]])
-                        log.log("mov Name \(path)")
-                        try fileManager.removeItemAtPath(path)
-                    }catch {}
+                log.log("movNames.count \(movNames.count)   ori_mov.count   \(ori_mov.count)")
+                log.log("cunt         \(count)")
+                if count > 0 {
+                    //프레임을 복사했다가 다시 뒤로 돌아 갈때
+                    for var i = ori_mov.count; i<movNames.count; i++ {
+                        do {
+                            try fileManager.removeItemAtPath(movNames[i])
+                            log.log("folder Name \(movNames[i])")
+                            let path = String(format: "%@.mov", arguments: [movNames[i]])
+                            log.log("mov Name \(path)")
+                            try fileManager.removeItemAtPath(path)
+                        }catch {}
+                    }
                 }
                 self.appdelegate.camera.workFolder = self.workFolder
                 self.navigationController?.popViewControllerAnimated(true)
             }
         }else {
+            //편집 불러오기로 들어왔을 때
             self.navigationController?.navigationBarHidden = false
             if self.appdelegate.main.view.hidden == false {
                 //self.appdelegate.main.fire()
@@ -1666,7 +1671,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         }
         
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.SavedPhotosAlbum){
-//            //print("Galeria Imagen")
+            //            //print("Galeria Imagen")
             previewTimer?.invalidate()
             previewTimer = nil
             imagePicker!.delegate = self
@@ -1699,7 +1704,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             previewTimer = nil
             
             self.collections.removeAtIndex(selectedCellIndex)
-//            self.imagePaths.removeAtIndex(selectedCellIndex)
+            //            self.imagePaths.removeAtIndex(selectedCellIndex)
             self.playImageArr.removeAtIndex(selectedCellIndex-1)
             self.imageArr.removeAtIndex(selectedCellIndex-1)
             self.imagePathArr.removeAtIndex(selectedCellIndex-1)
@@ -1722,7 +1727,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                 log.log("movPath \(movPath)")
                 try fileManager.removeItemAtPath(movPath) // mov 파일 삭제
             } catch {
-                    
+                
             }
             selectedCellIndex = 0
             setPlayArr()
@@ -1738,7 +1743,6 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         if(imageLoading) {
             
         } else {
-//            //print("slider change")
             make_gif()
             imageLoading = false
         }
@@ -1746,43 +1750,6 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     
     @IBAction func actEditorCancle(sender: AnyObject) {
         selectedCellIndex = -1
-//        if filterState {
-//            collectionType = 0
-//            collections = []
-//            
-//
-//            self.collectionView.hidden = false
-//            self.editplus.hidden = true
-//            self.playSpeed.hidden = true
-//            self.basicButtonView.hidden = false
-//            self.colorView.hidden = true
-//            self.textEditView.hidden = true
-//            self.conformView.hidden = true
-//            self.eraserView.hidden = true
-//            
-//            for filterName in filterButtonName {
-//                var image = playImageArr[0][0]
-//                if filterName == "None"  {
-//                }else {
-//                    applyFilter(&image, filterName: filterName)
-//                }
-//                collections.append(image)
-//                //            if let path = NSBundle.mainBundle().pathForResource(_filterName, ofType: "jpg") {
-//                //                collections.append(UIImage(contentsOfFile: path)!)
-//                //            }
-//            }
-//            self.collectionView.reloadData()
-//            
-//        }else {
-//            self.collectionView.hidden = true
-//            self.editplus.hidden = true
-//            self.playSpeed.hidden = false
-//            self.basicButtonView.hidden = false
-//            self.colorView.hidden = true
-//            self.textEditView.hidden = true
-//            self.conformView.hidden = true
-//            self.eraserView.hidden = true
-//        }
         for view in self.canvas.subviews {
             view.removeFromSuperview()
         }
@@ -1930,7 +1897,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                     if(fileManager.fileExistsAtPath(scratchPath!)) {
                         try fileManager.removeItemAtPath(scratchPath!)
                     }
-//                    UIImagePNGRepresentation(frontImage.image!)?.writeToFile(scratchPath!, atomically: true)
+                    //                    UIImagePNGRepresentation(frontImage.image!)?.writeToFile(scratchPath!, atomically: true)
                     UIImageJPEGRepresentation(maskImage.image!, 100)!.writeToFile(scratchPath!, atomically: true)
                 } catch let error as NSError {
                     //                //print(error.localizedDescription);
@@ -1945,13 +1912,13 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     }
     
     @IBAction func actFont(sender: AnyObject) {
-//        //print("actFont")
+        //        //print("actFont")
         let font = FontViewController()
         font.view.frame = CGRectMake(0, self.view.bounds.size.height, self.view.bounds.size.width, 200)
         font.gif = self
         font.font = font
-//        font.modalPresentationStyle = UIModalPresentationStyle.FormSheet
-//        self.presentViewController(font, animated: true, completion: nil)
+        //        font.modalPresentationStyle = UIModalPresentationStyle.FormSheet
+        //        self.presentViewController(font, animated: true, completion: nil)
         self.view.addSubview(font.view)
         UIView.animateWithDuration(0.5, delay: 0.1, options: .CurveEaseOut, animations: { () -> Void in
             var frame = font.view.frame
@@ -1959,7 +1926,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             frame.origin.y = self.view.bounds.size.height-200
             font.view.frame = frame
             }) { (finished) -> Void in
-//                //print("complete")
+                //                //print("complete")
         }
         
     }
@@ -1976,38 +1943,17 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     
     var playArr:[UIImage] = []
     
-
-    func replay() {
-        let delay = self.sliderDelay.value
-        let duration = delay * Float(images.count)
-        self.image.contentMode = UIViewContentMode.ScaleAspectFill // 20151120 추가
-        
-        self.image.image = nil
-//        self.image.image = UIImage.animatedImageWithImages(images, duration: NSTimeInterval(duration))
-        interval = Double(self.sliderDelay.value)
-        previewTimer?.invalidate()
-        previewTimer = nil
-        previewTimer = NSTimer.scheduledTimerWithTimeInterval(interval, target: self, selector: Selector("nextImage"), userInfo: nil, repeats: true)
-    }
-    
-    
     func make_gif() {
-        let delay = self.sliderDelay.value
-        let duration = delay * Float(images.count)
         setPlayArr()
     }
     
     
-    var animation = CAKeyframeAnimation(keyPath: "contents")
     var currentIndex = 0
     
     //image path 배열
     var frameimagepathArr = [[String]]()
     
     func setPlayArr() {
-//        let frameSpeed = 6
-//        var offset = 2
-        
         imagePaths = []
         
         playImageArr = [[UIImage]]()
@@ -2053,7 +1999,6 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                 }
                 step++
             }
-            log.log("nImgArr          \(nImgArr)")
             if nImgArr.count > 0 {
                 playImageArr.append(nImgArr)
                 frameimagepathArr.append(nImgPathArr)
@@ -2081,19 +2026,13 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                 playImageArr.append([])
                 for var j=0; j<frameimagepathArr[i].count; j++ {
                     var image:UIImage? = UIImage(contentsOfFile: frameimagepathArr[i][j])
-                        applyFilter(&image!, filterName: self.filterCurrent)
+                    applyFilter(&image!, filterName: self.filterCurrent)
                     playImageArr[i].append(image!)
                     image = nil
                 }
                 
             }
         }
-        
-        
-        
-        log.log("playImageArr \(playImageArr.count)")
-        log.log("cellArr \(cellArr.count)")
-        
         
         if( playType == 1) {
             imagePaths = imagePaths.reverse()
@@ -2109,14 +2048,11 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         previewTimer?.invalidate()
         previewTimer = nil
         previewTimer = NSTimer.scheduledTimerWithTimeInterval(interval, target: self, selector: Selector("nextImage"), userInfo: nil, repeats: true)
-        log.log("image frame   \(image.frame)")
-        log.log("image width :  \(self.image.frame.size.width)   image height : \(self.image.frame.size.height)")
-        if self.image.image?.size.width > self.image.image?.size.height {
+        if playImageArr[0][0].size.width > playImageArr[0][0].size.height {
             let nWidth = UIScreen.mainScreen().bounds.width;
             let nHeight = nWidth * (imgSize.height) / (imgSize.width)
-            let posY = (Config.getInstance().wid/8)*3
+            let posY = Config.getInstance().wid/8*2-10
             self.gifView.frame = CGRectMake(0, posY, nWidth, nHeight)
-            log.log("\(self.gifView.frame)")
             self.imageHei.constant = nHeight
             self.imagePosY.constant = posY
         }else if playImageArr[0][0].size.width == playImageArr[0][0].size.height {
@@ -2137,7 +2073,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             }else if textArr.count < playImageArr.count {
                 textArr.append([])
             }
-                cellArr.append(0)
+            cellArr.append(0)
         }
         cellArr.append(0)
     }
@@ -2163,14 +2099,12 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                 view.removeFromSuperview()
             }
             if allText.count > 0 {
-//                log.log("alltext > 0 ")
                 for view in self.allText {
                     self.canvas.addSubview(view)
                 }
             }
             if textArr.count > 0 {
                 //텍스트가 있을 때
-//                log.log("selectCellIndex   \(allText.count)")
                 if textArr[selectedCellIndex-1].count > 0 {
                     for var i=0; i<textArr[selectedCellIndex-1].count; i++ {
                         self.canvas.addSubview(textArr[selectedCellIndex-1][i])
@@ -2188,71 +2122,64 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                 }
             }
         }else {  //selectedCellIndex == -1 전체 재생
-                if playType == 0 {
-                    //순재생
-                    if textArr.count > 0 {
-                        if textArr[frameIndex].count > 0 {
-                            for view in self.canvas.subviews {
-                                view.removeFromSuperview()
-                            }
-                            for var i=0; i<textArr[frameIndex].count; i++ {
-                                
-                                self.canvas.addSubview(textArr[frameIndex][i])
-                            }
-                        }else{
-                            for view in self.canvas.subviews {
-                                view.removeFromSuperview()
-                            }
+            if playType == 0 {
+                //순재생
+                if textArr.count > 0 {
+                    if textArr[frameIndex].count > 0 {
+                        for view in self.canvas.subviews {
+                            view.removeFromSuperview()
                         }
-                    }
-                    //canvas subview change
-//                    log.log("textArr \(textArr.count)")
-                    if textArr.count > 0 {
-                        if textArr[frameIndex].count > 0 {
-                            for view in self.canvas.subviews {
-                                view.removeFromSuperview()
-                            }
-//                            log.log("textArr[currentImage].count \(textArr[frameIndex].count)  frameIndex \(frameIndex)")
-                            for var i=0; i<textArr[frameIndex].count; i++ {
-                                self.canvas.addSubview(textArr[frameIndex][i])
-                            }
+                        for var i=0; i<textArr[frameIndex].count; i++ {
+                            
+                            self.canvas.addSubview(textArr[frameIndex][i])
                         }
-                    }
-                    if allText.count > 0 {
-                        for alltext in allText {
-                            self.canvas.addSubview(alltext)
-                        }
-                    }
-                    
-                }else {
-                    //역재생
-                    print("역재생   ",frameIndex)
-                    let count = textArr.count - (frameIndex+1)
-                    print("count      ",count)
-                    if textArr.count > 0 {
-                        print("textArr.count  ",textArr.count)
-                        if textArr[count].count > 0 {
-                            for view in self.canvas.subviews {
-                                view.removeFromSuperview()
-                            }
-                            print("textArr[\(count)].count  ",textArr[count].count)
-                            for var i=0; i<textArr[count].count; i++ {
-                                self.canvas.addSubview(textArr[count][i])
-                            }
-                        }else{
-                            print("nonoononononononononononononononono")
-                            for view in self.canvas.subviews {
-                                view.removeFromSuperview()
-                            }
-                        }
-                    }
-                    if allText.count > 0 {
-                        for alltext in allText {
-                            self.canvas.addSubview(alltext)
+                    }else{
+                        for view in self.canvas.subviews {
+                            view.removeFromSuperview()
                         }
                     }
                 }
+                if textArr.count > 0 {
+                    if textArr[frameIndex].count > 0 {
+                        for view in self.canvas.subviews {
+                            view.removeFromSuperview()
+                        }
+                        for var i=0; i<textArr[frameIndex].count; i++ {
+                            self.canvas.addSubview(textArr[frameIndex][i])
+                        }
+                    }
+                }
+                if allText.count > 0 {
+                    for alltext in allText {
+                        self.canvas.addSubview(alltext)
+                    }
+                }
+                
+            }else {
+                //역재생
+                print("역재생   ",frameIndex)
+                let count = textArr.count - (frameIndex+1)
+                if textArr.count > 0 {
+                    if textArr[count].count > 0 {
+                        for view in self.canvas.subviews {
+                            view.removeFromSuperview()
+                        }
+                        for var i=0; i<textArr[count].count; i++ {
+                            self.canvas.addSubview(textArr[count][i])
+                        }
+                    }else{
+                        for view in self.canvas.subviews {
+                            view.removeFromSuperview()
+                        }
+                    }
+                }
+                if allText.count > 0 {
+                    for alltext in allText {
+                        self.canvas.addSubview(alltext)
+                    }
+                }
             }
+        }
         if selectedCellIndex <= 0 {
             if playType == 0 {
                 if playImageArr[frameIndex].count > 0 {
@@ -2283,7 +2210,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             }
             
         }
-            currentIndex1++
+        currentIndex1++
         if selectedCellIndex <= 0 {
             if playType == 0 {
                 if(currentIndex1 >= playImageArr[frameIndex].count) {
@@ -2312,34 +2239,6 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         
     }
     
-    func setAnimation() {
-        let delay = self.sliderDelay.value
-        let duration = Double(delay * Float(playImageArr[currentIndex].count))
-        let repeatCount = Float(1.0)
-        animation.duration = duration
-        animation.values = playImageArr[currentIndex].map {$0.CGImage as! AnyObject}
-        animation.repeatCount = repeatCount
-        animation.removedOnCompletion = false
-        animation.delegate = self
-        
-        self.image.layer.addAnimation(animation, forKey:"contents")
-        self.image.startAnimating()
-    }
-    
-    
-    override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
-        //print("stop============================== ",flag)
-        currentIndex++
-        if (currentIndex == playImageArr.count) {
-            currentIndex = 0
-        }
-        self.image.layer.removeAnimationForKey("contents")
-        setAnimation()
-        
-    }
-    
-    
-    
     func hexStringToUIColor (hex:String) -> UIColor {
         var cString:String = hex.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet() as NSCharacterSet).uppercaseString
         
@@ -2365,7 +2264,6 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-//        self.collectionView.contentInset = UIEdgeInsetsMake(self.topLayoutGuide.length, 0, 0, 0)
         self.collectionView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
         self.editScroll.contentSize = CGSizeMake(420, 50)
         self.automaticallyAdjustsScrollViewInsets = false // collection view 에서 상단 마진 관련
@@ -2402,7 +2300,6 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         } else if(filterName=="TONE_CURVE") {
             let filter = GPUImageToneCurveFilter()
             filter.setPointsWithACV("tone_cuver_sample")
-            //filter.setPointsWithACVURL(tone_cuve)
             image = filter.imageByFilteringImage(image)
         } else if(filterName=="LOOKUP_AMATORKA") {
             let filter = GPUImageAmatorkaFilter()
@@ -2461,11 +2358,6 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                 mask()
             }
             
-            
-            
-            
-            
-            
             self.insetAllFram()
             selectedCellIndex = -1
             for view in self.canvas.subviews {
@@ -2520,7 +2412,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             
             let cell2 = collectionView.cellForItemAtIndexPath(indexPath)
             if cellArr[selectedCellIndex] == 0 {
-               cellArr[selectedCellIndex] = 1
+                cellArr[selectedCellIndex] = 1
                 cell2!.layer.borderColor = Config.getInstance().color.CGColor
             }else {
                 cellArr[selectedCellIndex] = 0
@@ -2586,7 +2478,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         cell.layer.borderColor = UIColor.blackColor().CGColor
         if collectionType == 1 {
             log.log("cellArr \(cellArr.count)")
-//            selectedCellIndex = 0
+            //            selectedCellIndex = 0
             log.log("indexPath row \(indexPath.row)")
             self.cellArr[indexPath.row] = 1
             cellindex = indexPath.row
@@ -2662,7 +2554,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         
         let imagePath = self.frameimagepathArr.removeAtIndex(atIndexPath.item-1)
         self.frameimagepathArr.insert(imagePath, atIndex: toIndexPath.item-1)
-         collectionView.reloadData()
+        collectionView.reloadData()
         selectedCellIndex = toIndexPath.item-1
         for view in self.canvas.subviews {
             view.removeFromSuperview()
@@ -2673,12 +2565,12 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         previewTimer = NSTimer.scheduledTimerWithTimeInterval(interval, target: self, selector: Selector("nextImage"), userInfo: nil, repeats: true)
     }
     
-//    func scrollTrigerEdgeInsetsInCollectionView(collectionView: UICollectionView) -> UIEdgeInsets {
-//        return UIEdgeInsetsMake(50.0, 50.0, 50.0, 50.0)
-//    }
+    //    func scrollTrigerEdgeInsetsInCollectionView(collectionView: UICollectionView) -> UIEdgeInsets {
+    //        return UIEdgeInsetsMake(0.0, 100.0, 100.0, 100.0)
+    //    }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(50.0, 50.0)
+        return CGSizeMake(80.0, 80.0)   // jis
     }
     
     
@@ -2707,7 +2599,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             if(historyImg.count==10) {
                 historyImg.removeAtIndex(0)
             }
-        
+            
             let newCgIm = CGImageCreateCopy(maskImage.image?.CGImage)
             if(newCgIm != nil) {
                 let newImage = UIImage(CGImage: newCgIm!)
@@ -2763,14 +2655,6 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             lastPoint = currentPoint
         }
         
-//        if let touch = touches.first {
-//            let currentPoint = touch.locationInView(frontImage)
-//            drawLineFrom(lastPoint, toPoint: currentPoint)
-//            lastPoint = currentPoint
-//        }
-        
-        
-        //print(self.frontImage.frame)
     }
     
     
@@ -2784,10 +2668,10 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             drawLineFrom(lastPoint, toPoint: lastPoint)
         }
         
-//        if mouseSwiped == false {
-//            // draw a single point
-//            drawLineFrom(lastPoint, toPoint: lastPoint)
-//        }
+        //        if mouseSwiped == false {
+        //            // draw a single point
+        //            drawLineFrom(lastPoint, toPoint: lastPoint)
+        //        }
         
     }
     
@@ -2834,7 +2718,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                             if _imgPath > aaa {
                                 aaa = _imgPath!
                             }
-   
+                            
                         }
                     }
                     
@@ -2845,8 +2729,10 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                         fileName = fileName + ".mov"
                         fileManager.createFileAtPath(fileName, contents: nil, attributes: nil)
                         fileName = String(format: "%@/%02d",arguments:[workFolder!,aaa])
-                        log.log("fileName  \(fileName)")
+                        movNames.append(fileName)
+                        addImage = true
                         try fileManager.createDirectoryAtPath(fileName, withIntermediateDirectories: false, attributes: nil)
+                        
                     }
                     
                     //이미지 사이즈 변경및 자르기
@@ -2860,7 +2746,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                         
                         pickedImage = pickedImage.cropToBounds(480, height:480)
                     }
-
+                    
                     fileName = fileName+"/000.jpg"
                     UIImageJPEGRepresentation(pickedImage, 80)!.writeToFile(fileName, atomically: true)
                     

@@ -55,7 +55,7 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="add" width="119" height="238"/>
-        <image name="temp_delete" width="119" height="238"/>
+        <image name="add" width="59" height="119"/>
+        <image name="temp_delete" width="59" height="119"/>
     </resources>
 </document>

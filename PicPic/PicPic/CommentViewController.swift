@@ -10,9 +10,11 @@ import UIKit
 import SwiftyJSON
 import AssetsLibrary
 import Photos
+import CryptoSwift
 
 
-class CommentViewController: SubViewController , UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, SwipableCellButtonActionDelegate{
+
+class CommentViewController: SubViewController , UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, SwipableCellButtonActionDelegate,GifListDelegate{
     
     @IBOutlet weak var galleryButton: UIButton!
     
@@ -125,7 +127,7 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         self.tag.view.hidden = true
         self.view.bringSubviewToFront(self.tag.view)
         
-        self.galleryButton.hidden = true
+//        self.galleryButton.hidden = true
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -208,9 +210,23 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
     }
     
     @IBAction func gallery(sender: AnyObject) {
-        let gifList = GifListViewController()
+        let gifList = self.storyboard?.instantiateViewControllerWithIdentifier("GifListViewController")as! GifListViewController
+        gifList.commentView = self
+        gifList.delegate = self
         self.navigationController?.pushViewController(gifList, animated: true)
     }
+    
+    
+    var asset : PHAsset!
+    
+    func addSelected(image:UIImage,asset:PHAsset) {
+        print("addSelected in ")
+        self.imageComView.hidden = false
+        self.comImage.image = image
+        self.asset = asset
+    }
+    
+    
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         picker.dismissViewControllerAnimated(true, completion: nil)
@@ -386,6 +402,7 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
                 
             }
         }
+        print(self.writType)
         cell.writType = self.writType
         cell.setBody()
         self.height[indexPath.row] = cell.height
@@ -447,6 +464,8 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         return cell
     }
     
+    var filename : String!
+    
     @IBAction func sendComment(sender: AnyObject) {
         let rawString = comTextField.text
         let whitespace = NSCharacterSet.whitespaceAndNewlineCharacterSet()
@@ -455,7 +474,7 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         formatter.dateFormat = "yyyyMMddHHmmss"
         let date = NSDate()
         let currentdate = formatter.stringFromDate(date)
-        let filename = "\(self.appdelegate.email)_\(currentdate).jpg"
+        filename = "\(self.appdelegate.email)_\(currentdate).gif"
         
         
         if trimmed.length == 0 && self.comImage.image == nil {
@@ -463,9 +482,34 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
             return
         }
         if comImage.image != nil {
-            myImageUploadRequest(comImage.image, filename: filename)
+            self.asset.requestContentEditingInputWithOptions(PHContentEditingInputRequestOptions()) { (input, _) in
+                let url = input!.fullSizeImageURL
+                print("url   ",url) // 배열에 담아 콜렉션 뷰에 로드하면 됨.
+                let data_gif = NSData(contentsOfURL: url!)
+                let upload_url = "http://gif.picpic.world/uploadToServerForPicPic.php"
+                let parameters = ["": ""]
+                let request = self.urlRequestWithComponents(upload_url, parameters: parameters, imageData: data_gif!)
+                
+                Alamofire1.manager.upload(request.0, data: request.1).progress { (bytesWritten, totalBytesWritten, totalBytesExpectedToWrite) in
+                    //                //print("\(totalBytesWritten) / \(totalBytesExpectedToWrite)")
+                    }
+                    .responseJSON(completionHandler: { (request, response, data, error) in
+                        if error != nil {
+                            print(error)
+                        }else {
+                            print(response)
+                        }
+                    })
+            }
+            
+            
+            
+//            myImageUploadRequest(comImage.image, filename: filename)
         }
         
+        if self.imageComView.hidden == false {
+            self.imageComView.hidden = true
+        }
         
         view.endEditing(true)
         self.comTextField.endEditing(true)
@@ -476,16 +520,9 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         if let text = comTextField.text {
             if text != "" {
                 var message : JSON = ["my_id":self.appdelegate.email,"com_id":self.com_id,"post_id":self.post_id,"body":text,"com_form":com_form,"user_tags":"","url":filename]
-                //                    print(message)
-                //                    var connection = URLConnection(serviceCode: 231, message: message)
-                //                    var readData = connection.connection()
-                //                    print(message)
                 self.appdelegate.doIt(231, message: message, callback: { (readData) -> () in
-                    //                        print(readData)
                     if readData["msg"].string! == "success"{
                         message = ["my_id":self.appdelegate.email,"post_id":self.post_id,"page":"1"]
-                        //                            connection = URLConnection(serviceCode: 321, message: message)
-                        //                            data = connection.connection()
                         self.appdelegate.doIt(321, message: message, callback: { (readData) -> () in
                             self.dataArray.removeAll()
                             self.getData(readData)
@@ -493,9 +530,7 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
                         })
                     }
                 })
-                
             }
-            
         }
     }
     
@@ -580,6 +615,42 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         text = text.stringByReplacingCharactersInRange(textrange, withString: str)
         self.comTextField.text = text as String
         self.tag.view.hidden = true
+    }
+    
+    
+    
+    func urlRequestWithComponents(urlString:String, parameters:Dictionary<String, String>, imageData:NSData) -> (URLRequestConvertible, NSData) {
+        // create url request to send
+        let mutableURLRequest = NSMutableURLRequest(URL: NSURL(string: urlString)!)
+        mutableURLRequest.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
+        mutableURLRequest.timeoutInterval = 60
+        mutableURLRequest.HTTPMethod = "POST"
+        let lineEnd = "\r\n"
+        let twoHyphens = "--"
+        let boundaryConstant = "Boundary-animated_gif"
+        mutableURLRequest.setValue("Keep-Alive", forHTTPHeaderField: "Connection")
+        mutableURLRequest.setValue("multipart/form-data; boundary=\(boundaryConstant)", forHTTPHeaderField: "Content-Type")
+        //post data
+        let uploadData: NSMutableData = NSMutableData()
+        uploadData.appendString("\(twoHyphens)\(boundaryConstant)\(lineEnd)")
+        // add params (all params are strings)
+        for (key, value) in parameters {
+            if value != "" {
+                uploadData.appendString("Content-Disposition: form-data; name=\"\(key)\"\(lineEnd)\(lineEnd)")
+                uploadData.appendString("\(value)\(lineEnd)")
+                uploadData.appendString("\(twoHyphens)\(boundaryConstant)\(lineEnd)")
+                //                //print("\(key): \(value)")
+            }
+        }
+        //data
+        uploadData.appendString("Content-Disposition: form-data; name=\"uploaded_file\"; filename=\"\(self.filename)\"\(lineEnd)\(lineEnd)")
+        //        uploadData.appendString("Content-Type: image/jpeg\r\n\r\n")
+        uploadData.appendData(imageData)
+        uploadData.appendString("\(lineEnd)")
+        uploadData.appendString("\(twoHyphens)\(boundaryConstant)\(twoHyphens)\(lineEnd)")
+        //set body
+        mutableURLRequest.HTTPBody = uploadData
+        return (ParameterEncoding.URL.encode(mutableURLRequest, parameters: nil).0, uploadData)
     }
     
     
@@ -673,7 +744,7 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         
         
         
-        let mimetype = "image/jpg"
+        let mimetype = "image/gif"
         
         body.appendString("--\(boundary)\r\n")
         body.appendString("Content-Disposition: form-data; name=\"\(filePathKey!)\"; filename=\"\(filename)\"\r\n")
@@ -712,7 +783,7 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
             report.type = "C"
             self.appdelegate.testNavi.pushViewController(report, animated: true)
             self.comTableView.reloadData()
-        }else if writeType == 1 && comType == 0 {
+        }else {
             let reply = data["reply_id"].string!
             let message : JSON = ["my_id":self.appdelegate.email,"com_id":reply,"post_id":self.post_id,"body":"","com_form":"D","user_tags":""]
             
@@ -735,29 +806,17 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
                 }
             })
             
-        }else if writeType == 0 && comType == 1 {
-            let reply = data["reply_id"].string!
-            let message : JSON = ["my_id":self.appdelegate.email,"com_id":reply,"post_id":self.post_id,"body":"","com_form":"D","user_tags":""]
-            
-            print("message    ",message)
-            //            let connection = URLConnection(serviceCode: 231, message: message)
-            //            let readData = connection.connection()
-            self.appdelegate.doIt(231, message: message, callback: { (readData) -> () in
-                if readData["msg"].string! == "success" {
-                    self.deleteRow(index)
-                    if self.appdelegate.second.view.hidden == false {
-                        if self.appdelegate.second.webState == "follow" {
-                            self.appdelegate.second.following()
-                        }else if self.appdelegate.second.webState == "all" {
-                            self.appdelegate.second.all()
-                        }else if self.appdelegate.second.webState == "category" {
-                            self.appdelegate.second.category()
-                        }
-                    }
-                    
-                }
-            })
         }
+    }
+    
+    let key: String = "secret0key000000"
+    let iv: String = "0123456789012345"
+    
+    func enc(str: String) -> String
+    {
+        let encryptedBytes: [UInt8] = try! str.encrypt(AES(key: key, iv: iv, blockMode: .CBC))
+        let base64Enc = NSData(bytes: encryptedBytes).base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
+        return base64Enc
     }
     
     func cellDidOpen(cell: UITableViewCell) {

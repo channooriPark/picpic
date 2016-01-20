@@ -313,20 +313,23 @@ public class RichTextView: UITextView, UITextViewDelegate {
                 para.appendAttributedString(attrString)
             }
             
-            var textAttachment = NSTextAttachment()
+            let textAttachment = NSTextAttachment()
             
-            if let urlString = url {
-                let url = NSURL(string: imageURL.imageurl(urlString))
-                if let imagedata = NSData(contentsOfURL: url!){
-                    var attributesString = NSMutableAttributedString()
-                    textAttachment.image = UIImage(data: imagedata)
-                    var oldWidth = textAttachment.image!.size.width
-                    var scaleFactor = oldWidth/(textView.frame.size.width - 10)
-                    textAttachment.image = UIImage(CGImage: textAttachment.image!.CGImage!, scale: scaleFactor, orientation: UIImageOrientation.Up)
-                    var attrStringWithImage : NSAttributedString = NSAttributedString(attachment: textAttachment)
-                    para.replaceCharactersInRange(NSMakeRange(0, 1), withAttributedString: attrStringWithImage)
-                }
-            }
+//            if let urlString = url {
+//                attrString = NSAttributedString(string: " ")
+//                para.appendAttributedString(attrString)
+//                let url = NSURL(string: imageURL.gifImageUrl(urlString))
+//                if let imagedata = NSData(contentsOfURL: url!){
+//                    textAttachment.image = UIImage.animatedImageWithAnimatedGIFURL(url)
+//                    
+//                    let oldWidth = textAttachment.image!.size.width
+//                    let scaleFactor = oldWidth/(textView.frame.size.width - 10)
+//                    textAttachment.image = UIImage(CGImage: textAttachment.image!.CGImage!, scale: scaleFactor, orientation: UIImageOrientation.Up)
+//                    let attrStringWithImage : NSAttributedString = NSAttributedString(attachment: textAttachment)
+//                    let stringCount = para.length
+//                    para.replaceCharactersInRange(NSMakeRange(stringCount-1, 1), withAttributedString: attrStringWithImage)
+//                }
+//            }
             
         }
         self.attributedText = para

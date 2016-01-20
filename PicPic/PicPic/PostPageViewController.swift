@@ -279,11 +279,6 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate{
         print(self.comment.titleLabel?.text)
         self.postImage.addSubview(self.likeImage)
         self.view.bringSubviewToFront(self.likeImage)
-        
-        //print(self.comment.frame)
-//        self.postImage.addSubview(self.likeImage)
-//        self.view.bringSubviewToFront(self.likeImage)
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -411,9 +406,10 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate{
         if !self.appdelegate.myfeed.view.hidden {
             self.navigationController?.navigationBarHidden = true
         }
-        //        self.appdelegate.controller.removeAtIndex(a.index)
+        
         self.appdelegate.tabbar.view.hidden = false
         self.postImage.enterBackground()
+        self.postImage.gifRemoveObserver()
         self.navigationController?.popViewControllerAnimated(true)
         UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
     }

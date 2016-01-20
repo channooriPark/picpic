@@ -334,7 +334,7 @@
     
     
     <string name="camera_startMent">시작 위치</string>
-    <string name="camera_endMent">종료 위치</string>
+    <string name="camera_endMent">지속 시간</string>
     <string name="camera_loop">구간 재생</string>
     
     <string name="camera_tempsave">임시저장이 완료되었습니다</string>
@@ -498,9 +498,8 @@
     
     <string name="data_error">데이터를 불러오지 못하였습니다.</string>
     
-    <string name="camera_video_setting">5초이상 설정하실 수 없습니다.</string>
-    <string name="camera_startpoint_setting">시작이 종료보다 클 수 없습니다.</string>
-    <string name="camera_endpoint_setting">종료가 시작보다 작을 수 없습니다.</string>
+    <string name="camera_setting">1초 이하는 설정할 수 없습니다.</string>
+    <string name="camera_endpoint">영상의 끝입니다.</string>
 
 
     <string name="category_0">선택안함</string>
