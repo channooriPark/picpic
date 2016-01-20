@@ -50,7 +50,7 @@ class FirstViewController: UIViewController , UIAlertViewDelegate{
                     formatter.dateFormat = "yyyyMMddHHmmss"
                     let date = NSDate()
                     let currentDate = formatter.stringFromDate(date)
-                    self.language = checkNational(nation[0] as! String)
+                    self.language = checkNational(nation.firstObject as! String)
                     let register_form = "10002"
                     
                     if self.appdelegate.standardUserDefaults.valueForKey("uuid") == nil {

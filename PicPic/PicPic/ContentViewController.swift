@@ -14,6 +14,10 @@ class ContentViewController: SubViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        let message = JSON(["my_id" : "kimch@mono-rama.com", "country" : "ko_KR"])
+//        self.appdelegate.doItSocket(SERVICE_CODE.MAIN.rawValue, message: message, callback: { (result) in
+//            print(result.description)
+//        })
         
         let titleImage = UIImage(named: "imv_timeline_logo")
         let titleImageView = UIImageView(image: titleImage)
@@ -35,13 +39,16 @@ class ContentViewController: SubViewController {
         self.view.addSubview(appdelegate.alram.view)
         self.view.addSubview(appdelegate.myfeed.view)
         
+//        self.appdelegate.main.view.frame = CGRectMake(0, UIApplication.sharedApplication().statusBarFrame.height, self.view.frame.width, self.view.frame.height - UIApplication.sharedApplication().statusBarFrame.height - appdelegate.tabbar.view.frame.size.height - self.navigationController!.navigationBar.frame.height)
+        self.view.bringSubviewToFront(self.appdelegate.main.view)
+        
         if self.appdelegate.notiType == 0 {
             appdelegate.second.view.hidden = true
             appdelegate.alram.view.hidden = true
             appdelegate.myfeed.view.hidden = true
         }else {
             appdelegate.second.view.hidden = true
-            appdelegate.main.view.hidden = true
+            //appdelegate.main.view.hidden = true
             appdelegate.myfeed.view.hidden = true
             appdelegate.tabbar.click4(appdelegate.tabbar.button4)
         }

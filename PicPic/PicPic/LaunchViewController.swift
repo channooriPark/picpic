@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class LaunchViewController: UIViewController {
 
     @IBOutlet weak var logoImage: UIImageView!
@@ -32,10 +33,11 @@ class LaunchViewController: UIViewController {
         }
         
         
-        print("",logoImage.frame)
-        print("",logoHei.constant)
-        print("",logoWid.constant)
+        
         NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("moveFirstView"), userInfo: nil, repeats: false)
+        
+        
+
     }
     
     func moveFirstView() {

@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, PPMosaicLayoutDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
+
 
         // Do any additional setup after loading the view.
         self.collectionView.delegate = self
@@ -24,6 +26,7 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
         let layout = PPMosaicLayout()
         layout.delegate = self
         self.collectionView.collectionViewLayout = layout
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -59,6 +62,7 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.item)
+        
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: PPMosaicLayout, numberOfColumnsInSection section: Int) -> Int {

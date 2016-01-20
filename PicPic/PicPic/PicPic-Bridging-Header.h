@@ -17,5 +17,9 @@
 #import "InstaFilters.h"
 #import <Google/CloudMessaging.h>
 #import <Google/SignIn.h>
+#import "QAGIFEncoderAPI.h"
+#import "QAGIFEncType.h"
+
+
 
 #endif /* createAniGIF_Bridging_Header_h */

@@ -581,6 +581,7 @@ class GifMaker {
         let fileManager = NSFileManager.defaultManager()
 //        let ghostPath = String(format: "%@/ghost.jpg", arguments: [workFolder])
         let scratchPath = String(format: "%@/scratch.jpg", arguments: [workFolder])
+
         
         var eraserImage = UIImage()
         var masked:CGImageRef!
@@ -787,10 +788,11 @@ class GifMaker {
             //
             //            }
         }
-        let regift_photo: Regift_photo = Regift_photo(sourceArray: saveArr1, delayTime: delayTime)
+        //let regift_photo: Regift_photo = Regift_photo(sourceArray: saveArr1, delayTime: delayTime)
         
-        let output = regift_photo.createGif()
+        //let output = regift_photo.createGif()
         //        print("output ",output?.path)
+        print(gifPath)
         
         do {
             if fileManager.fileExistsAtPath(gifPath) {
@@ -800,332 +802,80 @@ class GifMaker {
                 //delete file code
             }
             //            print("gifPath ",gifPath)
-            try fileManager.copyItemAtPath((output?.path)!, toPath: gifPath)
+            //try fileManager.copyItemAtPath((output?.path)!, toPath: gifPath)
         } catch let error as NSError {
             print(error.localizedDescription);
         }
+        let agifencPtr:UnsafeMutablePointer<QAGIFHandle> = UnsafeMutablePointer.alloc(sizeof(QAGIFHandle))
+        
+        let path = gifPath.substringWithRange(gifPath.startIndex ..< gifPath.endIndex.advancedBy(-22))
+        print(path)
+
+        //var buffer = UnsafeMutablePointer<Int8>(path.UTF8String)
+        
+        var buffer = UnsafeMutablePointer<Int8>(NSString(string: gifPath).UTF8String)
+        
+        QAGIFEncInitHandle(agifencPtr)
+        // set agif encoder delay time
+        QAGIFEncSetDelay(agifencPtr, Int32(delayTime * 1000))
+        // set agif encoder dispose method
+        QAGIFEncSetDispose(agifencPtr, 0)
+        
+        // set agif encoder x, y position
+        QAGIFEncSetPosition(agifencPtr, 0, 0)
+        // set agif encoder repeat value
+        QAGIFEncSetRepeat(agifencPtr, -1)
+        
+        // set transparent
+        QAGIFEncSetTransparent(agifencPtr, 0)
+        
+        // set writer
+        QAGIFEncSetWriteFunc(agifencPtr, 2)
+        // set dither
+        QAGIFEncSetDither(agifencPtr, 1)
+        
+        // set task nb
+        QAGIFEncSetMaxTaskTP(agifencPtr, 4)
+        
+        // set agif encoding file name
+        var ret = QAGIFEncStart(agifencPtr, buffer)
+        
+        let wdt:Int32 = Int32(saveArr1.first!.size.width)
+        let hgt:Int32 = Int32(saveArr1.first!.size.height)
+        
+        let qbite = UnsafeMutablePointer<QBYTE>.alloc( Int(wdt*hgt*4) )
+        
+        
+        for var i=0;i<saveArr1.count;i++ {
+            //arr의 uiimage를 버퍼에 담아 전달
+            let image = saveArr1[i] as UIImage
+            let cgImage = image.CGImage
+            
+            let width = Int(image.size.width)
+            let height = Int(image.size.height)
+            let bitsPerComponent = 8 // 2
+            let bytesPerPixel = 4
+            let bytesPerRow = width * bytesPerPixel
+            
+            let colorSpace = CGColorSpaceCreateDeviceRGB() // 3
+            var bitmapInfo: UInt32 = CGBitmapInfo.ByteOrder32Big.rawValue
+            bitmapInfo |= CGImageAlphaInfo.PremultipliedLast.rawValue & CGBitmapInfo.AlphaInfoMask.rawValue
+            
+            let imageContext = CGBitmapContextCreate(qbite, width, height, bitsPerComponent, bytesPerRow, colorSpace, bitmapInfo)
+            
+            
+            CGContextDrawImage(imageContext, CGRect(origin: CGPointZero, size: image.size), cgImage)
+            
+            QAGIFEncAddFrameFast(agifencPtr, qbite, BITMAP_FORMAT_RGBA_8888, wdt,hgt);
+            
+        }
+        
+        QAGIFEncFinish(agifencPtr, 1)
+        
         
     }
     
-    func make2(photoDataArr:[[UIImage]], delayTime:Float, gifPath:String, workFolder:String,subtitle:[[MyView]]?,warterMark : Bool,imageCheck : [Int:Int]?, canvas : UIView?,playType : Int,allText:[MyView]?, progress: UIView?) {
-        
-        
-        
-        var saveArr = photoDataArr
-        var saveArr1 = [UIImage]()
-        let fileManager = NSFileManager.defaultManager()
-        //        let ghostPath = String(format: "%@/ghost.jpg", arguments: [workFolder])
-        let scratchPath = String(format: "%@/scratch.jpg", arguments: [workFolder])
-        
-        var eraserImage = UIImage()
-        var masked:CGImageRef!
-        let imageRef = photoDataArr[0][0].CGImage
-        if let maskRef = UIImage(contentsOfFile: scratchPath)?.CGImage {
-            let mask:CGImageRef = CGImageMaskCreate(CGImageGetWidth(maskRef), CGImageGetHeight(maskRef), CGImageGetBitsPerComponent(maskRef), CGImageGetBitsPerPixel(maskRef), CGImageGetBytesPerRow(maskRef), CGImageGetDataProvider(maskRef), nil, true)!
-            
-            masked = CGImageCreateWithMask(imageRef, mask)!
-            eraserImage = UIImage(CGImage: masked)
-        }
-        
-        var provalue : Float = Float(saveArr.count/100)
-        
-        
-//        for view in progress!.subviews
-//        {
-//            if view.isMemberOfClass(UIProgressView)
-//            {
-//                (view as! UIProgressView).progress = 0.2  // Float
-//            }
-//            if view.isMemberOfClass(UILabel)
-//            {
-//                (view as! UILabel).text = "20%"
-//                (view as! UILabel).sizeToFit()
-//            }
-//        }
-        
-        
-        
-        if( fileManager.fileExistsAtPath(scratchPath) || subtitle != nil) {
-            if playType == 1 {
-                for var i=photoDataArr.count-1;i>=0;i-- {
-                    for var j=photoDataArr[i].count-1;j>=0;j-- {
-                        
-                        let bottomImage = photoDataArr[i][j]
-                        let size = bottomImage.size
-                        let areaSize = CGRect(x: 0, y: 0, width: size.width, height: size.height)
-                        
-                        UIGraphicsBeginImageContext(size)
-                        
-                        bottomImage.drawInRect(areaSize)
-                        
-                        //                        if fileManager.fileExistsAtPath(ghostPath) {
-                        //                            let ghost_img = UIImage(contentsOfFile: ghostPath)
-                        //                            ghost_img!.drawInRect(areaSize, blendMode: CGBlendMode.Multiply, alpha: Config.getInstance().ghostAlpha)
-                        //                        }
-                        
-                        if fileManager.fileExistsAtPath(scratchPath) {
-                            let scratch_img = eraserImage
-                            scratch_img.drawInRect(areaSize)
-                        }
-                        
-                        
-                        var newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()
-                        UIGraphicsEndImageContext()
-                        
-                        //                if filter != nil {
-                        //                    applyFilter(&newImage, filter: filter!)
-                        //                }
-                        
-                        UIGraphicsBeginImageContext(size)
-                        
-                        newImage.drawInRect(areaSize)
-                        
-                        for view in progress!.subviews
-                        {
-                            if view.isMemberOfClass(UIProgressView)
-                            {
-                                (view as! UIProgressView).progress = 0.4
-                            }
-                            if view.isMemberOfClass(UILabel)
-                            {
-                                (view as! UILabel).text = "40%"
-                                (view as! UILabel).sizeToFit()
-                            }
-                        }
-                        
-                        if subtitle != nil {
-                            if subtitle![0].count > 0 {
-                                if canvas?.subviews.count > 0 {
-                                    for view in (canvas?.subviews)! {
-                                        view.removeFromSuperview()
-                                    }
-                                }
-                                for text in subtitle![0] {
-                                    canvas?.addSubview(text)
-                                }
-                            }
-                            
-                            //preIndex 이전 프레임 / current 현재프레임
-                            log.log("subview change")
-                            for view in (canvas?.subviews)! {
-                                view.removeFromSuperview()
-                            }
-                            if subtitle![i].count > 0 {
-                                for text in subtitle![i] {
-                                    canvas?.addSubview(text)
-                                }
-                            }
-                            
-                            
-                            //                    }
-                            canvas!.drawViewHierarchyInRect(areaSize, afterScreenUpdates: true)
-                        }
-                        
-                        if warterMark {
-                            //                    print("warterMark")
-                            let warter = UIImage(named: "watermark")
-                            let warterRect = CGRectMake(areaSize.width-155, areaSize.height-58, 145, 48)
-                            warter?.drawInRect(warterRect)
-                        }
-                        
-                        newImage = UIGraphicsGetImageFromCurrentImageContext()
-                        
-                        UIGraphicsEndImageContext()
-                        
-                        saveArr[i][j] = newImage
-                        saveArr1.append(saveArr[i][j])
-                    }
-                    
-                    for view in progress!.subviews
-                    {
-                        if view.isMemberOfClass(UIProgressView)
-                        {
-                            (view as! UIProgressView).progress = 0.6
-                        }
-                        if view.isMemberOfClass(UILabel)
-                        {
-                            (view as! UILabel).text = "60%"
-                            (view as! UILabel).sizeToFit()
-                        }
-                    }
-                    
-                }
-            }else {
-                for var i=0;i<photoDataArr.count;i++ {
-                    provalue = Float(provalue/Float(photoDataArr[i].count))
-                    for var j=0;j<photoDataArr[i].count;j++ {
-                        if playType == 1 {
-                            i = photoDataArr.count - (i+1)
-                            j = photoDataArr[i].count - (j+1)
-                            log.log("i \(i)")
-                            log.log("j \(j)")
-                        }
-                        
-                        let bottomImage = photoDataArr[i][j]
-                        let size = bottomImage.size
-                        let areaSize = CGRect(x: 0, y: 0, width: size.width, height: size.height)
-                        
-                        UIGraphicsBeginImageContext(size)
-                        
-                        bottomImage.drawInRect(areaSize)
-                        
-                        //                        if fileManager.fileExistsAtPath(ghostPath) {
-                        //                            let ghost_img = UIImage(contentsOfFile: ghostPath)
-                        //                            ghost_img!.drawInRect(areaSize, blendMode: CGBlendMode.Multiply, alpha: Config.getInstance().ghostAlpha)
-                        //                        }
-                        
-                        if fileManager.fileExistsAtPath(scratchPath) {
-                            let scratch_img = eraserImage
-                            scratch_img.drawInRect(areaSize)
-                        }
-                        
-                        
-                        var newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()
-                        UIGraphicsEndImageContext()
-                        
-                        //                if filter != nil {
-                        //                    applyFilter(&newImage, filter: filter!)
-                        //                }
-                        
-                        UIGraphicsBeginImageContext(size)
-                        
-                        newImage.drawInRect(areaSize)
-                        
-                        for view in progress!.subviews
-                        {
-                            if view.isMemberOfClass(UIProgressView)
-                            {
-                                (view as! UIProgressView).progress = 0.4
-                            }
-                            if view.isMemberOfClass(UILabel)
-                            {
-                                (view as! UILabel).text = "40%"
-                                (view as! UILabel).sizeToFit()
-                            }
-                        }
-                        
-                        if subtitle != nil {
-                            if subtitle![0].count > 0 {
-                                if canvas?.subviews.count > 0 {
-                                    for view in (canvas?.subviews)! {
-                                        view.removeFromSuperview()
-                                    }
-                                }
-                                for text in subtitle![0] {
-                                    canvas?.addSubview(text)
-                                }
-                            }
-                            
-                            //preIndex 이전 프레임 / current 현재프레임
-                            log.log("subview change")
-                            for view in (canvas?.subviews)! {
-                                view.removeFromSuperview()
-                            }
-                            if subtitle![i].count > 0 {
-                                for text in subtitle![i] {
-                                    canvas?.addSubview(text)
-                                }
-                            }
-                            if let all = allText {
-                                for alltext in all {
-                                    canvas?.addSubview(alltext)
-                                }
-                            }
-                            
-                            canvas!.drawViewHierarchyInRect(areaSize, afterScreenUpdates: true)
-                        }
-                        
-                        if warterMark {
-                            //                    print("warterMark")
-                            let warter = UIImage(named: "watermark")
-                            let warterRect = CGRectMake(areaSize.width-131, areaSize.height-44, 121, 38)
-                            warter?.drawInRect(warterRect)
-                        }
-                        
-                        for view in progress!.subviews
-                        {
-                            if view.isMemberOfClass(UIProgressView)
-                            {
-                                (view as! UIProgressView).progress = 0.6
-                            }
-                            if view.isMemberOfClass(UILabel)
-                            {
-                                (view as! UILabel).text = "60%"
-                                (view as! UILabel).sizeToFit()
-                            }
-                        }
-                        
-                        newImage = UIGraphicsGetImageFromCurrentImageContext()
-                        
-                        UIGraphicsEndImageContext()
-                        
-                        saveArr[i][j] = newImage
-                        saveArr1.append(saveArr[i][j])
-                    }
-                    
-                }
-            }
-            
-            
-            log.log("saveArr1.count \(saveArr1.count)")
-        } else {
-            //            if(filter != nil) {
-            //                for var i=0;i<photoDataArr.count;i++ {
-            //                    var bottomImage = photoDataArr[i]
-            //
-            //                    applyFilter(&bottomImage, filter: filter!)
-            //
-            //                    saveArr[i] = bottomImage
-            //                }
-            //            } else {
-            //
-            //            }
-        }
-        let regift_photo: Regift_photo = Regift_photo(sourceArray: saveArr1, delayTime: delayTime)
-        
-        for view in progress!.subviews
-        {
-            if view.isMemberOfClass(UIProgressView)
-            {
-                (view as! UIProgressView).progress = 0.8
-            }
-            if view.isMemberOfClass(UILabel)
-            {
-                (view as! UILabel).text = "80%"
-                (view as! UILabel).sizeToFit()
-            }
-        }
-        
-        let output = regift_photo.createGif()
-        //        print("output ",output?.path)
-        
-        do {
-            if fileManager.fileExistsAtPath(gifPath) {
-                //                print("있어요")
-                //                print(gifPath)
-                try fileManager.removeItemAtPath(gifPath)
-                //delete file code
-            }
-            //            print("gifPath ",gifPath)
-            try fileManager.copyItemAtPath((output?.path)!, toPath: gifPath)
-        } catch let error as NSError {
-            print(error.localizedDescription);
-        }
-        
-        for view in progress!.subviews
-        {
-            if view.isMemberOfClass(UIProgressView)
-            {
-                (view as! UIProgressView).progress = 1.0
-            }
-            if view.isMemberOfClass(UILabel)
-            {
-                (view as! UILabel).text = "100%"
-                (view as! UILabel).sizeToFit()
-            }
-        }
-        
-    }
+    
     
     
     func make(photoDataArr:[UIImage], delayTime:Float, gifPath:String, workFolder:String,filter:CIFilter?) {

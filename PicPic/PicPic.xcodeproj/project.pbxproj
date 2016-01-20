@@ -8,9 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		254009E8A84B58AD4A88908B /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C43EA758E0DE01CCC4DEBB61 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		6CB454351C4CD60B00FB9FAC /* libfingramagifencoder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CB454341C4CD60B00FB9FAC /* libfingramagifencoder.a */; };
 		6CEDBA551C475791000C32F9 /* PPMosaicLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEDBA541C475791000C32F9 /* PPMosaicLayout.swift */; };
 		6CEDBA581C4757C6000C32F9 /* HomeNativeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEDBA561C4757C6000C32F9 /* HomeNativeViewController.swift */; };
 		6CEDBA591C4757C6000C32F9 /* HomeNativeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CEDBA571C4757C6000C32F9 /* HomeNativeViewController.xib */; };
+		6CEDBA5B1C475887000C32F9 /* SocketRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEDBA5A1C475887000C32F9 /* SocketRequest.swift */; };
 		E401A8D41BEE4E1800D34B3E /* TabBarTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401A8D31BEE4E1800D34B3E /* TabBarTestViewController.swift */; };
 		E401A8D61BEE4E3500D34B3E /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401A8D51BEE4E3500D34B3E /* ContentViewController.swift */; };
 		E401A8D81BEE4F4000D34B3E /* MainInterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E401A8D71BEE4F4000D34B3E /* MainInterViewController.swift */; };
@@ -416,9 +418,13 @@
 
 /* Begin PBXFileReference section */
 		08A1789DB2BC839084B50B61 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		6CB454321C4CD08200FB9FAC /* QAGIFEncoderAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QAGIFEncoderAPI.h; sourceTree = "<group>"; };
+		6CB454331C4CD08200FB9FAC /* QAGIFEncType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QAGIFEncType.h; sourceTree = "<group>"; };
+		6CB454341C4CD60B00FB9FAC /* libfingramagifencoder.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libfingramagifencoder.a; sourceTree = "<group>"; };
 		6CEDBA541C475791000C32F9 /* PPMosaicLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPMosaicLayout.swift; sourceTree = "<group>"; };
 		6CEDBA561C4757C6000C32F9 /* HomeNativeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeNativeViewController.swift; sourceTree = "<group>"; };
 		6CEDBA571C4757C6000C32F9 /* HomeNativeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeNativeViewController.xib; sourceTree = "<group>"; };
+		6CEDBA5A1C475887000C32F9 /* SocketRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocketRequest.swift; sourceTree = "<group>"; };
 		C43EA758E0DE01CCC4DEBB61 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEC09761CC89527D058E7F4A /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E401A8D31BEE4E1800D34B3E /* TabBarTestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarTestViewController.swift; sourceTree = "<group>"; };
@@ -1024,6 +1030,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6CB454351C4CD60B00FB9FAC /* libfingramagifencoder.a in Frameworks */,
 				E4DCBE101C2BA8440095F84A /* AssetsLibrary.framework in Frameworks */,
 				E4D5430A1C15985C00EC1BB0 /* Social.framework in Frameworks */,
 				E40E26501BEF001300591044 /* MobileCoreServices.framework in Frameworks */,
@@ -1067,9 +1074,19 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		6CB454311C4CCFFE00FB9FAC /* QAGIFEncoder */ = {
+			isa = PBXGroup;
+			children = (
+				6CB454321C4CD08200FB9FAC /* QAGIFEncoderAPI.h */,
+				6CB454331C4CD08200FB9FAC /* QAGIFEncType.h */,
+			);
+			name = QAGIFEncoder;
+			sourceTree = "<group>";
+		};
 		A439FDD749F1A27F780551FA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6CB454341C4CD60B00FB9FAC /* libfingramagifencoder.a */,
 				E4DCBE0F1C2BA8440095F84A /* AssetsLibrary.framework */,
 				E4D543091C15985C00EC1BB0 /* Social.framework */,
 				E40E264F1BEF001300591044 /* MobileCoreServices.framework */,
@@ -1106,6 +1123,7 @@
 		E42CDEE51BECF38A00C35419 /* gif */ = {
 			isa = PBXGroup;
 			children = (
+				6CB454311C4CCFFE00FB9FAC /* QAGIFEncoder */,
 				E4A414BF1C27AB1C0087F450 /* mask.jpg */,
 				E4AB45021C16667F002EA053 /* map */,
 				E4AB449C1C16666A002EA053 /* IFfilter */,
@@ -1830,6 +1848,7 @@
 				E40DA7DB1BEA1C2900C0E7F1 /* MakFileName.swift */,
 				E4F4A7171BF59F5200ACE67C /* LogPrint.swift */,
 				E48E98D91BF5B466002CF561 /* Secret.swift */,
+				6CEDBA5A1C475887000C32F9 /* SocketRequest.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -1954,7 +1973,7 @@
 				TargetAttributes = {
 					E44580381BE3882000AF186C = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = SEDPMQ93PW;
+						DevelopmentTeam = ANM7DT8PCR;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
 								enabled = 0;
@@ -2155,6 +2174,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6CEDBA5B1C475887000C32F9 /* SocketRequest.swift in Sources */,
 				E4D4EC971C112EAF00616C2E /* GPUImageScreenBlendFilter.m in Sources */,
 				E4D4EC8E1C112EAF00616C2E /* GPUImageRawDataInput.m in Sources */,
 				E4D4ECA11C112EAF00616C2E /* GPUImageSolidColorGenerator.m in Sources */,
@@ -2600,6 +2620,10 @@
 				INFOPLIST_FILE = PicPic/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"$(inherited)",
@@ -2617,7 +2641,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2627,6 +2651,10 @@
 				INFOPLIST_FILE = PicPic/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"$(inherited)",

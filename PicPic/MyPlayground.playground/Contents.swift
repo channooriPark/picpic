@@ -2,6 +2,7 @@
 
 import Cocoa
 
+
 var str = "Hello, playground"
 var str1 = "안녕하세요"
 
@@ -14,3 +15,4 @@ let text = str1 as NSString
 let end = text.length - rangeStart
 
 let subString = text.substringWithRange(NSMakeRange(rangeStart, end))
+
