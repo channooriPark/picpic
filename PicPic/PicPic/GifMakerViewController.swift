@@ -1535,8 +1535,11 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     
     @IBAction func actNext(sender: UIButton) {
         
-        self.progressContainerView!.hidden = false
-        self.view.bringSubviewToFront(self.progressContainerView!)
+        if filterState
+        {
+            self.progressContainerView!.hidden = false
+            self.view.bringSubviewToFront(self.progressContainerView!)
+        }
         
         previewTimer?.invalidate()
         previewTimer = nil
@@ -1550,43 +1553,45 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         }
         
         let path = String(format: "%@/%@", arguments: [gifsFolder!,gifName!])
+        
         var imgArr = [UIImage]()
         var tempArr = [[UIImage]]()
         tempArr = playImageArr
-        for var i=0; i<tempArr.count; i++ {
-            for var j=0; j<tempArr[i].count; j++ {
-                applyFilter(&tempArr[i][j], filterName: self.filterCurrent)
-            }
-        }
         
-        //        if self.ghostLayer?.image != nil {
-        //            let img = self.ghostLayer!.image
-        //            let imagePath = String(format: "%@/ghost.jpg", arguments: [self.workFolder!])
-        //            let fileManager = NSFileManager.defaultManager()
-        //            do {
-        //                if fileManager.fileExistsAtPath(imagePath) {
-        //                    try fileManager.removeItemAtPath(imagePath)
-        //                }
-        //            } catch {}
-        //            UIImageJPEGRepresentation(img!, 100)!.writeToFile(imagePath, atomically: true)
-        //        }
-        //progressView.removeFromSuperview()
-        NSThread.sleepForTimeInterval(0.5)
-        dispatch_async(dispatch_get_main_queue(), {
-            if self.textArr.count > 0 {
-                self.gifMaker.make2(tempArr, delayTime: self.sliderDelay.value, gifPath: path, workFolder: self.workFolder!, subtitle: self.textArr, warterMark: self.waterToggle, imageCheck: self.imageCheck, canvas: self.canvas,playType: self.playType,allText: self.allText, progress: self.progressContainerView)
-                print("before sleep")
-                NSThread.sleepForTimeInterval(2.0)
-                print("sleep next")
+        let progress = 1.0 / Float(tempArr.count)
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+            for var i=0; i<tempArr.count; i++ {
+                for var j=0; j<tempArr[i].count; j++ {
+                    self.applyFilter(&tempArr[i][j], filterName: self.filterCurrent)
+                    
+                }
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.progressView?.progress += progress
+                    for view in self.progressContainerView!.subviews
+                    {
+                        if view.isMemberOfClass(UILabel)
+                        {
+                            let progress = Int(self.progressView!.progress * 100.0)
+                            (view as! UILabel).text = "\(progress) %"
+                            (view as! UILabel).sizeToFit()
+                        }
+                    }
+                })
             }
             
-            let gifVC = self.storyboard?.instantiateViewControllerWithIdentifier("gifVC") as? GIFViewController
-            self.appdelegate.testNavi.navigationBarHidden = false
-            gifVC?.moviePath = NSURL(string: path)
-            self.appdelegate.testNavi.pushViewController(gifVC!, animated: true)
-            //self.spring.stopAnimation(true)
+            dispatch_async(dispatch_get_main_queue(), {
+                if self.textArr.count > 0 {
+                    self.gifMaker.make2(tempArr, delayTime: self.sliderDelay.value, gifPath: path, workFolder: self.workFolder!, subtitle: self.textArr, warterMark: self.waterToggle, imageCheck: self.imageCheck, canvas: self.canvas,playType: self.playType,allText: self.allText)
+                    
+                }
+                let gifVC = self.storyboard?.instantiateViewControllerWithIdentifier("gifVC") as? GIFViewController
+                self.appdelegate.testNavi.navigationBarHidden = false
+                gifVC?.moviePath = NSURL(string: path)
+                //        //print(path)
+                self.appdelegate.testNavi.pushViewController(gifVC!, animated: true)
+            })
         })
-        
     }
     
     @IBAction func back(sender: AnyObject) {

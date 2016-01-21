@@ -22,6 +22,7 @@ import TwitterKit
 class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGLInstanceIDDelegate, GCMReceiverDelegate {
 
     private var reachability:Reachability!
+    private let serverIp = "lb44196316nntH.hscc.hostwaycloud.co.kr"
     let log = LogPrint()
     var window: UIWindow?
     var token : NSString = ""
@@ -797,6 +798,109 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
             }
         }
     }
+    
+    func doItSocket(serviceCode: Int, message: JSON, callback: (JSON) -> ()) {
+        if self.reachability.currentReachabilityStatus() == NotReachable {
+            let temp = self.ment["network_error_message"].stringValue.componentsSeparatedByString("&")
+            log.log("\(temp)")
+            let alert = UIAlertView(title: self.ment["network_error_title"].stringValue, message: "\(temp[0])\n\(temp[1])", delegate: nil, cancelButtonTitle: self.ment["popup_confirm"].stringValue)
+            alert.show()
+        }else{
+            var ip = "210.122.9.21"
+            
+            if(serviceCode >= 201 && serviceCode<=210) {
+                
+            } else if(serviceCode==215 || serviceCode==216) {
+                
+            } else if(serviceCode>=218 && serviceCode<=221) {
+                
+            } else if(serviceCode>=230 && serviceCode<=233) {
+                
+            } else if(serviceCode>=301 && serviceCode<=303) {
+                
+            } else if(serviceCode>=402 && serviceCode<=403) {
+                
+            } else if(serviceCode==601 || serviceCode==603 || serviceCode==604) {
+                
+            } else if(serviceCode==701 || serviceCode==702) {
+                
+            } else if(serviceCode==804) {
+                
+            } else {
+                ip = serverIp
+            }
+            
+            
+            
+            let dateFormatter = NSDateFormatter()
+            let SECRETKEY = "SpI6k7IKSlKCliEk^E&SP%#[*I]M)rcF"
+            let SECRETKEYIV = "^E&SP%#[*I]M)rcF"
+            let keyTxt = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+            
+            var dummy = ""
+            
+            for _ in 0..<10
+            {
+                let t = Int(arc4random_uniform(UInt32((SECRETKEY as NSString).length)))
+                dummy += SECRETKEY.substringWithRange(SECRETKEY.startIndex.advancedBy(t) ..< SECRETKEY.startIndex.advancedBy(t+1))
+            }
+            
+            
+            dateFormatter.dateFormat = "yyyyMMddHHmmss"
+            var sendMsg = message
+            
+            sendMsg["ct"].stringValue = dateFormatter.stringFromDate(NSDate())
+            sendMsg["dm"].stringValue = keyTxt
+            
+            
+            let data1 = [UInt8](sendMsg.description.stringByReplacingOccurrencesOfString("\n", withString: "").utf8)//(try! sendMsg.aesEncrypt(SECRETKEY, iv: SECRETKEYIV).utf8)
+            
+            var sendData: [UInt8] = []
+            
+            sendData.append(0x02)
+            sendData.append(serviceCode.bytes()[4])
+            sendData.append(serviceCode.bytes()[5])
+            sendData.append(serviceCode.bytes()[6])
+            sendData.append(serviceCode.bytes()[7])
+            sendData.append(data1.count.bytes()[4])
+            sendData.append(data1.count.bytes()[5])
+            sendData.append(data1.count.bytes()[6])
+            sendData.append(data1.count.bytes()[7])
+            
+            sendData += data1
+            
+            //소켓전송
+            let session = NSURLSession.sharedSession()
+            if #available(iOS 9.0, *) {
+                let task = session.streamTaskWithHostName(ip, port: 34100)
+                task.writeData(NSData(bytes: sendData), timeout: 4.0, completionHandler: {_ in })
+                
+                task.readDataOfMinLength(1024, maxLength: 30000, timeout: 4.0, completionHandler: { (data, success, error) -> Void in
+                    if error == nil
+                    {
+                        print("**************read")
+                        let result = JSON(data: data!)
+                        if result.type == .Null
+                        {
+                            print("null")
+                        }
+                        else
+                        {
+                            callback(result)
+                        }
+                    }
+                    else
+                    {
+                        print(error)
+                    }
+                })
+                task.resume()
+            } else {
+                // Fallback on earlier versions
+            }
+        }
+    }
+
     
     func clearAlert(timer : NSTimer) {
         if alert != nil {

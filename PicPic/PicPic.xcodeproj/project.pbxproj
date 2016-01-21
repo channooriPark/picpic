@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		254009E8A84B58AD4A88908B /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C43EA758E0DE01CCC4DEBB61 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		6C9897991C5083F600AD6292 /* libfingramagifencoder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C9897981C5083F600AD6292 /* libfingramagifencoder.a */; };
+		6C98979F1C50868B00AD6292 /* HomeTagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C98979D1C50868B00AD6292 /* HomeTagCell.swift */; };
+		6C9897A01C50868B00AD6292 /* HomeTagCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C98979E1C50868B00AD6292 /* HomeTagCell.xib */; };
 		6CEDBA551C475791000C32F9 /* PPMosaicLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEDBA541C475791000C32F9 /* PPMosaicLayout.swift */; };
 		6CEDBA581C4757C6000C32F9 /* HomeNativeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEDBA561C4757C6000C32F9 /* HomeNativeViewController.swift */; };
 		6CEDBA591C4757C6000C32F9 /* HomeNativeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CEDBA571C4757C6000C32F9 /* HomeNativeViewController.xib */; };
@@ -423,6 +426,11 @@
 
 /* Begin PBXFileReference section */
 		08A1789DB2BC839084B50B61 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		6C9897981C5083F600AD6292 /* libfingramagifencoder.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libfingramagifencoder.a; sourceTree = "<group>"; };
+		6C98979B1C50846800AD6292 /* QAGIFEncoderAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QAGIFEncoderAPI.h; sourceTree = "<group>"; };
+		6C98979C1C50846800AD6292 /* QAGIFEncType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QAGIFEncType.h; sourceTree = "<group>"; };
+		6C98979D1C50868B00AD6292 /* HomeTagCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTagCell.swift; sourceTree = "<group>"; };
+		6C98979E1C50868B00AD6292 /* HomeTagCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeTagCell.xib; sourceTree = "<group>"; };
 		6CEDBA541C475791000C32F9 /* PPMosaicLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPMosaicLayout.swift; sourceTree = "<group>"; };
 		6CEDBA561C4757C6000C32F9 /* HomeNativeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeNativeViewController.swift; sourceTree = "<group>"; };
 		6CEDBA571C4757C6000C32F9 /* HomeNativeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeNativeViewController.xib; sourceTree = "<group>"; };
@@ -1038,6 +1046,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C9897991C5083F600AD6292 /* libfingramagifencoder.a in Frameworks */,
 				E4DCBE101C2BA8440095F84A /* AssetsLibrary.framework in Frameworks */,
 				E4CDA0891C4CD28400A85C42 /* FBSDKCoreKit.framework in Frameworks */,
 				E4D5430A1C15985C00EC1BB0 /* Social.framework in Frameworks */,
@@ -1081,9 +1090,19 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		6C98979A1C50843D00AD6292 /* QAEncoder */ = {
+			isa = PBXGroup;
+			children = (
+				6C98979B1C50846800AD6292 /* QAGIFEncoderAPI.h */,
+				6C98979C1C50846800AD6292 /* QAGIFEncType.h */,
+			);
+			name = QAEncoder;
+			sourceTree = "<group>";
+		};
 		A439FDD749F1A27F780551FA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6C9897981C5083F600AD6292 /* libfingramagifencoder.a */,
 				E4DCBE0F1C2BA8440095F84A /* AssetsLibrary.framework */,
 				E4D543091C15985C00EC1BB0 /* Social.framework */,
 				E40E264F1BEF001300591044 /* MobileCoreServices.framework */,
@@ -1120,6 +1139,7 @@
 		E42CDEE51BECF38A00C35419 /* gif */ = {
 			isa = PBXGroup;
 			children = (
+				6C98979A1C50843D00AD6292 /* QAEncoder */,
 				E4A414BF1C27AB1C0087F450 /* mask.jpg */,
 				E4AB45021C16667F002EA053 /* map */,
 				E4AB449C1C16666A002EA053 /* IFfilter */,
@@ -1278,6 +1298,8 @@
 				E4A8C7391BEF7B1D008EA6F7 /* MyFeedPageViewController.swift */,
 				6CEDBA561C4757C6000C32F9 /* HomeNativeViewController.swift */,
 				6CEDBA571C4757C6000C32F9 /* HomeNativeViewController.xib */,
+				6C98979D1C50868B00AD6292 /* HomeTagCell.swift */,
+				6C98979E1C50868B00AD6292 /* HomeTagCell.xib */,
 				E44C9C421BEBB337000DB5CA /* subView */,
 			);
 			name = MainView;
@@ -2099,6 +2121,7 @@
 				E4AB453F1C16668C002EA053 /* hudsonBackground.png in Resources */,
 				E4AB45411C16668C002EA053 /* inkwellMap.png in Resources */,
 				E4D3826D1C3F3DF000800239 /* SaveCell.xib in Resources */,
+				6C9897A01C50868B00AD6292 /* HomeTagCell.xib in Resources */,
 				E403AAEA1BED11BF007DBA10 /* tuto_4_kr.gif in Resources */,
 				E403AAE81BED11BF007DBA10 /* tuto_3.gif in Resources */,
 				E4364FE11C06938000B201C6 /* colorPalette.plist in Resources */,
@@ -2231,6 +2254,7 @@
 				E4AB44F61C16667A002EA053 /* IFNashvilleFilter.m in Sources */,
 				E4D4ECBB1C112EAF00616C2E /* GPUImageVoronoiConsumerFilter.m in Sources */,
 				E4D4EC1E1C112EAF00616C2E /* GPUImage3x3TextureSamplingFilter.m in Sources */,
+				6C98979F1C50868B00AD6292 /* HomeTagCell.swift in Sources */,
 				E4D4EC9B1C112EAF00616C2E /* GPUImageSingleComponentGaussianBlurFilter.m in Sources */,
 				E4D4EC631C112EAF00616C2E /* GPUImageLanczosResamplingFilter.m in Sources */,
 				E4AB44FE1C16667A002EA053 /* IFVideoCamera.m in Sources */,
@@ -2652,6 +2676,10 @@
 				INFOPLIST_FILE = PicPic/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"$(inherited)",
@@ -2679,6 +2707,10 @@
 				INFOPLIST_FILE = PicPic/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"$(inherited)",
