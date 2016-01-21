@@ -22,7 +22,7 @@ class VideoGalleryViewController : UIViewController, UICollectionViewDelegate, U
     @IBOutlet weak var nextheight: NSLayoutConstraint!
     @IBOutlet weak var nextWidth: NSLayoutConstraint!
     
-    public var delegate: CameraViewController!
+    public var cameradelegate: CameraViewController!
     let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     private var groups: [String]?
@@ -86,6 +86,7 @@ class VideoGalleryViewController : UIViewController, UICollectionViewDelegate, U
 
     }
     
+    
     private lazy var groupImageRequestOptions: PHImageRequestOptions = {
         let options = PHImageRequestOptions()
         options.deliveryMode = .Opportunistic
@@ -96,23 +97,23 @@ class VideoGalleryViewController : UIViewController, UICollectionViewDelegate, U
     
     @IBAction func onBtnPrev(sender: UIButton) {
         
+        self.dismissViewControllerAnimated(false, completion: nil)
+        
+    }
+    
+    
+    @IBAction func onBtnNext(sender: UIButton) {
+        print("next")
         self.dismissViewControllerAnimated(true, completion: nil)
         
         if (self.selectedAsset != nil) {
-        
+            
             self.selectedAsset!.fetchAVAssetWithCompleteBlock { (avAsset) in
                 dispatch_async(dispatch_get_main_queue(), { () in
                     self.selectVideo(avAsset!.URL)
                 })
             }
         }
-
-    }
-    
-    
-    @IBAction func onBtnClose(sender: UIButton) {
-        
-        self.dismissViewControllerAnimated(false, completion: nil)
     }
     
     
@@ -197,20 +198,15 @@ class VideoGalleryViewController : UIViewController, UICollectionViewDelegate, U
         override var selected: Bool {
             didSet {
                 if super.selected {
-                    self.videoInfoView.backgroundColor = UIColor(red: 20 / 255, green: 129 / 255, blue: 252 / 255, alpha: 1)
+                    self.videoInfoView.backgroundColor = UIColor(red: 20 / 255, green: 129 / 255, blue: 252 / 255, alpha: 0)
                 } else {
-                    self.videoInfoView.backgroundColor = UIColor(white: 0.0, alpha: 0.7)
+                    self.videoInfoView.backgroundColor = UIColor(white: 0.0, alpha: 0)
                 }
             }
         }
         
         private lazy var videoInfoView: UIView = {
             let videoInfoView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 0))
-            
-            let videoImageView = UIImageView(image: DKImageResource.videoCameraIcon())
-            videoInfoView.addSubview(videoImageView)
-            videoImageView.center = CGPoint(x: videoImageView.bounds.width / 2 + 7, y: videoInfoView.bounds.height / 2)
-            videoImageView.autoresizingMask = [.FlexibleBottomMargin, .FlexibleTopMargin]
             
             let videoDurationLabel = UILabel()
             videoDurationLabel.tag = -1
@@ -284,7 +280,7 @@ class VideoGalleryViewController : UIViewController, UICollectionViewDelegate, U
         
         let player = MPMoviePlayerController(contentURL: videoURL)
         player.movieSourceType = .File
-        player.controlStyle = .Embedded
+        player.controlStyle = .None
         player.fullscreen = false
         player.repeatMode = MPMovieRepeatMode.One
         player.scalingMode = MPMovieScalingMode.AspectFill
@@ -299,10 +295,10 @@ class VideoGalleryViewController : UIViewController, UICollectionViewDelegate, U
     }
     
     func selectVideo(videoURL:NSURL) {
-
+        
         Config.getInstance().dataType = 1
-        self.delegate.openMoviePreview(videoURL)
-       
+        self.cameradelegate.openMoviePreview(videoURL)
+        
     }
     
     
@@ -317,7 +313,7 @@ class VideoGalleryViewController : UIViewController, UICollectionViewDelegate, U
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
- 
+        
         return self.assetCellForIndexPath(indexPath)
         
     }
@@ -341,7 +337,7 @@ class VideoGalleryViewController : UIViewController, UICollectionViewDelegate, U
         
         var cell: DKAssetCell!
         var identifier: String!
-
+        
         identifier = DKVideoAssetIdentifier
         
         
@@ -365,9 +361,9 @@ class VideoGalleryViewController : UIViewController, UICollectionViewDelegate, U
         
         return cell
     }
-
-
-   
+    
+    
+    
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
         let selectedAsset = (collectionView.cellForItemAtIndexPath(indexPath) as? DKAssetCell)?.asset

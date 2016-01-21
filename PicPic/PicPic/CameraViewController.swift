@@ -589,8 +589,8 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
             
             print("videopicker            adsf;lejfioadsjfeakldjsfe;ioj")
             let videoPicker = self.storyboard?.instantiateViewControllerWithIdentifier("VideoGalleryViewController") as? VideoGalleryViewController
-            videoPicker?.delegate = self
-            self.presentViewController(videoPicker!, animated: true, completion: nil)
+            videoPicker?.cameradelegate = self;
+            self.presentViewController(videoPicker!, animated: true, completion: nil);
         }
     }
     

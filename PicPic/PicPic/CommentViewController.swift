@@ -14,7 +14,7 @@ import CryptoSwift
 
 
 
-class CommentViewController: SubViewController , UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, SwipableCellButtonActionDelegate,GifListDelegate{
+class CommentViewController: SubViewController , UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate, SwipableCellButtonActionDelegate,GifListDelegate{
     
     @IBOutlet weak var galleryButton: UIButton!
     
@@ -52,6 +52,10 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
     
     var cellsCurrentlyEditing: Set<NSIndexPath>?
     
+    
+    var imageComArr = [String:UIImage]()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -61,9 +65,6 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         if self.view.frame.size.width == 320.0 {
             commentBarHei.constant = 33
         }
-        //        self.comTableView.estimatedRowHeight = 72
-        //        self.comTableView.rowHeight = UITableViewAutomaticDimension
-        
         imageComView = UIView(frame: CGRectMake(0,self.view.frame.size.height-50-170,self.view.frame.size.width,170))
         imageComView.backgroundColor = UIColor.lightGrayColor()
         self.view.addSubview(imageComView)
@@ -192,10 +193,6 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         if let keyboardSize = (sender.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
             self.bottomLayout.constant -= keyboardSize.size.height
             self.imageComView.frame.origin.y += keyboardSize.size.height
-            //            self.tag.view.frame = CGRectMake(0, 60, self.view.bounds.size.width, self.scrollView.bounds.size.height + 80 )
-            //            self.tag.view.frame.origin.y += keyboardSize.size.height
-            //            self.scrollView.frame.origin.y += keyboardSize.size.height;
-            //            print(keyboardSize.size.height)
         }
     }
     
@@ -226,129 +223,11 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         self.asset = asset
     }
     
-    
-    
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        picker.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    var uploadImage : UIImage!
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        self.uploadImage = info[UIImagePickerControllerOriginalImage] as? UIImage
-        let uu = info[UIImagePickerControllerReferenceURL] as! NSURL
-        log.log("ddddd              \(uu)")
-        let image:UIImage = self.uploadImage
-        comImage.image = convert_profile_picture(self.uploadImage)
-        imagecancel = UIButton(type: .Custom)
-        imagecancel.frame = CGRectMake(self.imageComView.frame.size.width-30, 10, 20, 20)
-        imagecancel.setImage(UIImage(named: "icon_plus"), forState: .Normal)
-        imagecancel.addTarget(self, action: "imagecancle", forControlEvents: .TouchUpInside)
-        imageComView.addSubview(imagecancel)
-        comImage.contentMode = .ScaleAspectFit
-        log.log("comimage frame \(comImage.frame)")
-        log.log("comimage image size \(comImage.image?.size)")
-        imageComView.hidden = false
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
     func imagecancle(){
         log.log("cancel")
         imageComView.hidden = true
         comImage.image = nil
     }
-    
-    func convert_profile_picture(image: UIImage) -> UIImage {
-        
-        var image2:UIImage = image
-        if(image.imageOrientation == UIImageOrientation.Right) {
-            image2 = image2.imageRotatedByDegrees1(90.0)
-            //            print("image right")
-        } else if(image.imageOrientation == UIImageOrientation.Left) {
-            image2 = image2.imageRotatedByDegrees1(-90.0)
-            //            print("image left")
-        } else if(image.imageOrientation == UIImageOrientation.Up) {
-            //            image2 = image2.imageRotatedByDegrees1(180.0)
-            //            print("image up")
-        } else if(image.imageOrientation == UIImageOrientation.Down) {
-            //            print("image down")
-        }
-        
-        if(true) {
-            //return image2;
-        }
-        
-        //        let size = CGSize(width: 1024, height: 1024)
-        //        let image4: UIImage = resizeImage(image2, targetSize: size)
-        
-        return image2
-    }
-    
-    
-    /*func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
-    
-    let data = self.dataArray[indexPath.row]
-    let edit = UITableViewRowAction(style: .Normal, title: self.appdelegate.ment["comment_edit"].string!) { (action:UITableViewRowAction!, NSIndexPath) -> Void in
-    let firstActivityItem = self.dataArray[indexPath.row]
-    self.body = firstActivityItem["body"].string!
-    self.comWrite = "E"
-    self.comTextField.text = self.body
-    self.com_id = data["reply_id"].stringValue
-    self.comTextField.becomeFirstResponder()
-    tableView.setEditing(false, animated: true)
-    }
-    
-    let tag = UITableViewRowAction(style: .Normal, title: self.appdelegate.ment["comment_tag"].string!) { (action:UITableViewRowAction!, NSIndexPath) -> Void in
-    self.comTextField.text = "@\(data["id"].string!)"
-    self.comTextField.becomeFirstResponder()
-    tableView.setEditing(false, animated: true)
-    }
-    
-    
-    let delete = UITableViewRowAction(style: .Normal, title: self.appdelegate.ment["comment_delete"].string!) { (action:UITableViewRowAction!, indexpath) -> Void in
-    let data = self.dataArray[indexPath.row]
-    let reply = data["reply_id"].string!
-    let message : JSON = ["my_id":self.appdelegate.email,"com_id":reply,"post_id":self.post_id,"body":"","com_form":"D","user_tags":""]
-    //            let connection = URLConnection(serviceCode: 231, message: message)
-    //            let readData = connection.connection()
-    self.appdelegate.doIt(231, message: message, callback: { (readData) -> () in
-    if readData["msg"].string! == "success" {
-    self.deleteRow(indexPath)
-    if self.appdelegate.second.view.hidden == false {
-    if self.appdelegate.second.webState == "follow" {
-    self.appdelegate.second.following()
-    }else if self.appdelegate.second.webState == "all" {
-    self.appdelegate.second.all()
-    }else if self.appdelegate.second.webState == "category" {
-    self.appdelegate.second.category()
-    }
-    }
-    }
-    })
-    }
-    delete.backgroundColor = UIColor(colorLiteralRed: 0.99, green: 0.41, blue: 0.43, alpha: 1.00)
-    
-    let report = UITableViewRowAction(style: .Normal, title: self.appdelegate.ment["comment_report"].string!) { (action:UITableViewRowAction!, indexpath) -> Void in
-    
-    let report = self.storyboard?.instantiateViewControllerWithIdentifier("ReportViewController")as! ReportViewController
-    report.post_id = data["reply_id"].string!
-    report.type = "C"
-    self.appdelegate.testNavi.pushViewController(report, animated: true)
-    tableView.setEditing(false, animated: true)
-    }
-    report.backgroundColor = UIColor(colorLiteralRed: 0.99, green: 0.41, blue: 0.43, alpha: 1.00)
-    
-    if data["email"].string! == self.appdelegate.email {
-    return [delete,edit]
-    }else {
-    print("내남")
-    return [report,tag]
-    }
-    
-    
-    
-    
-    
-    }*/
     
     func deleteRow(indexPath:NSIndexPath){
         self.dataArray.removeAtIndex(indexPath.row)
@@ -356,16 +235,11 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         self.comTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
     }
     
-    
-    
     func getData(json:JSON){
-        //        print(json)
         if json["data"] == nil {
             return
         }else {
             if let array = json["data"].array {
-                //                self.dataArray.removeAll()
-                
                 for data in  array{
                     log.log("\(data)")
                     self.height.append(70)
@@ -420,8 +294,6 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         if let img = imageData[urlStr] {
             image = img
             cell.setData(image)
-            
-            //            print("aa")
         }
         else {
             let imgURL = NSURL(string: imageURL.imageurl(Rowdata["profile_picture"].string!))
@@ -436,16 +308,39 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
                             let url = NSURL(string: imageURL.imageurl("noprofile.png"))
                             let data = NSData(contentsOfURL: url!)
                             image = UIImage(data: data!)!
-                            
                         }else {
                             image = image2!
                         }
                         cell.setData(image)
-                        
-                        
                         self.imageData[urlStr] = image
                     })
                 }
+            }
+        }
+        
+        
+        let imageCom = imageURL.gifImageUrl(Rowdata["url"].stringValue)
+        if cell.urlString != nil {
+            if let img = self.imageComArr[imageCom] {
+                cell.imageComView(img)
+            }else {
+                let imageURL = NSURL(string: imageURL.gifImageUrl(Rowdata["url"].stringValue))
+                let request : NSURLRequest = NSURLRequest(URL: imageURL!)
+                let mainQueue = NSOperationQueue.mainQueue()
+                NSURLConnection.sendAsynchronousRequest(request, queue: mainQueue, completionHandler: { (response, data, error) -> Void in
+                    if error == nil {
+                        let image = UIImage.gifWithData(data!)
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            if image != nil {
+                                print("image comment ")
+                                cell.imageComView(image!)
+                                self.imageComArr[imageCom] = image
+                            }
+                        })
+                    }else {
+                        print("image comment error  :  ",error)
+                    }
+                })
             }
         }
         
@@ -474,14 +369,17 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         formatter.dateFormat = "yyyyMMddHHmmss"
         let date = NSDate()
         let currentdate = formatter.stringFromDate(date)
-        filename = "\(self.appdelegate.email)_\(currentdate).gif"
+        let make = MakeFileNmae()
+        let file = make.getFileName(self.appdelegate.userData["m_id"].string!)
         
-        
+        filename = "\(file)\(currentdate)_2.gif"
         if trimmed.length == 0 && self.comImage.image == nil {
             log.log("빈칸이야 다시써")
             return
         }
+        
         if comImage.image != nil {
+            //이미지 댓글이 있을경우
             self.asset.requestContentEditingInputWithOptions(PHContentEditingInputRequestOptions()) { (input, _) in
                 let url = input!.fullSizeImageURL
                 print("url   ",url) // 배열에 담아 콜렉션 뷰에 로드하면 됨.
@@ -495,16 +393,17 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
                     }
                     .responseJSON(completionHandler: { (request, response, data, error) in
                         if error != nil {
-                            print(error)
+                            print("image upload fail  ",error)
                         }else {
-                            print(response)
+                            print("iamge upload success  ",response)
+                            var message : JSON = ["url":self.filename]
+                            self.appdelegate.doIt(233, message: message, callback: { (readData) -> () in
+                                print(readData)
+                                print("ok")
+                            })
                         }
                     })
             }
-            
-            
-            
-//            myImageUploadRequest(comImage.image, filename: filename)
         }
         
         if self.imageComView.hidden == false {
@@ -535,8 +434,8 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
     }
     
     
+    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        
         return height[indexPath.row]
     }
     
@@ -665,14 +564,6 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         if image != nil {
             imageData = UIImageJPEGRepresentation(image, 1)!
         }
-        //        }else {
-        //            let imageURL = ImageURL()
-        //            let url = NSURL(string: imageURL.imageurl("noprofile.png"))
-        //            let data = NSData(contentsOfURL: url!)
-        //            imageData = data
-        //        }
-        
-        
         if(imageData==nil)  { return; }
         let myUrl = NSURL(string: "http://gif.picpic.world/uploadToServerForPicPic.php");
         //let myUrl = NSURL(string: "http://www.boredwear.com/utils/postImage.php");

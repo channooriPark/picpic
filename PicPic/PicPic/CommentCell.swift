@@ -55,7 +55,11 @@ class CommentCell: UITableViewCell {
     @IBOutlet weak var profileHei: NSLayoutConstraint!
     @IBOutlet weak var profileWid: NSLayoutConstraint!
     var cellIndex : NSIndexPath!
+    
+    //이미지 댓글 관련
     var imageCom : UIImage!
+    var imageComView : UIImageView! = UIImageView()
+    var urlString : String!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -84,7 +88,7 @@ class CommentCell: UITableViewCell {
     }
     
     func setBody(){
-        var urlString : String!
+        
         if data["url"].string == "" {
             urlString = nil
         }else {
@@ -105,30 +109,7 @@ class CommentCell: UITableViewCell {
         bodyLabel.sizeToFit()
         self.height = 70 + (bodyLabel.frame.size.height - 27)
         
-        if urlString != nil {
-            var image = UIImage()
-            let imageView = UIImageView(image: image)
-            image = UIImage.gifWithData(NSData(contentsOfURL: NSURL(string: self.self.imageURL.gifImageUrl(urlString))!)!)!
-            imageView.image = image
-            let width = self.upperContentView.frame.size.width - 56 - 10
-            var imagewidth = image.size.width - width
-            var imageHeight = image.size.height - (image.size.width - imagewidth)
-            if image.size.width > image.size.height {
-                imagewidth = width
-                imageHeight = imagewidth/4*3
-            }else if image.size.width < image.size.height {
-                imagewidth = width
-                imageHeight = imagewidth/3*4
-            }else {
-                imagewidth = width
-                imageHeight = width
-            }
-            let posY = self.bodyLabel.frame.size.height + self.bodyLabel.frame.origin.y
-            imageView.frame = CGRectMake(self.bodyLabel.frame.origin.x, posY, self.bodyLabel.frame.size.width, imageHeight)
-            self.upperContentView.addSubview(imageView)
-            imageView.frame = CGRectMake(self.bodyLabel.frame.origin.x, posY, width, imageHeight)
-            self.height = 70 + (self.bodyLabel.frame.size.height - 27) + imageView.frame.size.height + 10
-        }
+        
         
         
         let uploadDateText = data["time"].string!
@@ -194,9 +175,40 @@ class CommentCell: UITableViewCell {
                 self.comType = 1
             }
         }
-        
+    }
+    
+    
+    func imageViewSetSize(image:UIImage){
         
     }
+    
+    
+    func imageComView(image:UIImage) {
+        if urlString != nil {
+            imageComView.image = image
+            let width = self.upperContentView.frame.size.width - 56 - 10
+            var imagewidth = image.size.width - width
+            var imageHeight = image.size.height - (image.size.width - imagewidth)
+            if image.size.width > image.size.height {
+                imagewidth = width
+                imageHeight = imagewidth/4*3
+            }else if image.size.width < image.size.height {
+                imagewidth = width
+                imageHeight = imagewidth/3*4
+            }else {
+                imagewidth = width
+                imageHeight = width
+            }
+            let posY = self.bodyLabel.frame.size.height + self.bodyLabel.frame.origin.y
+            imageComView.frame = CGRectMake(self.bodyLabel.frame.origin.x, posY, self.bodyLabel.frame.size.width, imageHeight)
+            self.upperContentView.addSubview(imageComView)
+            imageComView.frame = CGRectMake(self.bodyLabel.frame.origin.x, posY, width, imageHeight)
+            self.height = 70 + (self.bodyLabel.frame.size.height - 27) + imageComView.frame.size.height + 10
+            print("image    height      ",self.height)
+            self.comment.height[index] = self.height
+        }
+    }
+    
     
     
     func setData(image: UIImage){
