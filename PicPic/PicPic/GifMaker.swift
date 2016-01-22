@@ -305,9 +305,6 @@ class GifMaker {
         
         let imgPath = "\(tmpPath)/000.jpg"
         let img = UIImage(contentsOfFile: imgPath)
-        
-//        print("Config.getInstance().dataType ",Config.getInstance().dataType)
-//        print("Config.getInstance().videoRatio ",Config.getInstance().videoRatio)
         if(Config.getInstance().dataType==0) {
             if(Config.getInstance().videoRatio == "1:1") {
                 if(img?.size.width>img?.size.height) {
