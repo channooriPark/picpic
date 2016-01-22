@@ -14,24 +14,27 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
     @IBOutlet weak var collectionView: UICollectionView!
     
     var tagData: Array<[String: String]> = []
-    var gifData: [String : NSData] = [ : ]
-    var recommendData: JSON?
-    var _hud: MBProgressHUD?
+    var gifData: [String : UIImage] = [ : ]
+    var friendData: Array<[String: String]> = []
+    var imageData: [String : UIImage] = [ : ]
+    
+    var _hud: MBProgressHUD = MBProgressHUD()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        _hud = MBProgressHUD()
-        _hud!.mode = MBProgressHUDModeIndeterminate
-        _hud!.center = self.view.center
-        self.view.addSubview(_hud!)
-        _hud!.hide(false)
+
+        _hud.mode = MBProgressHUDModeIndeterminate
+        _hud.center = self.view.center
+        self.view.addSubview(_hud)
+        _hud.hide(false)
         // Do any additional setup after loading the view.
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         
         self.collectionView.registerNib(UINib(nibName: "HomeTagCell", bundle: nil), forCellWithReuseIdentifier: "mainCell")
-        
+        self.collectionView.registerNib(UINib(nibName: "HomeFriendCell", bundle: nil), forCellWithReuseIdentifier: "mainFriendCell")
+        self.collectionView.registerNib(UINib(nibName: "HomeNativeReusableView", bundle: nil), forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "mainReusableView")
         
         let layout = PPMosaicLayout()
         layout.delegate = self
@@ -43,9 +46,12 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
     
     func refresh()
     {
-        self._hud!.show(true)
-        self.gifData = [ : ]
+        self._hud.show(true)
+        self.gifData = [:]
+        self.imageData = [:]
         self.tagData = []
+        self.friendData = []
+        
         self.collectionView.setContentOffset(CGPointZero, animated: false)
         self.collectionView.reloadData()
         
@@ -55,7 +61,6 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),{
             
             appdelegate.doItSocket(514, message: message, callback: {(json) in
-                print(json)
                 
                 for dic in json["locale"].array!
                 {
@@ -74,13 +79,13 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
 
                         if let gifURL = NSURL(string: "http://gif.picpic.world/" + url)
                         {
-                            self.gifData["\(index)"] = NSData(contentsOfURL: gifURL) ?? NSData()
+                            self.gifData["\(index)"] = UIImage.gifWithData(NSData(contentsOfURL: gifURL) ?? NSData())
                         }
-                        if self.tagData.count == self.gifData.count
+                        if self.dataAllReceived()
                         {
                             dispatch_sync(dispatch_get_main_queue(), {
                                 self.collectionView.reloadData()
-                                self._hud!.hide(true)
+                                self._hud.hide(true)
                             })
                         }
                     })
@@ -88,6 +93,41 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
                 
             })
         })
+        
+        appdelegate.doItSocket(411, message: message, callback: {(json) in
+            for dic in json["friends"].array!
+            {
+                self.friendData.append(dic.dictionaryObject as! [String : String])
+            }
+        })
+        appdelegate.doItSocket(411, message: message, callback: { (json) in
+            for dic in json["friends"].array!
+            {
+                self.friendData.append(dic.dictionaryObject as! [String : String])
+            }
+            
+            for (index, dic) in self.friendData.enumerate()
+            {
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                    let gifURL = NSURL(string: "http://gif.picpic.world/" + dic["profile_picture"]!)!
+                    self.imageData["\(index)"] = UIImage(data: NSData(contentsOfURL: gifURL) ?? NSData())
+                    
+                    if self.dataAllReceived()
+                    {
+                        dispatch_sync(dispatch_get_main_queue(), {
+                            self.collectionView.reloadData()
+                            self._hud.hide(true)
+                        })
+                    }
+                })
+            }
+
+        })
+    }
+    
+    func dataAllReceived() -> Bool
+    {
+        return self.tagData.count == self.gifData.count && self.tagData.count != 0 && self.friendData.count == 12
     }
     
     
@@ -100,9 +140,20 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
         return 5
     }
     
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: PPMosaicLayout, heightForHeaderInSection section: Int) -> CGFloat {
+        if gifData.count < 18 { return 0.0 }
+        
+        if section == 1 || section == 3 || section == 4
+        {
+            return 40.0
+        }
+        
+        return 0.0
+    }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-
+        if gifData.count < 18 { return 0 }
+        
         if section == 0
         {
             return 6
@@ -116,47 +167,67 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
             return self.gifData.count - 18 >= 0 ? self.gifData.count - 18 : 0
         }
         
-        return 9
+        return 6
 
     }
     
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = self.collectionView.dequeueReusableCellWithReuseIdentifier("mainCell", forIndexPath: indexPath) as! HomeTagCell
-        cell.cellIndexPath = indexPath
 
-        if self.gifData.count >= indexPath.item + 1
+        if indexPath.section == 0 || indexPath.section == 2 || indexPath.section == 4 // tags
         {
-            if indexPath.section == 0 || indexPath.section == 2 || indexPath.section == 4
+            let cell = self.collectionView.dequeueReusableCellWithReuseIdentifier("mainCell", forIndexPath: indexPath) as! HomeTagCell
+            cell.cellIndexPath = indexPath
+            
+            var index = indexPath.item
+            if indexPath.section == 2
             {
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-                    var index = indexPath.item
-                    if indexPath.section == 2
-                    {
-                        index += self.collectionView.numberOfItemsInSection(0)
-                    }
-                    else if indexPath.section == 4
-                    {
-                        index += self.collectionView.numberOfItemsInSection(0) + self.collectionView.numberOfItemsInSection(2)
-                    }
-                    
-                    let gif = UIImage.gifWithData(self.gifData["\(index)"]!)// gif init background
-
-                    
-                    if self.gifData["\(index)"]!.isEqualToData(NSData()){print("empty!")}
-                    
-                    dispatch_async(dispatch_get_main_queue(), {
-                        cell.gifImageView.image = gif
-                        let text = self.tagData[index]["tag_name"]
-                        cell.tagLabel.text = "#\(text!)"
-
-                        cell.tagLabel.sizeToFit()
-                    })
-                })
+                index += self.collectionView.numberOfItemsInSection(0)
             }
+            else if indexPath.section == 4
+            {
+                index += self.collectionView.numberOfItemsInSection(0) + self.collectionView.numberOfItemsInSection(2)
+            }
+
+            cell.gifImageView.image = self.gifData["\(index)"]
+            let text = self.tagData[index]["tag_name"]
+            cell.tagLabel.font = (index == 0 || index == 7 || index == 12) ? UIFont.systemFontOfSize(18) : UIFont.systemFontOfSize(13)
+            cell.tagLabel.text = "#\(text!)"
+            
+            return cell
         }
+        else //recommands
+        {
+            let cell = self.collectionView.dequeueReusableCellWithReuseIdentifier("mainFriendCell", forIndexPath: indexPath) as! HomeFriendCell
+            cell.backgroundColor = (indexPath.item % 2 == 1) ? UIColor(red: 233/255, green: 233/255, blue: 233/255, alpha: 1) : UIColor.whiteColor()
+            cell.cellIndexPath = indexPath
+            
+            var index = indexPath.item
+            
+            if indexPath.section == 3 {index += 6}
+
+            cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.width / 2
+            cell.profileImageView.layer.masksToBounds = true
+            cell.profileImageView.image = self.imageData["\(index)"]
+            
+            cell.nameLabel.text = self.friendData[index]["id"]!
+            cell.nameLabel.sizeToFit()
+            
+            if self.friendData[index]["follow_yn"] != "N"
+            {
+                cell.followButton.enabled = false
+            }
+            
+            return cell
+        }
+       
+    }
+    
+    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+        let view = self.collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "mainReusableView", forIndexPath: indexPath) as! HomeNativeReusableView
+        view.titleLabel.text = (indexPath.section == 4) ? "인기태그" : "추천친구"
         
-        return cell
+        return view
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
@@ -190,14 +261,6 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
     
     
     
-    /*
-    // MARK: - Navigation
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
-    }
-    */
     
 }

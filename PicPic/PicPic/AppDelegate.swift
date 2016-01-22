@@ -873,30 +873,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
             sendData += data1
             
             //소켓전송
+            let completionHandler = {(data: NSData?, success: Bool, error: NSError?) in
+                if error == nil
+                {
+                    print("**************read")
+                    let result = JSON(data: data!)
+                    if result.type == .Null
+                    {
+                        print("null")
+                        self.doItSocket(serviceCode, message: message, callback: callback)
+                    }
+                    else
+                    {
+                        callback(result)
+                    }
+                }
+                else
+                {
+                    print(error)
+                }
+            }
+            
             let session = NSURLSession.sharedSession()
             if #available(iOS 9.0, *) {
                 let task = session.streamTaskWithHostName(ip, port: 34100)
                 task.writeData(NSData(bytes: sendData), timeout: 4.0, completionHandler: {_ in })
                 
-                task.readDataOfMinLength(1024, maxLength: 30000, timeout: 4.0, completionHandler: { (data, success, error) -> Void in
-                    if error == nil
-                    {
-                        print("**************read")
-                        let result = JSON(data: data!)
-                        if result.type == .Null
-                        {
-                            print("null")
-                        }
-                        else
-                        {
-                            callback(result)
-                        }
-                    }
-                    else
-                    {
-                        print(error)
-                    }
-                })
+                task.readDataOfMinLength(1024, maxLength: 30000, timeout: 4.0, completionHandler: completionHandler)
                 task.resume()
             } else {
                 // Fallback on earlier versions
