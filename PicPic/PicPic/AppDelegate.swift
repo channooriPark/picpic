@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
     //MainView
     var contentview : ContentViewController!
     var tabbar : TabBarTestViewController!
-    var main : MainInterViewController!
+    var main : HomeNativeViewController!//MainInterViewController!
     var testNavi : UINavigationController!
     var alram : AlramViewController!
     var second : TestSecondViewController!
@@ -69,9 +69,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
     let subscriptionTopic = "/topics/global"
     var deviceId = ""
     var notiType = 0 //0이면 일반 1이면 알림을 통해서
+
 //    var application : UIApplication!
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
         
         
         if launchOptions != nil {
@@ -171,6 +173,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
         if let url = launchOptions?[UIApplicationLaunchOptionsURLKey]as? NSURL {
             UIApplication.sharedApplication().openURL(url)
         }
+    
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     
@@ -725,7 +728,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
     func loadView() {
         contentview = ContentViewController()
         tabbar = TabBarTestViewController()
-        main = MainInterViewController()
+        main = HomeNativeViewController()//MainInterViewController()
         alram = self.storyboard.instantiateViewControllerWithIdentifier("AlramViewController")as! AlramViewController
         second = TestSecondViewController()
         camera = self.storyboard.instantiateViewControllerWithIdentifier("CameraViewController")as! CameraViewController
@@ -758,7 +761,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
     func reloadView(){
         contentview = ContentViewController()
         tabbar = TabBarTestViewController()
-        main = MainInterViewController()
+        main = HomeNativeViewController()//MainInterViewController()
         alram = self.storyboard.instantiateViewControllerWithIdentifier("AlramViewController")as! AlramViewController
         second = TestSecondViewController()
         camera = self.storyboard.instantiateViewControllerWithIdentifier("CameraViewController")as! CameraViewController

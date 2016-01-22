@@ -15,17 +15,30 @@
                 <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GNH-73-2PI">
-                        <rect key="frame" x="0.0" y="120" width="150" height="30"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="width" secondItem="GNH-73-2PI" secondAttribute="height" multiplier="5:1" id="oX0-Gg-qD0"/>
-                        </constraints>
-                    </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qvQ-GH-z2b">
                         <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
                     </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GNH-73-2PI">
+                        <rect key="frame" x="0.0" y="116.5" width="150" height="33.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dzx-1E-ua5">
+                                <rect key="frame" x="8" y="6" width="42" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="42" id="Zwe-BC-OAw"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="Dzx-1E-ua5" secondAttribute="bottom" constant="6" id="2Ju-yY-aBc"/>
+                            <constraint firstItem="Dzx-1E-ua5" firstAttribute="top" secondItem="GNH-73-2PI" secondAttribute="top" constant="6" id="9Qq-24-BAX"/>
+                            <constraint firstItem="Dzx-1E-ua5" firstAttribute="leading" secondItem="GNH-73-2PI" secondAttribute="leading" constant="8" id="exR-tK-Rhg"/>
+                            <constraint firstAttribute="width" secondItem="GNH-73-2PI" secondAttribute="height" multiplier="4.5:1" id="oX0-Gg-qD0"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
@@ -50,6 +63,7 @@
             <connections>
                 <outlet property="bgView" destination="GNH-73-2PI" id="bFd-aF-Nhq"/>
                 <outlet property="gifImageView" destination="qvQ-GH-z2b" id="YzI-Nr-UjQ"/>
+                <outlet property="tagLabel" destination="Dzx-1E-ua5" id="Smp-Dq-2kA"/>
             </connections>
             <point key="canvasLocation" x="292" y="151"/>
         </collectionViewCell>

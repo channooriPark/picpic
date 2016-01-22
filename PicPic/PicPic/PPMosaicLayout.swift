@@ -82,7 +82,7 @@ class PPMosaicLayout: UICollectionViewLayout {
             }
             
             // Calculate Cell attributes in each section
-            
+
             for cellIndex in 0 ..< self.collectionView!.numberOfItemsInSection(sectionIndex)
             {
                 let cellIndexPath = NSIndexPath(forItem: cellIndex, inSection: sectionIndex)

@@ -13,7 +13,7 @@ class ContentViewController: SubViewController {
     let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        let visibleFrame = CGRectMake(0, self.appdelegate.testNavi.navigationBar.frame.height + UIApplication.sharedApplication().statusBarFrame.height, self.view.frame.width, self.view.frame.height - self.appdelegate.testNavi.navigationBar.frame.height - UIApplication.sharedApplication().statusBarFrame.height - (self.view.frame.height - self.appdelegate.tabbar.view.frame.origin.y))
         
         let titleImage = UIImage(named: "imv_timeline_logo")
         let titleImageView = UIImageView(image: titleImage)
@@ -34,6 +34,8 @@ class ContentViewController: SubViewController {
         self.view.addSubview(appdelegate.second.view)
         self.view.addSubview(appdelegate.alram.view)
         self.view.addSubview(appdelegate.myfeed.view)
+        
+        appdelegate.main.view.frame = visibleFrame
         
         if self.appdelegate.notiType == 0 {
             appdelegate.second.view.hidden = true
@@ -57,7 +59,8 @@ class ContentViewController: SubViewController {
     func refresh() {
         print("refresh()")
         if appdelegate.main.view.hidden == false {
-            appdelegate.main.wkwebView.scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+            //appdelegate.main.wkwebView.scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+            appdelegate.main.refresh()
         }else if appdelegate.second.view.hidden == false {
             appdelegate.second.wkwebView.scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
             if appdelegate.second.followT {

@@ -14,13 +14,18 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
     @IBOutlet weak var collectionView: UICollectionView!
     
     var tagData: Array<[String: String]> = []
-    var gifData: [NSData] = []
+    var gifData: [String : NSData] = [ : ]
     var recommendData: JSON?
+    var _hud: MBProgressHUD?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        _hud = MBProgressHUD()
+        _hud!.mode = MBProgressHUDModeIndeterminate
+        _hud!.center = self.view.center
+        self.view.addSubview(_hud!)
+        _hud!.hide(false)
         // Do any additional setup after loading the view.
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
@@ -31,25 +36,56 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
         let layout = PPMosaicLayout()
         layout.delegate = self
         self.collectionView.collectionViewLayout = layout
+        self.collectionView.bounces = false
         
         self.refresh()
     }
     
     func refresh()
     {
+        self._hud!.show(true)
+        self.gifData = [ : ]
+        self.tagData = []
+        self.collectionView.setContentOffset(CGPointZero, animated: false)
+        self.collectionView.reloadData()
+        
         let appdelegate = UIApplication.sharedApplication().delegate! as! AppDelegate
         //514, 411
         let message = JSON(["my_id": appdelegate.email])
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),{
             
             appdelegate.doItSocket(514, message: message, callback: {(json) in
+                print(json)
                 
+                for dic in json["locale"].array!
+                {
+                    self.tagData.append(dic.dictionaryObject as! [String : String])
+                }
                 for dic in json["interest"].array!
                 {
-                    let data = dic.dictionaryObject as! [String : String]
-                    self.tagData.append(data)
+                    self.tagData.append(dic.dictionaryObject as! [String: String])
                 }
-                dispatch_async(dispatch_get_main_queue(), { self.collectionView.reloadData()})
+
+                for (index, dic) in self.tagData.enumerate()
+                {
+                    let url = dic["url"]!.substringWithRange(dic["url"]!.startIndex ..< dic["url"]!.endIndex.advancedBy(-6)).stringByAppendingString("_1.gif")
+                    
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+
+                        if let gifURL = NSURL(string: "http://gif.picpic.world/" + url)
+                        {
+                            self.gifData["\(index)"] = NSData(contentsOfURL: gifURL) ?? NSData()
+                        }
+                        if self.tagData.count == self.gifData.count
+                        {
+                            dispatch_sync(dispatch_get_main_queue(), {
+                                self.collectionView.reloadData()
+                                self._hud!.hide(true)
+                            })
+                        }
+                    })
+                }
+                
             })
         })
     }
@@ -60,38 +96,66 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
         // Dispose of any resources that can be recreated.
     }
     
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 5
+    }
+    
+    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(self.tagData.count)
-        return self.tagData.count
+
+        if section == 0
+        {
+            return 6
+        }
+        else if section == 2
+        {
+            return 12
+        }
+        else if section == 4
+        {
+            return self.gifData.count - 18 >= 0 ? self.gifData.count - 18 : 0
+        }
+        
+        return 9
+
     }
     
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = self.collectionView.dequeueReusableCellWithReuseIdentifier("mainCell", forIndexPath: indexPath) as! HomeTagCell
         cell.cellIndexPath = indexPath
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-            let gif = self.gifData.count >= indexPath.row + 1 ? UIImage.gifWithData(self.gifData[indexPath.row]) : UIImage.gifWithData(NSData(contentsOfURL: NSURL(string: "http://gif.picpic.world/" + self.tagData[indexPath.row]["url"]!)!)!)
-            dispatch_async(dispatch_get_main_queue(), {
-                cell.gifImageView.image = gif
-            })
-        })
+
+        if self.gifData.count >= indexPath.item + 1
+        {
+            if indexPath.section == 0 || indexPath.section == 2 || indexPath.section == 4
+            {
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                    var index = indexPath.item
+                    if indexPath.section == 2
+                    {
+                        index += self.collectionView.numberOfItemsInSection(0)
+                    }
+                    else if indexPath.section == 4
+                    {
+                        index += self.collectionView.numberOfItemsInSection(0) + self.collectionView.numberOfItemsInSection(2)
+                    }
+                    
+                    let gif = UIImage.gifWithData(self.gifData["\(index)"]!)// gif init background
+
+                    
+                    if self.gifData["\(index)"]!.isEqualToData(NSData()){print("empty!")}
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        cell.gifImageView.image = gif
+                        let text = self.tagData[index]["tag_name"]
+                        cell.tagLabel.text = "#\(text!)"
+
+                        cell.tagLabel.sizeToFit()
+                    })
+                })
+            }
+        }
         
-        //cell.gifImageView.image = UIImage.animatedImageWithAnimatedGIFURL(NSURL(string: self.tagData[indexPath.row]["url"]!))
-        /*if (indexPath.item % 6) == 0
-        {
-        
-        }
-        else
-        {
-        if (indexPath.item % 6) == 1 || (indexPath.item % 6) == 5
-        {
-        cell.backgroundColor = UIColor.blueColor()
-        }
-        if (indexPath.item % 6) == 2 || (indexPath.item % 6) == 4
-        {
-        cell.backgroundColor = UIColor.redColor()
-        }
-        }*/
         return cell
     }
     
@@ -105,7 +169,17 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: PPMosaicLayout, mosaicCellSizeForItemAtIndexPath indexPath: NSIndexPath) -> PPMosaicCellSize {
-        return (indexPath.item == 0 || indexPath.item == 7) ? .Big : .Small
+//        return (indexPath.item == 0 || indexPath.item == 7) ? .Big : .Small
+        if indexPath.section == 0
+        {
+            return (indexPath.item == 0) ? .Big : .Small
+        }
+        else if indexPath.section == 2
+        {
+            return (indexPath.item == 1 || indexPath.item == 6) ? .Big : .Small
+        }
+        
+        return .Small
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: PPMosaicLayout, interitemSpacingForSectionAtIndex section: Int) -> CGFloat {

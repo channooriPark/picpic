@@ -1605,7 +1605,8 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             if fileManager.fileExistsAtPath(db) {
                 self.navigationController?.navigationBarHidden = false
                 if self.appdelegate.main.view.hidden == false {
-                    self.appdelegate.main.fire()
+                    //self.appdelegate.main.fire()
+                    self.appdelegate.main.refresh()
                 }else if self.appdelegate.second.view.hidden == false {
                     if self.appdelegate.second.webState == "follow" {
                         self.appdelegate.second.following()
@@ -1644,7 +1645,8 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             //편집 불러오기로 들어왔을 때
             self.navigationController?.navigationBarHidden = false
             if self.appdelegate.main.view.hidden == false {
-                self.appdelegate.main.fire()
+                //self.appdelegate.main.fire()
+                self.appdelegate.main.refresh()
             }else if self.appdelegate.second.view.hidden == false {
                 if self.appdelegate.second.webState == "follow" {
                     self.appdelegate.second.following()
