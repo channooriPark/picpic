@@ -872,7 +872,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
             
             sendData += data1
             
-            //소켓전송
+//            let connection = Connection()
+//            //소켓전송
+//            connection.connect(ip, port: 34100)
+//            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+//                connection.send(sendData)
+//                dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),{
+//                    print("****************")
+//                    let output = connection.read()
+//                    //
+//                    
+//                    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+//                        callback(JSON(output.convertToDictionary()!))
+//                        connection.disconnect() })
+//                })
+//            })
+            //
+            
+            
             let completionHandler = {(data: NSData?, success: Bool, error: NSError?) in
                 if error == nil
                 {
@@ -962,6 +979,21 @@ extension String {
         
     }
     
+    func convertToDictionary() -> [String: AnyObject]?
+    {
+        //print(self)
+        if let data = self.stringByReplacingOccurrencesOfString("\0", withString: "").stringByReplacingOccurrencesOfString("\n", withString: "").stringByReplacingOccurrencesOfString("\t", withString: "").dataUsingEncoding(NSUTF8StringEncoding) {
+            do {
+                let json = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions()) as? [String: AnyObject]
+                return json
+            }catch let error as NSError
+            {
+                print(error)
+            }
+
+        }
+        return nil
+    }
 }
 
 extension Character {

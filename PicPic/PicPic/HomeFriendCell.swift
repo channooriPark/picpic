@@ -15,13 +15,12 @@ class HomeFriendCell: UICollectionViewCell {
     @IBOutlet weak var followButton: UIButton!
     
     var cellIndexPath: NSIndexPath!
+    var delegate: HomeFriendCellProtocol?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         self.followButton.setImage(UIImage(named: "icon_find_plus"), forState: .Normal)
-        self.followButton.setImage(UIImage(named: "icon_find_plus_c"), forState: .Disabled)
-
     }
 
     override func prepareForReuse() {
@@ -29,9 +28,24 @@ class HomeFriendCell: UICollectionViewCell {
         
         self.profileImageView.image = nil
         self.nameLabel.text = nil
+        self.followButton.setImage(UIImage(named: "icon_find_plus"), forState: .Normal)
 
     }
     @IBAction func followTouched() {
-        self.followButton.enabled = false
+        self.delegate?.followClicked(self.cellIndexPath)
+        if self.followButton.imageForState(.Normal) == UIImage(named: "icon_find_plus")
+        {
+            self.followButton.setImage(UIImage(named: "icon_find_plus_c"), forState: .Normal)
+        }
+        else
+        {
+            self.followButton.setImage(UIImage(named: "icon_find_plus"), forState: .Normal)
+        }
+        self.followButton.layoutIfNeeded()
     }
+}
+
+protocol HomeFriendCellProtocol
+{
+    func followClicked(indexPath: NSIndexPath)
 }

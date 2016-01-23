@@ -9,7 +9,7 @@
 import UIKit
 import SwiftyJSON
 
-class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, PPMosaicLayoutDelegate {
+class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, PPMosaicLayoutDelegate, HomeFriendCellProtocol {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -59,7 +59,6 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
         //514, 411
         let message = JSON(["my_id": appdelegate.email])
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),{
-            
             appdelegate.doItSocket(514, message: message, callback: {(json) in
                 
                 for dic in json["locale"].array!
@@ -94,34 +93,45 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
             })
         })
         
-        appdelegate.doItSocket(411, message: message, callback: {(json) in
-            for dic in json["friends"].array!
-            {
-                self.friendData.append(dic.dictionaryObject as! [String : String])
-            }
-        })
-        appdelegate.doItSocket(411, message: message, callback: { (json) in
-            for dic in json["friends"].array!
-            {
-                self.friendData.append(dic.dictionaryObject as! [String : String])
-            }
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),{
+            appdelegate.doItSocket(411, message: message, callback: {(json) in
+                for dic in json["friends"].array!
+                {
+                    self.friendData.append(dic.dictionaryObject as! [String : String])
+                }
+            })
+            appdelegate.doItSocket(411, message: message, callback: { (json) in
+                for dic in json["friends"].array!
+                {
+                    self.friendData.append(dic.dictionaryObject as! [String : String])
+                }
             
-            for (index, dic) in self.friendData.enumerate()
-            {
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-                    let gifURL = NSURL(string: "http://gif.picpic.world/" + dic["profile_picture"]!)!
-                    self.imageData["\(index)"] = UIImage(data: NSData(contentsOfURL: gifURL) ?? NSData())
-                    
-                    if self.dataAllReceived()
-                    {
-                        dispatch_sync(dispatch_get_main_queue(), {
-                            self.collectionView.reloadData()
-                            self._hud.hide(true)
-                        })
-                    }
-                })
-            }
+                for (index, dic) in self.friendData.enumerate()
+                {
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                        let gifURL = NSURL(string: "http://gif.picpic.world/" + dic["profile_picture"]!)!
 
+                        if let data = NSData(contentsOfURL: gifURL)
+                        {
+                            self.imageData["\(index)"] = UIImage(data:data)
+                        }
+                        else
+                        {
+                            print("empty")
+                            self.imageData["\(index)"] = UIImage()
+                        }
+                    
+                        if self.dataAllReceived()
+                        {
+                            dispatch_sync(dispatch_get_main_queue(), {
+                                self.collectionView.reloadData()
+                                self._hud.hide(true)
+                            })
+                        }
+                    })
+                }
+
+            })
         })
     }
     
@@ -201,6 +211,7 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
             let cell = self.collectionView.dequeueReusableCellWithReuseIdentifier("mainFriendCell", forIndexPath: indexPath) as! HomeFriendCell
             cell.backgroundColor = (indexPath.item % 2 == 1) ? UIColor(red: 233/255, green: 233/255, blue: 233/255, alpha: 1) : UIColor.whiteColor()
             cell.cellIndexPath = indexPath
+            cell.delegate = self
             
             var index = indexPath.item
             
@@ -212,10 +223,12 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
             
             cell.nameLabel.text = self.friendData[index]["id"]!
             cell.nameLabel.sizeToFit()
+            cell.nameLabel.center.x = cell.profileImageView.center.x
+
             
             if self.friendData[index]["follow_yn"] != "N"
             {
-                cell.followButton.enabled = false
+                cell.followButton.setImage(UIImage(named: "icon_find_plus_c"), forState: .Normal)
             }
             
             return cell
@@ -257,8 +270,32 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
         return 0.0
     }
     
-    
-    
+    func followClicked(indexPath: NSIndexPath)
+    {
+        var index = indexPath.item
+        if indexPath.section == 3 {index += 6}
+        
+        self.friendData[index]["follow_yn"] = "Y"
+        
+        let type : String!
+        let send_id = self.friendData[index]["email"]
+        let appdelegate = UIApplication.sharedApplication().delegate! as! AppDelegate
+        if appdelegate.userData["register_form"].string == "10001" {
+            type = "N"
+        }else if appdelegate.userData["register_form"].string == "10002" {
+            type = "F"
+        }else if appdelegate.userData["register_form"].string == "10003" {
+            type = "G"
+        }else {
+            type = "R"
+        }
+        
+        
+        let message : JSON = ["myId":appdelegate.email,"email":[["email":send_id!]],"type":type]
+        appdelegate.doIt(402, message: message, callback: {(json) in
+            print(json)
+        })
+    }
     
     
     

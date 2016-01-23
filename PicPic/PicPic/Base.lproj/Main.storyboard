@@ -3323,7 +3323,7 @@
                             <constraint firstItem="DsY-c0-YNT" firstAttribute="leading" secondItem="SdH-2H-JQp" secondAttribute="leadingMargin" constant="-11" id="PDG-BV-bWo"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="414212EA-E2B6-435E-8139-B16255951288" id="QqF-Li-2ct"/>
+                    <tabBarItem key="tabBarItem" title="" image="895A8717-50FF-4CE2-9092-DD2FDB0A7835" id="QqF-Li-2ct"/>
                     <navigationItem key="navigationItem" id="0aK-XR-PxR"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
@@ -7453,7 +7453,7 @@
                             <constraint firstItem="x9I-39-yvM" firstAttribute="leading" secondItem="Y3S-o4-VFB" secondAttribute="leadingMargin" constant="-11" id="Yxw-LI-fvC"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="2864A387-4A16-482A-8AB8-B63A5C1D1A8D" id="urB-TV-Wsz"/>
+                    <tabBarItem key="tabBarItem" title="" image="927B291A-CEE5-4392-B728-3E68028EB250" id="urB-TV-Wsz"/>
                     <navigationItem key="navigationItem" id="jnl-Uw-H5F"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
@@ -8983,7 +8983,7 @@
     </scenes>
     <resources>
         <image name=" delete" width="375" height="667"/>
-        <image name="2864A387-4A16-482A-8AB8-B63A5C1D1A8D" width="20" height="25">
+        <image name="895A8717-50FF-4CE2-9092-DD2FDB0A7835" width="20" height="25">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -9067,7 +9067,7 @@ AKcAqQCrAK0AsgC1ALcAuQC7AL0AwgDZANsA3RFPEVQRXxFoEXsRfxGKEZMRmBGgEaMRqBG3EbsRwhHK
 EdcR3BHeEeAR5RHtEfAR9RH9EgASEhIVEhoAAAAAAAACAQAAAAAAAABBAAAAAAAAAAAAAAAAAAASHA
 </mutableData>
         </image>
-        <image name="414212EA-E2B6-435E-8139-B16255951288" width="20" height="25">
+        <image name="927B291A-CEE5-4392-B728-3E68028EB250" width="20" height="25">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

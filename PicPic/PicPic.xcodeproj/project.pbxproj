@@ -11,6 +11,7 @@
 		6C9897991C5083F600AD6292 /* libfingramagifencoder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C9897981C5083F600AD6292 /* libfingramagifencoder.a */; };
 		6C98979F1C50868B00AD6292 /* HomeTagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C98979D1C50868B00AD6292 /* HomeTagCell.swift */; };
 		6C9897A01C50868B00AD6292 /* HomeTagCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C98979E1C50868B00AD6292 /* HomeTagCell.xib */; };
+		6CD3A4531C53761C0042F873 /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD3A4521C53761C0042F873 /* Connection.swift */; };
 		6CEDBA551C475791000C32F9 /* PPMosaicLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEDBA541C475791000C32F9 /* PPMosaicLayout.swift */; };
 		6CEDBA581C4757C6000C32F9 /* HomeNativeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEDBA561C4757C6000C32F9 /* HomeNativeViewController.swift */; };
 		6CEDBA591C4757C6000C32F9 /* HomeNativeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CEDBA571C4757C6000C32F9 /* HomeNativeViewController.xib */; };
@@ -435,6 +436,7 @@
 		6C98979C1C50846800AD6292 /* QAGIFEncType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QAGIFEncType.h; sourceTree = "<group>"; };
 		6C98979D1C50868B00AD6292 /* HomeTagCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTagCell.swift; sourceTree = "<group>"; };
 		6C98979E1C50868B00AD6292 /* HomeTagCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeTagCell.xib; sourceTree = "<group>"; };
+		6CD3A4521C53761C0042F873 /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
 		6CEDBA541C475791000C32F9 /* PPMosaicLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPMosaicLayout.swift; sourceTree = "<group>"; };
 		6CEDBA561C4757C6000C32F9 /* HomeNativeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeNativeViewController.swift; sourceTree = "<group>"; };
 		6CEDBA571C4757C6000C32F9 /* HomeNativeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeNativeViewController.xib; sourceTree = "<group>"; };
@@ -1917,6 +1919,7 @@
 				E40DA7DB1BEA1C2900C0E7F1 /* MakFileName.swift */,
 				E4F4A7171BF59F5200ACE67C /* LogPrint.swift */,
 				E48E98D91BF5B466002CF561 /* Secret.swift */,
+				6CD3A4521C53761C0042F873 /* Connection.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -2337,6 +2340,7 @@
 				E4D4EC691C112EAF00616C2E /* GPUImageLocalBinaryPatternFilter.m in Sources */,
 				E4F3DD451BE38EC20063F29B /* URLConnection.swift in Sources */,
 				E416CC1C1C38F2BF001E488E /* GifListViewController.swift in Sources */,
+				6CD3A4531C53761C0042F873 /* Connection.swift in Sources */,
 				E4E0946D1BEC4F23008145C1 /* OpenAccountTableViewController.swift in Sources */,
 				E4D4EC6A1C112EAF00616C2E /* GPUImageLookupFilter.m in Sources */,
 				E4D4ECB61C112EAF00616C2E /* GPUImageUIElement.m in Sources */,
