@@ -19,6 +19,7 @@
 #import <Google/SignIn.h>
 #import "QAGIFEncoderAPI.h"
 #import "QAGIFEncType.h"
+#import "CHTCollectionViewWaterfallLayout.h"
 
 
 #endif /* createAniGIF_Bridging_Header_h */

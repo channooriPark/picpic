@@ -13,12 +13,40 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var tagData: Array<[String: String]> = []
-    var gifData: [String : UIImage] = [ : ]
+    var tagData: Array<[String: String]>  = []
+    var gifData: [String : UIImage] = [ : ]{
+        didSet{
+            print("\(self.tagData.count), \(self.gifData.count),, \(self.friendData.count), \(self.imageData.count) : \(self.dataAllReceived())")
+            if self.dataAllReceived()
+            {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self._hud.hide(true)
+                    self.collectionView.reloadData()
+                })
+            }
+        }
+    }
     var friendData: Array<[String: String]> = []
-    var imageData: [String : UIImage] = [ : ]
+    var imageData: [String : UIImage] = [ : ]{
+        didSet{
+            print("\(self.tagData.count), \(self.gifData.count),, \(self.friendData.count), \(self.imageData.count) : \(self.dataAllReceived())")
+            if self.dataAllReceived()
+            {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self._hud.hide(true)
+                    self.collectionView.reloadData()
+                })
+            }
+        }
+    }
     
     var _hud: MBProgressHUD = MBProgressHUD()
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.navigationBarHidden = false
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +87,7 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
         //514, 411
         let message = JSON(["my_id": appdelegate.email])
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),{
-            appdelegate.doItSocket(514, message: message, callback: {(json) in
+            appdelegate.doIt(514, message: message, callback: {(json) in
                 
                 for dic in json["locale"].array!
                 {
@@ -69,75 +97,65 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
                 {
                     self.tagData.append(dic.dictionaryObject as! [String: String])
                 }
-
-                for (index, dic) in self.tagData.enumerate()
-                {
-                    let url = dic["url"]!.substringWithRange(dic["url"]!.startIndex ..< dic["url"]!.endIndex.advancedBy(-6)).stringByAppendingString("_1.gif")
+                appdelegate.doIt(411, message: message, callback: {(json) in
+                    for dic in json["friends"].array!
+                    {
+                        self.friendData.append(dic.dictionaryObject as! [String : String])
+                    }
+                })
+                appdelegate.doIt(411, message: message, callback: { (json) in
+                    for dic in json["friends"].array!
+                    {
+                        self.friendData.append(dic.dictionaryObject as! [String : String])
+                    }
                     
-                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
-
-                        if let gifURL = NSURL(string: "http://gif.picpic.world/" + url)
+                    
+                    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                        
+                        for (index, dic) in self.tagData.enumerate()
                         {
-                            self.gifData["\(index)"] = UIImage.gifWithData(NSData(contentsOfURL: gifURL) ?? NSData())
+                            let url = dic["url"]!.substringWithRange(dic["url"]!.startIndex ..< dic["url"]!.endIndex.advancedBy(-6)).stringByAppendingString("_1.gif")
+                            
+                            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+                                
+                                if let gifURL = NSURL(string: "http://gif.picpic.world/" + url)
+                                {
+                                    self.gifData["\(index)"] = UIImage.gifWithData(NSData(contentsOfURL: gifURL) ?? NSData())
+                                }
+                                
+                            })
                         }
-                        if self.dataAllReceived()
+
+                        
+                        for (index, dic) in self.friendData.enumerate()
                         {
-                            dispatch_sync(dispatch_get_main_queue(), {
-                                self.collectionView.reloadData()
-                                self._hud.hide(true)
+                            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                                let gifURL = NSURL(string: "http://gif.picpic.world/" + dic["profile_picture"]!)!
+                                
+                                if let data = NSData(contentsOfURL: gifURL)
+                                {
+                                    self.imageData["\(index)"] = UIImage(data:data)
+                                }
+                                else
+                                {
+                                    print("empty")
+                                    self.imageData["\(index)"] = UIImage()
+                                }
+                                
                             })
                         }
                     })
-                }
+                    
+                })
                 
             })
         })
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),{
-            appdelegate.doItSocket(411, message: message, callback: {(json) in
-                for dic in json["friends"].array!
-                {
-                    self.friendData.append(dic.dictionaryObject as! [String : String])
-                }
-            })
-            appdelegate.doItSocket(411, message: message, callback: { (json) in
-                for dic in json["friends"].array!
-                {
-                    self.friendData.append(dic.dictionaryObject as! [String : String])
-                }
-            
-                for (index, dic) in self.friendData.enumerate()
-                {
-                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-                        let gifURL = NSURL(string: "http://gif.picpic.world/" + dic["profile_picture"]!)!
-
-                        if let data = NSData(contentsOfURL: gifURL)
-                        {
-                            self.imageData["\(index)"] = UIImage(data:data)
-                        }
-                        else
-                        {
-                            print("empty")
-                            self.imageData["\(index)"] = UIImage()
-                        }
-                    
-                        if self.dataAllReceived()
-                        {
-                            dispatch_sync(dispatch_get_main_queue(), {
-                                self.collectionView.reloadData()
-                                self._hud.hide(true)
-                            })
-                        }
-                    })
-                }
-
-            })
-        })
+    
     }
     
     func dataAllReceived() -> Bool
     {
-        return self.tagData.count == self.gifData.count && self.tagData.count != 0 && self.friendData.count == 12
+        return self.tagData.count == self.gifData.count && self.tagData.count != 0 && self.imageData.count == 12
     }
     
     
@@ -244,7 +262,27 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        print("\(indexPath.item) \(self.collectionView.cellForItemAtIndexPath(indexPath)!.bounds)")
+        
+        self.navigationController?.navigationBarHidden = true
+        
+        if indexPath.section == 0 || indexPath.section == 2 || indexPath.section == 4
+        {
+            var index = indexPath.item
+            if indexPath.section == 2
+            {
+                index += self.collectionView.numberOfItemsInSection(0)
+            }
+            else if indexPath.section == 4
+            {
+                index += self.collectionView.numberOfItemsInSection(0) + self.collectionView.numberOfItemsInSection(2)
+            }
+            
+            let vc = TagNativeViewController()
+            vc.tagName = self.tagData[index]["tag_name"]!
+            vc.tagId = self.tagData[index]["tag_id"]!
+
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
         
     }
     
@@ -275,7 +313,14 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
         var index = indexPath.item
         if indexPath.section == 3 {index += 6}
         
-        self.friendData[index]["follow_yn"] = "Y"
+        if self.friendData[index]["follow_yn"] == "N"
+        {
+            self.friendData[index]["follow_yn"] = "Y"
+        }
+        else
+        {
+            self.friendData[index]["follow_yn"] = "N"
+        }
         
         let type : String!
         let send_id = self.friendData[index]["email"]
