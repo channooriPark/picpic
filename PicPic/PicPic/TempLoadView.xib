@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -12,20 +12,20 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ckI-XB-JxI">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="20"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="white_arrow_up" translatesAutoresizingMaskIntoConstraints="NO" id="PqI-QG-CSE">
-                            <rect key="frame" x="140" y="0.0" width="40" height="20"/>
+                            <rect key="frame" x="140" y="4" width="40" height="32"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="40" id="EdR-DT-0Nr"/>
-                                <constraint firstAttribute="height" constant="20" id="Rza-9l-QIT"/>
+                                <constraint firstAttribute="height" constant="32" id="Rza-9l-QIT"/>
                             </constraints>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QKM-ZE-Roy">
-                            <rect key="frame" x="295" y="2" width="15" height="16"/>
+                            <rect key="frame" x="283" y="4" width="29" height="31"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="16" id="IuP-PA-41X"/>
-                                <constraint firstAttribute="width" constant="15" id="phk-ed-xBI"/>
+                                <constraint firstAttribute="height" constant="31" id="IuP-PA-41X"/>
+                                <constraint firstAttribute="width" constant="29" id="phk-ed-xBI"/>
                             </constraints>
                             <state key="normal" image="white_x"/>
                             <connections>
@@ -33,14 +33,14 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.25098039215686274" green="0.25098039215686274" blue="0.25098039215686274" alpha="1" colorSpace="calibratedRGB"/>
                     <gestureRecognizers/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="20" id="PII-zP-TkU"/>
-                        <constraint firstItem="QKM-ZE-Roy" firstAttribute="centerY" secondItem="ckI-XB-JxI" secondAttribute="centerY" id="WqV-Xk-5ff"/>
+                        <constraint firstAttribute="height" constant="40" id="PII-zP-TkU"/>
+                        <constraint firstItem="QKM-ZE-Roy" firstAttribute="centerY" secondItem="ckI-XB-JxI" secondAttribute="centerY" constant="-0.5" id="WqV-Xk-5ff"/>
                         <constraint firstItem="PqI-QG-CSE" firstAttribute="centerX" secondItem="ckI-XB-JxI" secondAttribute="centerX" id="a8I-MG-zlp"/>
                         <constraint firstItem="PqI-QG-CSE" firstAttribute="centerY" secondItem="ckI-XB-JxI" secondAttribute="centerY" id="cia-qs-4at"/>
-                        <constraint firstAttribute="trailing" secondItem="QKM-ZE-Roy" secondAttribute="trailing" constant="10" id="j6F-EL-Wcg"/>
+                        <constraint firstAttribute="trailing" secondItem="QKM-ZE-Roy" secondAttribute="trailing" constant="8" id="j6F-EL-Wcg"/>
                     </constraints>
                     <connections>
                         <outletCollection property="gestureRecognizers" destination="v0Y-hZ-30k" appends="YES" id="lHY-rN-UyX"/>
@@ -48,7 +48,7 @@
                     </connections>
                 </view>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="nIU-vc-oc9">
-                    <rect key="frame" x="0.0" y="20" width="320" height="528"/>
+                    <rect key="frame" x="0.0" y="40" width="320" height="508"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Bg4-Al-8lL">
                         <size key="itemSize" width="50" height="50"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -78,7 +78,7 @@
                 <outlet property="panImage" destination="PqI-QG-CSE" id="oqh-Rg-JXO"/>
                 <outlet property="panningView" destination="ckI-XB-JxI" id="8X9-c6-g2r"/>
             </connections>
-            <point key="canvasLocation" x="688" y="588"/>
+            <point key="canvasLocation" x="686" y="585"/>
         </view>
         <panGestureRecognizer minimumNumberOfTouches="1" id="v0Y-hZ-30k">
             <connections>

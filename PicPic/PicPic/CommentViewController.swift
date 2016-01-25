@@ -128,7 +128,7 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         self.tag.view.hidden = true
         self.view.bringSubviewToFront(self.tag.view)
         
-//        self.galleryButton.hidden = true
+        self.galleryButton.hidden = true
     }
     
     override func viewDidAppear(animated: Bool) {

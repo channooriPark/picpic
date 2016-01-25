@@ -46,6 +46,7 @@
 		E416CC1C1C38F2BF001E488E /* GifListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E416CC1B1C38F2BF001E488E /* GifListViewController.swift */; };
 		E41A137A1BF115BD00028971 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E41A13791BF115BD00028971 /* KakaoOpenSDK.framework */; };
 		E41B09AB1C05D9E8001171A2 /* TextAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41B09AA1C05D9E8001171A2 /* TextAddViewController.swift */; };
+		E41DE5091C51FCDD002272B5 /* NotificationCustom.xib in Resources */ = {isa = PBXBuildFile; fileRef = E41DE5081C51FCDD002272B5 /* NotificationCustom.xib */; };
 		E420D7F31C045661007E530B /* SaveListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E420D7F21C045661007E530B /* SaveListViewController.swift */; };
 		E42600401BFC0A7D00D495B6 /* RichTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E426003F1BFC0A7D00D495B6 /* RichTextView.swift */; };
 		E42CDE981BEC7FFA00C35419 /* NoticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42CDE971BEC7FFA00C35419 /* NoticsViewController.swift */; };
@@ -84,6 +85,7 @@
 		E466C2501BE8AD93004F65EF /* SettingProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E466C24F1BE8AD93004F65EF /* SettingProfileViewController.swift */; };
 		E469C5A31BE855440095AD69 /* FacebookJoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E469C5A21BE855440095AD69 /* FacebookJoinViewController.swift */; };
 		E46BECDF1C117040008AC31A /* Alamofire1.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46BECDE1C117040008AC31A /* Alamofire1.swift */; };
+		E4796CC81C51CDAB00F239CF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E4796CCA1C51CDAB00F239CF /* Localizable.strings */; };
 		E47BEFF21C44842D008E93E8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E47BEFF11C44842D008E93E8 /* GoogleService-Info.plist */; };
 		E47BEFF81C44BE01008E93E8 /* GoogleJoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47BEFF71C44BE01008E93E8 /* GoogleJoinViewController.swift */; };
 		E47BEFFA1C44C37A008E93E8 /* GoogleprofileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47BEFF91C44C37A008E93E8 /* GoogleprofileViewController.swift */; };
@@ -468,6 +470,7 @@
 		E416CC1B1C38F2BF001E488E /* GifListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GifListViewController.swift; sourceTree = "<group>"; };
 		E41A13791BF115BD00028971 /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
 		E41B09AA1C05D9E8001171A2 /* TextAddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextAddViewController.swift; sourceTree = "<group>"; };
+		E41DE5081C51FCDD002272B5 /* NotificationCustom.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationCustom.xib; sourceTree = "<group>"; };
 		E420D7F21C045661007E530B /* SaveListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveListViewController.swift; sourceTree = "<group>"; };
 		E426003F1BFC0A7D00D495B6 /* RichTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichTextView.swift; sourceTree = "<group>"; };
 		E42CDE971BEC7FFA00C35419 /* NoticsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticsViewController.swift; sourceTree = "<group>"; };
@@ -517,6 +520,10 @@
 		E466C24F1BE8AD93004F65EF /* SettingProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingProfileViewController.swift; sourceTree = "<group>"; };
 		E469C5A21BE855440095AD69 /* FacebookJoinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookJoinViewController.swift; sourceTree = "<group>"; };
 		E46BECDE1C117040008AC31A /* Alamofire1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alamofire1.swift; sourceTree = "<group>"; };
+		E4796CC71C51CDA100F239CF /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
+		E4796CC91C51CDAB00F239CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E4796CCB1C51CDB400F239CF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E4796CCC1C51CDB600F239CF /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E47BEFF11C44842D008E93E8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E47BEFF71C44BE01008E93E8 /* GoogleJoinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleJoinViewController.swift; sourceTree = "<group>"; };
 		E47BEFF91C44C37A008E93E8 /* GoogleprofileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleprofileViewController.swift; sourceTree = "<group>"; };
@@ -1224,6 +1231,7 @@
 				E4364FE01C06938000B201C6 /* colorPalette.plist */,
 				E4CDA0821C4CB8FD00A85C42 /* strings_en.xml */,
 				E4CDA0831C4CB8FD00A85C42 /* strings.xml */,
+				E4796CCA1C51CDAB00F239CF /* Localizable.strings */,
 				E45BAD881BFC5A990065148E /* MyPlayground.playground */,
 				E4C459401BF9777500FEAAA0 /* text */,
 				E4CDA0731C4CB80E00A85C42 /* DKImageManager */,
@@ -1265,6 +1273,7 @@
 				E42CDF151BECFB3C00C35419 /* PicPic-Bridging-Header.h */,
 				E44580431BE3882000AF186C /* Assets.xcassets */,
 				E44580481BE3882000AF186C /* Info.plist */,
+				E41DE5081C51FCDD002272B5 /* NotificationCustom.xib */,
 			);
 			path = PicPic;
 			sourceTree = "<group>";
@@ -2021,10 +2030,13 @@
 				TargetAttributes = {
 					E44580381BE3882000AF186C = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = ANM7DT8PCR;
+						DevelopmentTeam = SEDPMQ93PW;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
 								enabled = 0;
+							};
+							com.apple.Push = {
+								enabled = 1;
 							};
 							com.apple.SafariKeychain = {
 								enabled = 0;
@@ -2050,6 +2062,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = E44580301BE3882000AF186C;
 			productRefGroup = E445803A1BE3882000AF186C /* Products */;
@@ -2069,6 +2082,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4AB45501C16668C002EA053 /* toasterOverlayMapWarm.png in Resources */,
+				E41DE5091C51FCDD002272B5 /* NotificationCustom.xib in Resources */,
 				E4AB453A1C16668C002EA053 /* edgeBurn.png in Resources */,
 				E4AB453D1C16668C002EA053 /* hefeMetal.png in Resources */,
 				E4A414C01C27AB1C0087F450 /* mask.jpg in Resources */,
@@ -2137,6 +2151,7 @@
 				E4AB452F1C16668C002EA053 /* amaroMap.png in Resources */,
 				E4CDA0851C4CB8FD00A85C42 /* strings.xml in Resources */,
 				E47BEFF21C44842D008E93E8 /* GoogleService-Info.plist in Resources */,
+				E4796CC81C51CDAB00F239CF /* Localizable.strings in Resources */,
 				E4AB454D1C16668C002EA053 /* toasterColorShift.png in Resources */,
 				E403AAE91BED11BF007DBA10 /* tuto_4_en.gif in Resources */,
 				E403AAEB1BED11BF007DBA10 /* tuto_5.gif in Resources */,
@@ -2572,8 +2587,19 @@
 			isa = PBXVariantGroup;
 			children = (
 				E44580411BE3882000AF186C /* Base */,
+				E4796CC71C51CDA100F239CF /* ko */,
 			);
 			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		E4796CCA1C51CDAB00F239CF /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E4796CC91C51CDAB00F239CF /* Base */,
+				E4796CCB1C51CDB400F239CF /* en */,
+				E4796CCC1C51CDB600F239CF /* ko */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -2666,8 +2692,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: HYUNWOONG OH (57V54GPACQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: HYUNWOONG OH (57V54GPACQ)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2686,7 +2712,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = picpic.sikkle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "505a7dba-2082-4a59-bb8b-85c29b4f4be1";
 				SWIFT_OBJC_BRIDGING_HEADER = "PicPic/PicPic-Bridging-Header.h";
 			};
 			name = Debug;
@@ -2697,8 +2723,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: HYUNWOONG OH (57V54GPACQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: HYUNWOONG OH (57V54GPACQ)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2717,7 +2743,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = picpic.sikkle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "505a7dba-2082-4a59-bb8b-85c29b4f4be1";
 				SWIFT_OBJC_BRIDGING_HEADER = "PicPic/PicPic-Bridging-Header.h";
 			};
 			name = Release;

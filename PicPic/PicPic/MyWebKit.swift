@@ -394,6 +394,8 @@ class MyWebKit : UIViewController, WKNavigationDelegate, WKUIDelegate{
             var count = 0
             if appdelegate.controller.count == 1 {
                 
+            }else if appdelegate.controller.count == 0 {
+                count = 0
             }else {
                 count = appdelegate.controller.count-1
             }

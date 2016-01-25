@@ -109,17 +109,7 @@ class MoviePreviewViewController : SubViewController, UIImagePickerControllerDel
     }
     
     @IBAction func actNext(sender: UIButton) {
-        
-        
-        
-        //        if ((self.sliderStart.value)>timeLimit) {
-        //            let alert = UIAlertController(title: "", message: self.appdelegate.ment["camera_video_setting"].stringValue, preferredStyle: UIAlertControllerStyle.Alert)
-        //            alert.addAction(UIAlertAction(title: self.appdelegate.ment["popup_confirm"].stringValue, style: UIAlertActionStyle.Default, handler: nil))
-        //            presentViewController(alert, animated: true, completion: nil)
-        //            return
-        //        }
-        
-        
+        self.moviePlayer?.rate = 0
         let start = Double(self.sliderStart.value)
         let end = Double(self.sliderStart.value + self.sliderEnd.value)
         self.backViewShow(true)
@@ -166,9 +156,6 @@ class MoviePreviewViewController : SubViewController, UIImagePickerControllerDel
                         gifMakerVC?.gifsFolder = self.gifsFolder
                         gifMakerVC?.gifName = self.gifName
                         gifMakerVC?.arr_recoding_time.append(end-start)
-                        
-                        //        controlLoading(false)
-                        //        loading.stopAnimating()
                         self.appdelegate.testNavi.pushViewController(gifMakerVC!, animated: true)
                     })
                 }
@@ -331,8 +318,6 @@ class MoviePreviewViewController : SubViewController, UIImagePickerControllerDel
         movieView.layer.addSublayer(playerLayer)
         
         moviePlayer?.play()
-        
-        
         let time_total = CMTimeGetSeconds(asset.duration)
         
         var time_end = Double(timeLimit);

@@ -1,1 +1,0 @@
-../../../../AppInvites/Frameworks/GINInvite.framework/Versions/A/Headers/GINInvite.h

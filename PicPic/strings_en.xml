@@ -140,6 +140,8 @@
     <string name="popup_is_sign_out">Delete your account?</string>
     <string name="popup_sign_out_str">When deleted, collected user information will be &#xD;erased permanently and you will not be accessible &#xD;to your account anymore.</string>
     <string name="popup_confirm">Confirm</string>
+    <string name="video_not_search">Not Found Movies.</string>
+
     
     
     
@@ -153,6 +155,12 @@
     <string name="notification_all">All</string>
     <string name="notification_my">You</string>
     <string name="notification_follow">Following</string>
+    
+    <string name="notification_close">Close</string>
+    <string name="notification_action">Detail</string>
+    <string name="notification_new">New Notification</string>
+    
+
 
     <string name="like">Like</string>
     <string name="like_cancel">Unlike</string>

@@ -3323,7 +3323,7 @@
                             <constraint firstItem="DsY-c0-YNT" firstAttribute="leading" secondItem="SdH-2H-JQp" secondAttribute="leadingMargin" constant="-11" id="PDG-BV-bWo"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="A6FE2302-E1AD-4F91-ACAA-DA90E8C47660" id="QqF-Li-2ct"/>
+                    <tabBarItem key="tabBarItem" title="" image="7A9D7341-94DC-4A77-82A8-DC2E1C78EBD3" id="QqF-Li-2ct"/>
                     <navigationItem key="navigationItem" id="0aK-XR-PxR"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
@@ -7453,7 +7453,7 @@
                             <constraint firstItem="x9I-39-yvM" firstAttribute="leading" secondItem="Y3S-o4-VFB" secondAttribute="leadingMargin" constant="-11" id="Yxw-LI-fvC"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="4078AC53-9171-4857-8B10-ED92D104FBBC" id="urB-TV-Wsz"/>
+                    <tabBarItem key="tabBarItem" title="" image="9078C65F-BD18-4198-8E30-9CE38E228BB1" id="urB-TV-Wsz"/>
                     <navigationItem key="navigationItem" id="jnl-Uw-H5F"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
@@ -8969,6 +8969,7 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="backButton" destination="9mC-nc-wxW" id="U0K-gK-tSC"/>
                         <outlet property="collectionView" destination="VV3-xU-coy" id="GEf-SM-jQg"/>
                         <outlet property="nextButton" destination="cKl-6v-hHc" id="sRc-Ux-4uZ"/>
                         <outlet property="nextWidth" destination="ZVC-ea-5SD" id="LL2-oa-2AQ"/>
@@ -8983,7 +8984,7 @@
     </scenes>
     <resources>
         <image name=" delete" width="375" height="667"/>
-        <image name="4078AC53-9171-4857-8B10-ED92D104FBBC" width="20" height="25">
+        <image name="7A9D7341-94DC-4A77-82A8-DC2E1C78EBD3" width="20" height="25">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -9067,7 +9068,7 @@ AKcAqQCrAK0AsgC1ALcAuQC7AL0AwgDZANsA3RFPEVQRXxFoEXsRfxGKEZMRmBGgEaMRqBG3EbsRwhHK
 EdcR3BHeEeAR5RHtEfAR9RH9EgASEhIVEhoAAAAAAAACAQAAAAAAAABBAAAAAAAAAAAAAAAAAAASHA
 </mutableData>
         </image>
-        <image name="A6FE2302-E1AD-4F91-ACAA-DA90E8C47660" width="20" height="25">
+        <image name="9078C65F-BD18-4198-8E30-9CE38E228BB1" width="20" height="25">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

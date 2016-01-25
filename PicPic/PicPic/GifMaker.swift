@@ -42,8 +42,8 @@ class GifMaker {
     }
     
     func thumbFromMov(inputPath:String, outputPath imagePath:String) {
-//        print("moviePath : ",inputPath)
-//        print("imagePath : ",imagePath)
+        //        print("moviePath : ",inputPath)
+        //        print("imagePath : ",imagePath)
         let asset = AVAsset(URL: NSURL(fileURLWithPath: inputPath))
         let imageGenerator = AVAssetImageGenerator(asset: asset)
         imageGenerator.appliesPreferredTrackTransform = true
@@ -52,7 +52,7 @@ class GifMaker {
         do {
             let imageRef = try imageGenerator.copyCGImageAtTime(time, actualTime: nil)
             var img = UIImage(CGImage: imageRef)
-//            print(img.size)
+            //            print(img.size)
             let width = img.size.width
             var height = img.size.height
             
@@ -126,66 +126,46 @@ class GifMaker {
                 let imageRef = try imageGenerator.copyCGImageAtTime(time, actualTime: nil)
                 var img = UIImage(CGImage: imageRef)
                 if(Config.getInstance().dataType==0) {
-                //카메라 촬영
-                if(Config.getInstance().videoRatio == "1:1") {
-                    var width = Double(img.size.width)
-                    if(img.size.height<img.size.width) {
-                        width = Double(img.size.height)
+                    //카메라 촬영
+                    if(Config.getInstance().videoRatio == "1:1") {
+                        var width = Double(img.size.width)
+                        if(img.size.height<img.size.width) {
+                            width = Double(img.size.height)
+                        }
+                        
+                        img = img.cropToBounds(width, height: width)
+                        //                    img = img.cropToBounds(480, height: 480)
+                        
+                        if( Double(Config.getInstance().wid) < width) {
+                            img = img.resizeImage(CGSize(width: 480, height: 480))
+                        }
+                    } else {
+                        //                    self.log.log("log.log img size\(img.size)")
+                        var width = Double(img.size.width)
+                        if(img.size.height<img.size.width) {
+                            width = Double(img.size.height)
+                        }
+                        let height = width*4/3
+                        
+                        img = img.cropToBounds(width, height: height)
+                        //                    img = img.cropToBounds(480, height: 640)
+                        
+                        if( Double(Config.getInstance().wid) < width) {
+                            img = img.resizeImage(CGSize(width: 480, height: 640))
+                        }
                     }
-                    
-                    img = img.cropToBounds(width, height: width)
-//                    img = img.cropToBounds(480, height: 480)
-                    
-                    if( Double(Config.getInstance().wid) < width) {
-                        img = img.resizeImage(CGSize(width: 480, height: 480))
-                    }
-                } else {
-//                    self.log.log("log.log img size\(img.size)")
-                    var width = Double(img.size.width)
-                    if(img.size.height<img.size.width) {
-                        width = Double(img.size.height)
-                    }
-                    let height = width*4/3
-                    
-                    img = img.cropToBounds(width, height: height)
-//                    img = img.cropToBounds(480, height: 640)
-                    
-                    if( Double(Config.getInstance().wid) < width) {
-                        img = img.resizeImage(CGSize(width: 480, height: 640))
-                    }
-                }
                 } else {
                     //갤러리에서 동영상 선택
                     self.log.log("log.log img size\(img.size)")
                     if(img.size.width > img.size.height) { //가로로 자르기
                         let imgRatio = Float((img.size.width) / (img.size.height))
-                        let ratio = Float(4.0/3.0)
+                        let ratio = Float(16.0/9.0)
                         self.log.log("imgRatio  :  \(imgRatio)  ratio : \(ratio)")
-                        if(imgRatio > ratio) { // 세로 기준
-                            
-                            /*var width = Double(img.size.width)
-                            if(img.size.height<img.size.width) {
-                                width = Double(img.size.height)
-                            }*/
-                            let width = Double (img.size.height*CGFloat(4/3) )
-                            let height = Double (img.size.height)
-                            
-                            print("img 세로기준 datatype 1 ",img.size.width,"x",img.size.height)
-                            print(width,"x",height)
-                            
+                        if imgRatio == ratio {
+                            //16:9기준
                             img = img.cropToBounds(720, height: 720)
-//                            if( Double(Config.getInstance().wid) < width) {
-                                img = img.resizeImage(CGSize(width: 640, height: 360))
-//                            }
-                            /*
                             img = img.resizeImage(CGSize(width: 640, height: 360))
-                            let cropSize = CGSize(width:img!.size.height*4/3, height:img!.size.height)
-                            let reSize = CGSize(width: Config.getInstance().wid, height: Config.getInstance().wid*3/4)
-                            
-                            makeJpegs(tmpPath, workPath: workPath, cropSize: cropSize, reSize: reSize)*/
-                        } else { // 가로 기준
-//                            print("5")
-                            
+                        } else { // 4:3기준
                             var width = Double(img.size.width)
                             if(img.size.height<img.size.width) {
                                 width = Double(img.size.height)
@@ -199,61 +179,17 @@ class GifMaker {
                             if( Double(Config.getInstance().wid) < width) {
                                 img = img.resizeImage(CGSize(width: 640, height: 480))
                             }
-                            
-                            /*
-                            let cropSize = CGSize(width:img!.size.width, height:img!.size.width*3/4)
-                            let reSize = CGSize(width: Config.getInstance().wid, height: Config.getInstance().wid*3/4)
-                            
-                            makeJpegs(tmpPath, workPath: workPath, cropSize: cropSize, reSize: reSize)*/
                         }
                     } else { // 세로로 자르기
-                        let imgRatio = Float((img.size.height) / (img.size.width))
-                        let ratio = Float(4.0/3.0)
+                        var width = Double(img.size.width)
+                        if(img.size.height<img.size.width) {
+                            width = Double(img.size.height)
+                        }
+                        let height = width*4/3
                         
-                        if(imgRatio > ratio) { // 가로 기준
-//                            print("6")
-                            
-                            var width = Double(img.size.width)
-                            if(img.size.height<img.size.width) {
-                                width = Double(img.size.height)
-                            }
-                            let height = width*4/3
-                            
-                            img = img.cropToBounds(width, height: height)
-                            if( Double(Config.getInstance().wid) < width) {
-                                img = img.resizeImage(CGSize(width: 480, height: 640))
-                            }
-                            
-                            /*
-                            let cropSize = CGSize(width:img!.size.width, height:img!.size.width*4/3)
-                            
-                            print(cropSize)
-                            //let reSize = CGSize(width: Config.getInstance().wid, height: Config.getInstance().wid*4/3)
-                            
-                            makeJpegs(tmpPath, workPath: workPath, cropSize: cropSize, reSize: nil)*/
-                            
-                        } else { // 세로 기준
-//                            print("7")
-                            
-                            /*var width = Double(img.size.width)
-                            if(img.size.height<img.size.width) {
-                                width = Double(img.size.height)
-                            }
-                            let height = width*4/3*/
-                            
-                            let width = Double (img.size.height*CGFloat(4/3) )
-                            let height = Double (img.size.height)
-                            
-                            img = img.cropToBounds(width, height: height)
-                            if( Double(Config.getInstance().wid) < width) {
-                                img = img.resizeImage(CGSize(width: 480, height: 640))
-                            }
-                            
-                            /*
-                            let cropSize = CGSize(width:img!.size.height*4/3, height:img!.size.height)
-                            let reSize = CGSize(width: Config.getInstance().wid, height: Config.getInstance().wid*4/3)
-                            
-                            makeJpegs(tmpPath, workPath: workPath, cropSize: cropSize, reSize: reSize)*/
+                        img = img.cropToBounds(width, height: height)
+                        if( Double(Config.getInstance().wid) < width) {
+                            img = img.resizeImage(CGSize(width: 480, height: 640))
                         }
                     }
                     
@@ -265,7 +201,6 @@ class GifMaker {
             }
             indx++
         }
-//        print("dddddddddddddd")
     }
     
     func makeJpegs(tmpPath:String, workPath:String, cropSize:CGSize?, reSize:CGSize?) {
@@ -280,7 +215,7 @@ class GifMaker {
                 var img = UIImage(contentsOfFile: path);
                 
                 if(cropSize != nil) {
-//                    print(cro÷pSize)
+                    //                    print(cro÷pSize)
                     img = img?.cropToBounds(Double(cropSize!.width), height: Double(cropSize!.height))
                 }
                 if(reSize != nil) {
@@ -290,7 +225,7 @@ class GifMaker {
             }
         }
         
-//        print("ggggg÷÷gggggggggggg")
+        //        print("ggggg÷÷gggggggggggg")
     }
     
     func readyWork(tmpPath:String, workPath:String, ratio:String) {
@@ -305,37 +240,40 @@ class GifMaker {
         
         let imgPath = "\(tmpPath)/000.jpg"
         let img = UIImage(contentsOfFile: imgPath)
+        
+        //        print("Config.getInstance().dataType ",Config.getInstance().dataType)
+        //        print("Config.getInstance().videoRatio ",Config.getInstance().videoRatio)
         if(Config.getInstance().dataType==0) {
             if(Config.getInstance().videoRatio == "1:1") {
                 if(img?.size.width>img?.size.height) {
-//                    print("1")
+                    //                    print("1")
                     let cropSize = CGSize(width:img!.size.height, height:img!.size.height)
                     let reSize = CGSize(width: Config.getInstance().wid, height: Config.getInstance().wid)
                     
                     makeJpegs(tmpPath, workPath: workPath, cropSize: cropSize, reSize: reSize)
                 } else {
-//                    print("2")
+                    //                    print("2")
                     let cropSize = CGSize(width:img!.size.width, height:img!.size.width)
                     let reSize = CGSize(width: Config.getInstance().wid, height: Config.getInstance().wid)
-//                    print("\(reSize)     \(cropSize)")
+                    //                    print("\(reSize)     \(cropSize)")
                     makeJpegs(tmpPath, workPath: workPath, cropSize: cropSize, reSize: reSize)
                 }
             } else {
                 
                 
                 if(img?.size.width > img?.size.height) { //가로로 자르기
-//                    print("3")
+                    //                    print("3")
                     let imgRatio = Float((img?.size.width)! / (img?.size.height)!)
                     let ratio = Float(4.0/3.0)
                     
                     if(imgRatio > ratio) { // 세로 기준
-//                        print("4")
+                        //                        print("4")
                         let cropSize = CGSize(width:img!.size.height*4/3, height:img!.size.height)
                         let reSize = CGSize(width: Config.getInstance().wid, height: Config.getInstance().wid*3/4)
                         
                         makeJpegs(tmpPath, workPath: workPath, cropSize: cropSize, reSize: reSize)
                     } else { // 가로 기준
-//                        print("5")
+                        //                        print("5")
                         let cropSize = CGSize(width:img!.size.width, height:img!.size.width*3/4)
                         let reSize = CGSize(width: Config.getInstance().wid, height: Config.getInstance().wid*3/4)
                         
@@ -346,16 +284,16 @@ class GifMaker {
                     let ratio = Float(4.0/3.0)
                     
                     if(imgRatio > ratio) { // 가로 기준
-//                        print("6")
+                        //                        print("6")
                         let cropSize = CGSize(width:img!.size.width, height:img!.size.width*4/3)
                         
-//                        print(cropSize)
+                        //                        print(cropSize)
                         //let reSize = CGSize(width: Config.getInstance().wid, height: Config.getInstance().wid*4/3)
                         
                         makeJpegs(tmpPath, workPath: workPath, cropSize: cropSize, reSize: nil)
                         
                     } else { // 세로 기준
-//                        print("7")
+                        //                        print("7")
                         let cropSize = CGSize(width:img!.size.height*4/3, height:img!.size.height)
                         let reSize = CGSize(width: Config.getInstance().wid, height: Config.getInstance().wid*4/3)
                         
@@ -367,26 +305,14 @@ class GifMaker {
             }
         } else {
             if(img?.size.width>Config.getInstance().wid) {
-//                print("리사이징 코드 삽입")
+                //                print("리사이징 코드 삽입")
                 //let enumerator:NSDirectoryEnumerator = fileManager.enumeratorAtPath(tmpPath)!
                 
                 let reSize = CGSize(width: Config.getInstance().wid, height: Config.getInstance().wid*(img?.size.height)!/(img?.size.width)!)
                 
                 makeJpegs(tmpPath, workPath: workPath, cropSize: nil, reSize: reSize)
-                /*
-                while let element = enumerator.nextObject() as? String {
-                    if element.hasSuffix("jpg") { // checks the extension
-                        let path = "\(tmpPath)/\(element)"
-                        let dest = "\(workPath)/\(element)"
-                        
-                        var img = UIImage(contentsOfFile: path);
-                        img = img?.resizeImage(reSize)
-                        
-                        UIImageJPEGRepresentation(img!, 100)!.writeToFile(dest, atomically: true)
-                    }
-                }*/
             } else {
-//                print("work 폴더로 복사")
+                //                print("work 폴더로 복사")
                 
                 let enumerator:NSDirectoryEnumerator = fileManager.enumeratorAtPath(tmpPath)!
                 
@@ -410,7 +336,7 @@ class GifMaker {
     func save(photoDataArr:Array<UIImage>, outPath:String) {
         var indx = 0;
         for img in photoDataArr {
-//            print("iamge Size",img.size)
+            //            print("iamge Size",img.size)
             let savePath = String(format: "%@/%03d.jpg", arguments: [outPath,Int(indx)])
             UIImageJPEGRepresentation(img, 100)!.writeToFile(savePath, atomically: true)
             indx++
@@ -419,11 +345,11 @@ class GifMaker {
     
     func creat(photoDataArr:Array<UIImage>, delayTime:Float, gifPath:String) {
         let fileManager = NSFileManager.defaultManager()
-
+        
         let regift_photo: Regift_photo = Regift_photo(sourceArray: photoDataArr, delayTime: delayTime)
         
         let output = regift_photo.createGif()
-//        print("output ",output?.path)
+        //        print("output ",output?.path)
         
         do {
             try fileManager.copyItemAtPath((output?.path)!, toPath: gifPath)
@@ -479,9 +405,9 @@ class GifMaker {
         var saveArr = photoDataArr
         
         let fileManager = NSFileManager.defaultManager()
-//        print("run make2")
-//        print("imga count ",photoDataArr.count)
-//        print("delay Time : ",delayTime)
+        //        print("run make2")
+        //        print("imga count ",photoDataArr.count)
+        //        print("delay Time : ",delayTime)
         let ghostPath = String(format: "%@/ghost.jpg", arguments: [workFolder])
         let scratchPath = String(format: "%@/scratch.png", arguments: [workFolder])
         
@@ -512,10 +438,6 @@ class GifMaker {
                 var newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()
                 UIGraphicsEndImageContext()
                 
-//                if filter != nil {
-//                    applyFilter(&newImage, filter: filter!)
-//                }
-                
                 UIGraphicsBeginImageContext(size)
                 
                 newImage.drawInRect(areaSize)
@@ -524,7 +446,7 @@ class GifMaker {
                 }
                 
                 if warterMark {
-//                    print("warterMark")
+                    //                    print("warterMark")
                     let warter = UIImage(named: "watermark")
                     let warterRect = CGRectMake(areaSize.width-158, areaSize.height-58, 148, 48)
                     warter?.drawInRect(warterRect)
@@ -533,36 +455,36 @@ class GifMaker {
                 newImage = UIGraphicsGetImageFromCurrentImageContext()
                 
                 UIGraphicsEndImageContext()
-
+                
                 saveArr[i] = newImage
             }
-     
+            
         } else {
-//            if(filter != nil) {
-//                for var i=0;i<photoDataArr.count;i++ {
-//                    var bottomImage = photoDataArr[i]
-//                    
-//                    applyFilter(&bottomImage, filter: filter!)
-//                    
-//                    saveArr[i] = bottomImage
-//                }
-//            } else {
-//                
-//            }
+            //            if(filter != nil) {
+            //                for var i=0;i<photoDataArr.count;i++ {
+            //                    var bottomImage = photoDataArr[i]
+            //
+            //                    applyFilter(&bottomImage, filter: filter!)
+            //
+            //                    saveArr[i] = bottomImage
+            //                }
+            //            } else {
+            //
+            //            }
         }
         let regift_photo: Regift_photo = Regift_photo(sourceArray: saveArr, delayTime: delayTime)
         
         let output = regift_photo.createGif()
-//        print("output ",output?.path)
+        //        print("output ",output?.path)
         
         do {
             if fileManager.fileExistsAtPath(gifPath) {
-//                print("있어요")
-//                print(gifPath)
+                //                print("있어요")
+                //                print(gifPath)
                 try fileManager.removeItemAtPath(gifPath)
                 //delete file code
             }
-//            print("gifPath ",gifPath)
+            //            print("gifPath ",gifPath)
             try fileManager.copyItemAtPath((output?.path)!, toPath: gifPath)
         } catch let error as NSError {
             print(error.localizedDescription);
@@ -576,7 +498,7 @@ class GifMaker {
         var saveArr = photoDataArr
         var saveArr1 = [UIImage]()
         let fileManager = NSFileManager.defaultManager()
-//        let ghostPath = String(format: "%@/ghost.jpg", arguments: [workFolder])
+        //        let ghostPath = String(format: "%@/ghost.jpg", arguments: [workFolder])
         let scratchPath = String(format: "%@/scratch.jpg", arguments: [workFolder])
         
         var eraserImage = UIImage()
@@ -614,10 +536,10 @@ class GifMaker {
                         
                         bottomImage.drawInRect(areaSize)
                         
-//                        if fileManager.fileExistsAtPath(ghostPath) {
-//                            let ghost_img = UIImage(contentsOfFile: ghostPath)
-//                            ghost_img!.drawInRect(areaSize, blendMode: CGBlendMode.Multiply, alpha: Config.getInstance().ghostAlpha)
-//                        }
+                        //                        if fileManager.fileExistsAtPath(ghostPath) {
+                        //                            let ghost_img = UIImage(contentsOfFile: ghostPath)
+                        //                            ghost_img!.drawInRect(areaSize, blendMode: CGBlendMode.Multiply, alpha: Config.getInstance().ghostAlpha)
+                        //                        }
                         
                         if fileManager.fileExistsAtPath(scratchPath) {
                             let scratch_img = eraserImage
@@ -698,10 +620,10 @@ class GifMaker {
                         
                         bottomImage.drawInRect(areaSize)
                         
-//                        if fileManager.fileExistsAtPath(ghostPath) {
-//                            let ghost_img = UIImage(contentsOfFile: ghostPath)
-//                            ghost_img!.drawInRect(areaSize, blendMode: CGBlendMode.Multiply, alpha: Config.getInstance().ghostAlpha)
-//                        }
+                        //                        if fileManager.fileExistsAtPath(ghostPath) {
+                        //                            let ghost_img = UIImage(contentsOfFile: ghostPath)
+                        //                            ghost_img!.drawInRect(areaSize, blendMode: CGBlendMode.Multiply, alpha: Config.getInstance().ghostAlpha)
+                        //                        }
                         
                         if fileManager.fileExistsAtPath(scratchPath) {
                             let scratch_img = eraserImage
@@ -863,17 +785,17 @@ class GifMaker {
         QAGIFEncFinish(agifencPtr, 1)
     }
     
-
+    
     
     
     func make(photoDataArr:[UIImage], delayTime:Float, gifPath:String, workFolder:String,filter:CIFilter?) {
         let fileManager = NSFileManager.defaultManager()
         
-//        print("imga count ",photoDataArr.count)
-//        print("delay Time : ",delayTime)
+        //        print("imga count ",photoDataArr.count)
+        //        print("delay Time : ",delayTime)
         let ghostPath = String(format: "%@/ghost.jpg", arguments: [workFolder])
         if fileManager.fileExistsAtPath(ghostPath) {
-//            print("have ghost")
+            //            print("have ghost")
             
             var ghost_img = UIImage(contentsOfFile: ghostPath)
             
@@ -907,7 +829,7 @@ class GifMaker {
             let regift_photo: Regift_photo = Regift_photo(sourceArray: saveArr, delayTime: delayTime)
             
             let output = regift_photo.createGif()
-//            print("output ",output?.path)
+            //            print("output ",output?.path)
             
             do {
                 try fileManager.copyItemAtPath((output?.path)!, toPath: gifPath)
@@ -920,7 +842,7 @@ class GifMaker {
             let regift_photo: Regift_photo = Regift_photo(sourceArray: photoDataArr, delayTime: delayTime)
             
             let output = regift_photo.createGif()
-//            print("output ",output?.path)
+            //            print("output ",output?.path)
             
             do {
                 try fileManager.copyItemAtPath((output?.path)!, toPath: gifPath)
@@ -945,7 +867,7 @@ extension UIImage {
     
     
     public func resizeImage(targetSize: CGSize) -> UIImage {
-//        print("targetSize ",targetSize)
+        //        print("targetSize ",targetSize)
         let widthRatio  = targetSize.width  / self.size.width
         let heightRatio = targetSize.height / self.size.height
         
@@ -960,13 +882,10 @@ extension UIImage {
         } else {
             newSize = CGSizeMake(heightRatio*self.size.width, heightRatio*self.size.height)
         }
-//        print("newSize ",newSize)
+        print("resizeImage method()         newSize ",newSize)
         
         // This is the rect that we've calculated out and this is what is actually used below
         let rect = CGRectMake(0, 0, targetSize.width, targetSize.height)
-        
-//        print("newSize ",newSize," image size ",self.size)
-        
         // Actually do the resizing to the rect using the ImageContext stuff
         UIGraphicsBeginImageContextWithOptions(targetSize, false, 1.0)
         self.drawInRect(rect)
@@ -981,11 +900,11 @@ extension UIImage {
         
         let contextImage: UIImage = UIImage(CGImage: self.CGImage!)
         
-//        print("contextImage ",contextImage.size.width,"x",contextImage.size.height)
+        //        print("contextImage ",contextImage.size.width,"x",contextImage.size.height)
         
         let contextSize: CGSize = contextImage.size
         
-//        print("contextSize ",contextSize)
+        //        print("contextSize ",contextSize)
         var posX: CGFloat = 0.0
         var posY: CGFloat = 0.0
         var cgwidth: CGFloat = CGFloat(width)
@@ -998,13 +917,13 @@ extension UIImage {
         
         if Config.getInstance().videoRatio == "1:1" {
             if contextSize.width > contextSize.height {
-//                print("aaaaaaaaaaaa")
+                //                print("aaaaaaaaaaaa")
                 posX = ((contextSize.width - contextSize.height) / 2)
                 posY = 0
                 cgwidth = contextSize.height
                 cgheight = contextSize.height
             } else {
-//                print("bbbbbbbbbbbbbb")
+                //                print("bbbbbbbbbbbbbb")
                 posX = 0
                 posY = ((contextSize.height - contextSize.width) / 2)
                 cgwidth = contextSize.width
@@ -1012,7 +931,7 @@ extension UIImage {
             }
         } else {
             if contextSize.width > contextSize.height {
-//                print("ccccccccccccc")
+                //                print("ccccccccccccc")
                 cgwidth = contextSize.height*4/3
                 cgheight = contextSize.height
                 
@@ -1020,7 +939,7 @@ extension UIImage {
                 posY = 0
                 
             } else {
-//                print("ddddddddddddddd")
+                //                print("ddddddddddddddd")
                 cgwidth = contextSize.width
                 cgheight = contextSize.width * 4/3
                 
@@ -1030,9 +949,9 @@ extension UIImage {
         }
         
         
-//        print(posX," ",posY," ",cgwidth," ",cgheight)
+        //        print(posX," ",posY," ",cgwidth," ",cgheight)
         let rect: CGRect = CGRectMake(posX, posY, cgwidth, cgheight)
-//        let rect: CGRect = CGRectMake(0, 0, cgwidth, cgheight)
+        //        let rect: CGRect = CGRectMake(0, 0, cgwidth, cgheight)
         // Create bitmap image from context using the rect
         let imageRef: CGImageRef = CGImageCreateWithImageInRect(contextImage.CGImage, rect)!
         
@@ -1042,11 +961,11 @@ extension UIImage {
         
         let _scale = self.scale
         let _orientation = self.imageOrientation
-//        print(_scale, "  ", _orientation ,"  ")
+        //        print(_scale, "  ", _orientation ,"  ")
         
         let image:UIImage = UIImage(CGImage: imageRef, scale: _scale, orientation: _orientation)
-//        print("image size ",image.size)
-//        print("image   ",image)
+        //        print("image size ",image.size)
+        //        print("image   ",image)
         return image
     }
     

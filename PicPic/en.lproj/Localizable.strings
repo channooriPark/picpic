@@ -1,0 +1,24 @@
+/* 
+  Localizable.strings
+  PicPic
+
+  Created by 찬누리 박 on 2016. 1. 21..
+  Copyright © 2016년 찬누리 박. All rights reserved.
+*/
+
+
+"KEY" = "HELLO WORLD   %@님 외 %@명이 댓글을 달았습니다.";
+"PL" = "%@ liked your post.";
+"Cl" = "%@ liked your comment.";
+"PC" = "%@ commented on your post.";
+"FM" = "%@ started to follow you.";
+"RM" = "%@ RePic-ed your post.";
+"CMP" = "Your post has been flagged.";
+"CMC" = "Your comment has been flagged.";
+"FP" = "%@ changed profile picture.";
+"FI" = "%@ changed username.";
+"FJA" = "%@ participated in %@";
+"FCA" = "%@ started %@";
+"TMC" = "%@ mentioned you in the comment.";
+"TMP" = "%@ mentioned you in the post.";
+"RP" = "%@ commented on the same post.";

@@ -1605,8 +1605,8 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             if fileManager.fileExistsAtPath(db) {
                 self.navigationController?.navigationBarHidden = false
                 if self.appdelegate.main.view.hidden == false {
-                    //self.appdelegate.main.fire()
-                    self.appdelegate.main.refresh()
+                    self.appdelegate.main.fire()
+                    //self.appdelegate.main.refresh()
                 }else if self.appdelegate.second.view.hidden == false {
                     if self.appdelegate.second.webState == "follow" {
                         self.appdelegate.second.following()
@@ -1645,8 +1645,8 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             //편집 불러오기로 들어왔을 때
             self.navigationController?.navigationBarHidden = false
             if self.appdelegate.main.view.hidden == false {
-                //self.appdelegate.main.fire()
-                self.appdelegate.main.refresh()
+                self.appdelegate.main.fire()
+                //self.appdelegate.main.refresh()
             }else if self.appdelegate.second.view.hidden == false {
                 if self.appdelegate.second.webState == "follow" {
                     self.appdelegate.second.following()
@@ -1908,8 +1908,9 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             
             
         }
-        self.view.bringSubviewToFront(btnPre)
+        self.view.bringSubviewToFront(canvas)
         self.view.bringSubviewToFront(btnNext)
+        self.view.bringSubviewToFront(btnPre)
     }
     
     @IBAction func actFont(sender: AnyObject) {
@@ -2373,6 +2374,9 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             let cell2 = collectionView.cellForItemAtIndexPath(indexPath)
             cell2!.layer.borderColor = Config.getInstance().color.CGColor
             
+            self.view.bringSubviewToFront(self.btnNext)
+            self.view.bringSubviewToFront(self.btnPre)
+            
         } else {
             // 이미지 프레임 편집기
             previewTimer?.invalidate()
@@ -2433,6 +2437,8 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             previewTimer = NSTimer.scheduledTimerWithTimeInterval(interval, target: self, selector: Selector("nextImage"), userInfo: nil, repeats: true)
         }
         self.view.bringSubviewToFront(self.waterMark)
+        self.view.bringSubviewToFront(self.btnNext)
+        self.view.bringSubviewToFront(self.btnPre)
     }
     
     func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath){
@@ -2680,7 +2686,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         var eraserImage = playImageArr[0][0]
         let filter = GPUImageBrightnessFilter()
         filter.brightness = 0.02
-        applyFilter(&eraserImage, filterName: self.filterCurrent)
+//        applyFilter(&eraserImage, filterName: self.filterCurrent)
         let imageRef = eraserImage.CGImage
         let maskRef = maskImage.image?.CGImage
         

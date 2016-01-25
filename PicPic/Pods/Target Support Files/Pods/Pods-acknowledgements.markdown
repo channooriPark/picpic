@@ -25,7 +25,7 @@ SOFTWARE.
 
 ## Alamofire
 
-Copyright (c) 2014–2015 Alamofire Software Foundation (http://alamofire.org/)
+Copyright (c) 2014–2016 Alamofire Software Foundation (http://alamofire.org/)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -46,10 +46,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
-## AppInvites
-
-Copyright 2015 Google Inc.
-
 ## CryptoSwift
 
 Copyright (C) 2014 Marcin Krzyżanowski <marcin.krzyzanowski@gmail.com>
@@ -63,14 +59,6 @@ Permission is granted to anyone to use this software for any purpose,including c
 - Altered source versions must be plainly marked as such, and must not be misrepresented as being the original software.
 - This notice may not be removed or altered from any source or binary distribution.
 
-## GGLInstanceID
-
-Copyright 2015 Google Inc.
-
-## GPPCore
-
-Copyright 2015 Google Inc. All Rights Reserved.
-
 ## Google
 
 Copyright 2015 Google Inc.
@@ -83,27 +71,11 @@ Copyright 2015 Google Inc.
 
 Copyright 2015 Google Inc.
 
-## GoogleCloudMessaging
-
-Copyright 2015 Google Inc.
-
-## GoogleIPhoneUtilities
-
-Copyright 2015 Google Inc.
-
 ## GoogleInterchangeUtilities
 
 Copyright 2015 Google Inc.
 
 ## GoogleNetworkingUtilities
-
-Copyright 2015 Google Inc.
-
-## GoogleParsingUtilities
-
-Copyright 2015 Google Inc.
-
-## GooglePlusUtilities
 
 Copyright 2015 Google Inc.
 

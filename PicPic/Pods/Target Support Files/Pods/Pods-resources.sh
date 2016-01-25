@@ -58,17 +58,9 @@ install_resource()
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_resource "AppInvites/Resources/GINInviteResources.bundle"
-  install_resource "AppInvites/Frameworks/GINInvite.framework/Versions/A/Resources/GINInviteResources.bundle"
-  install_resource "GPPCore/Resources/GPPACLPickerResources.bundle"
-  install_resource "GPPCore/Frameworks/GPPCore.framework/Versions/A/Resources/GPPACLPickerResources.bundle"
   install_resource "GoogleSignIn/Resources/GoogleSignIn.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_resource "AppInvites/Resources/GINInviteResources.bundle"
-  install_resource "AppInvites/Frameworks/GINInvite.framework/Versions/A/Resources/GINInviteResources.bundle"
-  install_resource "GPPCore/Resources/GPPACLPickerResources.bundle"
-  install_resource "GPPCore/Frameworks/GPPCore.framework/Versions/A/Resources/GPPACLPickerResources.bundle"
   install_resource "GoogleSignIn/Resources/GoogleSignIn.bundle"
 fi
 

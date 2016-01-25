@@ -21,6 +21,7 @@ class VideoGalleryViewController : UIViewController, UICollectionViewDelegate, U
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var nextheight: NSLayoutConstraint!
     @IBOutlet weak var nextWidth: NSLayoutConstraint!
+    @IBOutlet weak var backButton: UIButton!
     
     public var cameradelegate: CameraViewController!
     let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -97,7 +98,7 @@ class VideoGalleryViewController : UIViewController, UICollectionViewDelegate, U
     
     @IBAction func onBtnPrev(sender: UIButton) {
         
-        self.dismissViewControllerAnimated(false, completion: nil)
+        self.dismissViewControllerAnimated(true, completion: nil)
         
     }
     
@@ -250,7 +251,6 @@ class VideoGalleryViewController : UIViewController, UICollectionViewDelegate, U
             if error == nil {
                 strongSelf.groups = groups!
                 strongSelf.selectedGroup = strongSelf.defaultAssetGroupOfAppropriate()
-                
             }
         }
     }
@@ -309,6 +309,16 @@ class VideoGalleryViewController : UIViewController, UICollectionViewDelegate, U
         guard let selectedGroup = self.selectedGroup else { return 0 }
         
         let group = getImageManager().groupDataManager.fetchGroupWithGroupId(selectedGroup)
+        print("group count   ",group.totalCount)
+        if group.totalCount == 0 {
+            let alert = UIAlertController(title: "", message: self.appdelegate.ment["video_not_search"].stringValue, preferredStyle: .Alert)
+            let complete = UIAlertAction(title: self.appdelegate.ment["popup_confirm"].stringValue, style: UIAlertActionStyle.Default, handler: { (complete) -> Void in
+                self.onBtnPrev(self.backButton)
+            })
+            alert.addAction(complete)
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+        
         return group.totalCount ?? 0
     }
     

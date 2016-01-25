@@ -19,7 +19,7 @@ import TwitterKit
 
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGLInstanceIDDelegate, GCMReceiverDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
 
     private var reachability:Reachability!
     private let serverIp = "lb44196316nntH.hscc.hostwaycloud.co.kr"
@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
     //MainView
     var contentview : ContentViewController!
     var tabbar : TabBarTestViewController!
-    var main : HomeNativeViewController!//MainInterViewController!
+    var main : MainInterViewController!
     var testNavi : UINavigationController!
     var alram : AlramViewController!
     var second : TestSecondViewController!
@@ -75,7 +75,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         
-        
         if launchOptions != nil {
             if let noti = launchOptions![UIApplicationLaunchOptionsRemoteNotificationKey] {
                 notiType = 1
@@ -83,11 +82,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
         }
         application.applicationIconBadgeNumber = 0
         
-        var configureError:NSError?
-        GGLContext.sharedInstance().configureWithError(&configureError)
-        assert(configureError == nil, "Error configuring Google services: \(configureError)")
-        gcmSenderID = GGLContext.sharedInstance().configuration.gcmSenderID
-        log.log("sender id           \(gcmSenderID)")
+//        var configureError:NSError?
+//        GGLContext.sharedInstance().configureWithError(&configureError)
+//        assert(configureError == nil, "Error configuring Google services: \(configureError)")
+//        gcmSenderID = GGLContext.sharedInstance().configuration.gcmSenderID
+//        log.log("sender id           \(gcmSenderID)")
         if #available(iOS 8.0, *) {
             let settings: UIUserNotificationSettings =
             UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
@@ -98,13 +97,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
             let types: UIRemoteNotificationType = [.Alert, .Badge, .Sound]
             application.registerForRemoteNotificationTypes(types)
         }
-        
-        // [END register_for_remote_notifications]
-        // [START start_gcm_service]
-        let gcmConfig = GCMConfig.defaultConfig()
-        gcmConfig.receiverDelegate = self
-        GCMService.sharedInstance().startWithConfig(gcmConfig)
-        // [END start_gcm_service]
         
         if standardUserDefaults.valueForKey("uuid") == nil {
             var uuid = UIDevice.currentDevice().identifierForVendor?.UUIDString
@@ -169,90 +161,104 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
             alert.show()
         }
         loadView()
-
+        
         if let url = launchOptions?[UIApplicationLaunchOptionsURLKey]as? NSURL {
             UIApplication.sharedApplication().openURL(url)
         }
-    
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     
     
     
-    func subscribeToTopic() {
-        if(registrationToken != nil && connectedToGCM) {
-            GCMPubSub.sharedInstance().subscribeWithToken(self.registrationToken, topic: subscriptionTopic,
-                options: nil, handler: {(NSError error) -> Void in
-                    if (error != nil) {
-                        // Treat the "already subscribed" error more gently
-                        if error.code == 3001 {
-                            print("Already subscribed to \(self.subscriptionTopic)")
-                        } else {
-                            print("Subscription failed: \(error.localizedDescription)");
-                        }
-                    } else {
-                        self.subscribedToTopic = true;
-                        NSLog("Subscribed to \(self.subscriptionTopic)");
-                    }
-            })
-        }
-    }
+    //    func subscribeToTopic() {
+    //        if(registrationToken != nil && connectedToGCM) {
+    //            GCMPubSub.sharedInstance().subscribeWithToken(self.registrationToken, topic: subscriptionTopic,
+    //                options: nil, handler: {(NSError error) -> Void in
+    //                    if (error != nil) {
+    //                        // Treat the "already subscribed" error more gently
+    //                        if error.code == 3001 {
+    //                            print("Already subscribed to \(self.subscriptionTopic)")
+    //                        } else {
+    //                            print("Subscription failed: \(error.localizedDescription)");
+    //                        }
+    //                    } else {
+    //                        self.subscribedToTopic = true;
+    //                        NSLog("Subscribed to \(self.subscriptionTopic)");
+    //                    }
+    //            })
+    //        }
+    //    }
     
     // [START connect_gcm_service]
     func applicationDidBecomeActive( application: UIApplication) {
         // Connect to the GCM server to receive non-APNS notifications
         FBSDKAppEvents.activateApp()
-        GCMService.sharedInstance().connectWithHandler({
-            (NSError error) -> Void in
-            if error != nil {
-                print("Could not connect to GCM: \(error.localizedDescription)")
-            } else {
-                self.connectedToGCM = true
-                print("Connected to GCM")
-                // [START_EXCLUDE]
-                self.subscribeToTopic()
-                // [END_EXCLUDE]
-            }
-        })
+        //        GCMService.sharedInstance().connectWithHandler({
+        //            (NSError error) -> Void in
+        //            if error != nil {
+        //                print("Could not connect to GCM: \(error.localizedDescription)")
+        //            } else {
+        //                self.connectedToGCM = true
+        //                print("Connected to GCM")
+        //                // [START_EXCLUDE]
+        //                self.subscribeToTopic()
+        //                // [END_EXCLUDE]
+        //            }
+        //        })
         
     }
     // [END connect_gcm_service]
     
     // [START disconnect_gcm_service]
     func applicationDidEnterBackground(application: UIApplication) {
-        GCMService.sharedInstance().disconnect()
-        // [START_EXCLUDE]
-        self.connectedToGCM = false
+        //        GCMService.sharedInstance().disconnect()
+        //        // [START_EXCLUDE]
+        //        self.connectedToGCM = false
         // [END_EXCLUDE]
     }
     // [END disconnect_gcm_service]
     
-    // [START receive_apns_token]
-    func application( application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken
-        deviceToken: NSData ) {
-            // [END receive_apns_token]
-            // [START get_gcm_reg_token]
-            // Create a config and set a delegate that implements the GGLInstaceIDDelegate protocol.
-            let instanceIDConfig = GGLInstanceIDConfig.defaultConfig()
-            instanceIDConfig.delegate = self
-            // Start the GGLInstanceID shared instance with that config and request a registration
-            // token to enable reception of notifications
-            GGLInstanceID.sharedInstance().startWithConfig(instanceIDConfig)
-            registrationOptions = [kGGLInstanceIDRegisterAPNSOption:deviceToken,
-                kGGLInstanceIDAPNSServerTypeSandboxOption:true]
-            GGLInstanceID.sharedInstance().tokenWithAuthorizedEntity(gcmSenderID,
-                scope: kGGLInstanceIDScopeGCM, options: registrationOptions, handler: registrationHandler)
-            // [END get_gcm_reg_token]
+    
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        log.log("\(deviceToken)")
+        self.token = deviceToken.description.stringByReplacingOccurrencesOfString("<", withString: "").stringByReplacingOccurrencesOfString(">", withString: "").stringByReplacingOccurrencesOfString(" ", withString: "")
+        
+        log.log("\(token)")
     }
+    
+    
+    // [START receive_apns_token]
+    //    func application( application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken
+    //        deviceToken: NSData ) {
+    //            // [END receive_apns_token]
+    //            // [START get_gcm_reg_token]
+    //            // Create a config and set a delegate that implements the GGLInstaceIDDelegate protocol.
+    //
+    //            var token = deviceToken.debugDescription.stringByReplacingOccurrencesOfString("<", withString: "").stringByReplacingOccurrencesOfString(">", withString: "").stringByReplacingOccurrencesOfString(" ", withString: "")
+    //            token = token.uppercaseString
+    //            print("device token    :     ",token)
+    //
+    //
+    ////            let instanceIDConfig = GGLInstanceIDConfig.defaultConfig()
+    ////            instanceIDConfig.delegate = self
+    ////            // Start the GGLInstanceID shared instance with that config and request a registration
+    ////            // token to enable reception of notifications
+    ////            GGLInstanceID.sharedInstance().startWithConfig(instanceIDConfig)
+    ////            registrationOptions = [kGGLInstanceIDRegisterAPNSOption:deviceToken,
+    ////                kGGLInstanceIDAPNSServerTypeSandboxOption:true]
+    ////            GGLInstanceID.sharedInstance().tokenWithAuthorizedEntity(gcmSenderID,
+    ////                scope: kGGLInstanceIDScopeGCM, options: registrationOptions, handler: registrationHandler)
+    //            // [END get_gcm_reg_token]
+    //    }
     
     // [START receive_apns_token_error]
     func application( application: UIApplication, didFailToRegisterForRemoteNotificationsWithError
         error: NSError ) {
             print("Registration for remote notification failed with error: \(error.localizedDescription)")
             // [END receive_apns_token_error]
-            let userInfo = ["error": error.localizedDescription]
-            NSNotificationCenter.defaultCenter().postNotificationName(
-                registrationKey, object: nil, userInfo: userInfo)
+            //            let userInfo = ["error": error.localizedDescription]
+            //            NSNotificationCenter.defaultCenter().postNotificationName(
+            //                registrationKey, object: nil, userInfo: userInfo)
     }
     
     // [START ack_message_reception]
@@ -260,118 +266,168 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
         didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
             print("Notification received: \(userInfo)")
             // This works only if the app started the GCM service
-            GCMService.sharedInstance().appDidReceiveMessage(userInfo);
-            // Handle the received message
-            // [START_EXCLUDE]
-            NSNotificationCenter.defaultCenter().postNotificationName(messageKey, object: nil,
-                userInfo: userInfo)
+            //            GCMService.sharedInstance().appDidReceiveMessage(userInfo);
+            //            // Handle the received message
+            //            // [START_EXCLUDE]
+            //            NSNotificationCenter.defaultCenter().postNotificationName(messageKey, object: nil,
+            //                userInfo: userInfo)
             // [END_EXCLUDE]
             
             //different
     }
     
+    
+    //"body" : "내용을 적어넣으세요",   "loc-key" : "CONTENT","loc-args" : [ "Jenna", "Frank" ]}
+    
+    //    {"aps" : { "alert" : {"loc-key" : "PL","loc-args" : [ "Channoori_Park" ]},"sound" : "default","badge" : 1,},"acme1" : [ "post", "POST0000455109"]}
+    
+    //    {"aps" : {"alert":"안녕하세요","badge" : 5,"sound":"default","acme1" : [ "bang", "whiz"]}
+    
+    
+    //    {"aps" : {"alert" : "You got your emails.","badge" : 1,"sound" : "default"}}
+    
+    
+    
     func application( application: UIApplication,
         didReceiveRemoteNotification userInfo: [NSObject : AnyObject],
         fetchCompletionHandler handler: (UIBackgroundFetchResult) -> Void) {
-//            print("fetch Notification received: \(userInfo)")
-//            print(userInfo["gcm.notification.acme1"])
-            // This works only if the app started the GCM service
-            GCMService.sharedInstance().appDidReceiveMessage(userInfo);
-            // Handle the received message
-            // Invoke the completion handler passing the appropriate UIBackgroundFetchResult value
-            // [START_EXCLUDE]
-            NSNotificationCenter.defaultCenter().postNotificationName(messageKey, object: nil,
-                userInfo: userInfo)
-            if application.applicationState == UIApplicationState.Active {
-//                let alert = UIAlertView(title: "", message: "Active", delegate: nil, cancelButtonTitle: "확인")
-//                alert.show()
-            }
             
-            if application.applicationState == UIApplicationState.Inactive {
-                notiType = 1
-//                if let navi = self.testNavi {
-//                    let alert = UIAlertView(title: "", message: "Inactive \(userInfo)", delegate: nil, cancelButtonTitle: "확인")
-//                    alert.show()
-//                }
-                
-            }
-            handler(UIBackgroundFetchResult.NoData);
+            print("fetch Notification received: \(userInfo)")
+            
+                if application.applicationState == UIApplicationState.Inactive {
+                    if let info = userInfo["acme1"] {
+                        let infoArr = info as! [String]
+                        print(infoArr[1])
+                        
+                        let url : NSURL = NSURL(string: "picpic://\(infoArr[0])/\(infoArr[1])")!
+                        URLopenPage(url)
+                        print("url   :   ",url)
+                    }else {
+                        self.notiType = 1
+                    }
+                }else if application.applicationState == UIApplicationState.Active {
+                    let alert = UIAlertController(title: "", message: self.ment["notification_new"].stringValue, preferredStyle: UIAlertControllerStyle.Alert)
+                    
+                    let button = UIAlertAction(title: self.ment["notification_action"].stringValue, style: .Default, handler: { (button) -> Void in
+                        if let info = userInfo["acme1"] {
+                            let infoArr = info as! [String]
+                            print(infoArr[1])
+                            
+                            let url : NSURL = NSURL(string: "picpic://\(infoArr[0])/\(infoArr[1])")!
+                            self.URLopenPage(url)
+                            print("url   :   ",url)
+                        }else {
+                            self.notiType = 1
+                            self.testNavi.popToRootViewControllerAnimated(true)
+                            self.alram.alarmtableview.reloadData()
+                            self.tabbar.click4(self.tabbar.button4)
+                            
+                        }
+                    })
+                    alert.addAction(button)
+                    
+                    let cancel = UIAlertAction(title: self.ment["notification_close"].stringValue, style: UIAlertActionStyle.Cancel, handler: { (cancel) -> Void in
+                        
+                    })
+                    alert.addAction(cancel)
+                    self.testNavi.presentViewController(alert, animated: true, completion: nil)
+                }
+            
+            
+            
+            
+            //            print(userInfo["gcm.notification.acme1"])
+            // This works only if the app started the GCM service
+            //            GCMService.sharedInstance().appDidReceiveMessage(userInfo);
+            //            // Handle the received message
+            //            // Invoke the completion handler passing the appropriate UIBackgroundFetchResult value
+            //            // [START_EXCLUDE]
+            //            NSNotificationCenter.defaultCenter().postNotificationName(messageKey, object: nil,
+            //                userInfo: userInfo)
+            //            if application.applicationState == UIApplicationState.Active {
+            ////                let alert = UIAlertView(title: "", message: "Active", delegate: nil, cancelButtonTitle: "확인")
+            ////                alert.show()
+            //            }
+            //
+            //            if application.applicationState == UIApplicationState.Inactive {
+            //                notiType = 1
+            ////                if let navi = self.testNavi {
+            ////                    let alert = UIAlertView(title: "", message: "Inactive \(userInfo)", delegate: nil, cancelButtonTitle: "확인")
+            ////                    alert.show()
+            ////                }
+            //
+            //            }
+            //            handler(UIBackgroundFetchResult.NoData);
             // [END_EXCLUDE]
     }
     // [END ack_message_reception]
     
-    func registrationHandler(registrationToken: String!, error: NSError!) {
-        if (registrationToken != nil) {
-            self.registrationToken = registrationToken
-            print("Registration Token: \(registrationToken)")
-            self.token = self.registrationToken!
-            if (self.standardUserDefaults.valueForKey("push_token") == nil) {
-                self.standardUserDefaults.setValue(self.token, forKey: "push_token")
-            }else {
-                self.standardUserDefaults.removeObjectForKey("push_token")
-                self.standardUserDefaults.setValue(self.token, forKey: "push_token")
-            }
-            if email != nil {
-                let message : JSON = ["email":email,"device_id":self.deviceId,"push_token":registrationToken]
-                self.doIt(221, message: message, callback: { (readData) -> () in
-                })
-            }
-            
-            
-            self.subscribeToTopic()
-            let userInfo = ["registrationToken": registrationToken]
-            NSNotificationCenter.defaultCenter().postNotificationName(
-                self.registrationKey, object: nil, userInfo: userInfo)
-        } else {
-            print("Registration to GCM failed with error: \(error.localizedDescription)")
-            let userInfo = ["error": error.localizedDescription]
-            NSNotificationCenter.defaultCenter().postNotificationName(
-                self.registrationKey, object: nil, userInfo: userInfo)
-        }
-    }
+    //    func registrationHandler(registrationToken: String!, error: NSError!) {
+    //        if (registrationToken != nil) {
+    //            self.registrationToken = registrationToken
+    //            print("Registration Token: \(registrationToken)")
+    //            self.token = self.registrationToken!
+    //            if (self.standardUserDefaults.valueForKey("push_token") == nil) {
+    //                self.standardUserDefaults.setValue(self.token, forKey: "push_token")
+    //            }else {
+    //                self.standardUserDefaults.removeObjectForKey("push_token")
+    //                self.standardUserDefaults.setValue(self.token, forKey: "push_token")
+    //            }
+    //            if email != nil {
+    //                let message : JSON = ["email":email,"device_id":self.deviceId,"push_token":registrationToken]
+    //                self.doIt(221, message: message, callback: { (readData) -> () in
+    //                })
+    //            }
+    //
+    //
+    //            self.subscribeToTopic()
+    //            let userInfo = ["registrationToken": registrationToken]
+    //            NSNotificationCenter.defaultCenter().postNotificationName(
+    //                self.registrationKey, object: nil, userInfo: userInfo)
+    //        } else {
+    //            print("Registration to GCM failed with error: \(error.localizedDescription)")
+    //            let userInfo = ["error": error.localizedDescription]
+    //            NSNotificationCenter.defaultCenter().postNotificationName(
+    //                self.registrationKey, object: nil, userInfo: userInfo)
+    //        }
+    //    }
     
-    // [START on_token_refresh]
-    func onTokenRefresh() {
-        // A rotation of the registration tokens is happening, so the app needs to request a new token.
-        print("The GCM registration token needs to be changed.")
-        GGLInstanceID.sharedInstance().tokenWithAuthorizedEntity(gcmSenderID,
-            scope: kGGLInstanceIDScopeGCM, options: registrationOptions, handler: registrationHandler)
-    }
-    // [END on_token_refresh]
-    
-    // [START upstream_callbacks]
-    func willSendDataMessageWithID(messageID: String!, error: NSError!) {
-        if (error != nil) {
-            // Failed to send the message.
-        } else {
-            // Will send message, you can save the messageID to track the message
-        }
-    }
-    
-    func didSendDataMessageWithID(messageID: String!) {
-        // Did successfully send message identified by messageID
-    }
-    // [END upstream_callbacks]
-    
-    func didDeleteMessagesOnServer() {
-        // Some messages sent to this device were deleted on the GCM server before reception, likely
-        // because the TTL expired. The client should notify the app server of this, so that the app
-        // server can resend those messages.
-    }
+    //    // [START on_token_refresh]
+    //    func onTokenRefresh() {
+    //        // A rotation of the registration tokens is happening, so the app needs to request a new token.
+    //        print("The GCM registration token needs to be changed.")
+    //        GGLInstanceID.sharedInstance().tokenWithAuthorizedEntity(gcmSenderID,
+    //            scope: kGGLInstanceIDScopeGCM, options: registrationOptions, handler: registrationHandler)
+    //    }
+    //    // [END on_token_refresh]
+    //
+    //    // [START upstream_callbacks]
+    //    func willSendDataMessageWithID(messageID: String!, error: NSError!) {
+    //        if (error != nil) {
+    //            // Failed to send the message.
+    //        } else {
+    //            // Will send message, you can save the messageID to track the message
+    //        }
+    //    }
+    //
+    //    func didSendDataMessageWithID(messageID: String!) {
+    //        // Did successfully send message identified by messageID
+    //    }
+    //    // [END upstream_callbacks]
+    //
+    //    func didDeleteMessagesOnServer() {
+    //        // Some messages sent to this device were deleted on the GCM server before reception, likely
+    //        // because the TTL expired. The client should notify the app server of this, so that the app
+    //        // server can resend those messages.
+    //    }
     
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         if buttonIndex == alertView.cancelButtonIndex {
             exit(0)
         }
     }
-
-    func application(application: UIApplication, didFailToContinueUserActivityWithType userActivityType: String, error: NSError) {
-        log.log(error.localizedDescription)
-    }
     
-    
-    
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+    func URLopenPage(url:NSURL) {
         send_id = url.path
         log.log("query : \(url.query)")
         log.log("url : \(url)")
@@ -401,9 +457,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
             log.log("share_sns")
             let para = send_id.componentsSeparatedByString("/")
             let count = self.testNavi.viewControllers.count - 1
-//            message = ["my_id":self.email,"post_id":send_id]
-//            let connection = URLConnection(serviceCode: 504, message: message)
-//            let readData = connection.connection()
+            //            message = ["my_id":self.email,"post_id":send_id]
+            //            let connection = URLConnection(serviceCode: 504, message: message)
+            //            let readData = connection.connection()
             let share = self.storyboard.instantiateViewControllerWithIdentifier("ShareViewController")as! ShareViewController
             share.post_id = para[0]
             share.url = para[4]
@@ -418,24 +474,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
             log.log(send_id)
             let para = send_id.componentsSeparatedByString("/")
             moreToggle = true
-//            message = ["my_id":self.email,"post_id":send_id]
-//            let connection = URLConnection(serviceCode: 504, message: message)
-//            let readData = connection.connection()
-                if self.email == para[1] {
-                    let count = self.testNavi.viewControllers.count - 1
-                    let moreme = self.storyboard.instantiateViewControllerWithIdentifier("MoreMeViewController")as! MoreMeViewController
-                    moreme.post_id = para[0]
-                    moreme.email = para[1]
-                    
-                    self.testNavi.viewControllers[count].addChildViewController(moreme)
-                    self.testNavi.viewControllers[count].view.addSubview(moreme.view)
-                }else {
-                    let count = self.testNavi.viewControllers.count - 1
-                    let moreother = self.storyboard.instantiateViewControllerWithIdentifier("MoreOtherViewController")as! MoreOtherViewController
-                    moreother.post_id = para[0]
-                    self.testNavi.viewControllers[count].addChildViewController(moreother)
-                    self.testNavi.viewControllers[count].view.addSubview(moreother.view)
-                }
+            //            message = ["my_id":self.email,"post_id":send_id]
+            //            let connection = URLConnection(serviceCode: 504, message: message)
+            //            let readData = connection.connection()
+            if self.email == para[1] {
+                let count = self.testNavi.viewControllers.count - 1
+                let moreme = self.storyboard.instantiateViewControllerWithIdentifier("MoreMeViewController")as! MoreMeViewController
+                moreme.post_id = para[0]
+                moreme.email = para[1]
+                
+                self.testNavi.viewControllers[count].addChildViewController(moreme)
+                self.testNavi.viewControllers[count].view.addSubview(moreme.view)
+            }else {
+                let count = self.testNavi.viewControllers.count - 1
+                let moreother = self.storyboard.instantiateViewControllerWithIdentifier("MoreOtherViewController")as! MoreOtherViewController
+                moreother.post_id = para[0]
+                self.testNavi.viewControllers[count].addChildViewController(moreother)
+                self.testNavi.viewControllers[count].view.addSubview(moreother.view)
+            }
             
             break
         case "post":
@@ -443,7 +499,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
             
             let post = self.storyboard.instantiateViewControllerWithIdentifier("PostPageViewController")as! PostPageViewController
             self.controller.append(post)
-//            post.index = self.controller.count - 1
+            //            post.index = self.controller.count - 1
             post.type = "post"
             post.email = self.email
             post.postId = send_id as String
@@ -455,7 +511,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
             let tagview = self.storyboard.instantiateViewControllerWithIdentifier("TagViewController")as! TagViewController
             self.controller.append(tagview)
             tagview.type = "tag"
-//            tagview.index = self.controller.count - 1
+            //            tagview.index = self.controller.count - 1
             tagview.tagId = send_id as String
             tagview.email = self.email
             self.testNavi.navigationBarHidden = true
@@ -472,7 +528,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
             let user = self.storyboard.instantiateViewControllerWithIdentifier("UserPageViewController")as! UserPageViewController
             self.controller.append(user)
             user.type = "user"
-//            user.index = self.controller.count - 1
+            //            user.index = self.controller.count - 1
             user.myId = self.email
             user.userId = send_id as String
             self.testNavi.navigationBarHidden = true
@@ -522,12 +578,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
             log.log(self.email)
             self.controller.append(comment)
             comment.type = "comment"
-//            comment.index = self.controller.count - 1
+            //            comment.index = self.controller.count - 1
             comment.my_id = self.email
             comment.post_id = para[0]
             comment.postEmail = para[1]
-//            self.viewcontroller.presentViewController(comment, animated: true, completion: nil)
-//            self.contentview.pushViewController(comment, animated: true)
+            //            self.viewcontroller.presentViewController(comment, animated: true, completion: nil)
+            //            self.contentview.pushViewController(comment, animated: true)
             self.testNavi.pushViewController(comment, animated: true)
             self.main.view.hidden = true
             self.tabbar.view.hidden = true
@@ -552,8 +608,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
             
             
             let message : JSON = ["myId":self.email,"email":[["email":send_id]],"type":type]
-//            let connection = URLConnection(serviceCode: 402, message: message)
-//            let readData = connection.connection()
+            //            let connection = URLConnection(serviceCode: 402, message: message)
+            //            let readData = connection.connection()
             self.doIt(402, message: message, callback: { (readData) -> () in
                 
             })
@@ -561,8 +617,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
         case "do_follow_tag":
             log.log("call do_follow_tag ")
             let message : JSON = ["myId":self.email,"tag_id":send_id]
-//            let connection = URLConnection(serviceCode: 403, message: message)
-//            let readData = connection.connection()
+            //            let connection = URLConnection(serviceCode: 403, message: message)
+            //            let readData = connection.connection()
             self.doIt(403, message: message, callback: { (readData) -> () in
                 
             })
@@ -589,8 +645,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
         case "do_like_cancel":
             log.log("call do_like_cancel ")
             message = ["post_reply_id":send_id,"click_id":self.email,"like_form":"P"]
-//            let connection = URLConnection(serviceCode: 303, message: message)
-//            let readData = connection.connection()
+            //            let connection = URLConnection(serviceCode: 303, message: message)
+            //            let readData = connection.connection()
             self.doIt(303, message: message, callback: { (readData) -> () in
                 if readData["msg"].string! == "success"{
                     self.log.log("좋아요 취소")
@@ -599,7 +655,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
             break
         case "do_repic":
             break;
-            case "tag_follower":
+        case "tag_follower":
             log.log("call tag_follower ")
             let follower = self.storyboard.instantiateViewControllerWithIdentifier("FollowerViewController")as! FollowerViewController
             follower.email = self.email
@@ -634,7 +690,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
             let user = self.storyboard.instantiateViewControllerWithIdentifier("CommentUserPageViewController")as! CommentUserPageViewController
             self.controller.append(user)
             user.type = "user"
-//            user.index = self.controller.count - 1
+            //            user.index = self.controller.count - 1
             user.myId = self.email
             user.userId = send_id as String
             self.testNavi.navigationBarHidden = true
@@ -657,7 +713,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
             let tagview = self.storyboard.instantiateViewControllerWithIdentifier("CommentTagPageViewController")as! CommentTagPageViewController
             self.controller.append(tagview)
             tagview.type = "tag_name"
-//            tagview.index = self.controller.count - 1
+            //            tagview.index = self.controller.count - 1
             tagview.tagId = send_id as String
             tagview.email = self.email
             self.testNavi.navigationBarHidden = true
@@ -676,6 +732,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
         default:
             break;
         }
+    }
+    
+    
+    
+    
+    func application(application: UIApplication, didFailToContinueUserActivityWithType userActivityType: String, error: NSError) {
+        log.log(error.localizedDescription)
+    }
+    
+    
+    func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
+        
+        print("openturl in   hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha")
+        
+        
+        return true
+    }
+    
+    
+    
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+        
         
         return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }
@@ -692,21 +770,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
             }
     }
     
-
+    
     func applicationWillResignActive(application: UIApplication) {
     }
-
-//    func applicationDidEnterBackground(application: UIApplication) {
-//    }
-
+    
+    //    func applicationDidEnterBackground(application: UIApplication) {
+    //    }
+    
     func applicationWillEnterForeground(application: UIApplication) {
         application.applicationIconBadgeNumber = 0
     }
-
-//    func applicationDidBecomeActive(application: UIApplication) {
-//        FBSDKAppEvents.activateApp()
-//    }
-
+    
+    //    func applicationDidBecomeActive(application: UIApplication) {
+    //        FBSDKAppEvents.activateApp()
+    //    }
+    
     func applicationWillTerminate(application: UIApplication) {
     }
 
@@ -728,7 +806,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
     func loadView() {
         contentview = ContentViewController()
         tabbar = TabBarTestViewController()
-        main = HomeNativeViewController()//MainInterViewController()
+        main = MainInterViewController()//HomeNativeViewController()
         alram = self.storyboard.instantiateViewControllerWithIdentifier("AlramViewController")as! AlramViewController
         second = TestSecondViewController()
         camera = self.storyboard.instantiateViewControllerWithIdentifier("CameraViewController")as! CameraViewController
@@ -761,7 +839,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate, GGL
     func reloadView(){
         contentview = ContentViewController()
         tabbar = TabBarTestViewController()
-        main = HomeNativeViewController()//MainInterViewController()
+        main = MainInterViewController()//HomeNativeViewController()
         alram = self.storyboard.instantiateViewControllerWithIdentifier("AlramViewController")as! AlramViewController
         second = TestSecondViewController()
         camera = self.storyboard.instantiateViewControllerWithIdentifier("CameraViewController")as! CameraViewController
@@ -968,4 +1046,15 @@ extension Character {
     }
     
 }
+ 
+ 
+ extension String {
+    var localized: String {
+        return NSLocalizedString(self, tableName: nil, bundle: NSBundle.mainBundle(), value: "", comment: "")
+    }
+    
+    func localizedWithKey(key:String) -> String {
+        return NSLocalizedString(self, tableName: nil, bundle: NSBundle.mainBundle(), value: key, comment: "")
+    }
+ }
 
