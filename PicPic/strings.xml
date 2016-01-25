@@ -544,6 +544,9 @@
     
     <string name="camera_edit_partial">부분GIF를 적용한 상태로 필터를 적용 할 시, 적용된 부분GIF가 사라집니다.&amp; 필터를 적용하시겠습니까?</string>
 
-    
+    <string name="facebook_friend">페이스북에 있는 친구</string>
+    <string name="google_friend">구굴+에 있는 친구</string>
+    <string name="recommend_friend">추천친구를 팔로워 해보아요!</string>
+    <string name="friend_count">명</string>
 
 </resources>

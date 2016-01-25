@@ -160,7 +160,7 @@ class GifMaker {
                     if(img.size.width > img.size.height) { //가로로 자르기
                         let imgRatio = Float((img.size.width) / (img.size.height))
                         let ratio = Float(16.0/9.0)
-                        self.log.log("imgRatio  :  \(imgRatio)  ratio : \(ratio)")
+                        self.log.log("imgRatio  :  \(imgRatio) +- ratio : \(ratio)")
                         if imgRatio == ratio {
                             //16:9기준
                             img = img.cropToBounds(720, height: 720)

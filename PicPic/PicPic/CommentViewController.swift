@@ -58,7 +58,6 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.cellsCurrentlyEditing = Set()
         
         self.navigationController?.navigationBarHidden = false
@@ -110,13 +109,6 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         comTableView.addGestureRecognizer(tap)
         let height = UIScreen.mainScreen().bounds.height
-        //        self.scrollViewBottom.constant = height - 50
-        //        self.commentTop.constant = height - 50
-        //        self.scrollViewBottom.constant = self.commentTop.constant
-        
-        //        self.scrollView.frame.origin.y = height - 50
-        
-        
         log.log("\(self.scrollView.frame.origin.y)")
         log.log("\(self.commentView.frame.origin.y)")
         
@@ -144,7 +136,6 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         if count < 0 {
             count = 0
         }
-        //        print(count)
         let a = self.navigationController?.viewControllers[count] as! SubViewController
         
         
@@ -334,6 +325,7 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
                             if image != nil {
                                 print("image comment ")
                                 cell.imageComView(image!)
+                                self.height[indexPath.row] = cell.height
                                 self.imageComArr[imageCom] = image
                             }
                         })

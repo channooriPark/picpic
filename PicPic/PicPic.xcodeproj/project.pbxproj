@@ -187,10 +187,7 @@
 		E4AB45551C16668C002EA053 /* waldenMap.png in Resources */ = {isa = PBXBuildFile; fileRef = E4AB452B1C16668C002EA053 /* waldenMap.png */; };
 		E4AB45561C16668C002EA053 /* xproMap.png in Resources */ = {isa = PBXBuildFile; fileRef = E4AB452C1C16668C002EA053 /* xproMap.png */; };
 		E4AB45581C166A90002EA053 /* IFFilterApply.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4AB45571C166A90002EA053 /* IFFilterApply.swift */; };
-		E4AB455E1C166E98002EA053 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4AB455A1C166E98002EA053 /* Fabric.framework */; };
-		E4AB455F1C166E98002EA053 /* TwitterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4AB455B1C166E98002EA053 /* TwitterKit.framework */; };
 		E4AB45601C166E98002EA053 /* TwitterKitResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E4AB455C1C166E98002EA053 /* TwitterKitResources.bundle */; };
-		E4AB45611C166E98002EA053 /* TwitterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4AB455D1C166E98002EA053 /* TwitterCore.framework */; };
 		E4B6DE2E1BFD671C00F013A9 /* CommentUserPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B6DE2D1BFD671C00F013A9 /* CommentUserPageViewController.swift */; };
 		E4B6DE301BFD672F00F013A9 /* CommentTagPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B6DE2F1BFD672F00F013A9 /* CommentTagPageViewController.swift */; };
 		E4B6DE341BFD8EF300F013A9 /* WriteSearchPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B6DE331BFD8EF300F013A9 /* WriteSearchPageViewController.swift */; };
@@ -218,6 +215,9 @@
 		E4CDA0891C4CD28400A85C42 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4CDA0861C4CD28400A85C42 /* FBSDKCoreKit.framework */; };
 		E4CDA08A1C4CD28400A85C42 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4CDA0871C4CD28400A85C42 /* FBSDKLoginKit.framework */; };
 		E4CDA08B1C4CD28400A85C42 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4CDA0881C4CD28400A85C42 /* FBSDKShareKit.framework */; };
+		E4CF94051C55C4EE00B85F0D /* FriendEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CF94021C55C4EE00B85F0D /* FriendEntity.swift */; };
+		E4CF94061C55C4EE00B85F0D /* SearchFriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CF94031C55C4EE00B85F0D /* SearchFriendTableViewCell.swift */; };
+		E4CF94071C55C4EE00B85F0D /* SearchFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CF94041C55C4EE00B85F0D /* SearchFriendViewController.swift */; };
 		E4D230A61C17177000B838C3 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D230A51C17177000B838C3 /* CategoryViewController.swift */; };
 		E4D3826D1C3F3DF000800239 /* SaveCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4D382681C3F3DF000800239 /* SaveCell.xib */; };
 		E4D3826E1C3F3DF000800239 /* TempLoadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4D382691C3F3DF000800239 /* TempLoadView.xib */; };
@@ -705,6 +705,9 @@
 		E4CDA0861C4CD28400A85C42 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		E4CDA0871C4CD28400A85C42 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		E4CDA0881C4CD28400A85C42 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
+		E4CF94021C55C4EE00B85F0D /* FriendEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendEntity.swift; sourceTree = "<group>"; };
+		E4CF94031C55C4EE00B85F0D /* SearchFriendTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFriendTableViewCell.swift; sourceTree = "<group>"; };
+		E4CF94041C55C4EE00B85F0D /* SearchFriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFriendViewController.swift; sourceTree = "<group>"; };
 		E4D230A51C17177000B838C3 /* CategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		E4D382681C3F3DF000800239 /* SaveCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SaveCell.xib; sourceTree = "<group>"; };
 		E4D382691C3F3DF000800239 /* TempLoadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TempLoadView.xib; sourceTree = "<group>"; };
@@ -1078,21 +1081,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E40E264C1BEEFFE800591044 /* ImageIO.framework in Frameworks */,
+				E40E264A1BEEFFE200591044 /* AVFoundation.framework in Frameworks */,
 				6C9897991C5083F600AD6292 /* libfingramagifencoder.a in Frameworks */,
 				E4DCBE101C2BA8440095F84A /* AssetsLibrary.framework in Frameworks */,
 				E4CDA0891C4CD28400A85C42 /* FBSDKCoreKit.framework in Frameworks */,
 				E4D5430A1C15985C00EC1BB0 /* Social.framework in Frameworks */,
 				E40E26501BEF001300591044 /* MobileCoreServices.framework in Frameworks */,
 				E40E264E1BEF000B00591044 /* QuartzCore.framework in Frameworks */,
-				E40E264C1BEEFFE800591044 /* ImageIO.framework in Frameworks */,
-				E40E264A1BEEFFE200591044 /* AVFoundation.framework in Frameworks */,
 				E4CDA08A1C4CD28400A85C42 /* FBSDKLoginKit.framework in Frameworks */,
 				254009E8A84B58AD4A88908B /* Pods.framework in Frameworks */,
 				E41A137A1BF115BD00028971 /* KakaoOpenSDK.framework in Frameworks */,
 				E4CDA08B1C4CD28400A85C42 /* FBSDKShareKit.framework in Frameworks */,
-				E4AB455E1C166E98002EA053 /* Fabric.framework in Frameworks */,
-				E4AB455F1C166E98002EA053 /* TwitterKit.framework in Frameworks */,
-				E4AB45611C166E98002EA053 /* TwitterCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1403,6 +1403,9 @@
 		E466C2511BE8CD89004F65EF /* Personal */ = {
 			isa = PBXGroup;
 			children = (
+				E4CF94021C55C4EE00B85F0D /* FriendEntity.swift */,
+				E4CF94031C55C4EE00B85F0D /* SearchFriendTableViewCell.swift */,
+				E4CF94041C55C4EE00B85F0D /* SearchFriendViewController.swift */,
 				E4F3DD201BE38EC20063F29B /* MyInfoTableViewController.swift */,
 				E466C24B1BE8906C004F65EF /* SettingPasswordChangeTableViewController.swift */,
 				E466C2451BE88AD2004F65EF /* SettingProfileChangeViewController.swift */,
@@ -2333,6 +2336,7 @@
 				E4D4EC631C112EAF00616C2E /* GPUImageLanczosResamplingFilter.m in Sources */,
 				E4AB44FE1C16667A002EA053 /* IFVideoCamera.m in Sources */,
 				E4D4EC8C1C112EAF00616C2E /* GPUImagePosterizeFilter.m in Sources */,
+				E4CF94071C55C4EE00B85F0D /* SearchFriendViewController.swift in Sources */,
 				E4D4EC991C112EAF00616C2E /* GPUImageSharpenFilter.m in Sources */,
 				E4B6DE301BFD672F00F013A9 /* CommentTagPageViewController.swift in Sources */,
 				E4419D101C0BDB19003C600F /* MyBar.swift in Sources */,
@@ -2447,6 +2451,7 @@
 				E4D4EC4C1C112EAF00616C2E /* GPUImageGammaFilter.m in Sources */,
 				E4D4EC5D1C112EAF00616C2E /* GPUImageHueBlendFilter.m in Sources */,
 				E445803F1BE3882000AF186C /* ViewController.swift in Sources */,
+				E4CF94051C55C4EE00B85F0D /* FriendEntity.swift in Sources */,
 				E4D4EC6E1C112EAF00616C2E /* GPUImageLuminosity.m in Sources */,
 				E4D4EC2F1C112EAF00616C2E /* GPUImageColorBlendFilter.m in Sources */,
 				E401A8D61BEE4E3500D34B3E /* ContentViewController.swift in Sources */,
@@ -2490,6 +2495,7 @@
 				E4D4EC2E1C112EAF00616C2E /* GPUImageClosingFilter.m in Sources */,
 				E4AB44E91C16667A002EA053 /* GPUImageRotationFilter1.m in Sources */,
 				E4D4EC981C112EAF00616C2E /* GPUImageSepiaFilter.m in Sources */,
+				E4CF94061C55C4EE00B85F0D /* SearchFriendTableViewCell.swift in Sources */,
 				E40DA7C71BE9D95600C0E7F1 /* ServiceViewController.swift in Sources */,
 				E4D4EC5B1C112EAF00616C2E /* GPUImageHoughTransformLineDetector.m in Sources */,
 				E4D4EC3D1C112EAF00616C2E /* GPUImageDirectionalNonMaximumSuppressionFilter.m in Sources */,

@@ -21,6 +21,8 @@ class CommentCell: UITableViewCell {
     @IBOutlet weak var upperContentView: UIView!
     @IBOutlet weak var upperContentViewLeftConst: NSLayoutConstraint!
     @IBOutlet weak var upperContentViewRightConst: NSLayoutConstraint!
+    @IBOutlet weak var bodyHei: NSLayoutConstraint!
+    @IBOutlet weak var imageComView: UIImageView!
     var panStartPoint: CGPoint?
     var startingRightConst: CGFloat?
     var panRecognizer: UIPanGestureRecognizer?
@@ -58,7 +60,7 @@ class CommentCell: UITableViewCell {
     
     //이미지 댓글 관련
     var imageCom : UIImage!
-    var imageComView : UIImageView! = UIImageView()
+//    var imageComView : UIImageView! = UIImageView()
     var urlString : String!
 
     override func awakeFromNib() {
@@ -91,6 +93,7 @@ class CommentCell: UITableViewCell {
         
         if data["url"].string == "" {
             urlString = nil
+            imageComView.frame.size.height = 0
         }else {
             urlString = data["url"].stringValue
         }
@@ -103,7 +106,7 @@ class CommentCell: UITableViewCell {
         var newFrame = bodyLabel.frame
         newFrame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
         bodyLabel.frame = newFrame;
-        
+        bodyHei.constant = newFrame.size.height
         
         bodyLabel.scrollEnabled = false
         bodyLabel.sizeToFit()
@@ -185,7 +188,6 @@ class CommentCell: UITableViewCell {
     
     func imageComView(image:UIImage) {
         if urlString != nil {
-            imageComView.image = image
             let width = self.upperContentView.frame.size.width - 56 - 10
             var imagewidth = image.size.width - width
             var imageHeight = image.size.height - (image.size.width - imagewidth)
@@ -200,12 +202,13 @@ class CommentCell: UITableViewCell {
                 imageHeight = width
             }
             let posY = self.bodyLabel.frame.size.height + self.bodyLabel.frame.origin.y
-            imageComView.frame = CGRectMake(self.bodyLabel.frame.origin.x, posY, self.bodyLabel.frame.size.width, imageHeight)
+            imageComView.frame.size = CGSize(width: bodyLabel.frame.size.width, height: imageHeight)
             self.upperContentView.addSubview(imageComView)
-            imageComView.frame = CGRectMake(self.bodyLabel.frame.origin.x, posY, width, imageHeight)
+            imageComView.frame.size = CGSize(width: bodyLabel.frame.size.width, height: imageHeight)
             self.height = 70 + (self.bodyLabel.frame.size.height - 27) + imageComView.frame.size.height + 10
             print("image    height      ",self.height)
             self.comment.height[index] = self.height
+            imageComView.image = image
         }
     }
     

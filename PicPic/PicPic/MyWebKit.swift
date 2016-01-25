@@ -256,7 +256,7 @@ class MyWebKit : UIViewController, WKNavigationDelegate, WKUIDelegate{
             log.log("coment")
             log.log(send_id)
             let para = send_id.componentsSeparatedByString("/")
-            
+            print("postid : ",para[0],"   postEmail : ",para[1])
             let comment = appdelegate.storyboard.instantiateViewControllerWithIdentifier("comment")as! CommentViewController
             log.log(appdelegate.email)
             appdelegate.controller.append(comment)

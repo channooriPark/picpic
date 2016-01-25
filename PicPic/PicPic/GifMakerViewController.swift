@@ -2063,7 +2063,6 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             self.gifView.frame.origin.y = (UIScreen.mainScreen().bounds.width/8)*2
         }
         self.view.bringSubviewToFront(self.waterMark)
-        
     }
     
     func insetAllFram(){

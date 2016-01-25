@@ -25,6 +25,7 @@ class SettingTableViewController: UITableViewController , UIAlertViewDelegate{
     @IBOutlet weak var logoutLabel: UILabel!
     let log = LogPrint()
     @IBOutlet weak var socialNetwork: UILabel!
+//    @IBOutlet weak var searchFriend: UILabel!
     
     @IBOutlet weak var alarmSwitch: UISwitch!
     @IBOutlet weak var alarmLabel: UILabel!
@@ -42,17 +43,18 @@ class SettingTableViewController: UITableViewController , UIAlertViewDelegate{
         deActivite.text = self.appdelegate.ment["settings_signout"].stringValue
         alarmLabel.text = self.appdelegate.ment["settings_alarm"].stringValue
         socialNetwork.text = self.appdelegate.ment["settings_social"].stringValue
+//        searchFriend.text = self.appdelegate.ment["settings_find_friend"].stringValue
         
         
         
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    
+    
     override func viewWillAppear(animated: Bool) {
         let message : JSON = ["my_id":self.appdelegate.email,"user_id":self.appdelegate.email]
         self.appdelegate.doIt(406, message: message) { (readData) -> () in
@@ -110,7 +112,7 @@ class SettingTableViewController: UITableViewController , UIAlertViewDelegate{
     @IBAction func alarmSetting(sender: AnyObject) {
         UIApplication.sharedApplication().currentUserNotificationSettings()
         
-//        self.appdelegate.application.registerUserNotificationSettings()
+        //        self.appdelegate.application.registerUserNotificationSettings()
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -143,5 +145,5 @@ class SettingTableViewController: UITableViewController , UIAlertViewDelegate{
     @IBAction func backToMyFeed(sender: AnyObject) {
         self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
-
+    
 }
