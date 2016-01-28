@@ -523,6 +523,7 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
 //                //print("\(totalBytesWritten) / \(totalBytesExpectedToWrite)")
             }
             .responseJSON(completionHandler: { (request, response, data, error) in
+                print(request,"         ::             ",response,"          ",data)
                 self.dispatch_async_global {
                     if error != nil {
 //                        //print("error: \(error!)")
@@ -616,6 +617,7 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
         uploadData.appendData(imageData)
         uploadData.appendString("\(lineEnd)")
         uploadData.appendString("\(twoHyphens)\(boundaryConstant)\(twoHyphens)\(lineEnd)")
+        print("uploadData            :::::::::::::  \n",uploadData)
         //set body
         mutableURLRequest.HTTPBody = uploadData
         return (ParameterEncoding.URL.encode(mutableURLRequest, parameters: nil).0, uploadData)

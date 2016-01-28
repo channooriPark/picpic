@@ -376,7 +376,7 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         if comImage.image != nil {
             //이미지 댓글이 있을경우
             print("image 댓글 있어")
-            filename = "\(file)\(currentdate)_2.gif"
+            filename = "\(file)\(currentdate)_2.php"
             self.asset.requestContentEditingInputWithOptions(PHContentEditingInputRequestOptions()) { (input, _) in
                 let url = input!.fullSizeImageURL?.path
                 print("url   ",url) // 배열에 담아 콜렉션 뷰에 로드하면 됨.
@@ -390,7 +390,7 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
                         print("\(totalBytesWritten) / \(totalBytesExpectedToWrite)")
                     }
                     .responseJSON(completionHandler: { (request, response, data, error) in
-                        print(request,"           ",response)
+                        print(request,"         ::             ",response,"          ",data)
                         if error != nil {
                             print("image upload fail  ",error)
                         }else {
@@ -548,6 +548,7 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         uploadData.appendData(imageData)
         uploadData.appendString("\(lineEnd)")
         uploadData.appendString("\(twoHyphens)\(boundaryConstant)\(twoHyphens)\(lineEnd)")
+        print("uploadData            :::::::::::::  \n",uploadData)
         //set body
         mutableURLRequest.HTTPBody = uploadData
         return (ParameterEncoding.URL.encode(mutableURLRequest, parameters: nil).0, uploadData)
