@@ -386,6 +386,10 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         
         if(total_recording_time>=max_recording_time) {
             //            print("max!!!")
+            self.videoRatioBtn.enabled = false
+            self.btn_picker.enabled = false
+            self.btnLoad.enabled = false
+            
             return
         }
         
@@ -468,6 +472,9 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
             videoDataOutput.stopRecording()
             print("max.... ",self.total_recording_time)
             btnNext.enabled = true
+            self.videoRatioBtn.enabled = false
+            self.btn_picker.enabled = false
+            self.btnLoad.enabled = false
             self.btnNext.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             return
         }
@@ -712,7 +719,8 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
     // 이전 버튼 눌렀을 때
     @IBAction func moveProfile(sender: UIButton) {
         stopCamera()
-        
+        self.total_recording_time = 0
+        self.max_recording_this_frame = 5.0
         self.btnGhost.setImage(UIImage(named: "icon_camera_ghost"), forState: .Normal)
         self.editBar.setImage(UIImage(named: "plus"),forState: .Normal)
         self.workFolder = nil

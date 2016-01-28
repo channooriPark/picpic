@@ -3323,7 +3323,7 @@
                             <constraint firstItem="DsY-c0-YNT" firstAttribute="leading" secondItem="SdH-2H-JQp" secondAttribute="leadingMargin" constant="-11" id="PDG-BV-bWo"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="BC38DD70-D865-4735-B27E-7F37914E2062" id="QqF-Li-2ct"/>
+                    <tabBarItem key="tabBarItem" title="" image="3EBD1C43-B430-4409-A786-62484FB1A38E" id="QqF-Li-2ct"/>
                     <navigationItem key="navigationItem" id="0aK-XR-PxR"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
@@ -7487,7 +7487,7 @@
                             <constraint firstItem="x9I-39-yvM" firstAttribute="leading" secondItem="Y3S-o4-VFB" secondAttribute="leadingMargin" constant="-11" id="Yxw-LI-fvC"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="6679F517-17C4-4A8D-B804-C02763CB99C3" id="urB-TV-Wsz"/>
+                    <tabBarItem key="tabBarItem" title="" image="3579DE6F-FB54-4553-A3AB-35E479E2DEFA" id="urB-TV-Wsz"/>
                     <navigationItem key="navigationItem" id="jnl-Uw-H5F"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
@@ -9859,8 +9859,8 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ReW-EV-yic">
-                                <rect key="frame" x="211" y="17" width="52" height="27"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ReW-EV-yic">
+                                <rect key="frame" x="205" y="35" width="52" height="27"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <state key="normal" title="고화질저장">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -9897,6 +9897,7 @@
                             <constraint firstItem="drw-ZC-xdT" firstAttribute="top" secondItem="isJ-5C-alK" secondAttribute="top" id="afC-iI-HCt"/>
                             <constraint firstItem="TpC-hX-DFT" firstAttribute="width" secondItem="vDd-Ob-wHi" secondAttribute="width" id="c9A-i1-nio"/>
                             <constraint firstItem="ZxX-JQ-fbK" firstAttribute="top" secondItem="isJ-5C-alK" secondAttribute="top" id="cBI-dE-JrR"/>
+                            <constraint firstItem="ReW-EV-yic" firstAttribute="centerY" secondItem="XBZ-4N-vl6" secondAttribute="centerY" id="dvU-AV-ccj"/>
                             <constraint firstItem="h85-zp-Qbb" firstAttribute="trailing" secondItem="NZS-fy-Ajk" secondAttribute="trailing" id="eqr-mU-qxo"/>
                             <constraint firstItem="3lK-tv-YBI" firstAttribute="centerX" secondItem="vDd-Ob-wHi" secondAttribute="centerX" id="i7i-Mf-IOw"/>
                             <constraint firstItem="isJ-5C-alK" firstAttribute="leading" secondItem="vDd-Ob-wHi" secondAttribute="leading" id="kF4-nM-wOf"/>
@@ -9909,6 +9910,7 @@
                             <constraint firstItem="SYe-ec-5Bt" firstAttribute="top" secondItem="isJ-5C-alK" secondAttribute="bottom" id="qTy-3i-DID"/>
                             <constraint firstItem="h85-zp-Qbb" firstAttribute="leading" secondItem="TpC-hX-DFT" secondAttribute="leading" id="s4y-Mu-T7L"/>
                             <constraint firstItem="NZS-fy-Ajk" firstAttribute="leading" secondItem="3lK-tv-YBI" secondAttribute="leading" id="sWT-ke-p63"/>
+                            <constraint firstItem="KMp-v7-tMw" firstAttribute="leading" secondItem="ReW-EV-yic" secondAttribute="trailing" constant="8" symbolic="YES" id="sy1-hQ-dGM"/>
                             <constraint firstItem="8LO-Wf-S0a" firstAttribute="trailing" secondItem="NZS-fy-Ajk" secondAttribute="trailing" id="vJa-Ms-ug1"/>
                             <constraint firstAttribute="trailingMargin" secondItem="KMp-v7-tMw" secondAttribute="trailing" constant="-4" id="wYM-A3-ELN"/>
                             <constraint firstItem="eP8-u0-JOS" firstAttribute="trailing" secondItem="3lK-tv-YBI" secondAttribute="trailing" id="x80-mL-fTm"/>
@@ -9930,6 +9932,7 @@
                         <outlet property="btnEditor" destination="XfI-ks-8Q8" id="gZt-4j-6pA"/>
                         <outlet property="btnEraser" destination="0d4-jv-LJi" id="feg-4X-H71"/>
                         <outlet property="btnFilters" destination="5NK-Ep-KAM" id="Lcr-2B-pA7"/>
+                        <outlet property="btnHighResolSave" destination="ReW-EV-yic" id="D2u-kl-8AY"/>
                         <outlet property="btnNext" destination="KMp-v7-tMw" id="oPl-kX-wzF"/>
                         <outlet property="btnPlayType" destination="gBr-K9-xQ1" id="UkS-eG-v20"/>
                         <outlet property="btnPre" destination="XBZ-4N-vl6" id="ApA-QD-kec"/>
@@ -9981,7 +9984,7 @@
     </scenes>
     <resources>
         <image name=" delete" width="375" height="667"/>
-        <image name="6679F517-17C4-4A8D-B804-C02763CB99C3" width="20" height="25">
+        <image name="3579DE6F-FB54-4553-A3AB-35E479E2DEFA" width="20" height="25">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -10065,7 +10068,7 @@ AKcAqQCrAK0AsgC1ALcAuQC7AL0AwgDZANsA3RFPEVQRXxFoEXsRfxGKEZMRmBGgEaMRqBG3EbsRwhHK
 EdcR3BHeEeAR5RHtEfAR9RH9EgASEhIVEhoAAAAAAAACAQAAAAAAAABBAAAAAAAAAAAAAAAAAAASHA
 </mutableData>
         </image>
-        <image name="BC38DD70-D865-4735-B27E-7F37914E2062" width="20" height="25">
+        <image name="3EBD1C43-B430-4409-A786-62484FB1A38E" width="20" height="25">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
