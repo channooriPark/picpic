@@ -89,7 +89,6 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
         let message = JSON(["my_id": appdelegate.email])
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),{
             appdelegate.doItSocket(514, message: message, callback: {(json) in
-                
                 for dic in json["locale"].array!
                 {
                     self.tagData.append(dic.dictionaryObject as! [String : String])
@@ -99,6 +98,7 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
                     self.tagData.append(dic.dictionaryObject as! [String: String])
                 }
                 appdelegate.doItSocket(411, message: message, callback: {(json) in
+                    print(json)
                     for dic in json["friends"].array!
                     {
                         self.friendData.append(dic.dictionaryObject as! [String : String])
@@ -274,6 +274,16 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
             vc.tagName = self.tagData[index]["tag_name"]!
             vc.tagId = self.tagData[index]["tag_id"]!
 
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        else
+        {
+            var index = indexPath.item
+            if indexPath.section == 3 {index += 6}
+            
+            let vc = UserNativeViewController()
+            vc.userEmail = self.friendData[index]["email"]!
+            
             self.navigationController?.pushViewController(vc, animated: true)
         }
         

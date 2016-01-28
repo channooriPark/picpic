@@ -35,6 +35,7 @@ class TagNativeViewController: UIViewController, UICollectionViewDelegate, UICol
     var currentPage = "1"
     var currentRange = "N"
     var currentString = ""
+    var isWaterFall = true
     var _hud: MBProgressHUD = MBProgressHUD()
     
     override func viewWillAppear(animated: Bool) {
@@ -63,14 +64,14 @@ class TagNativeViewController: UIViewController, UICollectionViewDelegate, UICol
         // Do any additional setup after loading the view.
         let layout = CHTCollectionViewWaterfallLayout()
         layout.columnCount = 3
-        layout.itemRenderDirection = CHTCollectionViewWaterfallLayoutItemRenderDirection.LeftToRight
+        layout.itemRenderDirection = CHTCollectionViewWaterfallLayoutItemRenderDirection.ShortestFirst
         self.collectionView.collectionViewLayout = layout
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
         
-        self.collectionView.addInfiniteScrollingWithActionHandler({_ in self.refreshWithAdditionalPage(self.currentPage)})
-        
+        self.collectionView.alwaysBounceVertical = true
+        self.collectionView.addInfiniteScrollingWithActionHandler({ _ in self.refreshWithAdditionalPage(self.currentPage)})
         self.refresh()
     }
 
@@ -125,6 +126,7 @@ class TagNativeViewController: UIViewController, UICollectionViewDelegate, UICol
         {
             self.collectionView.infiniteScrollingView.enabled = true
         }
+        
         self._hud.show(true)
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         self.postInfos = []
@@ -132,10 +134,11 @@ class TagNativeViewController: UIViewController, UICollectionViewDelegate, UICol
         
         currentRange = range
         currentString = str
+        currentPage = "1"
         
         let mes: JSON = ["my_id" :appdelegate.email,"type": "TT","user_id": "", "tag_id" : self.infoDic["tag_id"] as! String, "range" : range, "str" : str, "page": "1"]
         
-        appdelegate.doIt(520, message: mes, callback: {(json) in
+        appdelegate.doIt(507, message: mes, callback: {(json) in
             if json["data"].type == .Null
             {
                 return
@@ -167,12 +170,12 @@ class TagNativeViewController: UIViewController, UICollectionViewDelegate, UICol
         
         let mes: JSON = ["my_id" :appdelegate.email,"type": "TT","user_id": "", "tag_id" : self.infoDic["tag_id"] as! String, "range" : self.currentRange, "str" : self.currentString, "page": "\(newPage)"]
         
-        appdelegate.doIt(520, message: mes, callback: {(json) in
+        appdelegate.doIt(507, message: mes, callback: {(json) in
             if json["data"].type == .Null
             {
+                self._hud.hide(true)
                 self.collectionView.infiniteScrollingView.stopAnimating()
                 self.collectionView.infiniteScrollingView.enabled = false
-                self._hud.hide(true)
                 return
             }
             let newData = json["data"].arrayObject as! Array<[String: AnyObject]>
@@ -195,6 +198,9 @@ class TagNativeViewController: UIViewController, UICollectionViewDelegate, UICol
         })
     }
     
+
+    
+//collectionView delegate, datasource
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return postGifData.count
     }

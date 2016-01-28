@@ -115,7 +115,8 @@ class TagNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
         
         let layout = CHTCollectionViewWaterfallLayout()
         layout.columnCount = 1
-        layout.itemRenderDirection = CHTCollectionViewWaterfallLayoutItemRenderDirection.LeftToRight
+        layout.itemRenderDirection = CHTCollectionViewWaterfallLayoutItemRenderDirection.ShortestFirst
+        self.parent.isWaterFall = false
         self.parent.collectionView.collectionViewLayout = layout
         self.parent.collectionView.reloadData()
     }
@@ -125,7 +126,8 @@ class TagNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
         
         let layout = CHTCollectionViewWaterfallLayout()
         layout.columnCount = 3
-        layout.itemRenderDirection = CHTCollectionViewWaterfallLayoutItemRenderDirection.LeftToRight
+        layout.itemRenderDirection = CHTCollectionViewWaterfallLayoutItemRenderDirection.ShortestFirst
+        self.parent.isWaterFall = true
         self.parent.collectionView.collectionViewLayout = layout
         self.parent.collectionView.reloadData()
     }

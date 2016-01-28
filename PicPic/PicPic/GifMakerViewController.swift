@@ -860,19 +860,45 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                 }
                 
                 let gif = NSData(contentsOfFile: path)
+                var photosAsset: PHFetchResult!
+                var collection: PHAssetCollection!
+                var assetCollectionPlaceholder: PHObjectPlaceholder!
+                
+                //Make sure we have custom album for this app if haven't already
+                let fetchOptions = PHFetchOptions()
+                fetchOptions.predicate = NSPredicate(format: "title = %@", "PicPic")
+                collection = PHAssetCollection.fetchAssetCollectionsWithType(.Album, subtype: .Any, options: fetchOptions).firstObject as? PHAssetCollection
+                
+                //if we don't have a special album for this app yet then make one
+                if collection == nil {
+                    PHPhotoLibrary.sharedPhotoLibrary().performChanges({
+                        let createAlbumRequest : PHAssetCollectionChangeRequest = PHAssetCollectionChangeRequest.creationRequestForAssetCollectionWithTitle("PicPic")
+                        assetCollectionPlaceholder = createAlbumRequest.placeholderForCreatedAssetCollection
+                        }, completionHandler: { success, error in
+                            if success {
+                                let collectionFetchResult = PHAssetCollection.fetchAssetCollectionsWithLocalIdentifiers([assetCollectionPlaceholder.localIdentifier], options: nil)
+                                print(collectionFetchResult)
+                                collection = collectionFetchResult.firstObject as! PHAssetCollection
+                            }
+                    })
+                }
+                
+                //save the gifs to Photos
                 PHPhotoLibrary.sharedPhotoLibrary().performChanges({
                     let img = UIImage.gifWithData(gif!)
-                    PHAssetChangeRequest.creationRequestForAssetFromImage(img!)
-                    }, completionHandler: {(success, error) in
-                    if success
-                    {
-                        print("sucess")
-                    }
-                    else
-                    {
-                        print(error)
-                    }
+                    let assetRequest = PHAssetChangeRequest.creationRequestForAssetFromImage(img!)
+                    let assetPlaceholder = assetRequest.placeholderForCreatedAsset
+                    photosAsset = PHAsset.fetchAssetsInAssetCollection(collection, options: nil)
+                    let albumChangeRequest = PHAssetCollectionChangeRequest(forAssetCollection: collection, assets: photosAsset)
+                    albumChangeRequest!.addAssets([assetPlaceholder!])
+                    }, completionHandler: { success, error in
+                        if success {
+                            print("added video to album")
+                        }else if error != nil{
+                            print("handle error since couldn't save video")
+                        }
                 })
+            
                 
             })
         })
