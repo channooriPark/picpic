@@ -82,16 +82,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
         }
         application.applicationIconBadgeNumber = 0
         
-        if #available(iOS 8.0, *) {
-            let settings: UIUserNotificationSettings =
-            UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
-            application.registerUserNotificationSettings(settings)
-            application.registerForRemoteNotifications()
-        } else {
-            // Fallback
-            let types: UIRemoteNotificationType = [.Alert, .Badge, .Sound]
-            application.registerForRemoteNotificationTypes(types)
+        
+        let settings: UIUserNotificationSettings =
+        UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
+        application.registerUserNotificationSettings(settings)
+        application.registerForRemoteNotifications()
+        
+        print("알림 상태      :     ",application.currentUserNotificationSettings()?.types.rawValue)
+        
+        
+        if application.currentUserNotificationSettings()?.types.rawValue == 0 {
+            print("Not Notification")
+            self.standardUserDefaults.setBool(false, forKey: "push")
+        }else {
+            print("Accept Notification")
+            self.standardUserDefaults.setBool(true, forKey: "push")
         }
+        
+        
         
         if standardUserDefaults.valueForKey("uuid") == nil {
             var uuid = UIDevice.currentDevice().identifierForVendor?.UUIDString
@@ -199,7 +207,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
     
     //{"aps" : {"alert" : {"loc-args" : [ "Jun__Bae" ],"loc-key" : "FM"},"badge" : 1,"push" : [ "user", "901131246628906" ],"sound" : "default"}}
     
-    
+    //{"aps" : { "alert" : {"loc-key" : "KEY","loc-args" : [ "Channoori_Park" ,"aaa","bbb","ccc","ddd"]},"sound" : "default","badge" : 1},"push" : [ "post", "POST0000455109"]}
     
     //    {"aps" : {"alert":"안녕하세요","badge" : 5,"sound":"default","acme1" : [ "bang", "whiz"]}
     // "alert" : {"loc-key" : "PL","loc-args" : [ "Channoori_Park" ]},"sound" : "default","badge" : 1,}
@@ -218,49 +226,72 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
         fetchCompletionHandler handler: (UIBackgroundFetchResult) -> Void) {
             
             print("fetch Notification received: \(userInfo)")
-            print(userInfo["push"])
+            var locMent = ""
+            let user : JSON = JSON(userInfo)
             
-                if application.applicationState == UIApplicationState.Inactive {
-                    if let infoUser = userInfo["push"] {
-                        let info = infoUser as! [String]
-                        var url : NSURL!
-                        if info.count > 2 {
-                            url = NSURL(string: "picpic://\(info[0])/\(info[1])/\(info[2])")!
-                        }else {
-                            url = NSURL(string: "picpic://\(info[0])/\(info[1])")!
+            if application.applicationState == UIApplicationState.Inactive {
+                if let infoUser = userInfo["push"] {
+                    let info = infoUser as! [String]
+                    var url : NSURL!
+                    if info.count > 2 {
+                        url = NSURL(string: "picpic://\(info[0])/\(info[1])/\(info[2])")!
+                    }else {
+                        url = NSURL(string: "picpic://\(info[0])/\(info[1])")!
+                    }
+                    URLopenPage(url)
+                    print("url   :   ",url)
+                }else {
+                    self.notiType = 1
+                }
+            }else if application.applicationState == UIApplicationState.Active {
+                
+                if let lockey = user["aps"]["alert"]["loc-key"].string {
+                    //custom pushnotification
+                    let locargs = user["aps"]["alert"]["loc-args"].arrayValue
+                    print(locargs)
+                    locMent = lockey.localizedWithKey(lockey)
+                    let tempArr = locMent.componentsSeparatedByString("%@")
+                    print("tempArr count ",tempArr)
+                    locMent = ""
+                    
+                    
+                    for var i = 0; i<tempArr.count; i++ {
+                        locMent += tempArr[i]
+                        if i == locargs.count {
+                            break
                         }
-                        URLopenPage(url)
+                        locMent += locargs[i].stringValue
+                    }
+
+                }else {
+                    locMent = user["aps"]["alert"].stringValue
+                }
+                let alert = UIAlertController(title: "", message: locMent, preferredStyle: UIAlertControllerStyle.Alert)
+                
+                let button = UIAlertAction(title: self.ment["notification_action"].stringValue, style: .Default, handler: { (button) -> Void in
+                    if let info = userInfo["push"] {
+                        let infoArr = info as! [String]
+                        print(infoArr[1])
+                        
+                        let url : NSURL = NSURL(string: "picpic://\(infoArr[0])/\(infoArr[1])")!
+                        self.URLopenPage(url)
                         print("url   :   ",url)
                     }else {
                         self.notiType = 1
-                    }
-                }else if application.applicationState == UIApplicationState.Active {
-                    let alert = UIAlertController(title: "", message: self.ment["notification_new"].stringValue, preferredStyle: UIAlertControllerStyle.Alert)
-                    
-                    let button = UIAlertAction(title: self.ment["notification_action"].stringValue, style: .Default, handler: { (button) -> Void in
-                        if let info = userInfo["push"] {
-                            let infoArr = info as! [String]
-                            print(infoArr[1])
-                            
-                            let url : NSURL = NSURL(string: "picpic://\(infoArr[0])/\(infoArr[1])")!
-                            self.URLopenPage(url)
-                            print("url   :   ",url)
-                        }else {
-                            self.notiType = 1
-                            self.testNavi.popToRootViewControllerAnimated(true)
-                            self.alram.alarmtableview.reloadData()
-                            self.tabbar.click4(self.tabbar.button4)
-                            
-                        }
-                    })
-                    alert.addAction(button)
-                    
-                    let cancel = UIAlertAction(title: self.ment["notification_close"].stringValue, style: UIAlertActionStyle.Cancel, handler: { (cancel) -> Void in
+                        self.testNavi.popToRootViewControllerAnimated(true)
+                        self.alram.alarmtableview.reloadData()
+                        self.tabbar.click4(self.tabbar.button4)
                         
-                    })
-                    alert.addAction(cancel)
-                    self.testNavi.presentViewController(alert, animated: true, completion: nil)
-                }
+                    }
+                })
+                alert.addAction(button)
+                
+                let cancel = UIAlertAction(title: self.ment["notification_close"].stringValue, style: UIAlertActionStyle.Cancel, handler: { (cancel) -> Void in
+                    
+                })
+                alert.addAction(cancel)
+                self.testNavi.presentViewController(alert, animated: true, completion: nil)
+            }
     }
     
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {

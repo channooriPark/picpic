@@ -1965,7 +1965,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         
         var step = 0
         
-        var keyStep = 0;
+        var keyStep = 0; //프레임 구간
         if( self.frameSlider.value == 1) {
             keyStep = 6
         } else if(self.frameSlider.value == 2) {

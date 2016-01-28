@@ -7,7 +7,7 @@
 */
 
 
-"KEY" = "HELLO WORLD   %@님 외 %@명이 댓글을 달았습니다.";
+"KEY" = "HELLO WORLD   %@님 외 %@명이 댓글을 달았습니다.%@ %@ %@";
 "PL" = "%@ liked your post.";
 "Cl" = "%@ liked your comment.";
 "PC" = "%@ commented on your post.";

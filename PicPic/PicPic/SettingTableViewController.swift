@@ -25,7 +25,7 @@ class SettingTableViewController: UITableViewController , UIAlertViewDelegate{
     @IBOutlet weak var logoutLabel: UILabel!
     let log = LogPrint()
     @IBOutlet weak var socialNetwork: UILabel!
-//    @IBOutlet weak var searchFriend: UILabel!
+    @IBOutlet weak var searchFriend: UILabel!
     
     @IBOutlet weak var alarmSwitch: UISwitch!
     @IBOutlet weak var alarmLabel: UILabel!
@@ -43,10 +43,14 @@ class SettingTableViewController: UITableViewController , UIAlertViewDelegate{
         deActivite.text = self.appdelegate.ment["settings_signout"].stringValue
         alarmLabel.text = self.appdelegate.ment["settings_alarm"].stringValue
         socialNetwork.text = self.appdelegate.ment["settings_social"].stringValue
-//        searchFriend.text = self.appdelegate.ment["settings_find_friend"].stringValue
+        searchFriend.text = self.appdelegate.ment["settings_find_friend"].stringValue
         
         
-        
+        if self.appdelegate.standardUserDefaults.valueForKey("push")as! Bool == true {
+            self.alarmSwitch.on = true
+        }else {
+            self.alarmSwitch.on = false
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -110,9 +114,19 @@ class SettingTableViewController: UITableViewController , UIAlertViewDelegate{
         }
     }
     @IBAction func alarmSetting(sender: AnyObject) {
-        UIApplication.sharedApplication().currentUserNotificationSettings()
-        
-        //        self.appdelegate.application.registerUserNotificationSettings()
+        if self.alarmSwitch.on {
+            UIApplication.sharedApplication().unregisterForRemoteNotifications()
+            self.appdelegate.standardUserDefaults.setBool(false, forKey: "push")
+        }else {
+            if UIApplication.sharedApplication().isRegisteredForRemoteNotifications() {
+                let settings: UIUserNotificationSettings =
+                UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
+                UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+                UIApplication.sharedApplication().registerForRemoteNotifications()
+            }
+            self.appdelegate.standardUserDefaults.setBool(false, forKey: "push")
+        }
+        print(UIApplication.sharedApplication().currentUserNotificationSettings())
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

@@ -63,9 +63,6 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate{
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true)
-//        if postImage != nil {
-//            postImage.enterForeground()
-//        }
     }
     
     override func viewDidLoad() {
@@ -286,6 +283,13 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate{
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        print("viewWillDisappear  viewWillDisappear  viewWillDisappear  viewWillDisappear  viewWillDisappear  viewWillDisappear  viewWillDisappear  viewWillDisappear  viewWillDisappear  viewWillDisappear  viewWillDisappear  ")
+        self.clickCheckCom = false
+        
+    }
+    
     func loading(state:Bool) {
         if state {
             backView.hidden = false
@@ -485,8 +489,13 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate{
         UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
     }
     
-    
+    var clickCheckCom = false
     @IBAction func comment(sender: AnyObject) {
+        if clickCheckCom {
+            return
+        }
+        
+        clickCheckCom = true
         let comment = storyboard!.instantiateViewControllerWithIdentifier("comment")as! CommentViewController
         self.appdelegate.controller.append(comment)
         comment.type = "comment"
@@ -503,6 +512,11 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate{
     }
     
     func lastcom_comment(){
+        if clickCheckCom {
+            return
+        }
+        
+        clickCheckCom = true
         let comment = storyboard!.instantiateViewControllerWithIdentifier("comment")as! CommentViewController
         self.appdelegate.controller.append(comment)
         comment.type = "comment"

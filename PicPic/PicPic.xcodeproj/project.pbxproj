@@ -58,7 +58,6 @@
 		E416CC1C1C38F2BF001E488E /* GifListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E416CC1B1C38F2BF001E488E /* GifListViewController.swift */; };
 		E41A137A1BF115BD00028971 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E41A13791BF115BD00028971 /* KakaoOpenSDK.framework */; };
 		E41B09AB1C05D9E8001171A2 /* TextAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41B09AA1C05D9E8001171A2 /* TextAddViewController.swift */; };
-		E41DE5091C51FCDD002272B5 /* NotificationCustom.xib in Resources */ = {isa = PBXBuildFile; fileRef = E41DE5081C51FCDD002272B5 /* NotificationCustom.xib */; };
 		E420D7F31C045661007E530B /* SaveListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E420D7F21C045661007E530B /* SaveListViewController.swift */; };
 		E42600401BFC0A7D00D495B6 /* RichTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E426003F1BFC0A7D00D495B6 /* RichTextView.swift */; };
 		E42CDE981BEC7FFA00C35419 /* NoticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42CDE971BEC7FFA00C35419 /* NoticsViewController.swift */; };
@@ -495,7 +494,6 @@
 		E416CC1B1C38F2BF001E488E /* GifListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GifListViewController.swift; sourceTree = "<group>"; };
 		E41A13791BF115BD00028971 /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
 		E41B09AA1C05D9E8001171A2 /* TextAddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextAddViewController.swift; sourceTree = "<group>"; };
-		E41DE5081C51FCDD002272B5 /* NotificationCustom.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationCustom.xib; sourceTree = "<group>"; };
 		E420D7F21C045661007E530B /* SaveListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveListViewController.swift; sourceTree = "<group>"; };
 		E426003F1BFC0A7D00D495B6 /* RichTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichTextView.swift; sourceTree = "<group>"; };
 		E42CDE971BEC7FFA00C35419 /* NoticsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticsViewController.swift; sourceTree = "<group>"; };
@@ -538,7 +536,6 @@
 		E452C8CC1BF2013F00375277 /* Regift_photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Regift_photo.swift; sourceTree = "<group>"; };
 		E4532E3B1C02FFEC00AFF019 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		E4532E3C1C02FFEC00AFF019 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
-		E45BAD881BFC5A990065148E /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		E466C2451BE88AD2004F65EF /* SettingProfileChangeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingProfileChangeViewController.swift; sourceTree = "<group>"; };
 		E466C24B1BE8906C004F65EF /* SettingPasswordChangeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingPasswordChangeTableViewController.swift; sourceTree = "<group>"; };
 		E466C24D1BE89905004F65EF /* ImageURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageURL.swift; sourceTree = "<group>"; };
@@ -1285,7 +1282,6 @@
 				E4CDA0821C4CB8FD00A85C42 /* strings_en.xml */,
 				E4CDA0831C4CB8FD00A85C42 /* strings.xml */,
 				E4796CCA1C51CDAB00F239CF /* Localizable.strings */,
-				E45BAD881BFC5A990065148E /* MyPlayground.playground */,
 				E4C459401BF9777500FEAAA0 /* text */,
 				E4CDA0731C4CB80E00A85C42 /* DKImageManager */,
 				E41A13791BF115BD00028971 /* KakaoOpenSDK.framework */,
@@ -1326,7 +1322,6 @@
 				E42CDF151BECFB3C00C35419 /* PicPic-Bridging-Header.h */,
 				E44580431BE3882000AF186C /* Assets.xcassets */,
 				E44580481BE3882000AF186C /* Info.plist */,
-				E41DE5081C51FCDD002272B5 /* NotificationCustom.xib */,
 			);
 			path = PicPic;
 			sourceTree = "<group>";
@@ -2139,7 +2134,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4AB45501C16668C002EA053 /* toasterOverlayMapWarm.png in Resources */,
-				E41DE5091C51FCDD002272B5 /* NotificationCustom.xib in Resources */,
 				E4AB453A1C16668C002EA053 /* edgeBurn.png in Resources */,
 				E4AB453D1C16668C002EA053 /* hefeMetal.png in Resources */,
 				E4A414C01C27AB1C0087F450 /* mask.jpg in Resources */,
