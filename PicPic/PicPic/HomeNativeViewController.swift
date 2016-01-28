@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyJSON
+import Alamofire
 
 class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, PPMosaicLayoutDelegate, HomeFriendCellProtocol {
     
@@ -87,7 +88,7 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
         //514, 411
         let message = JSON(["my_id": appdelegate.email])
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),{
-            appdelegate.doIt(514, message: message, callback: {(json) in
+            appdelegate.doItSocket(514, message: message, callback: {(json) in
                 
                 for dic in json["locale"].array!
                 {
@@ -97,60 +98,49 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
                 {
                     self.tagData.append(dic.dictionaryObject as! [String: String])
                 }
-                appdelegate.doIt(411, message: message, callback: {(json) in
+                appdelegate.doItSocket(411, message: message, callback: {(json) in
                     for dic in json["friends"].array!
                     {
                         self.friendData.append(dic.dictionaryObject as! [String : String])
                     }
-                })
-                appdelegate.doIt(411, message: message, callback: { (json) in
-                    for dic in json["friends"].array!
-                    {
-                        self.friendData.append(dic.dictionaryObject as! [String : String])
-                    }
-                    
-                    
-                    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                    appdelegate.doItSocket(411, message: message, callback: { (json) in
+                        for dic in json["friends"].array!
+                        {
+                            self.friendData.append(dic.dictionaryObject as! [String : String])
+                        }
                         
                         for (index, dic) in self.tagData.enumerate()
                         {
                             let url = dic["url"]!.substringWithRange(dic["url"]!.startIndex ..< dic["url"]!.endIndex.advancedBy(-6)).stringByAppendingString("_1.gif")
                             
-                            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
-                                
-                                if let gifURL = NSURL(string: "http://gif.picpic.world/" + url)
-                                {
-                                    self.gifData["\(index)"] = UIImage.gifWithData(NSData(contentsOfURL: gifURL) ?? NSData())
-                                }
-                                
-                            })
+                            Alamofire.request(.GET, "http://gif.picpic.world/" + url, parameters: ["foo": "bar"]).response { request, response, data, error in
+                                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+                                    self.gifData["\(index)"] = UIImage.gifWithData(data!) ?? UIImage()
+                                })
+                            }
+                            
                         }
-
+                        
                         
                         for (index, dic) in self.friendData.enumerate()
                         {
-                            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-                                let gifURL = NSURL(string: "http://gif.picpic.world/" + dic["profile_picture"]!)!
-                                
-                                if let data = NSData(contentsOfURL: gifURL)
-                                {
-                                    self.imageData["\(index)"] = UIImage(data:data)
-                                }
-                                else
-                                {
-                                    print("empty")
-                                    self.imageData["\(index)"] = UIImage()
-                                }
-                                
-                            })
+                            Alamofire.request(.GET, "http://gif.picpic.world/" + dic["profile_picture"]!, parameters: ["foo": "bar"]).response { request, response, data, error in
+                                self.imageData["\(index)"] = UIImage(data:data!)
+                            }
                         }
+                        
+                        
                     })
-                    
                 })
                 
             })
         })
     
+    }
+    
+    func fire()
+    {
+        
     }
     
     func dataAllReceived() -> Bool
@@ -267,7 +257,6 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        self.navigationController?.navigationBarHidden = true
         
         if indexPath.section == 0 || indexPath.section == 2 || indexPath.section == 4
         {

@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import SwiftyJSON
 
-class TagNativeReusableView: UICollectionReusableView {
+class TagNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
 
     @IBOutlet weak var imageCoverView: UIView!
     @IBOutlet weak var gifImageView: UIImageView!
@@ -25,16 +26,56 @@ class TagNativeReusableView: UICollectionReusableView {
     @IBOutlet weak var followerNumberButton: UIButton!
     @IBOutlet weak var tagFounderLabel: UILabel!
     
+    @IBOutlet weak var listViewButton: UIButton!
+    @IBOutlet weak var waterfallViewButton: UIButton!
+    
+    var tagId: String!
+    var parent: TagNativeViewController!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        searchBar.enablesReturnKeyAutomatically = false
+
     }
     
 
     @IBAction func followTouched() {
+        let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        if self.followButton.imageForState(.Normal) == UIImage(named: "follow")
+        {
+            followButton.setImage(UIImage(named: "follow_c"), forState: .Normal)
+        }
+        else
+        {
+            followButton.setImage(UIImage(named: "follow"), forState: .Normal)
+        }
+        let message : JSON = ["myId":appdelegate.email,"tag_id":self.tagId]
+
+        appdelegate.doIt(403, message: message, callback: { (readData) -> () in
+
+            if (readData.dictionaryObject!["follow"] as! String == "Y")
+            {
+                let newTitle = Int(self.followerNumberButton.titleForState(.Normal)!)! + 1
+                self.followerNumberButton.setTitle("\(newTitle)", forState: .Normal)
+            }
+            else
+            {
+                let newTitle = Int(self.followerNumberButton.titleForState(.Normal)!)! - 1
+                self.followerNumberButton.setTitle("\(newTitle)", forState: .Normal)
+            }
+        })
     }
     
     @IBAction func followerListTouched() {
+        let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let follower = appdelegate.storyboard.instantiateViewControllerWithIdentifier("FollowerViewController")as! FollowerViewController
+        follower.email = appdelegate.email
+        follower.tagId = tagId as String
+        follower.followType = "tag"
+        
+        appdelegate.testNavi.hidesBottomBarWhenPushed = true
+        appdelegate.testNavi.pushViewController(follower, animated: true)
     }
 
     @IBAction func leftButtonTouched() {
@@ -49,7 +90,9 @@ class TagNativeReusableView: UICollectionReusableView {
         
         leftButtonEnableView.backgroundColor = UIColor(red: 148/255, green: 158/255, blue: 241/255, alpha: 1.0)
         rightButtonEnableView.backgroundColor = UIColor.whiteColor()
-
+        
+        let str = self.searchBar.text ?? ""
+        self.parent.refreshWithoutProfileReload("N", str: str)
     }
     @IBAction func rightButtonTouched() {
         
@@ -61,9 +104,35 @@ class TagNativeReusableView: UICollectionReusableView {
         
         rightButtonEnableView.backgroundColor = UIColor(red: 148/255, green: 158/255, blue: 241/255, alpha: 1.0)
         leftButtonEnableView.backgroundColor = UIColor.whiteColor()
-        leftButton.layoutIfNeeded()
-        rightButton.layoutIfNeeded()
+        
+        let str = self.searchBar.text ?? ""
+        self.parent.refreshWithoutProfileReload("P", str: str)
     }
 
+    @IBAction func listViewButtonTouched() {
+        self.listViewButton.setImage(UIImage(named: "icon_my_list_c"), forState: .Normal)
+        self.waterfallViewButton.setImage(UIImage(named:"icon_my_gather"), forState: .Normal)
+        
+        let layout = CHTCollectionViewWaterfallLayout()
+        layout.columnCount = 1
+        layout.itemRenderDirection = CHTCollectionViewWaterfallLayoutItemRenderDirection.LeftToRight
+        self.parent.collectionView.collectionViewLayout = layout
+        self.parent.collectionView.reloadData()
+    }
+    @IBAction func waterFallViewButtonTouched() {
+        self.listViewButton.setImage(UIImage(named: "icon_my_list"), forState: .Normal)
+        self.waterfallViewButton.setImage(UIImage(named:"icon_my_gather_c"), forState: .Normal)
+        
+        let layout = CHTCollectionViewWaterfallLayout()
+        layout.columnCount = 3
+        layout.itemRenderDirection = CHTCollectionViewWaterfallLayoutItemRenderDirection.LeftToRight
+        self.parent.collectionView.collectionViewLayout = layout
+        self.parent.collectionView.reloadData()
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        let str = self.searchBar.text ?? ""
+        self.parent.refreshWithoutProfileReload(self.parent.currentRange, str: str)
+    }
     
 }

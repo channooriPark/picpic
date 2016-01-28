@@ -19,6 +19,7 @@
 #import "QAGIFEncoderAPI.h"
 #import "QAGIFEncType.h"
 #import "CHTCollectionViewWaterfallLayout.h"
+#import "UIScrollView+SVInfiniteScrolling.h"
 
 
 #endif /* createAniGIF_Bridging_Header_h */

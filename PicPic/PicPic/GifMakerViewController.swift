@@ -12,6 +12,7 @@ import MobileCoreServices
 import AssetsLibrary
 import SwiftyJSON
 import SpringIndicator
+import Photos
 
 class GifMakerViewController : SubViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, RAReorderableLayoutDelegate, RAReorderableLayoutDataSource ,UIAlertViewDelegate{
     
@@ -47,6 +48,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     
     @IBOutlet var btnNext: UIButton!
     @IBOutlet weak var btnPre: UIButton!
+    @IBOutlet weak var btnHighResolSave: UIButton!
     
     @IBOutlet var btnBasic: UIButton!
     @IBOutlet var btnPlayType: UIButton!
@@ -658,6 +660,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         self.view.bringSubviewToFront(self.waterMark)
         self.view.bringSubviewToFront(self.spring)
         self.view.bringSubviewToFront(self.progressView!)
+        self.view.bringSubviewToFront(self.btnHighResolSave)
     }
     
     
@@ -805,6 +808,86 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         }
     }
     
+    @IBAction func highResolSave() {
+        if filterState
+        {
+            self.progressContainerView!.hidden = false
+            self.view.bringSubviewToFront(self.progressContainerView!)
+        }
+        
+
+        /*self.view.bringSubviewToFront(spring)
+        self.spring.startAnimation(true)*/
+        //NSThread.sleepForTimeInterval(0.3)
+        
+        if text != nil {
+            text.deselected()
+            text = nil
+        }
+        
+        let path = String(format: "%@/%@", arguments: [gifsFolder!,gifName!])
+        
+        var imgArr = [UIImage]()
+        var tempArr = [[UIImage]]()
+        tempArr = playImageArr
+        
+        let progress = 1.0 / Float(tempArr.count)
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+            for var i=0; i<tempArr.count; i++ {
+                for var j=0; j<tempArr[i].count; j++ {
+                    self.applyFilter(&tempArr[i][j], filterName: self.filterCurrent)
+                    
+                }
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.progressView?.progress += progress
+                    for view in self.progressContainerView!.subviews
+                    {
+                        if view.isMemberOfClass(UILabel)
+                        {
+                            let progress = Int(self.progressView!.progress * 100.0)
+                            (view as! UILabel).text = "\(progress) %"
+                            (view as! UILabel).sizeToFit()
+                        }
+                    }
+                })
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                if self.textArr.count > 0 {
+                    self.gifMaker.make2(tempArr, delayTime: self.sliderDelay.value, gifPath: path, workFolder: self.workFolder!, subtitle: self.textArr, warterMark: self.waterToggle, imageCheck: self.imageCheck, canvas: self.canvas,playType: self.playType,allText: self.allText)
+                    
+                }
+                
+                let gif = NSData(contentsOfFile: path)
+                PHPhotoLibrary.sharedPhotoLibrary().performChanges({
+                    let img = UIImage.gifWithData(gif!)
+                    PHAssetChangeRequest.creationRequestForAssetFromImage(img!)
+                    }, completionHandler: {(success, error) in
+                    if success
+                    {
+                        print("sucess")
+                    }
+                    else
+                    {
+                        print(error)
+                    }
+                })
+                
+            })
+        })
+    
+    }
+
+    func image(image: UIImage, didFinishSavingWithError error: NSErrorPointer, contextInfo:UnsafePointer<Void>) {
+        if error != nil{
+            print(error)
+        }
+        else
+        {
+            print("saved")
+        }
+    }
     
     @IBAction func changeEraser(sender: AnyObject) {
         brushWidth = CGFloat(eraserSlider.value)

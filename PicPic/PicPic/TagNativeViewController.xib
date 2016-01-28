@@ -50,7 +50,7 @@
                 <constraint firstAttribute="bottom" secondItem="p3s-4c-mJF" secondAttribute="bottom" id="oTs-Ma-ZeA"/>
                 <constraint firstItem="p3s-4c-mJF" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="wsT-Eo-t0j"/>
             </constraints>
-            <point key="canvasLocation" x="325" y="455"/>
+            <point key="canvasLocation" x="433" y="275"/>
         </view>
     </objects>
     <resources>

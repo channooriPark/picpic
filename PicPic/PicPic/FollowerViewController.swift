@@ -71,7 +71,7 @@ class FollowerViewController: SubViewController , UIScrollViewDelegate{
         if count < 0 {
             count = 0
         }
-//        print(count)
+        print(count)
         let a = self.navigationController?.viewControllers[count] as! SubViewController
         if a.type == "tag" || a.type == "post" || a.type == "user" || a.type == "search" || a.type == "tag_name" {
             self.navigationController?.navigationBarHidden = true
