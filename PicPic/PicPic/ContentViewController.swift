@@ -35,7 +35,7 @@ class ContentViewController: SubViewController {
         self.view.addSubview(appdelegate.alram.view)
         self.view.addSubview(appdelegate.myfeed.view)
         
-//        appdelegate.main.view.frame = visibleFrame
+        //appdelegate.main.view.frame = visibleFrame
         
         if self.appdelegate.notiType == 0 {
             appdelegate.second.view.hidden = true

@@ -14,11 +14,17 @@
 		6C9897991C5083F600AD6292 /* libfingramagifencoder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C9897981C5083F600AD6292 /* libfingramagifencoder.a */; };
 		6C98979F1C50868B00AD6292 /* HomeTagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C98979D1C50868B00AD6292 /* HomeTagCell.swift */; };
 		6C9897A01C50868B00AD6292 /* HomeTagCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6C98979E1C50868B00AD6292 /* HomeTagCell.xib */; };
+		6CAEE70B1C59AED9001F3A7E /* UserNativeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAEE7091C59AED9001F3A7E /* UserNativeViewController.swift */; };
+		6CAEE70C1C59AED9001F3A7E /* UserNativeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CAEE70A1C59AED9001F3A7E /* UserNativeViewController.xib */; };
+		6CAEE7141C59B8EE001F3A7E /* HyperLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CAEE7131C59B8EE001F3A7E /* HyperLabel.m */; };
+		6CAEE7191C59BF8E001F3A7E /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CAEE7181C59BF8E001F3A7E /* UIScrollView+SVInfiniteScrolling.m */; };
 		6CD3A4531C53761C0042F873 /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD3A4521C53761C0042F873 /* Connection.swift */; };
 		6CD3A4591C53CB440042F873 /* TagNativeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD3A4571C53CB440042F873 /* TagNativeViewController.swift */; };
 		6CD3A45A1C53CB440042F873 /* TagNativeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CD3A4581C53CB440042F873 /* TagNativeViewController.xib */; };
 		6CD3A45D1C53D2680042F873 /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD3A45B1C53D2680042F873 /* TagCell.swift */; };
 		6CD3A45E1C53D2680042F873 /* TagCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CD3A45C1C53D2680042F873 /* TagCell.xib */; };
+		6CDC96FA1C58E3680077EE4A /* TagListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDC96F81C58E3680077EE4A /* TagListCell.swift */; };
+		6CDC96FB1C58E3680077EE4A /* TagListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CDC96F91C58E3680077EE4A /* TagListCell.xib */; };
 		6CEDBA551C475791000C32F9 /* PPMosaicLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEDBA541C475791000C32F9 /* PPMosaicLayout.swift */; };
 		6CEDBA581C4757C6000C32F9 /* HomeNativeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CEDBA561C4757C6000C32F9 /* HomeNativeViewController.swift */; };
 		6CEDBA591C4757C6000C32F9 /* HomeNativeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6CEDBA571C4757C6000C32F9 /* HomeNativeViewController.xib */; };
@@ -448,11 +454,19 @@
 		6C98979C1C50846800AD6292 /* QAGIFEncType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QAGIFEncType.h; sourceTree = "<group>"; };
 		6C98979D1C50868B00AD6292 /* HomeTagCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTagCell.swift; sourceTree = "<group>"; };
 		6C98979E1C50868B00AD6292 /* HomeTagCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeTagCell.xib; sourceTree = "<group>"; };
+		6CAEE7091C59AED9001F3A7E /* UserNativeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserNativeViewController.swift; sourceTree = "<group>"; };
+		6CAEE70A1C59AED9001F3A7E /* UserNativeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserNativeViewController.xib; sourceTree = "<group>"; };
+		6CAEE7131C59B8EE001F3A7E /* HyperLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HyperLabel.m; sourceTree = "<group>"; };
+		6CAEE7151C59B8F7001F3A7E /* HyperLabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HyperLabel.h; sourceTree = "<group>"; };
+		6CAEE7171C59BF8E001F3A7E /* UIScrollView+SVInfiniteScrolling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SVInfiniteScrolling.h"; sourceTree = "<group>"; };
+		6CAEE7181C59BF8E001F3A7E /* UIScrollView+SVInfiniteScrolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVInfiniteScrolling.m"; sourceTree = "<group>"; };
 		6CD3A4521C53761C0042F873 /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
 		6CD3A4571C53CB440042F873 /* TagNativeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagNativeViewController.swift; sourceTree = "<group>"; };
 		6CD3A4581C53CB440042F873 /* TagNativeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TagNativeViewController.xib; sourceTree = "<group>"; };
 		6CD3A45B1C53D2680042F873 /* TagCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
 		6CD3A45C1C53D2680042F873 /* TagCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TagCell.xib; sourceTree = "<group>"; };
+		6CDC96F81C58E3680077EE4A /* TagListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagListCell.swift; sourceTree = "<group>"; };
+		6CDC96F91C58E3680077EE4A /* TagListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TagListCell.xib; sourceTree = "<group>"; };
 		6CEDBA541C475791000C32F9 /* PPMosaicLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPMosaicLayout.swift; sourceTree = "<group>"; };
 		6CEDBA561C4757C6000C32F9 /* HomeNativeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeNativeViewController.swift; sourceTree = "<group>"; };
 		6CEDBA571C4757C6000C32F9 /* HomeNativeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeNativeViewController.xib; sourceTree = "<group>"; };
@@ -1128,6 +1142,33 @@
 			name = QAEncoder;
 			sourceTree = "<group>";
 		};
+		6CAEE7081C59AE9F001F3A7E /* UserNative */ = {
+			isa = PBXGroup;
+			children = (
+				6CAEE7091C59AED9001F3A7E /* UserNativeViewController.swift */,
+				6CAEE70A1C59AED9001F3A7E /* UserNativeViewController.xib */,
+			);
+			name = UserNative;
+			sourceTree = "<group>";
+		};
+		6CAEE70D1C59B86A001F3A7E /* HyperLabel */ = {
+			isa = PBXGroup;
+			children = (
+				6CAEE7151C59B8F7001F3A7E /* HyperLabel.h */,
+				6CAEE7131C59B8EE001F3A7E /* HyperLabel.m */,
+			);
+			name = HyperLabel;
+			sourceTree = "<group>";
+		};
+		6CAEE7161C59BF7C001F3A7E /* SVInfiniteScroll */ = {
+			isa = PBXGroup;
+			children = (
+				6CAEE7171C59BF8E001F3A7E /* UIScrollView+SVInfiniteScrolling.h */,
+				6CAEE7181C59BF8E001F3A7E /* UIScrollView+SVInfiniteScrolling.m */,
+			);
+			name = SVInfiniteScroll;
+			sourceTree = "<group>";
+		};
 		6CD3A4541C53C9E20042F873 /* TagNative */ = {
 			isa = PBXGroup;
 			children = (
@@ -1135,6 +1176,8 @@
 				6CD3A4581C53CB440042F873 /* TagNativeViewController.xib */,
 				6CD3A45B1C53D2680042F873 /* TagCell.swift */,
 				6CD3A45C1C53D2680042F873 /* TagCell.xib */,
+				6CDC96F81C58E3680077EE4A /* TagListCell.swift */,
+				6CDC96F91C58E3680077EE4A /* TagListCell.xib */,
 				6C6CF4361C53EC7900CE2E64 /* TagNativeReusableView.swift */,
 				6C6CF4371C53EC7900CE2E64 /* TagNativeReusableView.xib */,
 			);
@@ -1349,6 +1392,7 @@
 			children = (
 				6CF1B5321C5286520063F151 /* HomeNative */,
 				6CD3A4541C53C9E20042F873 /* TagNative */,
+				6CAEE7081C59AE9F001F3A7E /* UserNative */,
 				E4A3717B1C19A27100D69DDE /* MyWebKit.swift */,
 				E401A8D31BEE4E1800D34B3E /* TabBarTestViewController.swift */,
 				E401A8D51BEE4E3500D34B3E /* ContentViewController.swift */,
@@ -1943,6 +1987,8 @@
 		E4F3DD4F1BE390260063F29B /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				6CAEE7161C59BF7C001F3A7E /* SVInfiniteScroll */,
+				6CAEE70D1C59B86A001F3A7E /* HyperLabel */,
 				6C6CF43A1C549BCD00CE2E64 /* CHTCollectionViewWaterfallLayout.h */,
 				6C6CF43B1C549BCD00CE2E64 /* CHTCollectionViewWaterfallLayout.m */,
 				6CEDBA541C475791000C32F9 /* PPMosaicLayout.swift */,
@@ -2082,7 +2128,7 @@
 				TargetAttributes = {
 					E44580381BE3882000AF186C = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = SEDPMQ93PW;
+						DevelopmentTeam = ANM7DT8PCR;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
 								enabled = 0;
@@ -2162,6 +2208,7 @@
 				E4AB45341C16668C002EA053 /* brannanProcess.png in Resources */,
 				E4AB45491C16668C002EA053 /* softLight.png in Resources */,
 				E4C0CEC41C091D7D001C9AA7 /* 도현체.otf in Resources */,
+				6CAEE70C1C59AED9001F3A7E /* UserNativeViewController.xib in Resources */,
 				E4AB45361C16668C002EA053 /* earlybirdBlowout.png in Resources */,
 				E4D3826E1C3F3DF000800239 /* TempLoadView.xib in Resources */,
 				E4AB453E1C16668C002EA053 /* hefeSoftLight.png in Resources */,
@@ -2188,6 +2235,7 @@
 				E4AB45371C16668C002EA053 /* earlyBirdCurves.png in Resources */,
 				E4AB45451C16668C002EA053 /* overlayMap.png in Resources */,
 				E4AB453F1C16668C002EA053 /* hudsonBackground.png in Resources */,
+				6CDC96FB1C58E3680077EE4A /* TagListCell.xib in Resources */,
 				E4AB45411C16668C002EA053 /* inkwellMap.png in Resources */,
 				E4D3826D1C3F3DF000800239 /* SaveCell.xib in Resources */,
 				6C9897A01C50868B00AD6292 /* HomeTagCell.xib in Resources */,
@@ -2474,11 +2522,13 @@
 				E4D4EC881C112EAF00616C2E /* GPUImagePixellatePositionFilter.m in Sources */,
 				E4D4ECA61C112EAF00616C2E /* GPUImageSubtractBlendFilter.m in Sources */,
 				E4D4EC521C112EAF00616C2E /* GPUImageHalftoneFilter.m in Sources */,
+				6CAEE70B1C59AED9001F3A7E /* UserNativeViewController.swift in Sources */,
 				E4D4EC5C1C112EAF00616C2E /* GPUImageHSBFilter.m in Sources */,
 				E4AB44F11C16667A002EA053 /* IFHudsonFilter.m in Sources */,
 				E41B09AB1C05D9E8001171A2 /* TextAddViewController.swift in Sources */,
 				E4AB44F81C16667A002EA053 /* IFRiseFilter.m in Sources */,
 				E4D4EC681C112EAF00616C2E /* GPUImageLineGenerator.m in Sources */,
+				6CDC96FA1C58E3680077EE4A /* TagListCell.swift in Sources */,
 				E4D4EC851C112EAF00616C2E /* GPUImagePicture+TextureSubimage.m in Sources */,
 				E4D4EC411C112EAF00616C2E /* GPUImageEmbossFilter.m in Sources */,
 				E4D4EC461C112EAF00616C2E /* GPUImageFASTCornerDetectionFilter.m in Sources */,
@@ -2595,6 +2645,7 @@
 				E4D4ECAC1C112EAF00616C2E /* GPUImageThresholdedNonMaximumSuppressionFilter.m in Sources */,
 				E4D4EC931C112EAF00616C2E /* GPUImageRGBFilter.m in Sources */,
 				E40DA7CB1BE9D9AD00C0E7F1 /* OperationalViewController.swift in Sources */,
+				6CAEE7141C59B8EE001F3A7E /* HyperLabel.m in Sources */,
 				E4F3DD4C1BE38F480063F29B /* PhotoOperations.swift in Sources */,
 				E4D4EC941C112EAF00616C2E /* GPUImageRGBOpeningFilter.m in Sources */,
 				E4D4EC4F1C112EAF00616C2E /* GPUImageGaussianSelectiveBlurFilter.m in Sources */,
@@ -2614,6 +2665,7 @@
 				E4F3DD2F1BE38EC20063F29B /* CommentCell.swift in Sources */,
 				E4D4EC321C112EAF00616C2E /* GPUImageColorInvertFilter.m in Sources */,
 				E4151AFF1BF2689900527FF1 /* SubViewController.swift in Sources */,
+				6CAEE7191C59BF8E001F3A7E /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2758,8 +2810,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: HYUNWOONG OH (57V54GPACQ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: HYUNWOONG OH (57V54GPACQ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2776,9 +2828,9 @@
 					"-all_load",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = picpic.sikkle;
+				PRODUCT_BUNDLE_IDENTIFIER = picpic.sikkle1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "505a7dba-2082-4a59-bb8b-85c29b4f4be1";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PicPic/PicPic-Bridging-Header.h";
 			};
 			name = Debug;
@@ -2789,8 +2841,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: HYUNWOONG OH (57V54GPACQ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: HYUNWOONG OH (57V54GPACQ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2807,9 +2859,9 @@
 					"-all_load",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = picpic.sikkle;
+				PRODUCT_BUNDLE_IDENTIFIER = picpic.sikkle1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "505a7dba-2082-4a59-bb8b-85c29b4f4be1";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PicPic/PicPic-Bridging-Header.h";
 			};
 			name = Release;

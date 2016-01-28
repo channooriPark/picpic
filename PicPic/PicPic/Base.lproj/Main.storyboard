@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -3323,7 +3323,7 @@
                             <constraint firstItem="DsY-c0-YNT" firstAttribute="leading" secondItem="SdH-2H-JQp" secondAttribute="leadingMargin" constant="-11" id="PDG-BV-bWo"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="FF0CAC1E-C84A-4D01-9A67-8E7A7F5A28DE" id="QqF-Li-2ct"/>
+                    <tabBarItem key="tabBarItem" title="" image="772B2DE1-EE24-43DD-8A9F-4C73BB78B93E" id="QqF-Li-2ct"/>
                     <navigationItem key="navigationItem" id="0aK-XR-PxR"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
@@ -5861,8 +5861,8 @@
                                     <constraint firstItem="5PL-oO-8U2" firstAttribute="centerX" secondItem="1DR-iB-wTJ" secondAttribute="centerX" id="zmM-IU-O5Q"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t5u-Gc-9bI">
-                                <rect key="frame" x="5" y="34" width="30" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t5u-Gc-9bI">
+                                <rect key="frame" x="1" y="14" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="3wm-Vi-sn4"/>
                                     <constraint firstAttribute="height" constant="30" id="kYK-aJ-odI"/>
@@ -6159,8 +6159,8 @@
                                     <action selector="actWaterMark:" destination="2Nw-bv-2mf" eventType="touchUpInside" id="fEd-BD-dI2"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FS3-Mr-6Vh">
-                                <rect key="frame" x="265" y="34" width="43" height="33"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FS3-Mr-6Vh">
+                                <rect key="frame" x="265" y="14" width="43" height="33"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="43" id="ZA4-l8-ZKo"/>
                                 </constraints>
@@ -6181,6 +6181,16 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NYq-Z3-UUc">
+                                <rect key="frame" x="211" y="17" width="52" height="27"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <state key="normal" title="고화질저장">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="highResolSave" destination="2Nw-bv-2mf" eventType="touchUpInside" id="EY3-1D-wHm"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -6201,6 +6211,7 @@
                             <constraint firstItem="CxA-yA-kYW" firstAttribute="top" secondItem="1dZ-NC-66N" secondAttribute="bottom" id="FYb-Za-Rd6"/>
                             <constraint firstItem="1DR-iB-wTJ" firstAttribute="bottom" secondItem="6wS-NI-fK7" secondAttribute="top" id="GQl-j9-SbG"/>
                             <constraint firstItem="1dZ-NC-66N" firstAttribute="width" secondItem="kFU-IH-kXD" secondAttribute="width" id="LaF-eU-yUs"/>
+                            <constraint firstItem="NYq-Z3-UUc" firstAttribute="centerY" secondItem="FS3-Mr-6Vh" secondAttribute="centerY" id="PTv-qW-TLa"/>
                             <constraint firstItem="1SL-tA-vja" firstAttribute="trailing" secondItem="CxA-yA-kYW" secondAttribute="trailing" id="Ptb-dz-0PL"/>
                             <constraint firstItem="ZgG-H2-igI" firstAttribute="trailing" secondItem="1dZ-NC-66N" secondAttribute="trailing" id="QQz-nX-VMp"/>
                             <constraint firstItem="1SL-tA-vja" firstAttribute="leading" secondItem="Eye-Mc-uz7" secondAttribute="leading" id="R4g-YK-rmr"/>
@@ -6218,6 +6229,7 @@
                             <constraint firstItem="1DR-iB-wTJ" firstAttribute="trailing" secondItem="Z4l-Pw-hYM" secondAttribute="trailing" id="cDU-yn-n0z"/>
                             <constraint firstItem="4Cw-nh-d5n" firstAttribute="leading" secondItem="YX5-WH-etK" secondAttribute="leading" id="cGa-cS-SRR"/>
                             <constraint firstItem="1dZ-NC-66N" firstAttribute="top" secondItem="kFU-IH-kXD" secondAttribute="top" id="cej-If-D73"/>
+                            <constraint firstItem="FS3-Mr-6Vh" firstAttribute="leading" secondItem="NYq-Z3-UUc" secondAttribute="trailing" constant="2" id="fAp-Rm-txr"/>
                             <constraint firstItem="t5u-Gc-9bI" firstAttribute="top" secondItem="FS3-Mr-6Vh" secondAttribute="top" id="fPp-2m-Abu"/>
                             <constraint firstItem="6wS-NI-fK7" firstAttribute="top" secondItem="Z4l-Pw-hYM" secondAttribute="bottom" id="gAu-Zc-sQv"/>
                             <constraint firstItem="CxA-yA-kYW" firstAttribute="leading" secondItem="1dZ-NC-66N" secondAttribute="leading" id="gdY-sA-mQb"/>
@@ -6256,6 +6268,7 @@
                         <outlet property="btnEditor" destination="r1h-Vn-0KW" id="j35-xt-Wby"/>
                         <outlet property="btnEraser" destination="67g-8U-1U7" id="WwZ-ws-8CD"/>
                         <outlet property="btnFilters" destination="KUs-xS-adt" id="r6J-0X-d4u"/>
+                        <outlet property="btnHighResolSave" destination="NYq-Z3-UUc" id="e9e-Qz-U3I"/>
                         <outlet property="btnNext" destination="FS3-Mr-6Vh" id="wvM-Ah-O8F"/>
                         <outlet property="btnPlayType" destination="tQc-l1-FBS" id="hyR-t7-5gG"/>
                         <outlet property="btnPre" destination="t5u-Gc-9bI" id="e52-Gd-e93"/>
@@ -7474,7 +7487,7 @@
                             <constraint firstItem="x9I-39-yvM" firstAttribute="leading" secondItem="Y3S-o4-VFB" secondAttribute="leadingMargin" constant="-11" id="Yxw-LI-fvC"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="0F7F7B3C-1EC2-4A71-ABC1-65B94F345723" id="urB-TV-Wsz"/>
+                    <tabBarItem key="tabBarItem" title="" image="A81114B1-549C-42F9-B083-7161DABE2047" id="urB-TV-Wsz"/>
                     <navigationItem key="navigationItem" id="jnl-Uw-H5F"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
@@ -9019,7 +9032,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hYZ-Yx-83B" userLabel="페이스북">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hYZ-Yx-83B" userLabel="페이스북">
                                 <rect key="frame" x="0.0" y="64" width="106" height="44"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ehW-Mv-AZy">
@@ -9145,7 +9158,7 @@
                                     <constraint firstItem="F1A-xL-w9d" firstAttribute="centerY" secondItem="0EL-7Z-xPy" secondAttribute="centerY" constant="2.5" id="wRU-IO-FqH"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dxl-gZ-ge2" userLabel="추천친구">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dxl-gZ-ge2" userLabel="추천친구">
                                 <rect key="frame" x="213" y="64" width="107" height="44"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mpq-lu-LVx">
@@ -9219,7 +9232,7 @@
                                     <constraint firstItem="Mpq-lu-LVx" firstAttribute="centerX" secondItem="HLa-zc-oW7" secondAttribute="centerX" id="nra-3L-u5X"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HvP-Q4-PRR" userLabel="친구 100명 모두 팔로우">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HvP-Q4-PRR" userLabel="친구 100명 모두 팔로우">
                                 <rect key="frame" x="-4" y="108" width="328" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hsj-zm-uD5">
@@ -9253,14 +9266,14 @@
                                     <constraint firstItem="dXc-n1-r65" firstAttribute="leading" secondItem="HvP-Q4-PRR" secondAttribute="leading" constant="20" id="x09-Ux-7bT"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Syx-CW-Nwg" userLabel="divider">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Syx-CW-Nwg" userLabel="divider">
                                 <rect key="frame" x="0.0" y="152" width="320" height="1"/>
                                 <color key="backgroundColor" red="0.77137189139999995" green="0.77137189139999995" blue="0.77137189139999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="6Rl-E8-XaV"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="151" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ikd-VM-3yX">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="151" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ikd-VM-3yX">
                                 <rect key="frame" x="0.0" y="154" width="320" height="414"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -9409,7 +9422,7 @@
     </scenes>
     <resources>
         <image name=" delete" width="375" height="667"/>
-        <image name="0F7F7B3C-1EC2-4A71-ABC1-65B94F345723" width="20" height="25">
+        <image name="772B2DE1-EE24-43DD-8A9F-4C73BB78B93E" width="20" height="25">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -9493,7 +9506,7 @@ AKcAqQCrAK0AsgC1ALcAuQC7AL0AwgDZANsA3RFPEVQRXxFoEXsRfxGKEZMRmBGgEaMRqBG3EbsRwhHK
 EdcR3BHeEeAR5RHtEfAR9RH9EgASEhIVEhoAAAAAAAACAQAAAAAAAABBAAAAAAAAAAAAAAAAAAASHA
 </mutableData>
         </image>
-        <image name="FF0CAC1E-C84A-4D01-9A67-8E7A7F5A28DE" width="20" height="25">
+        <image name="A81114B1-549C-42F9-B083-7161DABE2047" width="20" height="25">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

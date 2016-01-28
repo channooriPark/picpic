@@ -12,6 +12,7 @@ import MobileCoreServices
 import AssetsLibrary
 import SwiftyJSON
 import SpringIndicator
+import Photos
 
 class GifMakerViewController : SubViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, RAReorderableLayoutDelegate, RAReorderableLayoutDataSource ,UIAlertViewDelegate{
     
@@ -47,6 +48,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     
     @IBOutlet var btnNext: UIButton!
     @IBOutlet weak var btnPre: UIButton!
+    @IBOutlet weak var btnHighResolSave: UIButton!
     
     @IBOutlet var btnBasic: UIButton!
     @IBOutlet var btnPlayType: UIButton!
@@ -658,6 +660,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         self.view.bringSubviewToFront(self.waterMark)
         self.view.bringSubviewToFront(self.spring)
         self.view.bringSubviewToFront(self.progressView!)
+        self.view.bringSubviewToFront(self.btnHighResolSave)
     }
     
     
@@ -805,6 +808,112 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         }
     }
     
+    @IBAction func highResolSave() {
+        if filterState
+        {
+            self.progressContainerView!.hidden = false
+            self.view.bringSubviewToFront(self.progressContainerView!)
+        }
+        
+
+        /*self.view.bringSubviewToFront(spring)
+        self.spring.startAnimation(true)*/
+        //NSThread.sleepForTimeInterval(0.3)
+        
+        if text != nil {
+            text.deselected()
+            text = nil
+        }
+        
+        let path = String(format: "%@/%@", arguments: [gifsFolder!,gifName!])
+        
+        var imgArr = [UIImage]()
+        var tempArr = [[UIImage]]()
+        tempArr = playImageArr
+        
+        let progress = 1.0 / Float(tempArr.count)
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+            for var i=0; i<tempArr.count; i++ {
+                for var j=0; j<tempArr[i].count; j++ {
+                    self.applyFilter(&tempArr[i][j], filterName: self.filterCurrent)
+                    
+                }
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.progressView?.progress += progress
+                    for view in self.progressContainerView!.subviews
+                    {
+                        if view.isMemberOfClass(UILabel)
+                        {
+                            let progress = Int(self.progressView!.progress * 100.0)
+                            (view as! UILabel).text = "\(progress) %"
+                            (view as! UILabel).sizeToFit()
+                        }
+                    }
+                })
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                if self.textArr.count > 0 {
+                    self.gifMaker.make2(tempArr, delayTime: self.sliderDelay.value, gifPath: path, workFolder: self.workFolder!, subtitle: self.textArr, warterMark: self.waterToggle, imageCheck: self.imageCheck, canvas: self.canvas,playType: self.playType,allText: self.allText)
+                    
+                }
+                
+                let gif = NSData(contentsOfFile: path)
+                var photosAsset: PHFetchResult!
+                var collection: PHAssetCollection!
+                var assetCollectionPlaceholder: PHObjectPlaceholder!
+                
+                //Make sure we have custom album for this app if haven't already
+                let fetchOptions = PHFetchOptions()
+                fetchOptions.predicate = NSPredicate(format: "title = %@", "PicPic")
+                collection = PHAssetCollection.fetchAssetCollectionsWithType(.Album, subtype: .Any, options: fetchOptions).firstObject as? PHAssetCollection
+                
+                //if we don't have a special album for this app yet then make one
+                if collection == nil {
+                    PHPhotoLibrary.sharedPhotoLibrary().performChanges({
+                        let createAlbumRequest : PHAssetCollectionChangeRequest = PHAssetCollectionChangeRequest.creationRequestForAssetCollectionWithTitle("PicPic")
+                        assetCollectionPlaceholder = createAlbumRequest.placeholderForCreatedAssetCollection
+                        }, completionHandler: { success, error in
+                            if success {
+                                let collectionFetchResult = PHAssetCollection.fetchAssetCollectionsWithLocalIdentifiers([assetCollectionPlaceholder.localIdentifier], options: nil)
+                                print(collectionFetchResult)
+                                collection = collectionFetchResult.firstObject as! PHAssetCollection
+                            }
+                    })
+                }
+                
+                //save the gifs to Photos
+                PHPhotoLibrary.sharedPhotoLibrary().performChanges({
+                    let img = UIImage.gifWithData(gif!)
+                    let assetRequest = PHAssetChangeRequest.creationRequestForAssetFromImage(img!)
+                    let assetPlaceholder = assetRequest.placeholderForCreatedAsset
+                    photosAsset = PHAsset.fetchAssetsInAssetCollection(collection, options: nil)
+                    let albumChangeRequest = PHAssetCollectionChangeRequest(forAssetCollection: collection, assets: photosAsset)
+                    albumChangeRequest!.addAssets([assetPlaceholder!])
+                    }, completionHandler: { success, error in
+                        if success {
+                            print("added video to album")
+                        }else if error != nil{
+                            print("handle error since couldn't save video")
+                        }
+                })
+            
+                
+            })
+        })
+    
+    }
+
+    func image(image: UIImage, didFinishSavingWithError error: NSErrorPointer, contextInfo:UnsafePointer<Void>) {
+        if error != nil{
+            print(error)
+        }
+        else
+        {
+            print("saved")
+        }
+    }
     
     @IBAction func changeEraser(sender: AnyObject) {
         brushWidth = CGFloat(eraserSlider.value)
