@@ -499,6 +499,7 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
         controlLoading(true)
         let data_gif: NSData
         if Config.getInstance().photoDataArr.count>0 {
+            print("regift_photo    ::      ",regift_photo!.createGif()!)
             data_gif = NSData(contentsOfURL: regift_photo!.createGif()!)!
         }
         else {

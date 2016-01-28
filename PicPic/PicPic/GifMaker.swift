@@ -203,6 +203,107 @@ class GifMaker {
         }
     }
     
+    
+    func movSplitHigh(url:NSURL, time_start:Double, var time_end:Double, outputPath path:String) {
+        
+        let fileManager = NSFileManager.defaultManager()
+        do {
+            if(!fileManager.fileExistsAtPath(path)) {
+                try fileManager.createDirectoryAtPath(path, withIntermediateDirectories: false, attributes: nil)
+                
+            }
+        } catch let error as NSError {
+            print(error.localizedDescription);
+        }
+        
+        
+        let asset = AVAsset(URL: url)
+        self.log.log("asset   \(asset)")
+        let time_total = CMTimeGetSeconds(asset.duration)
+        if(time_total < time_end || time_end == 0) {
+            time_end = time_total
+        }
+        
+        let frameCount = Int(CMTimeGetSeconds(asset.duration) * Constants.FrameRate)
+        var timePoints: [TimePoint] = []
+        
+        let movieLength = Float(asset.duration.value) / Float(asset.duration.timescale)
+        let increment = Float(movieLength) / Float(frameCount)
+        
+        let frame_start = Int(time_start * Constants.FrameRate)
+        let frame_end = Int(time_end * Constants.FrameRate)
+        
+        
+        for frameNumber in frame_start ..< frame_end {
+            let seconds: Float64 = Float64(increment) * Float64(frameNumber)
+            let time = CMTimeMakeWithSeconds(seconds, Constants.TimeInterval)
+            timePoints.append(time)
+        }
+        
+        if(timePoints.count == 0 && time_end>0) {
+            let time = CMTimeMakeWithSeconds(time_start, Constants.TimeInterval)
+            timePoints.append(time)
+        }
+        
+        let imageGenerator = AVAssetImageGenerator(asset: asset)
+        imageGenerator.appliesPreferredTrackTransform = true
+        
+        let tolerance = CMTimeMakeWithSeconds(Constants.Tolerance, Constants.TimeInterval)
+        imageGenerator.requestedTimeToleranceBefore = tolerance
+        imageGenerator.requestedTimeToleranceAfter = tolerance
+        
+        var indx = 0;
+        for time in timePoints {
+            do {
+                let fileName = String(format: "%03d.jpg",Int(indx))
+                let imagePath = "\(path)/\(fileName)"
+                let imageRef = try imageGenerator.copyCGImageAtTime(time, actualTime: nil)
+                var img = UIImage(CGImage: imageRef)
+                self.log.log("log.log img size\(img.size)")
+                if(img.size.width > img.size.height) { //가로로 자르기
+                    let imgRatio = Float((img.size.width) / (img.size.height))
+                    let ratio = Float(16.0/9.0)
+                    self.log.log("imgRatio  :  \(imgRatio) +- ratio : \(ratio)")
+                    if imgRatio == ratio {
+                        //16:9기준
+                        //                            img = img.cropToBounds(720, height: 720)
+                        img = img.resizeImage(CGSize(width: 1280, height: 720))
+                    } else { // 4:3기준
+                        var width = Double(img.size.width)
+                        if(img.size.height<img.size.width) {
+                            width = Double(img.size.height)
+                        }
+                        let height = width*3/4
+                        
+                        print("img 가로기준 ",img.size.width,"x",img.size.height)
+                        print(width,"x",height)
+                        
+                        //                            img = img.cropToBounds(width, height: height)
+                        if( Double(Config.getInstance().wid) < width) {
+                            img = img.resizeImage(CGSize(width: 1280, height: 960))
+                        }
+                    }
+                } else { // 세로로 자르기
+                    var width = Double(img.size.width)
+                    if(img.size.height<img.size.width) {
+                        width = Double(img.size.height)
+                    }
+                    let height = width*4/3
+                    
+                    img = img.cropToBounds(width, height: height)
+                    if( Double(Config.getInstance().wid) < width) {
+                        img = img.resizeImage(CGSize(width: 960, height: 1280))
+                    }
+                }
+                
+                UIImageJPEGRepresentation(img, 100)!.writeToFile(imagePath, atomically: true)
+            } catch let error as NSError {
+                print("An error occurred: \(error)")
+            }
+            indx++
+        }
+    }
+    
     func makeJpegs(tmpPath:String, workPath:String, cropSize:CGSize?, reSize:CGSize?) {
         let fileManager = NSFileManager.defaultManager()
         let enumerator:NSDirectoryEnumerator = fileManager.enumeratorAtPath(tmpPath)!
@@ -510,12 +611,6 @@ class GifMaker {
             masked = CGImageCreateWithMask(imageRef, mask)!
             eraserImage = UIImage(CGImage: masked)
         }
-        
-        
-        
-        
-        
-        
         
         if canvas?.subviews.count > 0 {
             for view in  (canvas?.subviews)! {
