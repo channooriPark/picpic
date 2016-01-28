@@ -21,8 +21,6 @@ class CommentCell: UITableViewCell {
     @IBOutlet weak var upperContentView: UIView!
     @IBOutlet weak var upperContentViewLeftConst: NSLayoutConstraint!
     @IBOutlet weak var upperContentViewRightConst: NSLayoutConstraint!
-    @IBOutlet weak var bodyHei: NSLayoutConstraint!
-    @IBOutlet weak var imageComView: UIImageView!
     var panStartPoint: CGPoint?
     var startingRightConst: CGFloat?
     var panRecognizer: UIPanGestureRecognizer?
@@ -60,8 +58,13 @@ class CommentCell: UITableViewCell {
     
     //이미지 댓글 관련
     var imageCom : UIImage!
-//    var imageComView : UIImageView! = UIImageView()
+    var imageComView : UIImageView! = UIImageView()
     var urlString : String!
+    var imageData : NSData!
+    @IBOutlet weak var likeCountSpace: NSLayoutConstraint!
+    var bodyHeight : CGFloat!
+    var urlState = false
+    var isFirst = true
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -90,12 +93,12 @@ class CommentCell: UITableViewCell {
     }
     
     func setBody(){
-        
         if data["url"].string == "" {
             urlString = nil
             imageComView.frame.size.height = 0
         }else {
             urlString = data["url"].stringValue
+            urlState = true
         }
         bodyLabel.putText(data["body"].string!,url: urlString)
         bodyLabel.textContainer.lineBreakMode = NSLineBreakMode.ByWordWrapping
@@ -106,17 +109,31 @@ class CommentCell: UITableViewCell {
         var newFrame = bodyLabel.frame
         newFrame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
         bodyLabel.frame = newFrame;
-        bodyHei.constant = newFrame.size.height
         
         bodyLabel.scrollEnabled = false
         bodyLabel.sizeToFit()
-        self.height = 70 + (bodyLabel.frame.size.height - 27)
+        
+        
+        if isFirst {
+            self.bodyHeight = bodyLabel.frame.size.height
+            print("setBody bodyHeight    :   ",self.bodyHeight)
+            self.height = 94 + (bodyLabel.frame.size.height - 50)
+            if urlState {
+                let width = self.upperContentView.frame.size.width - 56 - 10
+                let height = width/3*4
+                self.bodyHeight = bodyLabel.frame.size.height + bodyLabel.frame.origin.y
+                upperContentView.addSubview(imageComView)
+                imageComView.frame = CGRectMake(bodyLabel.frame.origin.x, bodyHeight, width, height)
+                self.height = 109 + (bodyLabel.frame.size.height - 60) + imageComView.frame.size.height + 10
+            }
+            isFirst = false
+        }
         
         
         
         
+        //업로드 시간
         let uploadDateText = data["time"].string!
-        
         if self.data["like_yn"].stringValue == "Y" {
             self.heartImage.hidden = false
             self.likeCountLabel.hidden = false
@@ -134,9 +151,6 @@ class CommentCell: UITableViewCell {
             self.likeButton.setTitle("\(self.appdelegate.ment["like"].stringValue)", forState: UIControlState.Normal)
             like_yn = self.data["like_yn"].string!
         }
-        
-        
-        
         uploadedDate(uploadDateText)
         let dateString : NSString = uploadTimeLabel.text!
         let dateSize = dateString.sizeWithAttributes([NSFontAttributeName:UIFont.systemFontOfSize(10)])
@@ -151,6 +165,7 @@ class CommentCell: UITableViewCell {
         para.appendAttributedString(attrString)
         self.userIDText.attributedText = para
         
+        //내가 쓴 글인지 남이 쓴 글인지 판단해서 스와이프 했을때의 이미지 결정하는 구문
         if writType == 0 {
             //내글
             if data["email"].stringValue == self.appdelegate.email {
@@ -181,34 +196,67 @@ class CommentCell: UITableViewCell {
     }
     
     
-    func imageViewSetSize(image:UIImage){
-        
-    }
-    
-    
-    func imageComView(image:UIImage) {
-        if urlString != nil {
-            let width = self.upperContentView.frame.size.width - 56 - 10
-            var imagewidth = image.size.width - width
-            var imageHeight = image.size.height - (image.size.width - imagewidth)
-            if image.size.width > image.size.height {
-                imagewidth = width
-                imageHeight = imagewidth/4*3
-            }else if image.size.width < image.size.height {
-                imagewidth = width
-                imageHeight = imagewidth/3*4
+    var isImageFirst = true
+    func imageComViewSet(completionHandler : ((image : UIImage) -> Void)) {
+        if urlState {
+            if self.imageData == nil {
+                let imageURL = NSURL(string: self.imageURL.gifImageUrl(data["url"].stringValue))
+                let request : NSURLRequest = NSURLRequest(URL: imageURL!)
+                let mainQueue = NSOperationQueue.mainQueue()
+                NSURLConnection.sendAsynchronousRequest(request, queue: mainQueue, completionHandler: { (response, data, error) -> Void in
+                    
+                    if error == nil {
+                        self.imageData = data
+                        let image = UIImage.animatedImageWithAnimatedGIFData(data!)
+                        if image != nil {
+                            let width = self.upperContentView.frame.size.width - 56 - 10
+                            var imagewidth = image.size.width - width
+                            var imageHeight = image.size.height - (image.size.width - imagewidth)
+                            if image.size.width > image.size.height {
+                                imagewidth = width
+                                imageHeight = imagewidth/4*3
+                            }else if image.size.width < image.size.height {
+                                imagewidth = width
+                                imageHeight = imagewidth/3*4
+                            }else {
+                                imagewidth = width
+                                imageHeight = width
+                            }
+                            let posY = self.bodyHeight
+                            print("posY",posY," height ",self.bodyHeight," y ",self.bodyLabel.frame.origin.y)
+                            self.imageComView.frame = CGRectMake(self.bodyLabel.frame.origin.x, posY, self.bodyLabel.frame.size.width-10, imageHeight)
+                            self.imageComView.frame = CGRectMake(self.bodyLabel.frame.origin.x, posY, self.bodyLabel.frame.size.width-10, imageHeight)
+                            print("likeCountSpace : ",self.likeCountSpace.constant)
+                            self.height = 109 + (self.bodyLabel.frame.size.height - 60) + self.imageComView.frame.size.height + 10
+                            print("body Label Height : ",self.bodyLabel.frame.size.height)
+                            print("image    height      ",self.height)
+                            print(self.imageComView.frame)
+                            self.comment.height[self.index] = self.height
+                            self.imageCom = image
+                            self.imageComView.image = image
+                        }
+                        completionHandler(image: image!)
+                        self.isImageFirst = false
+                    }else {
+                        print("image comment error  :  ",error)
+                    }
+                })
             }else {
-                imagewidth = width
-                imageHeight = width
+                self.imageComView.image = UIImage.animatedImageWithAnimatedGIFData(self.imageData)
+                self.height = 109 + (self.bodyLabel.frame.size.height - 60) + self.imageComView.frame.size.height + 10
+                self.comment.height[self.index] = self.height
+                
+                
+                self.upperContentView.bringSubviewToFront(self.likeCountLabel)
+//                print("likeCountSpace : ",self.likeCountSpace.constant)
+//                print("bodyLabel Frame",self.bodyLabel.frame)
+//                print("imageComView Frame",self.imageComView.frame)
+                print("bodyHeight : ",self.bodyHeight)
+                print("\(self.index)  height : ",self.height)
+//                print("upperContentView frame : ",self.upperContentView.frame)
+                
             }
-            let posY = self.bodyLabel.frame.size.height + self.bodyLabel.frame.origin.y
-            imageComView.frame.size = CGSize(width: bodyLabel.frame.size.width, height: imageHeight)
-            self.upperContentView.addSubview(imageComView)
-            imageComView.frame.size = CGSize(width: bodyLabel.frame.size.width, height: imageHeight)
-            self.height = 70 + (self.bodyLabel.frame.size.height - 27) + imageComView.frame.size.height + 10
-            print("image    height      ",self.height)
-            self.comment.height[index] = self.height
-            imageComView.image = image
+            
         }
     }
     
@@ -226,7 +274,6 @@ class CommentCell: UITableViewCell {
         let user = self.appdelegate.storyboard.instantiateViewControllerWithIdentifier("UserPageViewController")as! UserPageViewController
         self.appdelegate.controller.append(user)
         user.type = "user"
-//        user.index = self.appdelegate.controller.count - 1
         user.myId = self.appdelegate.email
         user.userId = data["email"].stringValue
         self.appdelegate.testNavi.navigationBarHidden = true

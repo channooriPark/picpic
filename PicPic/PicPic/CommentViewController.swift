@@ -11,6 +11,7 @@ import SwiftyJSON
 import AssetsLibrary
 import Photos
 import CryptoSwift
+import Alamofire
 
 
 
@@ -69,9 +70,16 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         self.view.addSubview(imageComView)
         comImage = UIImageView(frame: CGRectMake((self.view.frame.size.width/2) - 75, 10, 150, 150))
         self.imageComView.addSubview(comImage)
+        
+        //이미지
+        imagecancel = UIButton(type: .Custom)
+        let posX = comImage.frame.origin.x + comImage.frame.size.width - 15
+        let posY = comImage.frame.origin.y - 15
+        imagecancel.frame = CGRectMake(posX, posY, 30, 30)
+        imagecancel.setImage(UIImage(named: "xx"), forState: .Normal)
+        imagecancel.addTarget(self, action: "imagecancle", forControlEvents: .TouchUpInside)
+        imageComView.addSubview(imagecancel)
         imageComView.hidden = true
-        
-        
         
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         let image = UIImageView(frame: CGRectMake(-20, 0, 30, 30))
@@ -97,9 +105,6 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
             self.sendData()
         }
         
-        
-        
-        
         self.comTextField.delegate = self;
         self.comTextField.addTarget(self, action: Selector("didChangeText"), forControlEvents: UIControlEvents.EditingChanged)
         
@@ -113,15 +118,26 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         log.log("\(self.commentView.frame.origin.y)")
         
         self.tag = self.storyboard?.instantiateViewControllerWithIdentifier("TagTableViewController")as! TagTableViewController
-        
         self.tag.view.frame = CGRectMake(0, 60, self.view.bounds.size.width, self.scrollView.bounds.size.height - 60)
         self.addChildViewController(self.tag)
         self.view.addSubview(self.tag.view)
         self.tag.view.hidden = true
         self.view.bringSubviewToFront(self.tag.view)
         
-        self.galleryButton.hidden = true
+//        self.galleryButton.hidden = true
+        
+//        let message1 : JSON = ["my_id":self.appdelegate.email,"com_id":"REPLY0000007046","post_id":self.post_id,"body":"","com_form":"D","user_tags":""]
+//        
+//        print("message    ",message1)
+//        self.appdelegate.doIt(231, message: message1, callback: { (readData) -> () in
+//            if readData["msg"].string! == "success" {
+//                print("Delete    readData : ",readData)
+//            }
+//        })
+
+        
     }
+    
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -209,9 +225,13 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
     
     func addSelected(image:UIImage,asset:PHAsset) {
         print("addSelected in ")
+        
         self.imageComView.hidden = false
+        self.imagecancel.hidden = false
         self.comImage.image = image
         self.asset = asset
+        self.imageComView.bringSubviewToFront(self.imagecancel)
+        print("imageView frame : ",self.comImage.frame," cancel button frame : ",self.imagecancel.frame)
     }
     
     func imagecancle(){
@@ -233,7 +253,7 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
             if let array = json["data"].array {
                 for data in  array{
                     log.log("\(data)")
-                    self.height.append(70)
+                    self.height.append(94)
                     dataArray.insert(data, atIndex: 0)
                 }
             }
@@ -310,33 +330,16 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         }
         
         
-        let imageCom = imageURL.gifImageUrl(Rowdata["url"].stringValue)
-        if cell.urlString != nil {
-            if let img = self.imageComArr[imageCom] {
-                cell.imageComView(img)
-            }else {
-                let imageURL = NSURL(string: imageURL.gifImageUrl(Rowdata["url"].stringValue))
-                let request : NSURLRequest = NSURLRequest(URL: imageURL!)
-                let mainQueue = NSOperationQueue.mainQueue()
-                NSURLConnection.sendAsynchronousRequest(request, queue: mainQueue, completionHandler: { (response, data, error) -> Void in
-                    if error == nil {
-                        let image = UIImage.gifWithData(data!)
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            if image != nil {
-                                print("image comment ")
-                                cell.imageComView(image!)
-                                self.height[indexPath.row] = cell.height
-                                self.imageComArr[imageCom] = image
-                            }
-                        })
-                    }else {
-                        print("image comment error  :  ",error)
-                    }
-                })
+        if cell.urlState {
+            cell.imageComViewSet { (image) -> Void in
+                self.height[indexPath.row] = cell.height
+                self.tableView(tableView, heightForRowAtIndexPath: indexPath)
+                if cell.isImageFirst {
+                    tableView.reloadData()
+                }
             }
         }
         
-        log.log("height : \(self.height[indexPath.row])")
         cell.delegate = self
         
         guard let contains = self.cellsCurrentlyEditing?.contains(indexPath) else
@@ -364,7 +367,7 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         let make = MakeFileNmae()
         let file = make.getFileName(self.appdelegate.userData["m_id"].string!)
         
-        filename = "\(file)\(currentdate)_2.gif"
+        
         if trimmed.length == 0 && self.comImage.image == nil {
             log.log("빈칸이야 다시써")
             return
@@ -372,18 +375,21 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         
         if comImage.image != nil {
             //이미지 댓글이 있을경우
+            print("image 댓글 있어")
+            filename = "\(file)\(currentdate)_2.gif"
             self.asset.requestContentEditingInputWithOptions(PHContentEditingInputRequestOptions()) { (input, _) in
                 let url = input!.fullSizeImageURL
                 print("url   ",url) // 배열에 담아 콜렉션 뷰에 로드하면 됨.
-                let data_gif = NSData(contentsOfURL: url!)
+                let data_gif = NSData(contentsOfURL: url!)!
                 let upload_url = "http://gif.picpic.world/uploadToServerForPicPic.php"
                 let parameters = ["": ""]
-                let request = self.urlRequestWithComponents(upload_url, parameters: parameters, imageData: data_gif!)
+                let request = self.urlRequestWithComponents(upload_url, parameters: parameters, imageData: data_gif)
+                print(request.0.URLRequest.URLString)
+                
+                
                 
                 Alamofire1.manager.upload(request.0, data: request.1).progress { (bytesWritten, totalBytesWritten, totalBytesExpectedToWrite) in
-                    //                //print("\(totalBytesWritten) / \(totalBytesExpectedToWrite)")
-                    }
-                    .responseJSON(completionHandler: { (request, response, data, error) in
+                    }.responseJSON(completionHandler: { (request, response, data, error) in
                         if error != nil {
                             print("image upload fail  ",error)
                         }else {
@@ -393,9 +399,30 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
                                 print(readData)
                                 print("ok")
                             })
+                            var com_form = self.comWrite
+                            if self.comWrite == "E" {
+                                com_form = "E"
+                            }
+                            if let text = self.comTextField.text {
+                                if text != "" {
+                                    var message : JSON = ["my_id":self.appdelegate.email,"com_id":self.com_id,"post_id":self.post_id,"body":text,"com_form":com_form,"user_tags":"","url":self.filename]
+                                    self.appdelegate.doIt(231, message: message, callback: { (readData) -> () in
+                                        if readData["msg"].string! == "success"{
+                                            message = ["my_id":self.appdelegate.email,"post_id":self.post_id,"page":"1"]
+                                            self.appdelegate.doIt(321, message: message, callback: { (readData) -> () in
+                                                self.dataArray.removeAll()
+                                                self.getData(readData)
+                                                self.comTextField.text = ""
+                                            })
+                                        }
+                                    })
+                                }
+                            }
                         }
                     })
             }
+        }else {
+            filename = ""
         }
         
         if self.imageComView.hidden == false {
@@ -404,25 +431,6 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         
         view.endEditing(true)
         self.comTextField.endEditing(true)
-        var com_form = self.comWrite
-        if comWrite == "E" {
-            com_form = "E"
-        }
-        if let text = comTextField.text {
-            if text != "" {
-                var message : JSON = ["my_id":self.appdelegate.email,"com_id":self.com_id,"post_id":self.post_id,"body":text,"com_form":com_form,"user_tags":"","url":filename]
-                self.appdelegate.doIt(231, message: message, callback: { (readData) -> () in
-                    if readData["msg"].string! == "success"{
-                        message = ["my_id":self.appdelegate.email,"post_id":self.post_id,"page":"1"]
-                        self.appdelegate.doIt(321, message: message, callback: { (readData) -> () in
-                            self.dataArray.removeAll()
-                            self.getData(readData)
-                            self.comTextField.text = ""
-                        })
-                    }
-                })
-            }
-        }
     }
     
     
@@ -668,6 +676,7 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
             self.comTableView.reloadData()
         }else {
             let reply = data["reply_id"].string!
+            
             let message : JSON = ["my_id":self.appdelegate.email,"com_id":reply,"post_id":self.post_id,"body":"","com_form":"D","user_tags":""]
             
             print("message    ",message)
@@ -708,7 +717,6 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
     }
     
     func cellDidClose(index:NSIndexPath) {
-        print("Close   ")
         self.cellsCurrentlyEditing?.remove(index)
     }
 }

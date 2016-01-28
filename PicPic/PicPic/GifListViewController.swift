@@ -32,7 +32,7 @@ class GifListViewController: UIViewController , RAReorderableLayoutDelegate, RAR
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print("GIFLIST")
         
         let nib = UINib(nibName: "SaveCell", bundle: nil)
         self.collectionView.registerNib(nib, forCellWithReuseIdentifier: "cell")
@@ -46,41 +46,17 @@ class GifListViewController: UIViewController , RAReorderableLayoutDelegate, RAR
         image.addGestureRecognizer(tap)
         self.navigationItem.leftBarButtonItem = backButton
         
-        /*
-        asset.enumerateGroupsWithTypes(ALAssetsGroupSavedPhotos, usingBlock: { (group, stop) -> Void in
-            if group != nil {
-                print(group)
-                group.enumerateAssetsUsingBlock({ (asset, index, stop) -> Void in
-                    if (asset != nil) {
-                        print(asset)
-                        print(asset.thumbnail())
-                        if let a = asset.thumbnail() {
-                            let image = UIImage(CGImage: a.takeUnretainedValue())
-                            self.collections.append(image)
-                        }
-                    }
-                })
-            }
-            self.collectionView.reloadData()
-            }) { (error) -> Void in
-                print(error)
-        }
-        */
-        
-        
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
         let images = PHAsset.fetchAssetsWithMediaType(.Image, options: nil)
         print("images.count            ",images.count)
-        for var i=1800;i<images.count;i++ {
+        for var i=0;i<images.count;i++ {
             let img = images[i] as! PHAsset
             print("img            ",img)
             
             if #available(iOS 9.0, *) {
-                //let resources = PHAssetResource.assetResourcesForAsset(img)
-                //print("resources.count       ",resources.count,"          ", resources)
-                //if resources.count > 0 {
-                   if let filename = img.valueForKey("filename")
-                   {
+                
+                if let filename = img.valueForKey("filename")
+                {
                     print(filename)
                     if filename.lowercaseString.hasSuffix(".gif") {
                         print(filename," is gif ")
@@ -93,9 +69,8 @@ class GifListViewController: UIViewController , RAReorderableLayoutDelegate, RAR
                     } else {
                         print("not gif ",i)
                     }
-                
-                
                 }
+                
             } else {
             }
             
