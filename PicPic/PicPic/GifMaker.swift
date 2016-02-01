@@ -501,97 +501,7 @@ class GifMaker {
     }
     
     
-    func make2(photoDataArr:[UIImage], delayTime:Float, gifPath:String, workFolder:String,subtitle:UIView?,warterMark : Bool) {
-        
-        var saveArr = photoDataArr
-        
-        let fileManager = NSFileManager.defaultManager()
-        //        print("run make2")
-        //        print("imga count ",photoDataArr.count)
-        //        print("delay Time : ",delayTime)
-        let ghostPath = String(format: "%@/ghost.jpg", arguments: [workFolder])
-        let scratchPath = String(format: "%@/scratch.png", arguments: [workFolder])
-        
-        
-        if( fileManager.fileExistsAtPath(ghostPath) || fileManager.fileExistsAtPath(scratchPath) || subtitle != nil) {
-            for var i=0;i<photoDataArr.count;i++ {
-                let bottomImage = photoDataArr[i]
-                let size = bottomImage.size
-                let areaSize = CGRect(x: 0, y: 0, width: size.width, height: size.height)
-                
-                UIGraphicsBeginImageContext(size)
-                
-                
-                
-                bottomImage.drawInRect(areaSize)
-                
-                if fileManager.fileExistsAtPath(ghostPath) {
-                    let ghost_img = UIImage(contentsOfFile: ghostPath)
-                    ghost_img!.drawInRect(areaSize, blendMode: CGBlendMode.Multiply, alpha: Config.getInstance().ghostAlpha)
-                }
-                
-                if fileManager.fileExistsAtPath(scratchPath) {
-                    let scratch_img = UIImage(contentsOfFile: scratchPath)
-                    scratch_img!.drawInRect(areaSize)
-                }
-                
-                
-                var newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()
-                UIGraphicsEndImageContext()
-                
-                UIGraphicsBeginImageContext(size)
-                
-                newImage.drawInRect(areaSize)
-                if subtitle != nil {
-                    subtitle!.drawViewHierarchyInRect(areaSize, afterScreenUpdates: true)
-                }
-                
-                if warterMark {
-                    //                    print("warterMark")
-                    let warter = UIImage(named: "watermark")
-                    let warterRect = CGRectMake(areaSize.width-158, areaSize.height-58, 148, 48)
-                    warter?.drawInRect(warterRect)
-                }
-                
-                newImage = UIGraphicsGetImageFromCurrentImageContext()
-                
-                UIGraphicsEndImageContext()
-                
-                saveArr[i] = newImage
-            }
-            
-        } else {
-            //            if(filter != nil) {
-            //                for var i=0;i<photoDataArr.count;i++ {
-            //                    var bottomImage = photoDataArr[i]
-            //
-            //                    applyFilter(&bottomImage, filter: filter!)
-            //
-            //                    saveArr[i] = bottomImage
-            //                }
-            //            } else {
-            //
-            //            }
-        }
-        let regift_photo: Regift_photo = Regift_photo(sourceArray: saveArr, delayTime: delayTime)
-        
-        let output = regift_photo.createGif()
-        //        print("output ",output?.path)
-        
-        do {
-            if fileManager.fileExistsAtPath(gifPath) {
-                //                print("있어요")
-                //                print(gifPath)
-                try fileManager.removeItemAtPath(gifPath)
-                //delete file code
-            }
-            //            print("gifPath ",gifPath)
-            try fileManager.copyItemAtPath((output?.path)!, toPath: gifPath)
-        } catch let error as NSError {
-            print(error.localizedDescription);
-        }
-        
-    }
+    
     
     
     func make2(photoDataArr:[[UIImage]], delayTime:Float, gifPath:String, workFolder:String,subtitle:[[MyView]]?,warterMark : Bool,imageCheck : [Int:Int]?, canvas : UIView?,playType : Int,allText:[MyView]?) {
@@ -607,7 +517,7 @@ class GifMaker {
         let imageRef = photoDataArr[0][0].CGImage
         if let maskRef = UIImage(contentsOfFile: scratchPath)?.CGImage {
             let mask:CGImageRef = CGImageMaskCreate(CGImageGetWidth(maskRef), CGImageGetHeight(maskRef), CGImageGetBitsPerComponent(maskRef), CGImageGetBitsPerPixel(maskRef), CGImageGetBytesPerRow(maskRef), CGImageGetDataProvider(maskRef), nil, true)!
-            
+            print("mask Image : ",mask)
             masked = CGImageCreateWithMask(imageRef, mask)!
             eraserImage = UIImage(CGImage: masked)
         }
@@ -637,6 +547,7 @@ class GifMaker {
                         //                        }
                         
                         if fileManager.fileExistsAtPath(scratchPath) {
+                            print("scratchPath exist")
                             let scratch_img = eraserImage
                             scratch_img.drawInRect(areaSize)
                         }
@@ -714,11 +625,6 @@ class GifMaker {
                         UIGraphicsBeginImageContext(size)
                         
                         bottomImage.drawInRect(areaSize)
-                        
-                        //                        if fileManager.fileExistsAtPath(ghostPath) {
-                        //                            let ghost_img = UIImage(contentsOfFile: ghostPath)
-                        //                            ghost_img!.drawInRect(areaSize, blendMode: CGBlendMode.Multiply, alpha: Config.getInstance().ghostAlpha)
-                        //                        }
                         
                         if fileManager.fileExistsAtPath(scratchPath) {
                             let scratch_img = eraserImage
@@ -879,74 +785,6 @@ class GifMaker {
         
         QAGIFEncFinish(agifencPtr, 1)
     }
-    
-    
-    
-    
-    func make(photoDataArr:[UIImage], delayTime:Float, gifPath:String, workFolder:String,filter:CIFilter?) {
-        let fileManager = NSFileManager.defaultManager()
-        
-        //        print("imga count ",photoDataArr.count)
-        //        print("delay Time : ",delayTime)
-        let ghostPath = String(format: "%@/ghost.jpg", arguments: [workFolder])
-        if fileManager.fileExistsAtPath(ghostPath) {
-            //            print("have ghost")
-            
-            var ghost_img = UIImage(contentsOfFile: ghostPath)
-            
-            if filter != nil {
-                applyFilter(&ghost_img!, filter: filter!)
-            }
-            
-            var saveArr = photoDataArr
-            
-            for var i=0;i<photoDataArr.count;i++ {
-                var bottomImage = photoDataArr[i]
-                let size = bottomImage.size
-                
-                if filter != nil {
-                    applyFilter(&bottomImage, filter: filter!)
-                }
-                
-                UIGraphicsBeginImageContext(size)
-                
-                let areaSize = CGRect(x: 0, y: 0, width: size.width, height: size.height)
-                bottomImage.drawInRect(areaSize)
-                
-                ghost_img!.drawInRect(areaSize, blendMode: CGBlendMode.Multiply, alpha: Config.getInstance().ghostAlpha)
-                
-                let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()
-                UIGraphicsEndImageContext()
-                
-                saveArr[i] = newImage
-            }
-            
-            let regift_photo: Regift_photo = Regift_photo(sourceArray: saveArr, delayTime: delayTime)
-            
-            let output = regift_photo.createGif()
-            //            print("output ",output?.path)
-            
-            do {
-                try fileManager.copyItemAtPath((output?.path)!, toPath: gifPath)
-            } catch let error as NSError {
-                print(error.localizedDescription);
-            }
-            
-        } else {
-            
-            let regift_photo: Regift_photo = Regift_photo(sourceArray: photoDataArr, delayTime: delayTime)
-            
-            let output = regift_photo.createGif()
-            //            print("output ",output?.path)
-            
-            do {
-                try fileManager.copyItemAtPath((output?.path)!, toPath: gifPath)
-            } catch let error as NSError {
-                print(error.localizedDescription);
-            }
-        }
-    }
-    
     
     func applyFilter(inout image:UIImage, filter:CIFilter) {
         filter.setValue(CIImage(image: image), forKey: kCIInputImageKey)

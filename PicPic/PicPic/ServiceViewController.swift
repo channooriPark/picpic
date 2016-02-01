@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ServiceViewController: UIViewController {
+class ServiceViewController: UIViewController ,UIWebViewDelegate{
 
     
     let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -28,6 +28,12 @@ class ServiceViewController: UIViewController {
         let url = NSURL (string:urlpath!)
         let requestObj = NSURLRequest(URL: url!)
         webView.loadRequest(requestObj)
+//        webView.frame.size = CGSize(width: self.view.frame.size.width, height: webView.scrollView.contentSize.height)
+//        webView.scrollView.contentSize = CGSize(width: self.view.frame.size.width, height: webView.scrollView.contentSize.height)
+        webView.frame.size = CGSize(width: 200, height: webView.scrollView.contentSize.height)
+        webView.scrollView.contentSize = CGSize(width: 200, height: webView.scrollView.contentSize.height)
+        print("webView content Size ",webView.scrollView.contentSize)
+        print("webView frame   :  ",webView.frame)
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,7 +41,13 @@ class ServiceViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    
+    
+    func webViewDidFinishLoad(webView: UIWebView) {
+        webView.scrollView.contentSize = CGSize(width: webView.frame.size.width, height: webView.scrollView.contentSize.height)
+    }
+    
+    
     /*
     // MARK: - Navigation
 

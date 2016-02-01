@@ -19,6 +19,7 @@ class FirstViewController: UIViewController , UIAlertViewDelegate{
     let log = LogPrint()
     @IBOutlet weak var logoWid: NSLayoutConstraint!
     @IBOutlet weak var logoHei: NSLayoutConstraint!
+    var pushData : NSURL!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,6 +76,9 @@ class FirstViewController: UIViewController , UIAlertViewDelegate{
 //                            self.appdelegate.contentview.index = self.appdelegate.controller.count-1
                             self.appdelegate.contentview.type = "content"
                             self.appdelegate.window?.rootViewController = self.appdelegate.testNavi
+                            if self.pushData != nil {
+                                self.appdelegate.URLopenPage(self.pushData)
+                            }
                         }else {
                             let alert = UIAlertView(title: "로그인 실패", message: "로그인을 다시 해 주세요", delegate: self, cancelButtonTitle: "확인")
                             alert.show()
@@ -122,6 +126,9 @@ class FirstViewController: UIViewController , UIAlertViewDelegate{
                         //                        self.appdelegate.contentview.index = self.appdelegate.controller.count-1
                         self.appdelegate.contentview.type = "content"
                         self.appdelegate.window?.rootViewController = self.appdelegate.testNavi
+                        if self.pushData != nil {
+                            self.appdelegate.URLopenPage(self.pushData)
+                        }
                     }
                         //
                     else{
@@ -162,6 +169,9 @@ class FirstViewController: UIViewController , UIAlertViewDelegate{
 //                        self.appdelegate.contentview.index = self.appdelegate.controller.count-1
                         self.appdelegate.contentview.type = "content"
                         self.appdelegate.window?.rootViewController = self.appdelegate.testNavi
+                        if self.pushData != nil {
+                            self.appdelegate.URLopenPage(self.pushData)
+                        }
                     }
                         //
                     else{

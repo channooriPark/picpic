@@ -114,19 +114,23 @@ class SettingTableViewController: UITableViewController , UIAlertViewDelegate{
         }
     }
     @IBAction func alarmSetting(sender: AnyObject) {
-        if self.alarmSwitch.on {
+        print(alarmSwitch.on)
+        if self.alarmSwitch.on == false {
+            print("알림 안받어")
             UIApplication.sharedApplication().unregisterForRemoteNotifications()
             self.appdelegate.standardUserDefaults.setBool(false, forKey: "push")
         }else {
-            if UIApplication.sharedApplication().isRegisteredForRemoteNotifications() {
+            print("알림 받어")
+            if UIApplication.sharedApplication().isRegisteredForRemoteNotifications() == false {
                 let settings: UIUserNotificationSettings =
                 UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
                 UIApplication.sharedApplication().registerUserNotificationSettings(settings)
                 UIApplication.sharedApplication().registerForRemoteNotifications()
             }
-            self.appdelegate.standardUserDefaults.setBool(false, forKey: "push")
+            self.appdelegate.standardUserDefaults.setBool(true, forKey: "push")
         }
         print(UIApplication.sharedApplication().currentUserNotificationSettings())
+        print(UIApplication.sharedApplication().isRegisteredForRemoteNotifications())
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

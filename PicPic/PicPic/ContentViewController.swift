@@ -35,7 +35,7 @@ class ContentViewController: SubViewController {
         self.view.addSubview(appdelegate.alram.view)
         self.view.addSubview(appdelegate.myfeed.view)
         
-        //appdelegate.main.view.frame = visibleFrame
+        appdelegate.main.view.frame = visibleFrame
         
         if self.appdelegate.notiType == 0 {
             appdelegate.second.view.hidden = true
@@ -59,8 +59,8 @@ class ContentViewController: SubViewController {
     func refresh() {
         print("refresh()")
         if appdelegate.main.view.hidden == false {
-            //appdelegate.main.wkwebView.scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
-            //appdelegate.main.refresh()
+//            appdelegate.main.wkwebView.scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+            appdelegate.main.refresh()
         }else if appdelegate.second.view.hidden == false {
             appdelegate.second.wkwebView.scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
             if appdelegate.second.followT {
