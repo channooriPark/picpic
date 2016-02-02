@@ -450,11 +450,11 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
     }
     
     func finishPost() {
-        self.appdelegate.testNavi.navigationBarHidden = false
-        if self.appdelegate.myfeed.view.hidden == false {
-            self.appdelegate.testNavi.navigationBarHidden = true
+        self.navigationController!.navigationBarHidden = false
+        if self.navigationController!.view.hidden == false {
+            self.navigationController!.navigationBarHidden = true
         }
-        self.appdelegate.testNavi.popToRootViewControllerAnimated(true)
+        self.navigationController!.popToRootViewControllerAnimated(true)
     }
     
     

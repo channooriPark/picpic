@@ -63,6 +63,7 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate{
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true)
+        self.navigationController?.navigationBarHidden = true
     }
     
     override func viewDidLoad() {

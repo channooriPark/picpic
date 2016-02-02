@@ -737,7 +737,7 @@ class GifMaker {
         // set agif encoder x, y position
         QAGIFEncSetPosition(agifencPtr, 0, 0)
         // set agif encoder repeat value
-        QAGIFEncSetRepeat(agifencPtr, -1)
+        QAGIFEncSetRepeat(agifencPtr, 0)
         
         // set transparent
         QAGIFEncSetTransparent(agifencPtr, 0)
@@ -758,12 +758,20 @@ class GifMaker {
         
         let qbite = UnsafeMutablePointer<QBYTE>.alloc( Int(wdt*hgt*4) )
         
+        var testPath = String(format: "%@/test", arguments: [workFolder])
+        do {
+            try fileManager.createDirectoryAtPath(testPath, withIntermediateDirectories: false, attributes: nil)
+        }catch {
+            
+        }
         
         for var i=0;i<saveArr1.count;i++ {
             //arr의 uiimage를 버퍼에 담아 전달
+            testPath = String(format: "%@/test/%02d.jpg", arguments: [workFolder,i])
             let image = saveArr1[i] as UIImage
             let cgImage = image.CGImage
             
+            UIImageJPEGRepresentation(image, 100)?.writeToFile(testPath, atomically: true)
             let width = Int(image.size.width)
             let height = Int(image.size.height)
             let bitsPerComponent = 8 // 2

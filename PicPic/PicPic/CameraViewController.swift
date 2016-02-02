@@ -736,6 +736,7 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         self.removeTempLoadView()
         self.navigationController?.navigationBarHidden = false
         if !self.appdelegate.myfeed.view.hidden {
+            print("myfeed")
             self.navigationController?.navigationBarHidden = true
         }
         self.navigationController?.popViewControllerAnimated(true)
@@ -752,7 +753,6 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
             toggle = !toggle
         }
         controlRecording()
-        //        print("start recording")
     }
     var flash_toggle = false
     @IBAction func flash_on(sender: UIButton) {
@@ -772,9 +772,6 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
             flash_toggle = true
         }
         
-        
-        
-        
         do {
             try avDevice.lockForConfiguration()
             if(avDevice.torchActive) {
@@ -783,10 +780,8 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
                 avDevice.torchMode = AVCaptureTorchMode.On
                 try avDevice.setTorchModeOnWithLevel(1.0)
             }
-            //avDevice.torchMode = avDevice.torchActive ? AVCaptureTorchMode.Off : AVCaptureTorchMode.On
             avDevice.unlockForConfiguration()
         } catch {
-            // handle error
             return
         }
     }
