@@ -14,6 +14,13 @@ class MyFeedPageViewController: SubViewController,UIScrollViewDelegate {
     var email : String!
     let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var statusbar : UIView!
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+//        self.navigationController?.navigationBarHidden = true
+        appdelegate.testNavi.navigationBarHidden = true
+    }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()

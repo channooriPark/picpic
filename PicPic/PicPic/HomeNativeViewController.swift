@@ -13,6 +13,7 @@ import Alamofire
 class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, PPMosaicLayoutDelegate, HomeFriendCellProtocol {
     
     @IBOutlet weak var collectionView: UICollectionView!
+    let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     var tagData: Array<[String: String]>  = []
     var gifData: [String : UIImage] = [ : ]{
@@ -47,6 +48,7 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
         super.viewWillAppear(animated)
         
         self.navigationController?.navigationBarHidden = false
+        self.appdelegate.testNavi.navigationBarHidden = false
     }
     
     override func viewDidLoad() {

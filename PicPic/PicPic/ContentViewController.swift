@@ -54,6 +54,7 @@ class ContentViewController: SubViewController {
     
     override func viewWillAppear(animated: Bool) {
         self.type = "content"
+        appdelegate.testNavi.navigationBarHidden = false
     }
     
     func refresh() {

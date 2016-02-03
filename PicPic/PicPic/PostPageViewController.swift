@@ -406,10 +406,13 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate{
             self.navigationController?.navigationBarHidden = true
         }else {
             self.navigationController?.navigationBarHidden = false
+            self.appdelegate.testNavi.navigationBarHidden = false
         }
         
         if !self.appdelegate.myfeed.view.hidden {
+            print("myfeed")
             self.navigationController?.navigationBarHidden = true
+            self.appdelegate.testNavi.navigationBarHidden = true
         }
         
         self.appdelegate.tabbar.view.hidden = false

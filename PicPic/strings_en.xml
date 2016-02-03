@@ -141,6 +141,8 @@
     <string name="popup_sign_out_str">When deleted, collected user information will be &#xD;erased permanently and you will not be accessible &#xD;to your account anymore.</string>
     <string name="popup_confirm">Confirm</string>
     <string name="video_not_search">Not Found Movies.</string>
+    <string name="popup_delete">Delete Post?</string>
+    <string name="popup_block">Block User?</string>
 
     
     

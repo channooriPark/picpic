@@ -125,7 +125,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
         
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.grayColor()
         UIPageControl.appearance().currentPageIndicatorTintColor = UIColor.whiteColor()
-        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+//        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
         
         // 뷰 콘트롤러의 각종 텍스트를 message로부터 가져와서 교체

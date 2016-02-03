@@ -174,6 +174,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     var arr_recoding_time:[Double] = [Double]()
     var in_type : Int = 0 // 0이면 카메라 1이면 저장리스트
     var addImage : Bool = false
+    var addPicker : Bool = false
     
     override func viewDidDisappear(animated: Bool) {
         self.view = nil
@@ -329,29 +330,163 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         
         let json_path = String(format: "%@/db.json", arguments: [workFolder!])
         
-        if(fileManager.fileExistsAtPath(json_path)) {
-            in_type = 1
-            let jsonData:NSData = NSData(contentsOfFile: json_path)!
-            let json = JSON(data:jsonData)
-            log.log("json Data \(json)")
-            if let version = json["version"].bool {
-                if version {
+        if !addPicker {
+            if(fileManager.fileExistsAtPath(json_path)) {
+                in_type = 1
+                let jsonData:NSData = NSData(contentsOfFile: json_path)!
+                let json = JSON(data:jsonData)
+                log.log("json Data \(json)")
+                if let version = json["version"].bool {
+                    if version {
+                        self.sliderDelay.value = Float(json["delay"].string!)!
+                        if let items = json["files"].array {
+                            let documentDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+                            log.log("\(items)")
+                            for item in items {
+                                if let file_name = item.string {
+                                    let name = documentDirectory+"/"+file_name
+                                    var arr:[UIImage] = []
+                                    var pathArr:[String] = []
+                                    print("name   ",name)
+                                    movNames.append(name)
+                                    if let enumerator = fileManager.enumeratorAtPath(name){
+                                        while let element = enumerator.nextObject() as? String {
+                                            let imgPath = String(format: "%@/%@", arguments: [name,element]) //"\(workFolder)/\(element)"
+                                            let img = UIImage(contentsOfFile: imgPath)
+                                            print("imgPath   ",imgPath)
+                                            arr.append(img!)
+                                            pathArr.append(imgPath)
+                                        }
+                                        self.imageArr.append(arr)
+                                        self.imagePathArr.append(pathArr)
+                                    }
+                                }
+                            }
+                            print(imagePathArr)
+                            make_gif()
+                            log.log("\(imagePathArr)")
+                        }
+                        self.waterToggle = json["watermark"].boolValue
+                        if json["watermark"].boolValue {
+                            self.waterMark.setImage(UIImage(named: "watermark"), forState: .Normal)
+                        }else {
+                            self.waterMark.setImage(UIImage(named: "no_mark"), forState: .Normal)
+                        }
+                        //                    let imgPath = String(format: "%@/ghost.jpg", arguments:[workFolder!])
+                        //                    if fileManager.fileExistsAtPath(imgPath) {
+                        //                        setGhost(imgPath)
+                        //                    }
+                        if(json["direction"]=="normal") {
+                            playType = 0
+                        } else {
+                            playType = 1
+                            imagePaths = imagePaths.reverse()
+                        }
+                        if(json["filter"].string! != "None") {
+                            self.filterCurrent = json["filter"].string!
+                            //                        if let tmepImage = self.ghostLayer?.image {
+                            //                            var temp = tmepImage
+                            //                            applyFilter(&temp, filterName: self.filterCurrent)
+                            //                            self.ghostLayer!.image = temp
+                            //                        }
+                            log.log("\(filterCurrent)")
+                            previewTimer?.invalidate()
+                            previewTimer = nil
+                            playImageArr = [[UIImage]]()
+                            for var i=0; i<frameimagepathArr.count; i++ {
+                                playImageArr.append([])
+                                for var j=0; j<frameimagepathArr[i].count; j++ {
+                                    var image:UIImage? = UIImage(contentsOfFile: frameimagepathArr[i][j])
+                                    applyFilter(&image!, filterName: self.filterCurrent)
+                                    playImageArr[i].append(image!)
+                                    image = nil
+                                }
+                                
+                            }
+                            log.log("\(playImageArr.count)")
+                            self.insetAllFram()
+                            selectedCellIndex = -1
+                            frameIndex = 0
+                            currentIndex1 = 0
+                            interval = Double(self.sliderDelay.value)
+                            previewTimer?.invalidate()
+                            previewTimer = nil
+                            previewTimer = NSTimer.scheduledTimerWithTimeInterval(interval, target: self, selector: Selector("nextImage"), userInfo: nil, repeats: true)
+                        } else {
+                            make_gif()
+                        }
+                        if json["subtitle"].array!.count > 0 {
+                            log.log("asdjfo;eija;lveoianfl;kj;j;oasfj")
+                            var newView : MyView!
+                            self.textArr = [[MyView]]()
+                            if let sub = json["subtitle"].array {
+                                for var i=0; i<sub.count; i++ {
+                                    self.textArr.append([])
+                                    for var j=0; j<sub[i].count; j++ {
+                                        if let _ = sub[i][j]["frame"]["x"].float {
+                                            newView = MyView(frame: CGRectMake(CGFloat(sub[i][j]["frame"]["x"].float!), CGFloat(sub[i][j]["frame"]["y"].float!), CGFloat(sub[i][j]["frame"]["width"].float!), CGFloat(sub[i][j]["frame"]["height"].float!)))
+                                            newView.text = sub[i][j]["text"].string!
+                                            newView.fontName = sub[i][j]["font"].string!
+                                            newView.bounds = CGRectMake(CGFloat(sub[i][j]["bounds"]["x"].float!), CGFloat(sub[i][j]["bounds"]["y"].float!), CGFloat(sub[i][j]["bounds"]["width"].float!), CGFloat(sub[i][j]["bounds"]["height"].float!))
+                                            newView.transform = CGAffineTransform(a: CGFloat(sub[i][j]["transform"]["a"].float!), b: CGFloat(sub[i][j]["transform"]["b"].float!), c: CGFloat(sub[i][j]["transform"]["c"].float!), d: CGFloat(sub[i][j]["transform"]["d"].float!), tx: CGFloat(sub[i][j]["transform"]["tx"].float!), ty: CGFloat(sub[i][j]["transform"]["ty"].float!))
+                                            log.log("\(newView.transform)")
+                                            newView.color = sub[i][j]["color"].string!
+                                            newView.regen()
+                                            newView.deselected()
+                                            newView.label?.addTarget(self, action: "didSelect:", forControlEvents: .TouchUpInside)
+                                            newView.btn_remove?.addTarget(self, action: Selector("remove:"), forControlEvents: .TouchUpInside)
+                                            self.textArr[i].append(newView)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                        if json["allText"].array!.count > 0 {
+                            if let all = json["allText"].array {
+                                if all.count > 0 {
+                                    log.log("alltext count > 0")
+                                    for var i = 0; i<all.count; i++ {
+                                        let alltext = all[i]
+                                        log.log("\(alltext.string)")
+                                        if alltext.string != "" {
+                                            if let _ = alltext["frame"]["y"].float {
+                                                let newView = MyView(frame: CGRectMake(CGFloat(alltext["frame"]["x"].float!), CGFloat(alltext["frame"]["y"].float!), CGFloat(alltext["frame"]["width"].float!), CGFloat(alltext["frame"]["height"].float!)))
+                                                newView.text = alltext["text"].string!
+                                                newView.fontName = alltext["font"].string!
+                                                newView.bounds = CGRectMake(CGFloat(alltext["bounds"]["x"].float!), CGFloat(alltext["bounds"]["y"].float!), CGFloat(alltext["bounds"]["width"].float!), CGFloat(alltext["bounds"]["height"].float!))
+                                                newView.transform = CGAffineTransform(a: CGFloat(alltext["transform"]["a"].float!), b: CGFloat(alltext["transform"]["b"].float!), c: CGFloat(alltext["transform"]["c"].float!), d: CGFloat(alltext["transform"]["d"].float!), tx: CGFloat(alltext["transform"]["tx"].float!), ty: CGFloat(alltext["transform"]["ty"].float!))
+                                                log.log("\(newView.transform)")
+                                                newView.color = alltext["color"].string!
+                                                newView.regen()
+                                                newView.deselected()
+                                                newView.label?.addTarget(self, action: "didSelect:", forControlEvents: .TouchUpInside)
+                                                newView.btn_remove?.addTarget(self, action: Selector("remove:"), forControlEvents: .TouchUpInside)
+                                                allText.append(newView)
+                                            }
+                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                    //                make_gif()/
+                    log.log("daksdhfewkjf;aj;eiowjasd;fjeio")
+                    
+                }else{
                     self.sliderDelay.value = Float(json["delay"].string!)!
                     if let items = json["files"].array {
-                        let documentDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-                        log.log("\(items)")
                         for item in items {
                             if let file_name = item.string {
-                                let name = documentDirectory+"/"+file_name
                                 var arr:[UIImage] = []
                                 var pathArr:[String] = []
-                                print("name   ",name)
-                                movNames.append(name)
-                                if let enumerator = fileManager.enumeratorAtPath(name){
+                                movNames.append(file_name)
+                                if let enumerator:NSDirectoryEnumerator = fileManager.enumeratorAtPath(file_name){
                                     while let element = enumerator.nextObject() as? String {
-                                        let imgPath = String(format: "%@/%@", arguments: [name,element]) //"\(workFolder)/\(element)"
+                                        let imgPath = String(format: "%@/%@", arguments: [file_name,element]) //"\(workFolder)/\(element)"
                                         let img = UIImage(contentsOfFile: imgPath)
-                                        print("imgPath   ",imgPath)
                                         arr.append(img!)
                                         pathArr.append(imgPath)
                                     }
@@ -360,9 +495,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                                 }
                             }
                         }
-                        print(imagePathArr)
                         make_gif()
-                        log.log("\(imagePathArr)")
                     }
                     self.waterToggle = json["watermark"].boolValue
                     if json["watermark"].boolValue {
@@ -370,263 +503,140 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                     }else {
                         self.waterMark.setImage(UIImage(named: "no_mark"), forState: .Normal)
                     }
-                    //                    let imgPath = String(format: "%@/ghost.jpg", arguments:[workFolder!])
-                    //                    if fileManager.fileExistsAtPath(imgPath) {
-                    //                        setGhost(imgPath)
-                    //                    }
+                    //                let imgPath = String(format: "%@/ghost.jpg", arguments:[workFolder!])
+                    //                if fileManager.fileExistsAtPath(imgPath) {
+                    //                    setGhost(imgPath)
+                    //                }
                     if(json["direction"]=="normal") {
                         playType = 0
                     } else {
                         playType = 1
+                        //                    images = images.reverse()
                         imagePaths = imagePaths.reverse()
                     }
                     if(json["filter"].string! != "None") {
+                        //                    var tmepImage = self.ghostLayer?.image!
                         self.filterCurrent = json["filter"].string!
-                        //                        if let tmepImage = self.ghostLayer?.image {
-                        //                            var temp = tmepImage
-                        //                            applyFilter(&temp, filterName: self.filterCurrent)
-                        //                            self.ghostLayer!.image = temp
-                        //                        }
-                        log.log("\(filterCurrent)")
-                        previewTimer?.invalidate()
-                        previewTimer = nil
-                        playImageArr = [[UIImage]]()
-                        for var i=0; i<frameimagepathArr.count; i++ {
-                            playImageArr.append([])
-                            for var j=0; j<frameimagepathArr[i].count; j++ {
-                                var image:UIImage? = UIImage(contentsOfFile: frameimagepathArr[i][j])
-                                applyFilter(&image!, filterName: self.filterCurrent)
-                                playImageArr[i].append(image!)
-                                image = nil
-                            }
-                            
-                        }
-                        log.log("\(playImageArr.count)")
-                        self.insetAllFram()
-                        selectedCellIndex = -1
-                        frameIndex = 0
-                        currentIndex1 = 0
-                        interval = Double(self.sliderDelay.value)
-                        previewTimer?.invalidate()
-                        previewTimer = nil
-                        previewTimer = NSTimer.scheduledTimerWithTimeInterval(interval, target: self, selector: Selector("nextImage"), userInfo: nil, repeats: true)
+                        let filter = getFilterByName(self.filterCurrent)
+                        image.image = UIImage(contentsOfFile: imagePaths[0])
+                        applyFilter(&image.image!, filterName: self.filterCurrent)
+                        //                    applyFilter(&tmepImage!, filterName: self.filterCurrent)
+                        //                    self.ghostLayer!.image = tmepImage
                     } else {
                         make_gif()
                     }
                     if json["subtitle"].array!.count > 0 {
-                        log.log("asdjfo;eija;lveoianfl;kj;j;oasfj")
-                        var newView : MyView!
-                        self.textArr = [[MyView]]()
-                        if let sub = json["subtitle"].array {
-                            for var i=0; i<sub.count; i++ {
-                                self.textArr.append([])
-                                for var j=0; j<sub[i].count; j++ {
-                                    if let _ = sub[i][j]["frame"]["x"].float {
-                                        newView = MyView(frame: CGRectMake(CGFloat(sub[i][j]["frame"]["x"].float!), CGFloat(sub[i][j]["frame"]["y"].float!), CGFloat(sub[i][j]["frame"]["width"].float!), CGFloat(sub[i][j]["frame"]["height"].float!)))
-                                        newView.text = sub[i][j]["text"].string!
-                                        newView.fontName = sub[i][j]["font"].string!
-                                        newView.bounds = CGRectMake(CGFloat(sub[i][j]["bounds"]["x"].float!), CGFloat(sub[i][j]["bounds"]["y"].float!), CGFloat(sub[i][j]["bounds"]["width"].float!), CGFloat(sub[i][j]["bounds"]["height"].float!))
-                                        newView.transform = CGAffineTransform(a: CGFloat(sub[i][j]["transform"]["a"].float!), b: CGFloat(sub[i][j]["transform"]["b"].float!), c: CGFloat(sub[i][j]["transform"]["c"].float!), d: CGFloat(sub[i][j]["transform"]["d"].float!), tx: CGFloat(sub[i][j]["transform"]["tx"].float!), ty: CGFloat(sub[i][j]["transform"]["ty"].float!))
-                                        log.log("\(newView.transform)")
-                                        newView.color = sub[i][j]["color"].string!
-                                        newView.regen()
-                                        newView.deselected()
-                                        newView.label?.addTarget(self, action: "didSelect:", forControlEvents: .TouchUpInside)
-                                        newView.btn_remove?.addTarget(self, action: Selector("remove:"), forControlEvents: .TouchUpInside)
-                                        self.textArr[i].append(newView)
-                                    }
-                                }
+                        for sub in json["subtitle"].array! {
+                            if let temp = sub[]["frame"]["x"].float {
+                                let newView = MyView(frame: CGRectMake(CGFloat(sub[]["frame"]["x"].float!), CGFloat(sub[]["frame"]["y"].float!), CGFloat(sub[]["frame"]["width"].float!), CGFloat(sub[]["frame"]["height"].float!)))
+                                newView.text = sub[]["text"].string!
+                                newView.fontName = sub[]["font"].string!
+                                newView.bounds = CGRectMake(CGFloat(sub[]["bounds"]["x"].float!), CGFloat(sub[]["bounds"]["y"].float!), CGFloat(sub[]["bounds"]["width"].float!), CGFloat(sub[]["bounds"]["height"].float!))
+                                newView.transform = CGAffineTransform(a: CGFloat(sub[]["transform"]["a"].float!), b: CGFloat(sub[]["transform"]["b"].float!), c: CGFloat(sub[]["transform"]["c"].float!), d: CGFloat(sub[]["transform"]["d"].float!), tx: CGFloat(sub[]["transform"]["tx"].float!), ty: CGFloat(sub[]["transform"]["ty"].float!))
+                                log.log("\(newView.transform)")
+                                newView.color = sub[]["color"].string!
+                                newView.regen()
+                                newView.deselected()
+                                newView.label?.addTarget(self, action: "didSelect:", forControlEvents: .TouchUpInside)
+                                newView.btn_remove?.addTarget(self, action: Selector("remove:"), forControlEvents: .TouchUpInside)
+                                self.canvas.addSubview(newView)
                             }
                         }
                     }
-                    
-                    if json["allText"].array!.count > 0 {
-                        if let all = json["allText"].array {
-                            if all.count > 0 {
-                                log.log("alltext count > 0")
-                                for var i = 0; i<all.count; i++ {
-                                    let alltext = all[i]
-                                    log.log("\(alltext.string)")
-                                    if alltext.string != "" {
-                                        if let _ = alltext["frame"]["y"].float {
-                                            let newView = MyView(frame: CGRectMake(CGFloat(alltext["frame"]["x"].float!), CGFloat(alltext["frame"]["y"].float!), CGFloat(alltext["frame"]["width"].float!), CGFloat(alltext["frame"]["height"].float!)))
-                                            newView.text = alltext["text"].string!
-                                            newView.fontName = alltext["font"].string!
-                                            newView.bounds = CGRectMake(CGFloat(alltext["bounds"]["x"].float!), CGFloat(alltext["bounds"]["y"].float!), CGFloat(alltext["bounds"]["width"].float!), CGFloat(alltext["bounds"]["height"].float!))
-                                            newView.transform = CGAffineTransform(a: CGFloat(alltext["transform"]["a"].float!), b: CGFloat(alltext["transform"]["b"].float!), c: CGFloat(alltext["transform"]["c"].float!), d: CGFloat(alltext["transform"]["d"].float!), tx: CGFloat(alltext["transform"]["tx"].float!), ty: CGFloat(alltext["transform"]["ty"].float!))
-                                            log.log("\(newView.transform)")
-                                            newView.color = alltext["color"].string!
-                                            newView.regen()
-                                            newView.deselected()
-                                            newView.label?.addTarget(self, action: "didSelect:", forControlEvents: .TouchUpInside)
-                                            newView.btn_remove?.addTarget(self, action: Selector("remove:"), forControlEvents: .TouchUpInside)
-                                            allText.append(newView)
-                                        }
-                                        
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    
                 }
-                //                make_gif()/
-                log.log("daksdhfewkjf;aj;eiowjasd;fjeio")
                 
-            }else{
-                self.sliderDelay.value = Float(json["delay"].string!)!
-                if let items = json["files"].array {
-                    for item in items {
-                        if let file_name = item.string {
-                            var arr:[UIImage] = []
-                            var pathArr:[String] = []
-                            movNames.append(file_name)
-                            if let enumerator:NSDirectoryEnumerator = fileManager.enumeratorAtPath(file_name){
-                                while let element = enumerator.nextObject() as? String {
-                                    let imgPath = String(format: "%@/%@", arguments: [file_name,element]) //"\(workFolder)/\(element)"
-                                    let img = UIImage(contentsOfFile: imgPath)
-                                    arr.append(img!)
-                                    pathArr.append(imgPath)
-                                }
-                                self.imageArr.append(arr)
-                                self.imagePathArr.append(pathArr)
-                            }
-                        }
-                    }
-                    make_gif()
-                }
-                self.waterToggle = json["watermark"].boolValue
-                if json["watermark"].boolValue {
-                    self.waterMark.setImage(UIImage(named: "watermark"), forState: .Normal)
+                if fileManager.fileExistsAtPath(scratchPath!) {
+                    let mask = UIImage(contentsOfFile: scratchPath!) // 기본 마스크 이미지,
+                    // workFolder에 mask.jpg가 저장되어있으면 해당 mask를 로드한다. 필터 처리되었으면 필터처리함.
+                    // 필터를 변경시에 front이미지에 필터를 처리하고, mask()를 실행하여 처리..
+                    
+                    maskImage.frame = gifView.frame
+                    log.log("maskImage frame  \(maskImage.frame)")
+                    maskImage.image = mask
+                    maskImage.backgroundColor = UIColor.blackColor()
+                    maskImage.contentMode = .ScaleAspectFill
+                    
+                    frontImage.frame = gifView.frame
+                    //                frontImage.frame.size = CGSize(width: self.image.frame.size.width, height: round(self.image.frame.size.height))
+                    var eraserImage = playImageArr[0][0]
+                    let filter = GPUImageBrightnessFilter()
+                    filter.brightness = 0.01
+                    eraserImage = filter.imageByFilteringImage(eraserImage)
+                    applyFilter(&eraserImage, filterName: self.filterCurrent)
+                    frontImage.image = eraserImage
+                    self.view.addSubview(frontImage)
+                    self.mask()
+                    log.log("mask 있어")
                 }else {
-                    self.waterMark.setImage(UIImage(named: "no_mark"), forState: .Normal)
+                    let mask = UIImage(named:"mask.jpg") // 기본 마스크 이미지,
+                    // workFolder에 mask.jpg가 저장되어있으면 해당 mask를 로드한다. 필터 처리되었으면 필터처리함.
+                    // 필터를 변경시에 front이미지에 필터를 처리하고, mask()를 실행하여 처리..
+                    
+                    maskImage.frame = gifView.frame
+                    log.log("maskImage frame  \(maskImage.frame)")
+                    maskImage.image = mask
+                    maskImage.backgroundColor = UIColor.blackColor()
+                    maskImage.contentMode = .ScaleAspectFill
                 }
-                //                let imgPath = String(format: "%@/ghost.jpg", arguments:[workFolder!])
-                //                if fileManager.fileExistsAtPath(imgPath) {
-                //                    setGhost(imgPath)
-                //                }
-                if(json["direction"]=="normal") {
-                    playType = 0
-                } else {
-                    playType = 1
-                    //                    images = images.reverse()
-                    imagePaths = imagePaths.reverse()
-                }
-                if(json["filter"].string! != "None") {
-                    //                    var tmepImage = self.ghostLayer?.image!
-                    self.filterCurrent = json["filter"].string!
-                    let filter = getFilterByName(self.filterCurrent)
-                    image.image = UIImage(contentsOfFile: imagePaths[0])
-                    applyFilter(&image.image!, filterName: self.filterCurrent)
-                    //                    applyFilter(&tmepImage!, filterName: self.filterCurrent)
-                    //                    self.ghostLayer!.image = tmepImage
-                } else {
-                    make_gif()
-                }
-                if json["subtitle"].array!.count > 0 {
-                    for sub in json["subtitle"].array! {
-                        if let temp = sub[]["frame"]["x"].float {
-                            let newView = MyView(frame: CGRectMake(CGFloat(sub[]["frame"]["x"].float!), CGFloat(sub[]["frame"]["y"].float!), CGFloat(sub[]["frame"]["width"].float!), CGFloat(sub[]["frame"]["height"].float!)))
-                            newView.text = sub[]["text"].string!
-                            newView.fontName = sub[]["font"].string!
-                            newView.bounds = CGRectMake(CGFloat(sub[]["bounds"]["x"].float!), CGFloat(sub[]["bounds"]["y"].float!), CGFloat(sub[]["bounds"]["width"].float!), CGFloat(sub[]["bounds"]["height"].float!))
-                            newView.transform = CGAffineTransform(a: CGFloat(sub[]["transform"]["a"].float!), b: CGFloat(sub[]["transform"]["b"].float!), c: CGFloat(sub[]["transform"]["c"].float!), d: CGFloat(sub[]["transform"]["d"].float!), tx: CGFloat(sub[]["transform"]["tx"].float!), ty: CGFloat(sub[]["transform"]["ty"].float!))
-                            log.log("\(newView.transform)")
-                            newView.color = sub[]["color"].string!
-                            newView.regen()
-                            newView.deselected()
-                            newView.label?.addTarget(self, action: "didSelect:", forControlEvents: .TouchUpInside)
-                            newView.btn_remove?.addTarget(self, action: Selector("remove:"), forControlEvents: .TouchUpInside)
-                            self.canvas.addSubview(newView)
+                make_gif()
+            } else {
+                let enumerator:NSDirectoryEnumerator = fileManager.enumeratorAtPath(workFolder!)!
+                movNames = [String]()
+                imageArr = [[UIImage]]()
+                imagePathArr = [[String]]()
+                
+                while let element = enumerator.nextObject() as? String {
+                    if element.hasSuffix("mov") {
+                        
+                        var arr:[UIImage] = []
+                        var pathArr:[String] = []
+                        var imgPath = element.stringByReplacingOccurrencesOfString(".mov", withString: "")
+                        
+                        
+                        imgPath = String(format:"%@/%@", arguments : [workFolder!,imgPath])
+                        
+                        movNames.append(imgPath)
+                        
+                        let enumerator2:NSDirectoryEnumerator = fileManager.enumeratorAtPath(imgPath)!
+                        while let element2 = enumerator2.nextObject() as? String{
+                            let _imgPath = String(format:"%@/%@", arguments : [imgPath,element2])
+                            log.log("imgPath             \(_imgPath)")
+                            arr.append(UIImage(contentsOfFile: _imgPath)!)
+                            pathArr.append(_imgPath)
                         }
+                        imageArr.append(arr)
+                        imagePathArr.append(pathArr)
+                        log.log("movNames \(movNames)")
+                        log.log("imagePathArr.count \(pathArr.count)")
                     }
                 }
-            }
-            
-            if fileManager.fileExistsAtPath(scratchPath!) {
-                let mask = UIImage(contentsOfFile: scratchPath!) // 기본 마스크 이미지,
+                
+                if !addImage {
+                    ori_mov = movNames
+                }
+                
+                make_gif()
+                var mask = UIImage(named:"mask.jpg") // 기본 마스크 이미지,
+                
+                mask = mask?.resizeImage(playImageArr[0][0].size)
+                log.log("mask image        \(mask)")
                 // workFolder에 mask.jpg가 저장되어있으면 해당 mask를 로드한다. 필터 처리되었으면 필터처리함.
                 // 필터를 변경시에 front이미지에 필터를 처리하고, mask()를 실행하여 처리..
-                
                 maskImage.frame = gifView.frame
                 log.log("maskImage frame  \(maskImage.frame)")
                 maskImage.image = mask
                 maskImage.backgroundColor = UIColor.blackColor()
                 maskImage.contentMode = .ScaleAspectFill
-                
-                frontImage.frame = gifView.frame
-                //                frontImage.frame.size = CGSize(width: self.image.frame.size.width, height: round(self.image.frame.size.height))
-                var eraserImage = playImageArr[0][0]
-                let filter = GPUImageBrightnessFilter()
-                filter.brightness = 0.01
-                eraserImage = filter.imageByFilteringImage(eraserImage)
-                applyFilter(&eraserImage, filterName: self.filterCurrent)
-                frontImage.image = eraserImage
-                self.view.addSubview(frontImage)
-                self.mask()
-                log.log("mask 있어")
-            }else {
-                let mask = UIImage(named:"mask.jpg") // 기본 마스크 이미지,
-                // workFolder에 mask.jpg가 저장되어있으면 해당 mask를 로드한다. 필터 처리되었으면 필터처리함.
-                // 필터를 변경시에 front이미지에 필터를 처리하고, mask()를 실행하여 처리..
-                
-                maskImage.frame = gifView.frame
-                log.log("maskImage frame  \(maskImage.frame)")
-                maskImage.image = mask
-                maskImage.backgroundColor = UIColor.blackColor()
-                maskImage.contentMode = .ScaleAspectFill
+                self.canvas.frame = gifView.frame
             }
-            make_gif()
-        } else {
-            let enumerator:NSDirectoryEnumerator = fileManager.enumeratorAtPath(workFolder!)!
-            movNames = [String]()
-            imageArr = [[UIImage]]()
-            imagePathArr = [[String]]()
-            
-            while let element = enumerator.nextObject() as? String {
-                if element.hasSuffix("mov") {
-                    
-                    var arr:[UIImage] = []
-                    var pathArr:[String] = []
-                    var imgPath = element.stringByReplacingOccurrencesOfString(".mov", withString: "")
-                    
-                    
-                    imgPath = String(format:"%@/%@", arguments : [workFolder!,imgPath])
-                    
-                    movNames.append(imgPath)
-                    
-                    let enumerator2:NSDirectoryEnumerator = fileManager.enumeratorAtPath(imgPath)!
-                    while let element2 = enumerator2.nextObject() as? String{
-                        let _imgPath = String(format:"%@/%@", arguments : [imgPath,element2])
-                        log.log("imgPath             \(_imgPath)")
-                        arr.append(UIImage(contentsOfFile: _imgPath)!)
-                        pathArr.append(_imgPath)
-                    }
-                    imageArr.append(arr)
-                    imagePathArr.append(pathArr)
-                    log.log("movNames \(movNames)")
-                    log.log("imagePathArr.count \(pathArr.count)")
-                }
-            }
-            
-            if !addImage {
-                ori_mov = movNames
-            }
-            
-            make_gif()
-            var mask = UIImage(named:"mask.jpg") // 기본 마스크 이미지,
-            
-            mask = mask?.resizeImage(playImageArr[0][0].size)
-            log.log("mask image        \(mask)")
-            // workFolder에 mask.jpg가 저장되어있으면 해당 mask를 로드한다. 필터 처리되었으면 필터처리함.
-            // 필터를 변경시에 front이미지에 필터를 처리하고, mask()를 실행하여 처리..
-            maskImage.frame = gifView.frame
-            log.log("maskImage frame  \(maskImage.frame)")
-            maskImage.image = mask
-            maskImage.backgroundColor = UIColor.blackColor()
-            maskImage.contentMode = .ScaleAspectFill
-            self.canvas.frame = gifView.frame
+        }else {
+            print("하하하하하하하하핳하하하하하하핳하하하하하하하하하하하하하하하하하핳하하ㅏㅎ하하하하하하하하하하하핳하하하핳하하핳하하ㅏㅎ하하하하")
+            frameIndex = 0
+            currentIndex1 = 0
+            previewTimer = NSTimer.scheduledTimerWithTimeInterval(interval, target: self, selector: Selector("nextImage"), userInfo: nil, repeats: true)
         }
+        
+        
         
         
         
@@ -1825,7 +1835,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         if(imagePicker == nil) {
             imagePicker = UIImagePickerController()
         }
-        
+        self.addPicker = true
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.SavedPhotosAlbum){
             //            //print("Galeria Imagen")
             previewTimer?.invalidate()
