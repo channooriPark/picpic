@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ServiceViewController: UIViewController {
+class ServiceViewController: UIViewController ,UIWebViewDelegate{
 
     
     let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -36,7 +36,13 @@ class ServiceViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    
+    
+    func webViewDidFinishLoad(webView: UIWebView) {
+        webView.scrollView.contentSize = CGSize(width: webView.frame.size.width, height: webView.scrollView.contentSize.height)
+    }
+    
+    
     /*
     // MARK: - Navigation
 

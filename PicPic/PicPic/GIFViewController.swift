@@ -450,11 +450,11 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
     }
     
     func finishPost() {
-        self.appdelegate.testNavi.navigationBarHidden = false
-        if self.appdelegate.myfeed.view.hidden == false {
-            self.appdelegate.testNavi.navigationBarHidden = true
+        self.navigationController!.navigationBarHidden = false
+        if self.navigationController!.view.hidden == false {
+            self.navigationController!.navigationBarHidden = true
         }
-        self.appdelegate.testNavi.popToRootViewControllerAnimated(true)
+        self.navigationController!.popToRootViewControllerAnimated(true)
     }
     
     
@@ -499,6 +499,7 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
         controlLoading(true)
         let data_gif: NSData
         if Config.getInstance().photoDataArr.count>0 {
+            print("regift_photo    ::      ",regift_photo!.createGif()!)
             data_gif = NSData(contentsOfURL: regift_photo!.createGif()!)!
         }
         else {
@@ -522,6 +523,7 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
 //                //print("\(totalBytesWritten) / \(totalBytesExpectedToWrite)")
             }
             .responseJSON(completionHandler: { (request, response, data, error) in
+                print(request,"         ::             ",response,"          ",data)
                 self.dispatch_async_global {
                     if error != nil {
 //                        //print("error: \(error!)")
@@ -614,6 +616,7 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
         uploadData.appendData(imageData)
         uploadData.appendString("\(lineEnd)")
         uploadData.appendString("\(twoHyphens)\(boundaryConstant)\(twoHyphens)\(lineEnd)")
+        print("uploadData            :::::::::::::  \n",uploadData)
         //set body
         mutableURLRequest.HTTPBody = uploadData
         return (ParameterEncoding.URL.encode(mutableURLRequest, parameters: nil).0, uploadData)

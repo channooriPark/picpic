@@ -45,6 +45,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
     var camera : CameraViewController!
     var myfeed : MyFeedNativeViewController!//MyFeedPageViewController!
     var signin : UINavigationController!
+    var launch : LaunchViewController!
+    
+    
+    
     
     //SubView
     var tags = NSMutableDictionary()
@@ -69,6 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
     let subscriptionTopic = "/topics/global"
     var deviceId = ""
     var notiType = 0 //0이면 일반 1이면 알림을 통해서
+    
 
 //    var application : UIApplication!
 
@@ -82,6 +87,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
         }
         application.applicationIconBadgeNumber = 0
         
+        
+        var configureError: NSError?
+        GGLContext.sharedInstance().configureWithError(&configureError)
         
         let settings: UIUserNotificationSettings =
         UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
@@ -186,6 +194,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
         self.token = deviceToken.description.stringByReplacingOccurrencesOfString("<", withString: "").stringByReplacingOccurrencesOfString(">", withString: "").stringByReplacingOccurrencesOfString(" ", withString: "")
         
         log.log("\(token)")
+        
+        if self.email != nil {
+            let message : JSON = ["email":self.email,"device_id":self.deviceId,"push_token":self.token]
+            self.doIt(221, message: message, callback: { (readData) -> () in
+                print(readData)
+            })
+        }
+        
+        
     }
     func application( application: UIApplication, didFailToRegisterForRemoteNotificationsWithError
         error: NSError ) {
@@ -231,6 +248,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
             
             if application.applicationState == UIApplicationState.Inactive {
                 if let infoUser = userInfo["push"] {
+                    notiType = 0
                     let info = infoUser as! [String]
                     var url : NSURL!
                     if info.count > 2 {
@@ -238,7 +256,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
                     }else {
                         url = NSURL(string: "picpic://\(info[0])/\(info[1])")!
                     }
-                    URLopenPage(url)
+                    
+                    if self.email != nil {
+                        URLopenPage(url)
+                    }else {
+                        launch.pushData = url
+                    }
                     print("url   :   ",url)
                 }else {
                     self.notiType = 1
@@ -671,13 +694,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
         
         if standardUserDefaults.objectForKey("tutorial") != nil {
             self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-            let launch = storyboard.instantiateViewControllerWithIdentifier("LaunchViewController")as! LaunchViewController
+            launch = storyboard.instantiateViewControllerWithIdentifier("LaunchViewController")as! LaunchViewController
             launch.type = "first"
             self.window?.rootViewController = launch
             
         }else {
             self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-            let launch = storyboard.instantiateViewControllerWithIdentifier("LaunchViewController")as! LaunchViewController
+            launch = storyboard.instantiateViewControllerWithIdentifier("LaunchViewController")as! LaunchViewController
             launch.type = "intro"
             self.window?.rootViewController = launch
         }

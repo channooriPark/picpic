@@ -378,52 +378,58 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
             print("image 댓글 있어")
             filename = "\(file)\(currentdate)_2.gif"
             self.asset.requestContentEditingInputWithOptions(PHContentEditingInputRequestOptions()) { (input, _) in
-                let url = input!.fullSizeImageURL
+                let url = input!.fullSizeImageURL?.path
                 print("url   ",url) // 배열에 담아 콜렉션 뷰에 로드하면 됨.
-                let data_gif = NSData(contentsOfURL: url!)!
+                let data_gif = NSData(contentsOfFile: url!)!
                 let upload_url = "http://gif.picpic.world/uploadToServerForPicPic.php"
                 let parameters = ["": ""]
                 let request = self.urlRequestWithComponents(upload_url, parameters: parameters, imageData: data_gif)
                 print(request.0.URLRequest.URLString)
-                
-                
-                
-                Alamofire1.manager.upload(request.0, data: request.1).progress { (bytesWritten, totalBytesWritten, totalBytesExpectedToWrite) in
-                    }.responseJSON(completionHandler: { (request, response, data, error) in
-                        if error != nil {
-                            print("image upload fail  ",error)
-                        }else {
-                            print("iamge upload success  ",response)
-                            var message : JSON = ["url":self.filename]
-                            self.appdelegate.doIt(233, message: message, callback: { (readData) -> () in
-                                print(readData)
-                                print("ok")
-                            })
-                            var com_form = self.comWrite
-                            if self.comWrite == "E" {
-                                com_form = "E"
-                            }
-                            if let text = self.comTextField.text {
-                                if text != "" {
-                                    var message : JSON = ["my_id":self.appdelegate.email,"com_id":self.com_id,"post_id":self.post_id,"body":text,"com_form":com_form,"user_tags":"","url":self.filename]
-                                    self.appdelegate.doIt(231, message: message, callback: { (readData) -> () in
-                                        if readData["msg"].string! == "success"{
-                                            message = ["my_id":self.appdelegate.email,"post_id":self.post_id,"page":"1"]
-                                            self.appdelegate.doIt(321, message: message, callback: { (readData) -> () in
-                                                self.dataArray.removeAll()
-                                                self.getData(readData)
-                                                self.comTextField.text = ""
-                                            })
-                                        }
-                                    })
-                                }
-                            }
-                        }
-                    })
+//                Alamofire1.manager.upload(request.0, data: request.1)
+//                    .progress { (bytesWritten, totalBytesWritten, totalBytesExpectedToWrite) in
+//                        print("\(totalBytesWritten) / \(totalBytesExpectedToWrite)")
+//                    }
+//                    .responseJSON(completionHandler: { (request, response, data, error) in
+//                        print(request,"         ::             ",response,"          ",data)
+//                        if error != nil {
+//                            print("image upload fail  ",error)
+//                        }else {
+//                            print("iamge upload success  ",response)
+//                        }
+//                    })
+                self.myImageUploadRequest(data_gif, filename: self.filename)
             }
         }else {
             filename = ""
         }
+        
+        var message : JSON = ["url":self.filename]
+        self.appdelegate.doIt(233, message: message, callback: { (readData) -> () in
+            print(readData)
+            print("ok")
+        })
+        var com_form = self.comWrite
+        if self.comWrite == "E" {
+            com_form = "E"
+        }
+        if let text = self.comTextField.text {
+            if text != "" {
+                var message : JSON = ["my_id":self.appdelegate.email,"com_id":self.com_id,"post_id":self.post_id,"body":text,"com_form":com_form,"user_tags":"","url":self.filename]
+                self.appdelegate.doIt(231, message: message, callback: { (readData) -> () in
+                    if readData["msg"].string! == "success"{
+                        message = ["my_id":self.appdelegate.email,"post_id":self.post_id,"page":"1"]
+                        self.appdelegate.doIt(321, message: message, callback: { (readData) -> () in
+                            self.dataArray.removeAll()
+                            self.getData(readData)
+                            self.comTextField.text = ""
+                        })
+                    }
+                })
+            }
+        }
+        
+        
+        
         
         if self.imageComView.hidden == false {
             self.imageComView.hidden = true
@@ -520,6 +526,7 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
     
     func urlRequestWithComponents(urlString:String, parameters:Dictionary<String, String>, imageData:NSData) -> (URLRequestConvertible, NSData) {
         // create url request to send
+        print("urlRequestWidth Components In       hahahahahahaahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha")
         let mutableURLRequest = NSMutableURLRequest(URL: NSURL(string: urlString)!)
         mutableURLRequest.cachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
         mutableURLRequest.timeoutInterval = 60
@@ -547,6 +554,7 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         uploadData.appendData(imageData)
         uploadData.appendString("\(lineEnd)")
         uploadData.appendString("\(twoHyphens)\(boundaryConstant)\(twoHyphens)\(lineEnd)")
+//        print("uploadData            :::::::::::::  \n",uploadData)
         //set body
         mutableURLRequest.HTTPBody = uploadData
         return (ParameterEncoding.URL.encode(mutableURLRequest, parameters: nil).0, uploadData)
@@ -557,14 +565,16 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
     
     
     
-    func myImageUploadRequest(image: UIImage!, filename : String)
+    func myImageUploadRequest(data: NSData, filename : String)
     {
         var state = false
-        var imageData : NSData!
-        if image != nil {
-            imageData = UIImageJPEGRepresentation(image, 1)!
-        }
-        if(imageData==nil)  { return; }
+//        var imageData : NSData!
+//        if image != nil {
+//            imageData = UIImageJPEGRepresentation(image, 1)!
+//        }
+//        if(imageData==nil)  { return; }
+        
+        print("fileName   :   ",filename)
         let myUrl = NSURL(string: "http://gif.picpic.world/uploadToServerForPicPic.php");
         //let myUrl = NSURL(string: "http://www.boredwear.com/utils/postImage.php");
         
@@ -577,39 +587,23 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         
         
         
-        request.HTTPBody = createBodyWithParameters(nil, filePathKey: "uploaded_file", imageDataKey: imageData!, boundary: boundary,filename: filename)
+        request.HTTPBody = createBodyWithParameters(nil, filePathKey: "uploaded_file", imageDataKey: data, boundary: boundary,filename: filename)
         
         
         let task = NSURLSession.sharedSession().dataTaskWithRequest(request) {
             data, response, error in
             
             if error != nil {
-                //                print("error=\(error)")
                 return
             }
-            
-            // You can print out response object
-            //            print("******* response = \(response)")
-            
             // Print out reponse body
             let responseString = NSString(data: data!, encoding: NSUTF8StringEncoding)
-            //            print("****** response data = \(responseString!)")
-            
             
             var err: NSError?
             do {
                 var json = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as? NSDictionary
             }catch{
-                //                print(error)
             }
-            
-            /*
-            if let parseJSON = json {
-            var firstNameValue = parseJSON["firstName"] as? String
-            println("firstNameValue: \(firstNameValue)")
-            }
-            */
-            
         }
         task.resume()
     }

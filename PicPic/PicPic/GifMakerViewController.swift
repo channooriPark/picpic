@@ -46,6 +46,10 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     @IBOutlet weak var playSpeedText: UILabel!
     @IBOutlet weak var frameText: UILabel!
     
+    let rangeSlider = RangeSlider(frame: CGRectZero)
+    var lowerArr = [Double]()
+    var upperArr = [Double]()
+    
     @IBOutlet var btnNext: UIButton!
     @IBOutlet weak var btnPre: UIButton!
     @IBOutlet weak var btnHighResolSave: UIButton!
@@ -256,21 +260,17 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         self.btnAdd.frame = CGRectMake(width*5, 0, width, 50)
         self.editScroll.bounces = false
         
-        //        width = (self.editplus.frame.size.width)/5
-        //        self.editorCancle.frame = CGRectMake(width*0, 0, width, 50)
-        //        self.btnDrop.frame = CGRectMake(width*1, 0, width, 50)
-        //        self.btnText.frame = CGRectMake(width*2, 0, width, 50)
-        ////        self.btnAdd.frame = CGRectMake((50+width)*2, 0, width, 50)
-        //        self.saveButton.frame = CGRectMake(width*3, 0, width, 50)
-        
         self.playSpeed.frame.origin.y = 4*UIScreen.mainScreen().bounds.width/3
-        //        //print(self.playSpeed.frame.origin.y)
         self.playspeedHei.constant = self.view.frame.size.height - (self.playSpeed.frame.origin.y+50)
         self.collectionView.frame.origin.y = self.playSpeed.frame.origin.y
-        self.collectionHei.constant = self.playspeedHei.constant
+        self.collectionHei.constant = 70 //self.playspeedHei.constant
         self.eraserView.frame.origin.y = self.playSpeed.frame.origin.y
         self.eraserViewHei.constant = self.playspeedHei.constant
-        //        //print(self.collectionHei.constant)
+        
+        self.view.addSubview(rangeSlider)
+        rangeSlider.addTarget(self, action: "rangeSliderValueChanged:", forControlEvents: .ValueChanged)
+        rangeSlider.frame = CGRect(x: collectionView.frame.origin.x, y: collectionView.frame.origin.y + collectionView.frame.size.height + 5,
+            width: collectionView.frame.size.width, height: 20)
         
         var colorindex = 0
         let wid = self.view.bounds.size.width/20
@@ -291,6 +291,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         colorView.addGestureRecognizer(drag)
         
         self.collectionView.hidden = true
+        self.rangeSlider.hidden = true
         self.editplus.hidden = true
         self.playSpeed.hidden = false
         self.basicButtonView.hidden = false
@@ -577,10 +578,6 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             }
             make_gif()
         } else {
-            //            let imgPath = String(format: "%@/ghost.jpg", arguments:[workFolder!])
-            //            if fileManager.fileExistsAtPath(imgPath) {
-            //                setGhost(imgPath)
-            //            }
             let enumerator:NSDirectoryEnumerator = fileManager.enumeratorAtPath(workFolder!)!
             movNames = [String]()
             imageArr = [[UIImage]]()
@@ -824,14 +821,69 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             text.deselected()
             text = nil
         }
+        var path = String(format: "%@/highResolve", arguments: [workFolder!])
         
-        let path = String(format: "%@/%@", arguments: [gifsFolder!,gifName!])
+        let fileManager = NSFileManager.defaultManager()
         
         var imgArr = [UIImage]()
         var tempArr = [[UIImage]]()
-        tempArr = playImageArr
+//        tempArr = playImageArr
+        
         
         let progress = 1.0 / Float(tempArr.count)
+        
+        do {
+            print(path)
+            //highResolve폴더를 만든다
+            try fileManager.createDirectoryAtPath(path, withIntermediateDirectories: false, attributes: nil)
+            //workFolder에서 파일 리스트를 가져온다
+            let flist = try fileManager.contentsOfDirectoryAtPath(workFolder!)
+            print(flist)
+            for movName in flist {
+                if movName.hasSuffix(".mov") {
+                    
+                    let name = movName.stringByReplacingOccurrencesOfString(".mov", withString: "")
+                    let movPath = String(format:"%@/%@",arguments: [workFolder!,movName])
+                    let jpgPath = String(format:"%@/%@", arguments:[path, name])
+                    try fileManager.copyItemAtPath(movPath, toPath: String(format: "%@/%@", arguments: [path,movName]))
+                    print("movPath   ",movPath)
+                    print("imgPath   ",jpgPath)
+                    do {
+                        if fileManager.fileExistsAtPath(jpgPath) {
+                            try fileManager.removeItemAtPath(jpgPath)
+                        }
+                    }catch {}
+                    
+                    //고화질로 resizing
+                    self.gifMaker.movSplitHigh(NSURL(fileURLWithPath: movPath), time_start: 0.0, time_end: 0.0, outputPath: jpgPath)
+                }
+            }
+            
+            
+            let enumerator:NSDirectoryEnumerator = fileManager.enumeratorAtPath(path)!
+            print(enumerator)
+            while let element = enumerator.nextObject() as? String {
+                print("element   :   ",element)
+                if element.hasSuffix("mov") {
+                    imgArr = [UIImage]()
+                    var imgPath = element.stringByReplacingOccurrencesOfString(".mov", withString: "")
+                    
+                    imgPath = String(format:"%@/%@", arguments : [path,imgPath])
+                    print("imgPath",imgPath)
+                    let enumerator2:NSDirectoryEnumerator = fileManager.enumeratorAtPath(imgPath)!
+                    while let element2 = enumerator2.nextObject() as? String{
+                        let _imgPath = String(format:"%@/%@", arguments : [imgPath,element2])
+                        self.log.log("imgPath             \(_imgPath)")
+                        imgArr.append(UIImage(contentsOfFile: _imgPath)!)
+                    }
+                }
+            }
+            tempArr.append(imgArr)
+        }catch {
+            print(error)
+        }
+        print("tempArr          \n",tempArr)
+        
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
             for var i=0; i<tempArr.count; i++ {
@@ -839,6 +891,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                     self.applyFilter(&tempArr[i][j], filterName: self.filterCurrent)
                     
                 }
+                
                 dispatch_async(dispatch_get_main_queue(), {
                     self.progressView?.progress += progress
                     for view in self.progressContainerView!.subviews
@@ -854,11 +907,11 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             }
             
             dispatch_async(dispatch_get_main_queue(), {
+                path = String(format: "%@/%@", arguments: [self.gifsFolder!,self.gifName!])
                 if self.textArr.count > 0 {
                     self.gifMaker.make2(tempArr, delayTime: self.sliderDelay.value, gifPath: path, workFolder: self.workFolder!, subtitle: self.textArr, warterMark: self.waterToggle, imageCheck: self.imageCheck, canvas: self.canvas,playType: self.playType,allText: self.allText)
                     
                 }
-                
                 let gif = NSData(contentsOfFile: path)
                 var photosAsset: PHFetchResult!
                 var collection: PHAssetCollection!
@@ -885,7 +938,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                 
                 //save the gifs to Photos
                 PHPhotoLibrary.sharedPhotoLibrary().performChanges({
-                    let img = UIImage.gifWithData(gif!)
+                    let img = UIImage.animatedImageWithAnimatedGIFData(gif!)
                     let assetRequest = PHAssetChangeRequest.creationRequestForAssetFromImage(img!)
                     let assetPlaceholder = assetRequest.placeholderForCreatedAsset
                     photosAsset = PHAsset.fetchAssetsInAssetCollection(collection, options: nil)
@@ -897,6 +950,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                         }else if error != nil{
                             print("handle error since couldn't save video")
                         }
+                        self.progressContainerView.hidden = true
                 })
             
                 
@@ -937,6 +991,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         self.btnPre.enabled = false
         
         self.collectionView.hidden = true
+        self.rangeSlider.hidden = true
         self.editplus.hidden = true
         self.playSpeed.hidden = true
         self.basicButtonView.hidden = true
@@ -972,6 +1027,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     @IBAction func actBasic(sender: AnyObject) {
         //        //print("재생 속도만 보이게 함")
         self.collectionView.hidden = true
+        self.rangeSlider.hidden = true
         self.editplus.hidden = true
         self.playSpeed.hidden = false
         self.basicButtonView.hidden = false
@@ -1019,6 +1075,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         self.conformView.hidden = false
         
         self.collectionView.hidden = true
+        self.rangeSlider.hidden = true
         self.editplus.hidden = true
         self.playSpeed.hidden = true
         self.basicButtonView.hidden = true
@@ -1093,44 +1150,10 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     }
     
     
+    var isTextRemove = false
     func remove(sender:UIButton!){
-        if previewTimer != nil {
-            previewTimer?.invalidate()
-            previewTimer = nil
-        }
-        log.log("remove GIFMAKERVIEWCONTROLLER")
-        if selectedCellIndex == 0 {
-            allText.removeAtIndex(text.index)
-        }else if selectedCellIndex > 0 {
-            log.log("select text remove index \(text.index)")
-            textArr[selectedCellIndex-1].removeAtIndex(text.index)
-        }
-        
-        self.text = nil
-        
-        self.colorView.hidden = true
-        self.textEditView.hidden = true
-        self.conformView.hidden = true
-        
-        self.playSpeed.hidden = true
-        self.basicButtonView.hidden = true
-        
-        self.editplus.hidden = false
-        self.collectionView.hidden = false
-        self.eraserView.hidden = true
-        
-        self.old_text = nil
-        self.old_frame = nil
-        self.old_fontname = nil
-        self.old_transform = nil
-        self.old_bounds = nil
-        self.old_color = nil
-        frameIndex = 0
-        currentIndex1 = 0
-        interval = Double(self.sliderDelay.value)
-        previewTimer?.invalidate()
-        previewTimer = nil
-        previewTimer = NSTimer.scheduledTimerWithTimeInterval(interval, target: self, selector: Selector("nextImage"), userInfo: nil, repeats: true)
+        text.hidden = true
+        isTextRemove = true
     }
     
     func didSelect(sender : UIButton) {
@@ -1219,6 +1242,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         
         self.editplus.hidden = true
         self.collectionView.hidden = true
+        self.rangeSlider.hidden = true
         self.eraserView.hidden = true
     }
     
@@ -1295,6 +1319,8 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     }
     @IBAction func actEditor(sender: UIButton) {
         //        //print("에디터 오픈")
+        self.collectionHei.constant = 70
+        
         self.collectionView.hidden = false
         self.editplus.hidden = false
         self.playSpeed.hidden = true
@@ -1457,9 +1483,10 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         collectionType = 0
         selectedCellIndex = -1
         collections = []
-        
+        self.collectionHei.constant = self.playspeedHei.constant
         
         self.collectionView.hidden = false
+        self.rangeSlider.hidden = true
         self.editplus.hidden = true
         self.playSpeed.hidden = true
         self.basicButtonView.hidden = false
@@ -1665,11 +1692,30 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         
         var imgArr = [UIImage]()
         var tempArr = [[UIImage]]()
-        tempArr = playImageArr
+//        tempArr = playImageArr
         
         let progress = 1.0 / Float(tempArr.count)
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {1
+            
+            
+            // 촬영구간 편집 jis
+            for var i=0; i<self.playImageArr.count; i++ {
+                
+                let len = self.playImageArr[i].count
+                
+                print("Range slider value changed: (\(i) \(self.lowerArr[i+1]) \(self.upperArr[i+1]))")
+                
+                let start = Int(Double(len) * self.lowerArr[i+1])
+                let end = Int(Double(len) * self.upperArr[i+1])
+                
+                tempArr.append([UIImage]())
+                for var j=start; j<end; j++ {
+                    tempArr[i].append(self.playImageArr[i][j])
+                }
+            }
+            
+            
             for var i=0; i<tempArr.count; i++ {
                 for var j=0; j<tempArr[i].count; j++ {
                     self.applyFilter(&tempArr[i][j], filterName: self.filterCurrent)
@@ -1849,6 +1895,14 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     }
     
     
+    // 촬영길이 편집 슬라이더
+    func rangeSliderValueChanged(rangeSlider: RangeSlider) {
+        self.lowerArr[selectedCellIndex] = rangeSlider.lowerValue
+        self.upperArr[selectedCellIndex] = rangeSlider.upperValue
+        print("Range slider value changed: (\(rangeSlider.lowerValue) \(rangeSlider.upperValue))")
+    }
+    
+    
     @IBAction func sliderValueChange(sender: UISlider) {
         if(imageLoading) {
             
@@ -1864,6 +1918,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             view.removeFromSuperview()
         }
         collectionType = 0
+        self.collectionHei.constant = self.playspeedHei.constant
         actBasic(sender)
         frameIndex = 0
         currentIndex1 = 0
@@ -1935,6 +1990,47 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     }
     
     @IBAction func actComplete(sender: AnyObject) {
+        
+        if isTextRemove {
+            if previewTimer != nil {
+                previewTimer?.invalidate()
+                previewTimer = nil
+            }
+            log.log("remove GIFMAKERVIEWCONTROLLER")
+            if selectedCellIndex == 0 {
+                allText.removeAtIndex(text.index)
+            }else if selectedCellIndex > 0 {
+                log.log("select text remove index \(text.index)")
+                textArr[selectedCellIndex-1].removeAtIndex(text.index)
+            }
+            
+            self.text = nil
+            
+            self.colorView.hidden = true
+            self.textEditView.hidden = true
+            self.conformView.hidden = true
+            
+            self.playSpeed.hidden = true
+            self.basicButtonView.hidden = true
+            
+            self.editplus.hidden = false
+            self.collectionView.hidden = false
+            self.eraserView.hidden = true
+            
+            self.old_text = nil
+            self.old_frame = nil
+            self.old_fontname = nil
+            self.old_transform = nil
+            self.old_bounds = nil
+            self.old_color = nil
+            frameIndex = 0
+            currentIndex1 = 0
+            interval = Double(self.sliderDelay.value)
+            previewTimer?.invalidate()
+            previewTimer = nil
+            previewTimer = NSTimer.scheduledTimerWithTimeInterval(interval, target: self, selector: Selector("nextImage"), userInfo: nil, repeats: true)
+        }
+        
         
         if selectedCellIndex > 0 {
             if textArr.count > 0 {
@@ -2009,17 +2105,17 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                     }
                     //                    UIImagePNGRepresentation(frontImage.image!)?.writeToFile(scratchPath!, atomically: true)
                     UIImageJPEGRepresentation(maskImage.image!, 100)!.writeToFile(scratchPath!, atomically: true)
+                    print("ddd")
                 } catch let error as NSError {
                     //                //print(error.localizedDescription);
                 }
             }
-            
-            
-            
         }
         self.view.bringSubviewToFront(canvas)
         self.view.bringSubviewToFront(btnNext)
         self.view.bringSubviewToFront(btnPre)
+        self.view.bringSubviewToFront(waterMark)
+        self.view.bringSubviewToFront(btnHighResolSave)
     }
     
     @IBAction func actFont(sender: AnyObject) {
@@ -2184,8 +2280,12 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                 textArr.append([])
             }
             cellArr.append(0)
+            lowerArr.append(0)
+            upperArr.append(1)
         }
         cellArr.append(0)
+        lowerArr.append(0)
+        upperArr.append(1)
     }
     
     var currentIndex1 = 0
@@ -2492,6 +2592,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             selectedCellIndex = indexPath.item
             
             if selectedCellIndex == 0 {
+                self.rangeSlider.hidden = true
                 for var i=0; i<cellArr.count; i++ {
                     cellArr[i] = 1
                     if i == 0 { cellArr[i] = 0 }
@@ -2501,6 +2602,12 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                     }
                 }
             }else {
+                
+                self.rangeSlider.hidden = false
+                self.rangeSlider.lowerValue = self.lowerArr[selectedCellIndex]
+                self.rangeSlider.upperValue = self.upperArr[selectedCellIndex]
+
+                
                 log.log("cellArr.count \(cellArr.count)")
                 for var i=0; i<cellArr.count; i++ {
                     cellArr[i] = 0
@@ -2636,6 +2743,8 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         }
     }
     
+    
+    
     func collectionView(collectionView: UICollectionView, atIndexPath: NSIndexPath, didMoveToIndexPath toIndexPath: NSIndexPath) {
         
         
@@ -2685,7 +2794,12 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     //    }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(80.0, 80.0)   // jis
+        if self.editplus.hidden == false {
+            return CGSizeMake(60.0, 60.0)
+        }else {
+            return CGSizeMake(80.0, 80.0)
+        }
+           // jis
     }
     
     

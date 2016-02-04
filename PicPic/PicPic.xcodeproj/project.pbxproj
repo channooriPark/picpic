@@ -94,6 +94,9 @@
 		E4151AFF1BF2689900527FF1 /* SubViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4151AFE1BF2689900527FF1 /* SubViewController.swift */; };
 		E416CC1A1C38C503001E488E /* SocialNetworkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E416CC191C38C503001E488E /* SocialNetworkTableViewController.swift */; };
 		E416CC1C1C38F2BF001E488E /* GifListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E416CC1B1C38F2BF001E488E /* GifListViewController.swift */; };
+		E418CCAB1C59F3DC00DD1CFA /* RangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E418CCA81C59F3DC00DD1CFA /* RangeSlider.swift */; };
+		E418CCAC1C59F3DC00DD1CFA /* RangeSliderThumbLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E418CCA91C59F3DC00DD1CFA /* RangeSliderThumbLayer.swift */; };
+		E418CCAD1C59F3DC00DD1CFA /* RangeSliderTrackLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E418CCAA1C59F3DC00DD1CFA /* RangeSliderTrackLayer.swift */; };
 		E41A137A1BF115BD00028971 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E41A13791BF115BD00028971 /* KakaoOpenSDK.framework */; };
 		E41B09AB1C05D9E8001171A2 /* TextAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41B09AA1C05D9E8001171A2 /* TextAddViewController.swift */; };
 		E420D7F31C045661007E530B /* SaveListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E420D7F21C045661007E530B /* SaveListViewController.swift */; };
@@ -588,6 +591,9 @@
 		E4151AFE1BF2689900527FF1 /* SubViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubViewController.swift; sourceTree = "<group>"; };
 		E416CC191C38C503001E488E /* SocialNetworkTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialNetworkTableViewController.swift; sourceTree = "<group>"; };
 		E416CC1B1C38F2BF001E488E /* GifListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GifListViewController.swift; sourceTree = "<group>"; };
+		E418CCA81C59F3DC00DD1CFA /* RangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSlider.swift; sourceTree = "<group>"; };
+		E418CCA91C59F3DC00DD1CFA /* RangeSliderThumbLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSliderThumbLayer.swift; sourceTree = "<group>"; };
+		E418CCAA1C59F3DC00DD1CFA /* RangeSliderTrackLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSliderTrackLayer.swift; sourceTree = "<group>"; };
 		E41A13791BF115BD00028971 /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
 		E41B09AA1C05D9E8001171A2 /* TextAddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextAddViewController.swift; sourceTree = "<group>"; };
 		E420D7F21C045661007E530B /* SaveListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveListViewController.swift; sourceTree = "<group>"; };
@@ -1430,6 +1436,9 @@
 				E4D382681C3F3DF000800239 /* SaveCell.xib */,
 				E4D382691C3F3DF000800239 /* TempLoadView.xib */,
 				E4CDA0711C4CB7F300A85C42 /* VideoGalleryViewController.swift */,
+				E418CCA81C59F3DC00DD1CFA /* RangeSlider.swift */,
+				E418CCA91C59F3DC00DD1CFA /* RangeSliderThumbLayer.swift */,
+				E418CCAA1C59F3DC00DD1CFA /* RangeSliderTrackLayer.swift */,
 			);
 			name = gif;
 			sourceTree = "<group>";
@@ -2292,7 +2301,7 @@
 				TargetAttributes = {
 					E44580381BE3882000AF186C = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = ANM7DT8PCR;
+						DevelopmentTeam = SEDPMQ93PW;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
 								enabled = 0;
@@ -2522,6 +2531,7 @@
 				E4D4ECA81C112EAF00616C2E /* GPUImageTextureInput.m in Sources */,
 				E4D382751C3F409500800239 /* SaveCell.swift in Sources */,
 				E4D4EC9D1C112EAF00616C2E /* GPUImageSmoothToonFilter.m in Sources */,
+				E418CCAD1C59F3DC00DD1CFA /* RangeSliderTrackLayer.swift in Sources */,
 				E4D4EC371C112EAF00616C2E /* GPUImageCropFilter.m in Sources */,
 				E4C6C33E1C2ABF690075038A /* TagPageViewController.swift in Sources */,
 				E466C2461BE88AD2004F65EF /* SettingProfileChangeViewController.swift in Sources */,
@@ -2579,6 +2589,7 @@
 				E4AB44F71C16667A002EA053 /* IFNormalFilter.m in Sources */,
 				E4532E3D1C02FFEC00AFF019 /* Reachability.m in Sources */,
 				E4D4EC3B1C112EAF00616C2E /* GPUImageDifferenceBlendFilter.m in Sources */,
+				E418CCAC1C59F3DC00DD1CFA /* RangeSliderThumbLayer.swift in Sources */,
 				E4D4EC641C112EAF00616C2E /* GPUImageLaplacianFilter.m in Sources */,
 				E4D4EC7E1C112EAF00616C2E /* GPUImageOpacityFilter.m in Sources */,
 				E4D230A61C17177000B838C3 /* CategoryViewController.swift in Sources */,
@@ -2640,6 +2651,7 @@
 				E4D4EC211C112EAF00616C2E /* GPUImageAlphaBlendFilter.m in Sources */,
 				E4D4EC381C112EAF00616C2E /* GPUImageCrosshairGenerator.m in Sources */,
 				E4D4EC841C112EAF00616C2E /* GPUImagePicture.m in Sources */,
+				E418CCAB1C59F3DC00DD1CFA /* RangeSlider.swift in Sources */,
 				E4D4EC781C112EAF00616C2E /* GPUImageMovieComposition.m in Sources */,
 				E4D4EC1C1C112EAF00616C2E /* GLProgram.m in Sources */,
 				E4D4EC791C112EAF00616C2E /* GPUImageMovieWriter.m in Sources */,
@@ -3024,7 +3036,7 @@
 					"-all_load",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = picpic.sikkle1;
+				PRODUCT_BUNDLE_IDENTIFIER = picpic.sikkle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PicPic/PicPic-Bridging-Header.h";
@@ -3055,7 +3067,7 @@
 					"-all_load",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = picpic.sikkle1;
+				PRODUCT_BUNDLE_IDENTIFIER = picpic.sikkle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PicPic/PicPic-Bridging-Header.h";

@@ -203,6 +203,107 @@ class GifMaker {
         }
     }
     
+    
+    func movSplitHigh(url:NSURL, time_start:Double, var time_end:Double, outputPath path:String) {
+        
+        let fileManager = NSFileManager.defaultManager()
+        do {
+            if(!fileManager.fileExistsAtPath(path)) {
+                try fileManager.createDirectoryAtPath(path, withIntermediateDirectories: false, attributes: nil)
+                
+            }
+        } catch let error as NSError {
+            print(error.localizedDescription);
+        }
+        
+        
+        let asset = AVAsset(URL: url)
+        self.log.log("asset   \(asset)")
+        let time_total = CMTimeGetSeconds(asset.duration)
+        if(time_total < time_end || time_end == 0) {
+            time_end = time_total
+        }
+        
+        let frameCount = Int(CMTimeGetSeconds(asset.duration) * Constants.FrameRate)
+        var timePoints: [TimePoint] = []
+        
+        let movieLength = Float(asset.duration.value) / Float(asset.duration.timescale)
+        let increment = Float(movieLength) / Float(frameCount)
+        
+        let frame_start = Int(time_start * Constants.FrameRate)
+        let frame_end = Int(time_end * Constants.FrameRate)
+        
+        
+        for frameNumber in frame_start ..< frame_end {
+            let seconds: Float64 = Float64(increment) * Float64(frameNumber)
+            let time = CMTimeMakeWithSeconds(seconds, Constants.TimeInterval)
+            timePoints.append(time)
+        }
+        
+        if(timePoints.count == 0 && time_end>0) {
+            let time = CMTimeMakeWithSeconds(time_start, Constants.TimeInterval)
+            timePoints.append(time)
+        }
+        
+        let imageGenerator = AVAssetImageGenerator(asset: asset)
+        imageGenerator.appliesPreferredTrackTransform = true
+        
+        let tolerance = CMTimeMakeWithSeconds(Constants.Tolerance, Constants.TimeInterval)
+        imageGenerator.requestedTimeToleranceBefore = tolerance
+        imageGenerator.requestedTimeToleranceAfter = tolerance
+        
+        var indx = 0;
+        for time in timePoints {
+            do {
+                let fileName = String(format: "%03d.jpg",Int(indx))
+                let imagePath = "\(path)/\(fileName)"
+                let imageRef = try imageGenerator.copyCGImageAtTime(time, actualTime: nil)
+                var img = UIImage(CGImage: imageRef)
+                self.log.log("log.log img size\(img.size)")
+                if(img.size.width > img.size.height) { //가로로 자르기
+                    let imgRatio = Float((img.size.width) / (img.size.height))
+                    let ratio = Float(16.0/9.0)
+                    self.log.log("imgRatio  :  \(imgRatio) +- ratio : \(ratio)")
+                    if imgRatio == ratio {
+                        //16:9기준
+                        //                            img = img.cropToBounds(720, height: 720)
+                        img = img.resizeImage(CGSize(width: 1280, height: 720))
+                    } else { // 4:3기준
+                        var width = Double(img.size.width)
+                        if(img.size.height<img.size.width) {
+                            width = Double(img.size.height)
+                        }
+                        let height = width*3/4
+                        
+                        print("img 가로기준 ",img.size.width,"x",img.size.height)
+                        print(width,"x",height)
+                        
+                        //                            img = img.cropToBounds(width, height: height)
+                        if( Double(Config.getInstance().wid) < width) {
+                            img = img.resizeImage(CGSize(width: 1280, height: 960))
+                        }
+                    }
+                } else { // 세로로 자르기
+                    var width = Double(img.size.width)
+                    if(img.size.height<img.size.width) {
+                        width = Double(img.size.height)
+                    }
+                    let height = width*4/3
+                    
+                    img = img.cropToBounds(width, height: height)
+                    if( Double(Config.getInstance().wid) < width) {
+                        img = img.resizeImage(CGSize(width: 960, height: 1280))
+                    }
+                }
+                
+                UIImageJPEGRepresentation(img, 100)!.writeToFile(imagePath, atomically: true)
+            } catch let error as NSError {
+                print("An error occurred: \(error)")
+            }
+            indx++
+        }
+    }
+    
     func makeJpegs(tmpPath:String, workPath:String, cropSize:CGSize?, reSize:CGSize?) {
         let fileManager = NSFileManager.defaultManager()
         let enumerator:NSDirectoryEnumerator = fileManager.enumeratorAtPath(tmpPath)!
@@ -400,97 +501,7 @@ class GifMaker {
     }
     
     
-    func make2(photoDataArr:[UIImage], delayTime:Float, gifPath:String, workFolder:String,subtitle:UIView?,warterMark : Bool) {
-        
-        var saveArr = photoDataArr
-        
-        let fileManager = NSFileManager.defaultManager()
-        //        print("run make2")
-        //        print("imga count ",photoDataArr.count)
-        //        print("delay Time : ",delayTime)
-        let ghostPath = String(format: "%@/ghost.jpg", arguments: [workFolder])
-        let scratchPath = String(format: "%@/scratch.png", arguments: [workFolder])
-        
-        
-        if( fileManager.fileExistsAtPath(ghostPath) || fileManager.fileExistsAtPath(scratchPath) || subtitle != nil) {
-            for var i=0;i<photoDataArr.count;i++ {
-                let bottomImage = photoDataArr[i]
-                let size = bottomImage.size
-                let areaSize = CGRect(x: 0, y: 0, width: size.width, height: size.height)
-                
-                UIGraphicsBeginImageContext(size)
-                
-                
-                
-                bottomImage.drawInRect(areaSize)
-                
-                if fileManager.fileExistsAtPath(ghostPath) {
-                    let ghost_img = UIImage(contentsOfFile: ghostPath)
-                    ghost_img!.drawInRect(areaSize, blendMode: CGBlendMode.Multiply, alpha: Config.getInstance().ghostAlpha)
-                }
-                
-                if fileManager.fileExistsAtPath(scratchPath) {
-                    let scratch_img = UIImage(contentsOfFile: scratchPath)
-                    scratch_img!.drawInRect(areaSize)
-                }
-                
-                
-                var newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()
-                UIGraphicsEndImageContext()
-                
-                UIGraphicsBeginImageContext(size)
-                
-                newImage.drawInRect(areaSize)
-                if subtitle != nil {
-                    subtitle!.drawViewHierarchyInRect(areaSize, afterScreenUpdates: true)
-                }
-                
-                if warterMark {
-                    //                    print("warterMark")
-                    let warter = UIImage(named: "watermark")
-                    let warterRect = CGRectMake(areaSize.width-158, areaSize.height-58, 148, 48)
-                    warter?.drawInRect(warterRect)
-                }
-                
-                newImage = UIGraphicsGetImageFromCurrentImageContext()
-                
-                UIGraphicsEndImageContext()
-                
-                saveArr[i] = newImage
-            }
-            
-        } else {
-            //            if(filter != nil) {
-            //                for var i=0;i<photoDataArr.count;i++ {
-            //                    var bottomImage = photoDataArr[i]
-            //
-            //                    applyFilter(&bottomImage, filter: filter!)
-            //
-            //                    saveArr[i] = bottomImage
-            //                }
-            //            } else {
-            //
-            //            }
-        }
-        let regift_photo: Regift_photo = Regift_photo(sourceArray: saveArr, delayTime: delayTime)
-        
-        let output = regift_photo.createGif()
-        //        print("output ",output?.path)
-        
-        do {
-            if fileManager.fileExistsAtPath(gifPath) {
-                //                print("있어요")
-                //                print(gifPath)
-                try fileManager.removeItemAtPath(gifPath)
-                //delete file code
-            }
-            //            print("gifPath ",gifPath)
-            try fileManager.copyItemAtPath((output?.path)!, toPath: gifPath)
-        } catch let error as NSError {
-            print(error.localizedDescription);
-        }
-        
-    }
+    
     
     
     func make2(photoDataArr:[[UIImage]], delayTime:Float, gifPath:String, workFolder:String,subtitle:[[MyView]]?,warterMark : Bool,imageCheck : [Int:Int]?, canvas : UIView?,playType : Int,allText:[MyView]?) {
@@ -506,16 +517,10 @@ class GifMaker {
         let imageRef = photoDataArr[0][0].CGImage
         if let maskRef = UIImage(contentsOfFile: scratchPath)?.CGImage {
             let mask:CGImageRef = CGImageMaskCreate(CGImageGetWidth(maskRef), CGImageGetHeight(maskRef), CGImageGetBitsPerComponent(maskRef), CGImageGetBitsPerPixel(maskRef), CGImageGetBytesPerRow(maskRef), CGImageGetDataProvider(maskRef), nil, true)!
-            
+            print("mask Image : ",mask)
             masked = CGImageCreateWithMask(imageRef, mask)!
             eraserImage = UIImage(CGImage: masked)
         }
-        
-        
-        
-        
-        
-        
         
         if canvas?.subviews.count > 0 {
             for view in  (canvas?.subviews)! {
@@ -542,6 +547,7 @@ class GifMaker {
                         //                        }
                         
                         if fileManager.fileExistsAtPath(scratchPath) {
+                            print("scratchPath exist")
                             let scratch_img = eraserImage
                             scratch_img.drawInRect(areaSize)
                         }
@@ -619,11 +625,6 @@ class GifMaker {
                         UIGraphicsBeginImageContext(size)
                         
                         bottomImage.drawInRect(areaSize)
-                        
-                        //                        if fileManager.fileExistsAtPath(ghostPath) {
-                        //                            let ghost_img = UIImage(contentsOfFile: ghostPath)
-                        //                            ghost_img!.drawInRect(areaSize, blendMode: CGBlendMode.Multiply, alpha: Config.getInstance().ghostAlpha)
-                        //                        }
                         
                         if fileManager.fileExistsAtPath(scratchPath) {
                             let scratch_img = eraserImage
@@ -736,7 +737,7 @@ class GifMaker {
         // set agif encoder x, y position
         QAGIFEncSetPosition(agifencPtr, 0, 0)
         // set agif encoder repeat value
-        QAGIFEncSetRepeat(agifencPtr, -1)
+        QAGIFEncSetRepeat(agifencPtr, 0)
         
         // set transparent
         QAGIFEncSetTransparent(agifencPtr, 0)
@@ -757,12 +758,20 @@ class GifMaker {
         
         let qbite = UnsafeMutablePointer<QBYTE>.alloc( Int(wdt*hgt*4) )
         
+        var testPath = String(format: "%@/test", arguments: [workFolder])
+        do {
+            try fileManager.createDirectoryAtPath(testPath, withIntermediateDirectories: false, attributes: nil)
+        }catch {
+            
+        }
         
         for var i=0;i<saveArr1.count;i++ {
             //arr의 uiimage를 버퍼에 담아 전달
+            testPath = String(format: "%@/test/%02d.jpg", arguments: [workFolder,i])
             let image = saveArr1[i] as UIImage
             let cgImage = image.CGImage
             
+            UIImageJPEGRepresentation(image, 100)?.writeToFile(testPath, atomically: true)
             let width = Int(image.size.width)
             let height = Int(image.size.height)
             let bitsPerComponent = 8 // 2
@@ -784,74 +793,6 @@ class GifMaker {
         
         QAGIFEncFinish(agifencPtr, 1)
     }
-    
-    
-    
-    
-    func make(photoDataArr:[UIImage], delayTime:Float, gifPath:String, workFolder:String,filter:CIFilter?) {
-        let fileManager = NSFileManager.defaultManager()
-        
-        //        print("imga count ",photoDataArr.count)
-        //        print("delay Time : ",delayTime)
-        let ghostPath = String(format: "%@/ghost.jpg", arguments: [workFolder])
-        if fileManager.fileExistsAtPath(ghostPath) {
-            //            print("have ghost")
-            
-            var ghost_img = UIImage(contentsOfFile: ghostPath)
-            
-            if filter != nil {
-                applyFilter(&ghost_img!, filter: filter!)
-            }
-            
-            var saveArr = photoDataArr
-            
-            for var i=0;i<photoDataArr.count;i++ {
-                var bottomImage = photoDataArr[i]
-                let size = bottomImage.size
-                
-                if filter != nil {
-                    applyFilter(&bottomImage, filter: filter!)
-                }
-                
-                UIGraphicsBeginImageContext(size)
-                
-                let areaSize = CGRect(x: 0, y: 0, width: size.width, height: size.height)
-                bottomImage.drawInRect(areaSize)
-                
-                ghost_img!.drawInRect(areaSize, blendMode: CGBlendMode.Multiply, alpha: Config.getInstance().ghostAlpha)
-                
-                let newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()
-                UIGraphicsEndImageContext()
-                
-                saveArr[i] = newImage
-            }
-            
-            let regift_photo: Regift_photo = Regift_photo(sourceArray: saveArr, delayTime: delayTime)
-            
-            let output = regift_photo.createGif()
-            //            print("output ",output?.path)
-            
-            do {
-                try fileManager.copyItemAtPath((output?.path)!, toPath: gifPath)
-            } catch let error as NSError {
-                print(error.localizedDescription);
-            }
-            
-        } else {
-            
-            let regift_photo: Regift_photo = Regift_photo(sourceArray: photoDataArr, delayTime: delayTime)
-            
-            let output = regift_photo.createGif()
-            //            print("output ",output?.path)
-            
-            do {
-                try fileManager.copyItemAtPath((output?.path)!, toPath: gifPath)
-            } catch let error as NSError {
-                print(error.localizedDescription);
-            }
-        }
-    }
-    
     
     func applyFilter(inout image:UIImage, filter:CIFilter) {
         filter.setValue(CIImage(image: image), forKey: kCIInputImageKey)

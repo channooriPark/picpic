@@ -75,11 +75,8 @@ class GifListViewController: UIViewController , RAReorderableLayoutDelegate, RAR
             }
             
         }
-            dispatch_async(dispatch_get_main_queue(), {
-                print("collections count      ",self.collections.count)
-                
-        self.collectionView.reloadData()
-            })
+            self.collectionView.reloadData()
+            print("collections count      ",self.collections.count)
         })
     }
     

@@ -15,6 +15,8 @@ class LaunchViewController: UIViewController {
     @IBOutlet weak var logoWid: NSLayoutConstraint!
     let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var type : String!
+    var pushData : NSURL!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +43,11 @@ class LaunchViewController: UIViewController {
     func moveFirstView() {
         if type == "first" {
             let firstView = self.storyboard?.instantiateViewControllerWithIdentifier("FirstViewController")as! FirstViewController
+            if self.pushData != nil {
+                firstView.pushData = self.pushData
+            }
             self.appdelegate.window?.rootViewController = firstView
+            
         }else if type == "intro" {
             let intro = self.storyboard?.instantiateViewControllerWithIdentifier("IntroMainViewController")as! IntroMainViewController
             self.appdelegate.window?.rootViewController = intro
