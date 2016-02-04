@@ -140,7 +140,10 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     var colorArray : NSArray!
     var colorButton = [UIButton]()
     
-    
+    //elea
+    var imageArr_backup = [[UIImage]]()
+    var imagePathArr_backup = [[String]]()
+    //elea
     
     var lastPoint = CGPoint.zero
     var red: CGFloat = 255.0
@@ -175,6 +178,9 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     var in_type : Int = 0 // 0이면 카메라 1이면 저장리스트
     var addImage : Bool = false
     var addPicker : Bool = false
+    var isScratch : Bool = false
+    var addImageUrlArr : [Int:UIImage] = [Int:UIImage]()
+    var resizeType = 0 //4:3 = 0 / 1:1 = 1 / 16:9 = 2  고화질 저장 할 때 사용하는 type 변수
     
     override func viewDidDisappear(animated: Bool) {
         self.view = nil
@@ -325,9 +331,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         (self.collectionView.collectionViewLayout as! RAReorderableLayout).scrollDirection = .Horizontal
         //self.applyGradation()
         
-        self.ghostPath = String(format: "%@/ghost.jpg", arguments:[workFolder!])
         self.scratchPath = String(format: "%@/scratch.jpg", arguments:[workFolder!])
-        
         let json_path = String(format: "%@/db.json", arguments: [workFolder!])
         
         if !addPicker {
@@ -359,6 +363,10 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                                         }
                                         self.imageArr.append(arr)
                                         self.imagePathArr.append(pathArr)
+                                        //elea
+                                        self.imageArr_backup.append(arr)
+                                        self.imagePathArr_backup.append(pathArr)
+                                        //elea
                                     }
                                 }
                             }
@@ -492,6 +500,10 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                                     }
                                     self.imageArr.append(arr)
                                     self.imagePathArr.append(pathArr)
+                                    //elea
+                                    self.imageArr_backup.append(arr)
+                                    self.imagePathArr_backup.append(pathArr)
+                                    //elea
                                 }
                             }
                         }
@@ -606,6 +618,10 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                         }
                         imageArr.append(arr)
                         imagePathArr.append(pathArr)
+                        //elea
+                        self.imageArr_backup.append(arr)
+                        self.imagePathArr_backup.append(pathArr)
+                        //elea
                         log.log("movNames \(movNames)")
                         log.log("imagePathArr.count \(pathArr.count)")
                     }
@@ -616,21 +632,68 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                 }
                 
                 make_gif()
-                var mask = UIImage(named:"mask.jpg") // 기본 마스크 이미지,
                 
-                mask = mask?.resizeImage(playImageArr[0][0].size)
-                log.log("mask image        \(mask)")
-                // workFolder에 mask.jpg가 저장되어있으면 해당 mask를 로드한다. 필터 처리되었으면 필터처리함.
-                // 필터를 변경시에 front이미지에 필터를 처리하고, mask()를 실행하여 처리..
-                maskImage.frame = gifView.frame
-                log.log("maskImage frame  \(maskImage.frame)")
-                maskImage.image = mask
-                maskImage.backgroundColor = UIColor.blackColor()
-                maskImage.contentMode = .ScaleAspectFill
-                self.canvas.frame = gifView.frame
+                if isScratch {
+                    print(scratchPath!)
+                    let mask = UIImage(contentsOfFile: scratchPath!) // 기본 마스크 이미지,
+                    // workFolder에 mask.jpg가 저장되어있으면 해당 mask를 로드한다. 필터 처리되었으면 필터처리함.
+                    // 필터를 변경시에 front이미지에 필터를 처리하고, mask()를 실행하여 처리..
+                    
+                    maskImage.frame = gifView.frame
+                    log.log("maskImage frame  \(maskImage.frame)")
+                    maskImage.image = mask
+                    maskImage.backgroundColor = UIColor.blackColor()
+                    maskImage.contentMode = .ScaleAspectFill
+                    
+                    frontImage.frame = gifView.frame
+                    //                frontImage.frame.size = CGSize(width: self.image.frame.size.width, height: round(self.image.frame.size.height))
+                    var eraserImage = playImageArr[0][0]
+                    let filter = GPUImageBrightnessFilter()
+                    filter.brightness = 0.01
+                    eraserImage = filter.imageByFilteringImage(eraserImage)
+                    applyFilter(&eraserImage, filterName: self.filterCurrent)
+                    frontImage.image = eraserImage
+                    self.view.addSubview(frontImage)
+                    self.mask()
+                }else {
+                    var mask = UIImage(named:"mask.jpg") // 기본 마스크 이미지,
+                    
+                    mask = mask?.resizeImage(playImageArr[0][0].size)
+                    log.log("mask image        \(mask)")
+                    // workFolder에 mask.jpg가 저장되어있으면 해당 mask를 로드한다. 필터 처리되었으면 필터처리함.
+                    // 필터를 변경시에 front이미지에 필터를 처리하고, mask()를 실행하여 처리..
+                    maskImage.frame = gifView.frame
+                    log.log("maskImage frame  \(maskImage.frame)")
+                    maskImage.image = mask
+                    maskImage.backgroundColor = UIColor.blackColor()
+                    maskImage.contentMode = .ScaleAspectFill
+                    self.canvas.frame = gifView.frame
+                }
             }
         }else {
             print("하하하하하하하하핳하하하하하하핳하하하하하하하하하하하하하하하하하핳하하ㅏㅎ하하하하하하하하하하하핳하하하핳하하핳하하ㅏㅎ하하하하")
+            print(scratchPath!)
+            
+            let mask = UIImage(contentsOfFile: scratchPath!) // 기본 마스크 이미지,
+            // workFolder에 mask.jpg가 저장되어있으면 해당 mask를 로드한다. 필터 처리되었으면 필터처리함.
+            // 필터를 변경시에 front이미지에 필터를 처리하고, mask()를 실행하여 처리..
+            
+            maskImage.frame = gifView.frame
+            log.log("maskImage frame  \(maskImage.frame)")
+            maskImage.image = mask
+            maskImage.backgroundColor = UIColor.blackColor()
+            maskImage.contentMode = .ScaleAspectFill
+            
+            frontImage.frame = gifView.frame
+            //                frontImage.frame.size = CGSize(width: self.image.frame.size.width, height: round(self.image.frame.size.height))
+            var eraserImage = playImageArr[0][0]
+            let filter = GPUImageBrightnessFilter()
+            filter.brightness = 0.01
+            eraserImage = filter.imageByFilteringImage(eraserImage)
+            applyFilter(&eraserImage, filterName: self.filterCurrent)
+            frontImage.image = eraserImage
+            self.view.addSubview(frontImage)
+            self.mask()
             frameIndex = 0
             currentIndex1 = 0
             previewTimer = NSTimer.scheduledTimerWithTimeInterval(interval, target: self, selector: Selector("nextImage"), userInfo: nil, repeats: true)
@@ -833,6 +896,9 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         }
         var path = String(format: "%@/highResolve", arguments: [workFolder!])
         
+        
+        
+        
         let fileManager = NSFileManager.defaultManager()
         
         var imgArr = [UIImage]()
@@ -845,10 +911,14 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         do {
             print(path)
             //highResolve폴더를 만든다
+            if fileManager.fileExistsAtPath(path) {
+                try fileManager.removeItemAtPath(path)
+            }
             try fileManager.createDirectoryAtPath(path, withIntermediateDirectories: false, attributes: nil)
             //workFolder에서 파일 리스트를 가져온다
             let flist = try fileManager.contentsOfDirectoryAtPath(workFolder!)
             print(flist)
+            var index = 0
             for movName in flist {
                 if movName.hasSuffix(".mov") {
                     
@@ -865,7 +935,12 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                     }catch {}
                     
                     //고화질로 resizing
-                    self.gifMaker.movSplitHigh(NSURL(fileURLWithPath: movPath), time_start: 0.0, time_end: 0.0, outputPath: jpgPath)
+                    var imageUrl : UIImage!
+                    if let url = self.addImageUrlArr[index] {
+                        imageUrl = url
+                    }
+                    self.gifMaker.movSplitHigh(NSURL(fileURLWithPath: movPath), time_start: 0.0, time_end: 0.0, outputPath: jpgPath,imageUrl:imageUrl,resizeType: self.resizeType)
+                    index++
                 }
             }
             
@@ -886,9 +961,11 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                         self.log.log("imgPath             \(_imgPath)")
                         imgArr.append(UIImage(contentsOfFile: _imgPath)!)
                     }
+                    tempArr.append(imgArr)
                 }
+                
             }
-            tempArr.append(imgArr)
+            
         }catch {
             print(error)
         }
@@ -899,7 +976,6 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             for var i=0; i<tempArr.count; i++ {
                 for var j=0; j<tempArr[i].count; j++ {
                     self.applyFilter(&tempArr[i][j], filterName: self.filterCurrent)
-                    
                 }
                 
                 dispatch_async(dispatch_get_main_queue(), {
@@ -1357,8 +1433,6 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                     
                     movPath = String(format:"%@.mov", arguments:[movName])
                     try fileManager.removeItemAtPath(movPath) // mov 파일 삭제
-                    
-                    
                     imageArr.removeAll()
                     imagePathArr.removeAll()
                     let fileManager = NSFileManager.defaultManager()
@@ -1383,6 +1457,10 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                             }
                             imageArr.append(arr)
                             imagePathArr.append(pathArr)
+                            //elea
+                            self.imageArr_backup.append(arr)
+                            self.imagePathArr_backup.append(pathArr)
+                            //elea
                             make_gif()
                         }
                     }
@@ -1463,6 +1541,10 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                             }
                             imageArr.append(arr)
                             imagePathArr.append(pathArr)
+                            //elea
+                            self.imageArr_backup.append(arr)
+                            self.imagePathArr_backup.append(pathArr)
+                            //elea
                             make_gif()
                         }
                     }
@@ -1519,38 +1601,6 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         currentIndex1 = 0
     }
     
-    //    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-    //        if buttonIndex == alertView.cancelButtonIndex {
-    //            collectionType = 0
-    //            selectedCellIndex = -1
-    //            collections = []
-    //            frontImage.image = nil
-    //            tempFront = nil
-    //
-    //            self.collectionView.hidden = false
-    //            self.editplus.hidden = true
-    //            self.playSpeed.hidden = true
-    //            self.basicButtonView.hidden = false
-    //            filterState = true
-    //
-    //            self.btnFilters.setImage(UIImage(named: "icon_control_filter_c"), forState: .Normal)
-    //            self.btnBasic.setImage(UIImage(named: "icon_control_control"), forState: .Normal)
-    //
-    //
-    //            for filterName in filterButtonName {
-    //                var image = playImageArr[0][0]
-    //                if filterName == "None"  {
-    //                }else {
-    //                    applyFilter(&image, filterName: filterName)
-    //                }
-    //                collections.append(image)
-    //        }
-    //    }
-    //
-    //        self.collectionView.reloadData()
-    //        frameIndex = 0
-    //        currentIndex1 = 0
-    //    }
     
     
     //프레임 복사
@@ -1618,6 +1668,10 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                         collections.append(UIImage(contentsOfFile: imagePathArr[i][0])!)
                         imageArr.append(imgarr)
                         imagePathArr.append(patharr)
+                        //elea
+                        self.imageArr_backup.append(imgarr)
+                        self.imagePathArr_backup.append(patharr)
+                        //elea
                         aaa++
                     }
                     make_gif()
@@ -1661,6 +1715,10 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                     imageArr.append(imgarr)
                     imagePathArr.append(patharr)
                     collections.append(UIImage(contentsOfFile: imagePathArr[selectedCellIndex-1][0])!)
+                    //elea
+                    self.imageArr_backup.append(imgarr)
+                    self.imagePathArr_backup.append(patharr)
+                    //elea
                     make_gif()
                     collectionView.reloadData()
                     addImage = true
@@ -1702,7 +1760,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         
         var imgArr = [UIImage]()
         var tempArr = [[UIImage]]()
-//        tempArr = playImageArr
+        tempArr = playImageArr
         
         let progress = 1.0 / Float(tempArr.count)
         
@@ -1710,20 +1768,20 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             
             
             // 촬영구간 편집 jis
-            for var i=0; i<self.playImageArr.count; i++ {
-                
-                let len = self.playImageArr[i].count
-                
-                print("Range slider value changed: (\(i) \(self.lowerArr[i+1]) \(self.upperArr[i+1]))")
-                
-                let start = Int(Double(len) * self.lowerArr[i+1])
-                let end = Int(Double(len) * self.upperArr[i+1])
-                
-                tempArr.append([UIImage]())
-                for var j=start; j<end; j++ {
-                    tempArr[i].append(self.playImageArr[i][j])
-                }
-            }
+//            for var i=0; i<self.playImageArr.count; i++ {
+//                
+//                let len = self.playImageArr[i].count
+//                
+//                print("Range slider value changed: (\(i) \(self.lowerArr[i+1]) \(self.upperArr[i+1]))")
+//                
+//                let start = Int(Double(len) * self.lowerArr[i+1])
+//                let end = Int(Double(len) * self.upperArr[i+1])
+//                
+//                tempArr.append([UIImage]())
+//                for var j=start; j<end; j++ {
+//                    tempArr[i].append(self.playImageArr[i][j])
+//                }
+//            }
             
             
             for var i=0; i<tempArr.count; i++ {
@@ -1830,7 +1888,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         
     }
     
-    
+    var tempFilterName : String!
     @IBAction func actImageAdd(sender: UIButton) {
         if(imagePicker == nil) {
             imagePicker = UIImagePickerController()
@@ -1838,6 +1896,11 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         self.addPicker = true
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.SavedPhotosAlbum){
             //            //print("Galeria Imagen")
+            print("filter Current : ",self.filterCurrent)
+            if frontImage.image != nil {
+                print(frontImage.image)
+            }
+            tempFilterName = self.filterCurrent
             previewTimer?.invalidate()
             previewTimer = nil
             imagePicker!.delegate = self
@@ -1907,9 +1970,43 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     
     // 촬영길이 편집 슬라이더
     func rangeSliderValueChanged(rangeSlider: RangeSlider) {
+//        self.lowerArr[selectedCellIndex] = rangeSlider.lowerValue
+//        self.upperArr[selectedCellIndex] = rangeSlider.upperValue
+//        print("Range slider value changed: (\(rangeSlider.lowerValue) \(rangeSlider.upperValue))")
+        
         self.lowerArr[selectedCellIndex] = rangeSlider.lowerValue
         self.upperArr[selectedCellIndex] = rangeSlider.upperValue
         print("Range slider value changed: (\(rangeSlider.lowerValue) \(rangeSlider.upperValue))")
+        
+        let lowVal = rangeSlider.lowerValue * 100;
+        let uprVal = rangeSlider.upperValue * 100;
+        
+        //elea
+        
+        let allcount:Int = imageArr_backup[selectedCellIndex-1].count
+        let startPos = allcount * (Int)(lowVal) / 100
+        let endPos = allcount * (Int)(uprVal) / 100
+        
+        var imgarr = [UIImage]()
+        var patharr = [String]()
+        
+        
+        for var j=0; j<imageArr_backup[selectedCellIndex-1].count; j++ {
+            
+            if(j < startPos || j > endPos) {
+                continue
+            }
+            
+            imgarr.append(imageArr_backup[selectedCellIndex-1][j])
+            patharr.append(imagePathArr_backup[selectedCellIndex-1][j])
+        }
+        
+        imageArr[selectedCellIndex-1] = imgarr;
+        imagePathArr[selectedCellIndex-1]  = patharr;
+        
+        make_gif()
+        
+        collectionView.reloadData()
     }
     
     
@@ -2101,6 +2198,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             
             if eraserD {
                 frontImage.image = nil
+                isScratch = false
             }else {
                 if historyImg.count <= 0 {
                     frontImage.image = nil
@@ -2112,12 +2210,13 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                     let fileManager = NSFileManager.defaultManager()
                     if(fileManager.fileExistsAtPath(scratchPath!)) {
                         try fileManager.removeItemAtPath(scratchPath!)
+                        
                     }
-                    //                    UIImagePNGRepresentation(frontImage.image!)?.writeToFile(scratchPath!, atomically: true)
                     UIImageJPEGRepresentation(maskImage.image!, 100)!.writeToFile(scratchPath!, atomically: true)
+                    isScratch = true
                     print("ddd")
                 } catch let error as NSError {
-                    //                //print(error.localizedDescription);
+                    
                 }
             }
         }
@@ -2238,6 +2337,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         insetAllFram()
         
         if filterCurrent != "None" {
+            print("filter not None   ",self.filterCurrent)
             playImageArr = [[UIImage]]()
             for var i=0; i<frameimagepathArr.count; i++ {
                 playImageArr.append([])
@@ -2250,6 +2350,30 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                 
             }
         }
+        
+        
+        if tempFilterName != nil {
+            print("tempFilterName : ",self.tempFilterName)
+            playImageArr = [[UIImage]]()
+            for var i=0; i<frameimagepathArr.count; i++ {
+                playImageArr.append([])
+                for var j=0; j<frameimagepathArr[i].count; j++ {
+                    var image:UIImage? = UIImage(contentsOfFile: frameimagepathArr[i][j])
+                    applyFilter(&image!, filterName: self.tempFilterName)
+                    playImageArr[i].append(image!)
+                    image = nil
+                }
+                
+            }
+            self.filterCurrent = tempFilterName
+            tempFilterName = nil
+        }
+        
+        if frontImage.image != nil {
+            print(frontImage.image)
+        }
+        
+        
         
         if( playType == 1) {
             imagePaths = imagePaths.reverse()
@@ -2266,6 +2390,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         previewTimer = nil
         previewTimer = NSTimer.scheduledTimerWithTimeInterval(interval, target: self, selector: Selector("nextImage"), userInfo: nil, repeats: true)
         if playImageArr[0][0].size.width > playImageArr[0][0].size.height {
+            self.resizeType = 2
             let nWidth = UIScreen.mainScreen().bounds.width;
             let nHeight = nWidth * (imgSize.height) / (imgSize.width)
             let posY = Config.getInstance().wid/8*2-10
@@ -2273,6 +2398,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             self.imageHei.constant = nHeight
             self.imagePosY.constant = posY
         }else if playImageArr[0][0].size.width == playImageArr[0][0].size.height {
+            self.resizeType = 1
             self.image.frame.origin.y = (UIScreen.mainScreen().bounds.width/8)*2
             self.imagePosY.constant = (UIScreen.mainScreen().bounds.width/8)*2
             self.gifView.frame.origin.y = (UIScreen.mainScreen().bounds.width/8)*2
@@ -2549,6 +2675,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             
             if filter != nil {
                 self.filterCurrent = filter
+                print("filterCurrent  ",self.filterCurrent)
             }else {
                 self.filterCurrent = "None"
             }
@@ -2941,6 +3068,8 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             //print("연사 관련 전처리")
             // 이미지 추출 및 편집 뷰 컨트롤러로 이동
             //mov 파일과 폴더 생성 20151218 박찬누리
+            self.addPicker = false
+            print("filterCurrent   :  ",self.tempFilterName)
             if var pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
                 let fileManager = NSFileManager.defaultManager()
                 do {
@@ -3003,6 +3132,8 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                         imagePaths.insert(fileName, atIndex: self.selectedCellIndex)
                         collections.insert(pickedImage, atIndex: self.selectedCellIndex)
                         cellArr.insert(1, atIndex: self.selectedCellIndex)
+                        self.addImageUrlArr[self.selectedCellIndex-1] = info[UIImagePickerControllerOriginalImage] as? UIImage
+                        print("addImageArr URL    ::   ",self.addImageUrlArr[self.selectedCellIndex-1])
                     } else {
                         var pickedImageArr = [UIImage]()
                         var pickedImagePathArr = [String]()
@@ -3013,6 +3144,8 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                         imagePaths.append(fileName)
                         collections.append(pickedImage)
                         cellArr.append(0)
+                        self.addImageUrlArr[playImageArr.count-1] = info[UIImagePickerControllerOriginalImage] as? UIImage
+                        print("addImageArr URL    ::   ",self.addImageUrlArr[playImageArr.count-1])
                     }
                     self.collectionView.reloadData()
                     self.edit()
@@ -3026,6 +3159,10 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        print("imagepicker cancel ")
+        if frontImage.image != nil {
+            print(frontImage.image)
+        }
         self.dismissViewControllerAnimated(false, completion: nil)
     }
     

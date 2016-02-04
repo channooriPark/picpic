@@ -411,14 +411,13 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate{
         
         if !self.appdelegate.myfeed.view.hidden {
             print("myfeed")
-            self.navigationController?.navigationBarHidden = true
             self.appdelegate.testNavi.navigationBarHidden = true
         }
         
         self.appdelegate.tabbar.view.hidden = false
         self.postImage.enterBackground()
         self.postImage.gifRemoveObserver()
-        self.navigationController?.popViewControllerAnimated(true)
+        self.appdelegate.testNavi?.popViewControllerAnimated(true)
         UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
     }
     

@@ -81,22 +81,22 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        facebookLabel.text = self.appdelegate.ment["facebook"].stringValue
+        facebookLabel.text = self.appdelegate.ment["facebook"].stringValue
         twitterLabel.text = self.appdelegate.ment["twitter"].stringValue
         tumblrLabel.text = self.appdelegate.ment["tumblr"].stringValue
         pinterestLabel.text = self.appdelegate.ment["pinterest"].stringValue
         
         
         
-//        if self.appdelegate.standardUserDefaults.valueForKey("Facebook_Setting") == nil
-//            || self.appdelegate.standardUserDefaults.valueForKey("Facebook_Setting")as! String == "N" {
-//                self.facebookImage.image = UIImage(named: "icon_popup3_facebook")
-//                self.facebookState = false
-//        }
-//        else {
-//            self.facebookImage.image = UIImage(named: "icon_popup3_facebook_c")
-//            self.facebookState = true
-//        }
+        if self.appdelegate.standardUserDefaults.valueForKey("Facebook_Setting") == nil
+            || self.appdelegate.standardUserDefaults.valueForKey("Facebook_Setting")as! String == "N" {
+                self.facebookImage.image = UIImage(named: "icon_popup3_facebook")
+                self.facebookState = false
+        }
+        else {
+            self.facebookImage.image = UIImage(named: "icon_popup3_facebook_c")
+            self.facebookState = true
+        }
         
         if self.appdelegate.standardUserDefaults.valueForKey("Twitter_Setting") == nil
             || self.appdelegate.standardUserDefaults.valueForKey("Twitter_Setting")as! String == "N" {

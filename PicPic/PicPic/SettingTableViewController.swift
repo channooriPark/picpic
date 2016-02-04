@@ -73,13 +73,28 @@ class SettingTableViewController: UITableViewController , UIAlertViewDelegate{
     
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+//        if indexPath.section == 0 {
+//            tableView.cellForRowAtIndexPath(indexPath)?.selected = false
+//        }else if indexPath.section == 1 {
+//            tableView.cellForRowAtIndexPath(indexPath)?.selected = false
+//        }else
         if indexPath.section == 2 {
+            
             if indexPath.row == 2 {
                 self.performSegueWithIdentifier("logout", sender: self)
             }
         }
         
+        tableView.cellForRowAtIndexPath(indexPath)?.selected = false
+        
     }
+    
+    
+//    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+//        super.tableView(tableView, didDeselectRowAtIndexPath: indexPath)
+//    }
+    
+    
     
     @IBAction func accountSetting(sender: AnyObject) {
         var message : JSON = ["email":self.appdelegate.email,"close_yn":""]

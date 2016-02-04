@@ -204,7 +204,7 @@ class GifMaker {
     }
     
     
-    func movSplitHigh(url:NSURL, time_start:Double, var time_end:Double, outputPath path:String) {
+    func movSplitHigh(url:NSURL, time_start:Double, var time_end:Double, outputPath path:String,imageUrl:UIImage?,resizeType:Int) {
         
         let fileManager = NSFileManager.defaultManager()
         do {
@@ -253,37 +253,20 @@ class GifMaker {
         imageGenerator.requestedTimeToleranceAfter = tolerance
         
         var indx = 0;
-        for time in timePoints {
+        print("timePoints : ",timePoints)
+        if timePoints.count == 0 {
+            print("timePoints count Zero")
+            
+        }
+        if imageUrl != nil {
+            print("imageUrl not nil")
             do {
                 let fileName = String(format: "%03d.jpg",Int(indx))
                 let imagePath = "\(path)/\(fileName)"
-                let imageRef = try imageGenerator.copyCGImageAtTime(time, actualTime: nil)
-                var img = UIImage(CGImage: imageRef)
+                var img = imageUrl!
                 self.log.log("log.log img size\(img.size)")
-                if(img.size.width > img.size.height) { //가로로 자르기
-                    let imgRatio = Float((img.size.width) / (img.size.height))
-                    let ratio = Float(16.0/9.0)
-                    self.log.log("imgRatio  :  \(imgRatio) +- ratio : \(ratio)")
-                    if imgRatio == ratio {
-                        //16:9기준
-                        //                            img = img.cropToBounds(720, height: 720)
-                        img = img.resizeImage(CGSize(width: 1280, height: 720))
-                    } else { // 4:3기준
-                        var width = Double(img.size.width)
-                        if(img.size.height<img.size.width) {
-                            width = Double(img.size.height)
-                        }
-                        let height = width*3/4
-                        
-                        print("img 가로기준 ",img.size.width,"x",img.size.height)
-                        print(width,"x",height)
-                        
-                        //                            img = img.cropToBounds(width, height: height)
-                        if( Double(Config.getInstance().wid) < width) {
-                            img = img.resizeImage(CGSize(width: 1280, height: 960))
-                        }
-                    }
-                } else { // 세로로 자르기
+                if resizeType == 0 {
+                    //3:4
                     var width = Double(img.size.width)
                     if(img.size.height<img.size.width) {
                         width = Double(img.size.height)
@@ -294,13 +277,149 @@ class GifMaker {
                     if( Double(Config.getInstance().wid) < width) {
                         img = img.resizeImage(CGSize(width: 960, height: 1280))
                     }
+                }else if resizeType == 1 {
+                    //1:1
+                    var width = Double(img.size.width)
+                    if(img.size.height<img.size.width) {
+                        width = Double(img.size.height)
+                    }
+                    
+                    img = img.cropToBounds(width, height: width)
+                    //                    img = img.cropToBounds(480, height: 480)
+                    
+                    if( Double(Config.getInstance().wid) < width) {
+                        img = img.resizeImage(CGSize(width: 960, height: 960))
+                    }
+                }else if resizeType == 2 {
+                    //16:9
+                    img = img.resizeImage(CGSize(width: 1280, height: 720))
                 }
+                
+                
+                
+//                if(img.size.width > img.size.height) { //가로로 자르기
+//                    let imgRatio = Float((img.size.width) / (img.size.height))
+//                    let ratio = Float(16.0/9.0)
+//                    self.log.log("imgRatio  :  \(imgRatio) +- ratio : \(ratio)")
+//                    if imgRatio == ratio {
+//                        //16:9기준
+//                        //                            img = img.cropToBounds(720, height: 720)
+//                        img = img.resizeImage(CGSize(width: 1280, height: 720))
+//                    } else { // 4:3기준
+//                        var width = Double(img.size.width)
+//                        if(img.size.height<img.size.width) {
+//                            width = Double(img.size.height)
+//                        }
+//                        let height = width*3/4
+//                        
+//                        print("img 가로기준 ",img.size.width,"x",img.size.height)
+//                        print(width,"x",height)
+//                        
+//                        //                            img = img.cropToBounds(width, height: height)
+//                        if( Double(Config.getInstance().wid) < width) {
+//                            img = img.resizeImage(CGSize(width: 1280, height: 960))
+//                        }
+//                    }
+//                } else { // 세로로 자르기
+//                    var width = Double(img.size.width)
+//                    if(img.size.height<img.size.width) {
+//                        width = Double(img.size.height)
+//                    }
+//                    let height = width*4/3
+//                    
+//                    img = img.cropToBounds(width, height: height)
+//                    if( Double(Config.getInstance().wid) < width) {
+//                        img = img.resizeImage(CGSize(width: 960, height: 1280))
+//                    }
+//                }
                 
                 UIImageJPEGRepresentation(img, 100)!.writeToFile(imagePath, atomically: true)
             } catch let error as NSError {
                 print("An error occurred: \(error)")
             }
-            indx++
+        }else {
+            for time in timePoints {
+                do {
+                    let fileName = String(format: "%03d.jpg",Int(indx))
+                    let imagePath = "\(path)/\(fileName)"
+                    let imageRef = try imageGenerator.copyCGImageAtTime(time, actualTime: nil)
+                    var img = UIImage(CGImage: imageRef)
+                    self.log.log("log.log img size\(img.size)")
+                    if resizeType == 0 {
+                        //3:4
+                        var width = Double(img.size.width)
+                        if(img.size.height<img.size.width) {
+                            width = Double(img.size.height)
+                        }
+                        let height = width*4/3
+                        
+                        img = img.cropToBounds(width, height: height)
+                        if( Double(Config.getInstance().wid) < width) {
+                            img = img.resizeImage(CGSize(width: 960, height: 1280))
+                        }
+                    }else if resizeType == 1 {
+                        //1:1
+                        var width = Double(img.size.width)
+                        if(img.size.height<img.size.width) {
+                            width = Double(img.size.height)
+                        }
+                        
+                        img = img.cropToBounds(width, height: width)
+                        //                    img = img.cropToBounds(480, height: 480)
+                        
+                        if( Double(Config.getInstance().wid) < width) {
+                            img = img.resizeImage(CGSize(width: 960, height: 960))
+                        }
+                    }else if resizeType == 2 {
+                        //16:9
+                        img = img.resizeImage(CGSize(width: 1280, height: 720))
+                    }
+                    
+                    
+                    
+                    
+//                    if(img.size.width > img.size.height) { //가로로 자르기
+//                        let imgRatio = Float((img.size.width) / (img.size.height))
+//                        let ratio = Float(16.0/9.0)
+//                        self.log.log("imgRatio  :  \(imgRatio) +- ratio : \(ratio)")
+//                        if imgRatio == ratio {
+//                            //16:9기준
+//                            //                            img = img.cropToBounds(720, height: 720)
+//                            img = img.resizeImage(CGSize(width: 1280, height: 720))
+//                        } else { // 4:3기준
+//                            var width = Double(img.size.width)
+//                            if(img.size.height<img.size.width) {
+//                                width = Double(img.size.height)
+//                            }
+//                            let height = width*3/4
+//                            
+//                            print("img 가로기준 ",img.size.width,"x",img.size.height)
+//                            print(width,"x",height)
+//                            
+//                            //                            img = img.cropToBounds(width, height: height)
+//                            if( Double(Config.getInstance().wid) < width) {
+//                                img = img.resizeImage(CGSize(width: 1280, height: 960))
+//                            }
+//                        }
+//                    } else { // 세로로 자르기
+//                        var width = Double(img.size.width)
+//                        if(img.size.height<img.size.width) {
+//                            width = Double(img.size.height)
+//                        }
+//                        let height = width*4/3
+//                        
+//                        img = img.cropToBounds(width, height: height)
+//                        if( Double(Config.getInstance().wid) < width) {
+//                            img = img.resizeImage(CGSize(width: 960, height: 1280))
+//                        }
+//                    }
+                    
+                    UIImageJPEGRepresentation(img, 100)!.writeToFile(imagePath, atomically: true)
+                } catch let error as NSError {
+                    print("An error occurred: \(error)")
+                }
+                indx++
+            }
         }
     }
     
