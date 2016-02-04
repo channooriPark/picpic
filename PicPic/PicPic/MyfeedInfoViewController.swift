@@ -24,6 +24,10 @@ class MyfeedInfoViewController: UIViewController ,UITextFieldDelegate,UIAlertVie
     @IBOutlet weak var myAccount: UILabel!
     @IBOutlet weak var complete: UIBarButtonItem!
     
+    override func viewDidDisappear(animated: Bool) {
+        self.navigationController?.navigationBarHidden = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         complete.title = self.appdelegate.ment["complete1"].stringValue

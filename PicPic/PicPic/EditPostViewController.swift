@@ -181,18 +181,18 @@ class EditPostViewController: UIViewController, UIScrollViewDelegate, UITextView
 //        let readData = connection.connection()
         self.appdelegate.doIt(232, message: message) { (readData) -> () in
             if readData["msg"].string! == "success" {
-                if self.appdelegate.myfeed.wkwebView != nil {
-                    self.appdelegate.myfeed.fire()
-                }
-                if self.appdelegate.second.wkwebView != nil {
-                    if self.appdelegate.second.webState == "follow" {
-                        self.appdelegate.second.following()
-                    }else if self.appdelegate.second.webState == "all" {
-                        self.appdelegate.second.all()
-                    }else if self.appdelegate.second.webState == "category" {
-                    }
-                    
-                }
+//                if self.appdelegate.myfeed.wkwebView != nil {
+//                    self.appdelegate.myfeed.fire()
+//                }
+//                if self.appdelegate.second.wkwebView != nil {
+//                    if self.appdelegate.second.webState == "follow" {
+//                        self.appdelegate.second.following()
+//                    }else if self.appdelegate.second.webState == "all" {
+//                        self.appdelegate.second.all()
+//                    }else if self.appdelegate.second.webState == "category" {
+//                    }
+//                    
+//                }
                 
                 
                 var count = self.appdelegate.testNavi.viewControllers.count-2

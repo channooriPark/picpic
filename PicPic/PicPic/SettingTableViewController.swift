@@ -29,6 +29,9 @@ class SettingTableViewController: UITableViewController , UIAlertViewDelegate{
     
     @IBOutlet weak var alarmSwitch: UISwitch!
     @IBOutlet weak var alarmLabel: UILabel!
+    
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.topItem?.title = self.appdelegate.ment["setting"].stringValue

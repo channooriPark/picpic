@@ -564,17 +564,16 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
                         self.appdelegate.doIt(232, message: message, callback: { (readData) -> () in
                             if readData["msg"].string! == "success" {
                                 self.post_id = readData["post_id"].stringValue
-                                if self.appdelegate.myfeed.wkwebView != nil {
-                                    self.appdelegate.myfeed.fire()
-                                }
-                                if self.appdelegate.second.wkwebView != nil {
-                                    if self.appdelegate.second.webState == "follow" {
-                                        self.appdelegate.second.following()
-                                    }else if self.appdelegate.second.webState == "all" {
-                                        self.appdelegate.second.all()
-                                    }else if self.appdelegate.second.webState == "category" {
-                                    }
-                                }
+                                //self.appdelegate.myfeed.fire()
+
+//                                if self.appdelegate.second.wkwebView != nil {
+//                                    if self.appdelegate.second.webState == "follow" {
+//                                        self.appdelegate.second.following()
+//                                    }else if self.appdelegate.second.webState == "all" {
+//                                        self.appdelegate.second.all()
+//                                    }else if self.appdelegate.second.webState == "category" {
+//                                    }
+//                                }
                                 
                                 self.url = self.filename
 //                                self.facebook()

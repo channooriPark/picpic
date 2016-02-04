@@ -18,7 +18,6 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
     var tagData: Array<[String: String]>  = []
     var gifData: [String : UIImage] = [ : ]{
         didSet{
-            print("\(self.tagData.count), \(self.gifData.count),, \(self.friendData.count), \(self.imageData.count) : \(self.dataAllReceived())")
             if self.dataAllReceived()
             {
                 dispatch_async(dispatch_get_main_queue(), {
@@ -31,7 +30,6 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
     var friendData: Array<[String: String]> = []
     var imageData: [String : UIImage] = [ : ]{
         didSet{
-            print("\(self.tagData.count), \(self.gifData.count),, \(self.friendData.count), \(self.imageData.count) : \(self.dataAllReceived())")
             if self.dataAllReceived()
             {
                 dispatch_async(dispatch_get_main_queue(), {
@@ -142,17 +140,70 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
     
     func fire()
     {
-        
+        self.refresh()
     }
     
     func dataAllReceived() -> Bool
     {
+        var gArray = [Bool](count: self.tagData.count, repeatedValue: false)
+        for key in self.gifData.keys
+        {
+            gArray[Int(key)!] = true
+        }
+        print("g ", terminator: "")
+        for (index, received) in gArray.enumerate()
+        {
+            if !received
+            {
+                print("\(index) ", terminator:"")
+            }
+        }
+        print("")
+        
+        var fArray = [Bool](count: self.friendData.count, repeatedValue: false)
+        for key in self.imageData.keys
+        {
+            fArray[Int(key)!] = true
+        }
+        print("f ", terminator: "")
+        for (index, received) in fArray.enumerate()
+        {
+            if !received
+            {
+                print("\(index) ", terminator: "")
+            }
+        }
+        print("")
         return self.tagData.count == self.gifData.count && self.tagData.count != 0 && self.imageData.count == 12
     }
     
     
     func followClicked(indexPath: NSIndexPath) {
-        print("indexPath   :   ",indexPath)
+        let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        if self.friendData[indexPath.item]["follow_yn"] == "N"
+        {
+           self.friendData[indexPath.item]["follow_yn"] = "Y"
+        }
+        else
+        {
+            self.friendData[indexPath.item]["follow_yn"] = "N"
+        }
+
+        let type : String!
+        let email = self.friendData[indexPath.item]["email"]! as String
+        
+        if appdelegate.userData["register_form"].string == "10001" {
+            type = "N"
+        }else if appdelegate.userData["register_form"].string == "10002" {
+            type = "F"
+        }else if appdelegate.userData["register_form"].string == "10003" {
+            type = "G"
+        }else {
+            type = "R"
+        }
+        
+        let message : JSON = ["myId":appdelegate.email,"email":[["email" : email]],"type":type]
+        appdelegate.doIt(402, message: message, callback: {(json) in})
     }
     
     override func didReceiveMemoryWarning() {
@@ -231,9 +282,9 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
             
             if indexPath.section == 3 {index += 6}
 
+            cell.profileImageView.image = self.imageData["\(index)"]
             cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.width / 2
             cell.profileImageView.layer.masksToBounds = true
-            cell.profileImageView.image = self.imageData["\(index)"]
             
             cell.nameLabel.text = self.friendData[index]["id"]!
             cell.nameLabel.sizeToFit()
@@ -274,7 +325,6 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
             
             let vc = TagNativeViewController()
             vc.tagName = self.tagData[index]["tag_name"]!
-            vc.tagId = self.tagData[index]["tag_id"]!
 
             self.navigationController?.pushViewController(vc, animated: true)
         }
@@ -287,6 +337,7 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
             vc.userEmail = self.friendData[index]["email"]!
             
             self.navigationController?.pushViewController(vc, animated: true)
+            
         }
         
     }

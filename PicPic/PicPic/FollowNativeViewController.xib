@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FollowNativeViewController" customModule="PicPic" customModuleProvider="target">
+            <connections>
+                <outlet property="tableView" destination="8uD-TE-UZm" id="Wq6-RT-YkG"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8uD-TE-UZm">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="1Se-nf-owE"/>
+                        <outlet property="delegate" destination="-1" id="yJk-G9-G8b"/>
+                    </connections>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="8uD-TE-UZm" secondAttribute="trailing" id="DIs-sI-3AS"/>
+                <constraint firstAttribute="bottom" secondItem="8uD-TE-UZm" secondAttribute="bottom" id="F6E-uS-HNr"/>
+                <constraint firstItem="8uD-TE-UZm" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="QbL-6k-qHa"/>
+                <constraint firstItem="8uD-TE-UZm" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="eYD-9b-b29"/>
+            </constraints>
+            <point key="canvasLocation" x="920" y="552"/>
+        </view>
+    </objects>
+</document>

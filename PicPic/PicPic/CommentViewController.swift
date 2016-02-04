@@ -148,27 +148,27 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
     }
     
     func back(sender:UIBarButtonItem){
-        var count = (self.navigationController?.viewControllers.count)!-2
-        if count < 0 {
-            count = 0
-        }
-        let a = self.navigationController?.viewControllers[count] as! SubViewController
-        
-        
-        if a.type == "tag" || a.type == "post" || a.type == "user" || a.type == "search"{
-            self.navigationController?.navigationBarHidden = true
-        }else {
-            self.navigationController?.navigationBarHidden = false
-        }
-        if a.type == "post" {
-            let post = self.navigationController?.viewControllers[count]as! PostPageViewController
-            post.postImage.enterForeground()
-            post.setCommentCount(self.dataArray.count)
-            
-        }
+//        var count = (self.navigationController?.viewControllers.count)!-2
+//        if count < 0 {
+//            count = 0
+//        }
+//        let a = self.navigationController?.viewControllers[count] as! SubViewController
+//        
+//        
+//        if a.type == "tag" || a.type == "post" || a.type == "user" || a.type == "search"{
+//            self.navigationController?.navigationBarHidden = true
+//        }else {
+//            self.navigationController?.navigationBarHidden = false
+//        }
+//        if a.type == "post" {
+//            let post = self.navigationController?.viewControllers[count]as! PostPageViewController
+//            post.postImage.enterForeground()
+//            post.setCommentCount(self.dataArray.count)
+//            
+//        }
         self.navigationController?.popViewControllerAnimated(true)
-        self.appdelegate.tabbar.view.hidden = false
-        self.appdelegate.main.view.hidden = false
+//        self.appdelegate.tabbar.view.hidden = false
+//        self.appdelegate.main.view.hidden = false
     }
     
     
@@ -680,13 +680,13 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
                 if readData["msg"].string! == "success" {
                     self.deleteRow(index)
                     if self.appdelegate.second.view.hidden == false {
-                        if self.appdelegate.second.webState == "follow" {
-                            self.appdelegate.second.following()
-                        }else if self.appdelegate.second.webState == "all" {
-                            self.appdelegate.second.all()
-                        }else if self.appdelegate.second.webState == "category" {
-                            self.appdelegate.second.category()
-                        }
+//                        if self.appdelegate.second.webState == "follow" {
+//                            self.appdelegate.second.following()
+//                        }else if self.appdelegate.second.webState == "all" {
+//                            self.appdelegate.second.all()
+//                        }else if self.appdelegate.second.webState == "category" {
+//                            self.appdelegate.second.category()
+//                        }
                     }
                     
                 }

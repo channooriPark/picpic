@@ -40,6 +40,18 @@ class ContentViewController: SubViewController {
             appdelegate.myfeed.view.hidden = true
             appdelegate.tabbar.click4(appdelegate.tabbar.button4)
         }
+
+        self.view.addSubview(appdelegate.tabbar.view)
+        self.view.addSubview(appdelegate.main.view)
+        self.view.addSubview(appdelegate.second.view)
+        self.view.addSubview(appdelegate.alram.view)
+        self.view.addSubview(appdelegate.myfeed.view)
+        
+        appdelegate.main.view.frame = visibleFrame
+        appdelegate.second.view.frame = visibleFrame
+        appdelegate.myfeed.view.frame = CGRectMake(0, 0, self.view.frame.width, appdelegate.tabbar.view.frame.origin.y)
+        
+        
         
 
         self.view.addSubview(appdelegate.tabbar.view)
@@ -67,12 +79,12 @@ class ContentViewController: SubViewController {
 //            appdelegate.main.wkwebView.scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
 //            appdelegate.main.refresh()
         }else if appdelegate.second.view.hidden == false {
-            appdelegate.second.wkwebView.scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
-            if appdelegate.second.followT {
-                appdelegate.second.following()
-            }else if appdelegate.second.allT {
-                appdelegate.second.all()
-            }
+//            appdelegate.second.wkwebView.scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+//            if appdelegate.second.followT {
+//                appdelegate.second.following()
+//            }else if appdelegate.second.allT {
+//                appdelegate.second.all()
+//            }
         }
     }
     

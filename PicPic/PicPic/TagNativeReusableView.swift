@@ -36,6 +36,8 @@ class TagNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
         super.awakeFromNib()
         // Initialization code
         searchBar.enablesReturnKeyAutomatically = false
+        self.bringSubviewToFront(self.leftButton)
+        self.bringSubviewToFront(self.rightButton)
 
     }
     
@@ -69,13 +71,12 @@ class TagNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
     
     @IBAction func followerListTouched() {
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        let follower = appdelegate.storyboard.instantiateViewControllerWithIdentifier("FollowerViewController")as! FollowerViewController
-        follower.email = appdelegate.email
-        follower.tagId = tagId as String
-        follower.followType = "tag"
+        let fl = FollowNativeViewController()
+        fl.type = .TagFollower
+        fl.email = appdelegate.email
+        fl.tagId = self.tagId
         
-        appdelegate.testNavi.hidesBottomBarWhenPushed = true
-        appdelegate.testNavi.pushViewController(follower, animated: true)
+        self.parent.navigationController?.pushViewController(fl, animated: true)
     }
 
     @IBAction func leftButtonTouched() {
