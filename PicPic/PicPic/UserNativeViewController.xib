@@ -38,6 +38,16 @@
                         <action selector="backButtonTouched" destination="-1" eventType="touchUpInside" id="r4W-lj-41V"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JSK-ji-QqK">
+                    <rect key="frame" x="279" y="42" width="34" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="34" id="8rl-RL-wcy"/>
+                    </constraints>
+                    <state key="normal" image="icon_timeline_more_c"/>
+                    <connections>
+                        <action selector="moreButtonTouched" destination="-1" eventType="touchUpInside" id="0ww-A6-7Xd"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -45,13 +55,16 @@
                 <constraint firstItem="Zsh-HA-LQj" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="PHF-Ie-j2u"/>
                 <constraint firstAttribute="bottom" secondItem="Zsh-HA-LQj" secondAttribute="bottom" id="PnO-Dg-0P4"/>
                 <constraint firstItem="Zsh-HA-LQj" firstAttribute="top" secondItem="agX-rg-YHd" secondAttribute="bottom" constant="-64" id="Twa-DK-fxH"/>
+                <constraint firstItem="JSK-ji-QqK" firstAttribute="leading" secondItem="Zsh-HA-LQj" secondAttribute="trailing" constant="-41" id="ZCx-73-jan"/>
                 <constraint firstItem="Zsh-HA-LQj" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="cUw-Tb-eDH"/>
                 <constraint firstItem="Zsh-HA-LQj" firstAttribute="leading" secondItem="agX-rg-YHd" secondAttribute="trailing" constant="-41" id="ddc-W3-fBV"/>
+                <constraint firstItem="Zsh-HA-LQj" firstAttribute="top" secondItem="JSK-ji-QqK" secondAttribute="bottom" constant="-64" id="tLL-bv-1aU"/>
             </constraints>
             <point key="canvasLocation" x="280" y="259"/>
         </view>
     </objects>
     <resources>
         <image name="back_white" width="50" height="50"/>
+        <image name="icon_timeline_more_c" width="21" height="3"/>
     </resources>
 </document>

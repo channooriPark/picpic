@@ -10,13 +10,12 @@ import UIKit
 import SwiftyJSON
 import Alamofire
 
-class TagNativeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, CHTCollectionViewDelegateWaterfallLayout {
+class TagNativeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, CHTCollectionViewDelegateWaterfallLayout, TagListCellDelegate{
 
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
     var statusbar: UIView!
     var tagName: String!
-    var tagId: String!
     var infoDic: [String : AnyObject] = [:]
     var gifData = UIImage()
     var postInfos: Array<[String: AnyObject]> = []
@@ -60,6 +59,8 @@ class TagNativeViewController: UIViewController, UICollectionViewDelegate, UICol
         self.collectionView.dataSource = self
         
         self.collectionView.registerNib(UINib(nibName: "TagCell", bundle: nil), forCellWithReuseIdentifier: "tagCell")
+        self.collectionView.registerNib(UINib(nibName: "TagListCell", bundle: nil), forCellWithReuseIdentifier: "tagTimelineCell")
+        
         self.collectionView.registerNib(UINib(nibName: "TagNativeReusableView", bundle: nil), forSupplementaryViewOfKind: CHTCollectionElementKindSectionHeader, withReuseIdentifier: "tagReusableView")
         // Do any additional setup after loading the view.
         let layout = CHTCollectionViewWaterfallLayout()
@@ -68,6 +69,7 @@ class TagNativeViewController: UIViewController, UICollectionViewDelegate, UICol
         self.collectionView.collectionViewLayout = layout
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
         
         self.collectionView.alwaysBounceVertical = true
@@ -91,7 +93,7 @@ class TagNativeViewController: UIViewController, UICollectionViewDelegate, UICol
             self.infoDic = json.dictionaryObject!
             Alamofire.request(.GET, "http://gif.picpic.world/" + (self.infoDic["url"]! as! String), parameters: ["foo": "bar"]).response { request, response, data, error in
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-                    self.gifData = UIImage.gifWithData(data!)!
+                    self.gifData = UIImage.gifWithData(data!) ?? UIImage()
                 })
             }
             
@@ -100,6 +102,17 @@ class TagNativeViewController: UIViewController, UICollectionViewDelegate, UICol
             
             appdelegate.doIt(507, message: mes, callback: {(json) in
                 print(json)
+                if json["data"].type == .Null
+                {
+                    self._hud.hide(true)
+                    self.collectionView.infiniteScrollingView.stopAnimating()
+                    self.collectionView.infiniteScrollingView.enabled = false
+                    let alert = UIAlertController(title: "Alert", message: "존재하지않는 태그입니다.", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: {_ in self.backTouched()}))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    return
+                }
+                
                 self.postInfos = json["data"].arrayObject as! Array<[String: AnyObject]>
                 for (index, dic) in self.postInfos.enumerate()
                 {
@@ -141,6 +154,9 @@ class TagNativeViewController: UIViewController, UICollectionViewDelegate, UICol
         appdelegate.doIt(507, message: mes, callback: {(json) in
             if json["data"].type == .Null
             {
+                self._hud.hide(true)
+                self.collectionView.infiniteScrollingView.stopAnimating()
+                self.collectionView.infiniteScrollingView.enabled = false
                 return
             }
             self.postInfos = json["data"].arrayObject as! Array<[String: AnyObject]>
@@ -198,9 +214,13 @@ class TagNativeViewController: UIViewController, UICollectionViewDelegate, UICol
         })
     }
     
+   
+    
 
     
 //collectionView delegate, datasource
+
+    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return postGifData.count
     }
@@ -208,13 +228,102 @@ class TagNativeViewController: UIViewController, UICollectionViewDelegate, UICol
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let post = appdelegate.storyboard.instantiateViewControllerWithIdentifier("PostPageViewController")as! PostPageViewController
+        appdelegate.controller.append(post)
+        //            post.index = appdelegate.controller.count - 1
+        post.type = "post"
+        post.email = appdelegate.email
+        post.postId = self.postInfos[indexPath.item]["post_id"] as! String
+        
+        self.navigationController?.pushViewController(post, animated: true)
+    }
 
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = self.collectionView.dequeueReusableCellWithReuseIdentifier("tagCell", forIndexPath: indexPath) as! TagCell
+        if self.isWaterFall
+        {
+            let cell = self.collectionView.dequeueReusableCellWithReuseIdentifier("tagCell", forIndexPath: indexPath) as! TagCell
         
-        cell.imageView.image = self.postGifData["\(indexPath.item)"]
+            cell.imageView.image = self.postGifData["\(indexPath.item)"]
+            cell.cellIndexPath = indexPath
         
-        return cell
+            return cell
+        }
+        else
+        {
+            let cell = self.collectionView.dequeueReusableCellWithReuseIdentifier("tagTimelineCell", forIndexPath: indexPath) as! TagListCell
+            let dic = self.postInfos[indexPath.item]
+            let img = self.postGifData["\(indexPath.item)"]
+            
+            cell.cellIndexPath = indexPath
+            cell.delegate = self
+
+            let dateFormatter =  NSDateFormatter()
+            dateFormatter.dateFormat = "yyyyMMddHHmmss"
+            let date = dateFormatter.dateFromString(dic["date"] as! String)
+            let interval = NSDate().timeIntervalSinceDate(date!)
+            dateFormatter.dateFormat = "yyyy.MM.dd"
+            let intervalText = (interval / 3600 < 12) ? String(format: "%d시간전", Int(interval / 3600)) : dateFormatter.stringFromDate(date!)
+            
+            
+            cell.userIdLabel.text = (dic["id"] as? String)
+            cell.dateLabel.text = intervalText
+            
+            let label = ActiveLabel()
+            label.numberOfLines = 0
+            label.lineSpacing = 4
+            label.font = UIFont.systemFontOfSize(15)
+            
+            label.textColor = UIColor(red: 102.0/255, green: 117.0/255, blue: 127.0/255, alpha: 1)
+            label.hashtagColor = UIColor(red: 85.0/255, green: 172.0/255, blue: 238.0/255, alpha: 1)
+            label.text = (dic["body"] as! String)
+
+            label.handleHashtagTap({(string) in
+                let vc = TagNativeViewController()
+                vc.tagName = string.substringFromIndex(string.startIndex.advancedBy(1))
+                
+                self.navigationController?.pushViewController(vc, animated: true)
+            })
+            
+            label.frame = CGRectMake(0, 0, cell.bodyView.frame.width, CGFloat(20 * self.rowsNeededForText(label.text!)))
+            cell.bodyViewHeightConstraint.constant = CGFloat(20 * self.rowsNeededForText(label.text!))
+            cell.bodyView.addSubview(label)
+            
+            
+            cell.gifImageView.image = img
+            
+            cell.playCountLabel.text = String(dic["play_cnt"] as! Int)
+            cell.profileImageView.sd_setImageWithURL(NSURL(string: "http://gif.picpic.world/" + (dic["profile_picture"] as! String)))
+            cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.width / 2
+            cell.profileImageView.layer.masksToBounds = true
+            
+            cell.likeCountButton.setTitle(String(format: "좋아요 %d개", dic["like_cnt"] as! Int), forState: .Normal)
+            cell.commentCountButton.setTitle(String(format: "댓글 %d개", dic["com_cnt"] as! Int), forState: .Normal)
+            
+            if (dic["like_yn"] as! String) != "N"
+            {
+                cell.likeButton.setImage(UIImage(named: "icon_timeline_like_c"), forState: .Normal)
+            }
+            
+            if (dic["follow_yn"] as! String) != "N"
+            {
+                cell.followButton.setImage(UIImage(named: "icon_find_plus_c"), forState: .Normal)
+            }
+            
+            if (dic["last_com"] as! [String : String])["body"] != "null"
+            {
+                cell.lastCommentImageView.sd_setImageWithURL(NSURL(string: "http://gif.picpic.world/" + (dic["last_com"] as! [String : String])["profile_picture"]!))
+                cell.lastCommentTitleLabel.text = (dic["last_com"] as! [String : String])["id"]
+                cell.lastCommentTextLabel.text = (dic["last_com"] as! [String : String])["body"]
+                
+                cell.lastCommentTitleLabel.sizeToFit()
+                cell.lastCommentTextLabel.sizeToFit()
+            }
+            
+            return cell
+        }
     }
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
@@ -248,9 +357,24 @@ class TagNativeViewController: UIViewController, UICollectionViewDelegate, UICol
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+
+        let dic = self.postInfos[indexPath.item]
+        let imgSize =  self.postGifData["\(indexPath.item)"]!.size
+
+        //18, 45, 21, 50
+        let body = dic["body"] as! String
+        let ratio = imgSize.width / self.view.bounds.width
         
-        return self.postGifData["\(indexPath.item)"]!.size
+        let cnt = body.componentsSeparatedByString("\n").count - 1
+        
+        
+        
+        let height = imgSize.height + ((182 + 18 * CGFloat(cnt)) * ratio)
+        
+        return (self.isWaterFall) ? imgSize : CGSizeMake(imgSize.width, height)
     }
+    
+
     
     func collectionView(collectionView: UICollectionView!, layout collectionViewLayout: UICollectionViewLayout!, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
         return 3.0
@@ -285,19 +409,134 @@ class TagNativeViewController: UIViewController, UICollectionViewDelegate, UICol
         view.endEditing(true)
     }
     
+    func rowsNeededForText(txt: String) -> Int
+    {
+        var cnt = 1
+        
+        cnt += txt.componentsSeparatedByString("\n").count
+        
+        for string in txt.componentsSeparatedByString("\n")
+        {
+            cnt  += (string.characters.count / 36)
+        }
+        
+        return cnt
+    }
+    
     
     @IBAction func backTouched() {
         self.navigationController?.popViewControllerAnimated(true)
     }
 
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    //TagListCellDelegate
+    func userViewTouched(indexPath: NSIndexPath)
+    {
+        let vc = UserNativeViewController()
+        vc.userEmail = self.postInfos[indexPath.item]["email"]! as! String
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
-    */
+    
+    func followButtonTouched(indexPath: NSIndexPath)
+    {
+        let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        if self.postInfos[indexPath.item]["follow_yn"] as! String == "N"
+        {
+            self.postInfos[indexPath.item]["follow_yn"] = "Y"
+        }
+        else
+        {
+            self.postInfos[indexPath.item]["follow_yn"] = "N"
+        }
+        
+        let type : String!
+        let email = self.postInfos[indexPath.item]["email"]! as! String
+        
+        if appdelegate.userData["register_form"].string == "10001" {
+            type = "N"
+        }else if appdelegate.userData["register_form"].string == "10002" {
+            type = "F"
+        }else if appdelegate.userData["register_form"].string == "10003" {
+            type = "G"
+        }else {
+            type = "R"
+        }
+        
+        let message : JSON = ["myId":appdelegate.email,"email":[["email" : email]],"type":type]
+        appdelegate.doIt(402, message: message, callback: {(json) in
+            self.refreshWithoutProfileReload(self.currentRange, str: self.currentString)
+        })
+    }
+    
+    func likeCountButtonTouched(indexPath: NSIndexPath)
+    {
+        let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let fl = FollowNativeViewController()
+        fl.type = .Like
+        fl.email = appdelegate.email
+        fl.tagId = self.postInfos[indexPath.item]["post_id"] as! String
+        
+        self.navigationController?.pushViewController(fl, animated: true)
+    }
+    func likeButtonTouched(indexPath: NSIndexPath)
+    {
+        let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let message : JSON = ["post_reply_id" : self.postInfos[indexPath.item]["post_id"] as! String, "click_id" : appdelegate.email, "like_form": "P"]
+        
+        if self.postInfos[indexPath.item]["like_yn"] as! String == "N"
+        {
+            self.postInfos[indexPath.item]["like_yn"] = "Y"
+            self.postInfos[indexPath.item]["like_cnt"] = (self.postInfos[indexPath.item]["like_cnt"] as! Int) + 1
+            appdelegate.doIt(302, message: message, callback: { _ in
+                self.collectionView.reloadData()
+            })
+        }
+        else
+        {
+            self.postInfos[indexPath.item]["like_yn"] = "N"
+            self.postInfos[indexPath.item]["like_cnt"] = (self.postInfos[indexPath.item]["like_cnt"] as! Int) - 1
+            appdelegate.doIt(303, message: message, callback: { _ in
+                self.collectionView.reloadData()
+            })
+        }
+    }
+    func commentButtonTouched(indexPath: NSIndexPath)
+    {
+        let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let comment = appdelegate.storyboard.instantiateViewControllerWithIdentifier("comment")as! CommentViewController
+        comment.type = "comment"
+
+        comment.my_id = appdelegate.email
+        comment.post_id = self.postInfos[indexPath.item]["post_id"] as! String
+        comment.postEmail = self.postInfos[indexPath.item]["email"] as! String
+
+        self.navigationController?.pushViewController(comment, animated: true)
+    }
+    func shareButtonTouched(indexPath: NSIndexPath)
+    {
+        let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let message = JSON(["my_id" : appdelegate.email, "post_id" : self.postInfos[indexPath.item]["post_id"] as! String])
+        
+        appdelegate.doIt(504, message: message, callback: {(json) in
+
+            let share = appdelegate.storyboard.instantiateViewControllerWithIdentifier("ShareViewController")as! ShareViewController
+            share.post_id = json.dictionaryObject!["post_id"] as! String
+            share.url = json.dictionaryObject!["url"] as! String
+            share.repicState = (json.dictionaryObject!["repic_yn"] as! String == "N") ? false : true
+            
+            self.addChildViewController(share)
+            self.view.addSubview(share.view)
+        })
+    }
+    func moreButtonTouched(indexPath: NSIndexPath)
+    {
+        let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let moreother = appdelegate.storyboard.instantiateViewControllerWithIdentifier("MoreOtherViewController")as! MoreOtherViewController
+        moreother.post_id = self.postInfos[indexPath.item]["post_id"] as! String
+        
+        self.addChildViewController(moreother)
+        self.view.addSubview(moreother.view)
+    }
 
 }

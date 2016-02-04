@@ -68,19 +68,19 @@ class ReportViewController: UIViewController , UITextFieldDelegate{
     }
     
     func back(){
-        var count = (self.navigationController?.viewControllers.count)!-2
-        if count < 0 {
-            count = 0
-        }
-        //        print(count)
-        let a = self.navigationController?.viewControllers[count] as! SubViewController
-        if a.type == "tag" || a.type == "post" || a.type == "user" || a.type == "search"{
-            self.navigationController?.navigationBarHidden = true
-        }else {
-            self.navigationController?.navigationBarHidden = false
-        }
-        self.appdelegate.moreToggle = false
-        self.appdelegate.tabbar.view.hidden = false
+//        var count = (self.navigationController?.viewControllers.count)!-2
+//        if count < 0 {
+//            count = 0
+//        }
+//        //        print(count)
+//        let a = self.navigationController?.viewControllers[count] as! SubViewController
+//        if a.type == "tag" || a.type == "post" || a.type == "user" || a.type == "search"{
+//            self.navigationController?.navigationBarHidden = true
+//        }else {
+//            self.navigationController?.navigationBarHidden = false
+//        }
+//        self.appdelegate.moreToggle = false
+//        self.appdelegate.tabbar.view.hidden = false
         self.navigationController?.popViewControllerAnimated(true)
     }
     

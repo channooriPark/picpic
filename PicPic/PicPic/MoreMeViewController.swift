@@ -125,11 +125,11 @@ class MoreMeViewController: UIViewController {
         self.appdelegate.doIt(232, message: message) { (readData) -> () in
             if readData["msg"].string! == "success" {
                 if self.appdelegate.second.view.hidden == false {
-                    if self.appdelegate.second.webState == "follow" {
-                        self.appdelegate.second.following()
-                    }else if self.appdelegate.second.webState == "all" {
-                        self.appdelegate.second.all()
-                    }
+//                    if self.appdelegate.second.webState == "follow" {
+//                        self.appdelegate.second.following()
+//                    }else if self.appdelegate.second.webState == "all" {
+//                        self.appdelegate.second.all()
+//                    }
                 }
                 
                 if self.appdelegate.myfeed.view.hidden == false {

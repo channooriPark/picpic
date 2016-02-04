@@ -62,7 +62,7 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate{
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true)
+        self.navigationController?.navigationBarHidden = true
     }
     
     override func viewDidLoad() {
@@ -343,13 +343,13 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate{
                 self.appdelegate.doIt(302, message: message, callback: { (readData) -> () in
                     if readData["msg"].string! == "success"{
                         if self.appdelegate.second.view.hidden == false {
-                            if self.appdelegate.second.webState == "follow" {
-                                self.appdelegate.second.following()
-                            }else if self.appdelegate.second.webState == "all" {
-                                self.appdelegate.second.all()
-                            }else if self.appdelegate.second.webState == "category" {
-                                self.appdelegate.second.category()
-                            }
+//                            if self.appdelegate.second.webState == "follow" {
+//                                self.appdelegate.second.following()
+//                            }else if self.appdelegate.second.webState == "all" {
+//                                self.appdelegate.second.all()
+//                            }else if self.appdelegate.second.webState == "category" {
+//                                self.appdelegate.second.category()
+//                            }
                         }
                     }
                     self.likeToggle = true
@@ -368,13 +368,13 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate{
                 self.appdelegate.doIt(303, message: message, callback: { (readData) -> () in
                     if readData["msg"].string! == "success"{
                         if self.appdelegate.second.view.hidden == false {
-                            if self.appdelegate.second.webState == "follow" {
-                                self.appdelegate.second.following()
-                            }else if self.appdelegate.second.webState == "all" {
-                                self.appdelegate.second.all()
-                            }else if self.appdelegate.second.webState == "category" {
-                                self.appdelegate.second.category()
-                            }
+//                            if self.appdelegate.second.webState == "follow" {
+//                                self.appdelegate.second.following()
+//                            }else if self.appdelegate.second.webState == "all" {
+//                                self.appdelegate.second.all()
+//                            }else if self.appdelegate.second.webState == "category" {
+//                                self.appdelegate.second.category()
+//                            }
                         }
                         self.likeToggle = false
                         self.likeCount--
@@ -395,23 +395,23 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate{
     }
     
     func backTo() {
-        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
-        var count = (self.navigationController?.viewControllers.count)!-2
-        if count < 0 {
-            count = 0
-        }
-        let a = self.navigationController?.viewControllers[count] as! SubViewController
-        if a.type == "tag" || a.type == "post" || a.type == "user" || a.type == "search" || a.type == "tag_name" {
-            self.navigationController?.navigationBarHidden = true
-        }else {
-            self.navigationController?.navigationBarHidden = false
-        }
-        
-        if !self.appdelegate.myfeed.view.hidden {
-            self.navigationController?.navigationBarHidden = true
-        }
-        
-        self.appdelegate.tabbar.view.hidden = false
+//        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
+//        var count = (self.navigationController?.viewControllers.count)!-2
+//        if count < 0 {
+//            count = 0
+//        }
+//        let a = self.navigationController?.viewControllers[count] as! SubViewController
+//        if a.type == "tag" || a.type == "post" || a.type == "user" || a.type == "search" || a.type == "tag_name" {
+//            self.navigationController?.navigationBarHidden = true
+//        }else {
+//            self.navigationController?.navigationBarHidden = false
+//        }
+//        
+//        if !self.appdelegate.myfeed.view.hidden {
+//            self.navigationController?.navigationBarHidden = true
+//        }
+//        
+//        self.appdelegate.tabbar.view.hidden = false
         self.postImage.enterBackground()
         self.postImage.gifRemoveObserver()
         self.navigationController?.popViewControllerAnimated(true)
@@ -567,14 +567,20 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate{
     }
     
     @IBAction func likeList(sender: AnyObject) {
-        let like = self.storyboard!.instantiateViewControllerWithIdentifier("LikeListViewController")as! LikeListViewController
+//        let like = self.storyboard!.instantiateViewControllerWithIdentifier("LikeListViewController")as! LikeListViewController
+//        like.email = self.email
+//        like.tagId = self.data["post_id"].stringValue
+//        self.appdelegate.testNavi.navigationBarHidden = false
+//        self.appdelegate.tabbar.view.hidden = true
+//        self.postImage.enterBackground()
+//        self.appdelegate.testNavi.pushViewController(like, animated: true)
+//        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
+        
+        let like = FollowNativeViewController()
+        like.type = .Like
         like.email = self.email
         like.tagId = self.data["post_id"].stringValue
-        self.appdelegate.testNavi.navigationBarHidden = false
-        self.appdelegate.tabbar.view.hidden = true
-        self.postImage.enterBackground()
-        self.appdelegate.testNavi.pushViewController(like, animated: true)
-        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
+        self.navigationController?.pushViewController(like, animated: true)
     }
     
     @IBAction func commentAgain(sender: AnyObject) {

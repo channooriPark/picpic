@@ -80,15 +80,15 @@ class ShareViewController: UIViewController,UIAlertViewDelegate{
     }
     
     func DismissKeyboard(){
-        var count = (self.navigationController?.viewControllers.count)!-2
-        if count < 0 {
-            count = 0
-        }
-        let a = self.navigationController?.viewControllers[count] as! SubViewController
-        if a.type == "post" {
-            let post = self.navigationController?.viewControllers[count]as! PostPageViewController
-            post.postImage.enterForeground()
-        }
+//        var count = (self.navigationController?.viewControllers.count)!-2
+//        if count < 0 {
+//            count = 0
+//        }
+//        let a = self.navigationController?.viewControllers[count] as! SubViewController
+//        if a.type == "post" {
+//            let post = self.navigationController?.viewControllers[count]as! PostPageViewController
+//            post.postImage.enterForeground()
+//        }
         self.view.removeFromSuperview()
     }
 

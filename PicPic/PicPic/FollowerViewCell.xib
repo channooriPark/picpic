@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="followerCell" rowHeight="58" id="KGk-i7-Jjw" customClass="FollowerViewCell" customModule="PicPic" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="58"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="57"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2q9-qt-KkI">
+                        <rect key="frame" x="13" y="6" width="45" height="45"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="45" id="3p0-tr-G1v"/>
+                            <constraint firstAttribute="width" constant="45" id="gUK-4d-ULN"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ioe-fM-MAA">
+                        <rect key="frame" x="72" y="18" width="137" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="noB-hP-0u5"/>
+                            <constraint firstAttribute="width" constant="137" id="zpd-eU-217"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ebO-QJ-SWb">
+                        <rect key="frame" x="279" y="12" width="33" height="33"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="33" id="GJP-KQ-O95"/>
+                            <constraint firstAttribute="width" constant="33" id="ddy-K6-gir"/>
+                        </constraints>
+                        <state key="normal" image="icon_find_plus"/>
+                        <connections>
+                            <action selector="followButtonTouched" destination="KGk-i7-Jjw" eventType="touchUpInside" id="dd0-p7-ffR"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="ioe-fM-MAA" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="3kK-6w-fcY"/>
+                    <constraint firstItem="2q9-qt-KkI" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Eu7-6n-tL0"/>
+                    <constraint firstItem="2q9-qt-KkI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="Hfd-QS-YO8"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="ebO-QJ-SWb" secondAttribute="trailing" id="Kfl-sv-WEd"/>
+                    <constraint firstItem="ioe-fM-MAA" firstAttribute="leading" secondItem="2q9-qt-KkI" secondAttribute="trailing" constant="14" id="n99-Am-IDY"/>
+                    <constraint firstItem="ebO-QJ-SWb" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="wHC-ue-VrF"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="followButton" destination="ebO-QJ-SWb" id="wrL-g3-MlE"/>
+                <outlet property="idLabel" destination="ioe-fM-MAA" id="HgI-Wi-wNE"/>
+                <outlet property="profileImageView" destination="2q9-qt-KkI" id="we4-Ny-5Qt"/>
+            </connections>
+            <point key="canvasLocation" x="410" y="559"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="icon_find_plus" width="33" height="33"/>
+    </resources>
+</document>

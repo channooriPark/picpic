@@ -17,20 +17,8 @@
                         <constraint firstAttribute="height" constant="190" id="wUC-EQ-JPr"/>
                     </constraints>
                 </imageView>
-                <searchBar contentMode="redraw" text="" translatesAutoresizingMaskIntoConstraints="NO" id="h0M-X6-JhN">
-                    <rect key="frame" x="0.0" y="190" width="232" height="44"/>
-                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="44" id="rzQ-5F-w3c"/>
-                    </constraints>
-                    <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <textInputTraits key="textInputTraits" returnKeyType="search"/>
-                    <connections>
-                        <outlet property="delegate" destination="U6b-Vx-4bR" id="Dsr-Se-HwX"/>
-                    </connections>
-                </searchBar>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ftp-cm-Goo">
-                    <rect key="frame" x="0.0" y="233" width="160" height="37"/>
+                    <rect key="frame" x="0.0" y="232" width="160" height="38"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                     <state key="normal" title="최신순">
@@ -131,7 +119,7 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ird-Aa-btL">
-                    <rect key="frame" x="232" y="190" width="44" height="44"/>
+                    <rect key="frame" x="232" y="190" width="44" height="43"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <state key="normal" image="icon_my_list"/>
                     <connections>
@@ -139,7 +127,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="enW-pz-uVk">
-                    <rect key="frame" x="276" y="190" width="44" height="44"/>
+                    <rect key="frame" x="276" y="190" width="44" height="43"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <state key="normal" image="icon_my_gather_c"/>
                     <connections>
@@ -147,7 +135,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1hL-eb-eoG">
-                    <rect key="frame" x="160" y="233" width="160" height="37"/>
+                    <rect key="frame" x="160" y="232" width="160" height="38"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <state key="normal" title="인기순">
@@ -157,7 +145,20 @@
                         <action selector="rightButtonTouched" destination="U6b-Vx-4bR" eventType="touchUpInside" id="jd7-70-nlq"/>
                     </connections>
                 </button>
+                <searchBar contentMode="redraw" text="" translatesAutoresizingMaskIntoConstraints="NO" id="h0M-X6-JhN">
+                    <rect key="frame" x="0.0" y="190" width="232" height="44"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="rzQ-5F-w3c"/>
+                    </constraints>
+                    <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                    <connections>
+                        <outlet property="delegate" destination="U6b-Vx-4bR" id="Dsr-Se-HwX"/>
+                    </connections>
+                </searchBar>
             </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="1hL-eb-eoG" firstAttribute="top" secondItem="ird-Aa-btL" secondAttribute="bottom" constant="-1" id="0Yr-oD-oNx"/>
                 <constraint firstItem="zkh-He-5Qz" firstAttribute="leading" secondItem="3id-4x-y6B" secondAttribute="trailing" id="2V7-n0-Czm"/>
@@ -188,10 +189,10 @@
                 <constraint firstItem="h0M-X6-JhN" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" id="qW9-cR-qvU"/>
                 <constraint firstItem="zkh-He-5Qz" firstAttribute="top" secondItem="1hL-eb-eoG" secondAttribute="bottom" id="rFL-Hu-UdD"/>
                 <constraint firstAttribute="bottom" secondItem="1hL-eb-eoG" secondAttribute="bottom" constant="3" id="t5h-z5-66G"/>
-                <constraint firstItem="Ftp-cm-Goo" firstAttribute="top" secondItem="h0M-X6-JhN" secondAttribute="bottom" constant="-1" id="uoh-H6-qGO"/>
+                <constraint firstItem="Ftp-cm-Goo" firstAttribute="top" secondItem="h0M-X6-JhN" secondAttribute="bottom" constant="-2" id="uoh-H6-qGO"/>
                 <constraint firstAttribute="trailing" secondItem="54e-vQ-2Nn" secondAttribute="trailing" id="v1w-5N-auk"/>
                 <constraint firstItem="enW-pz-uVk" firstAttribute="leading" secondItem="ird-Aa-btL" secondAttribute="trailing" id="vtU-zV-zWz"/>
-                <constraint firstItem="1hL-eb-eoG" firstAttribute="top" secondItem="h0M-X6-JhN" secondAttribute="bottom" constant="-1" id="xdz-wF-4GE"/>
+                <constraint firstItem="1hL-eb-eoG" firstAttribute="top" secondItem="h0M-X6-JhN" secondAttribute="bottom" constant="-2" id="xdz-wF-4GE"/>
                 <constraint firstItem="3id-4x-y6B" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" id="zCt-Cm-UfA"/>
             </constraints>
             <connections>

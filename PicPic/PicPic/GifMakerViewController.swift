@@ -1717,13 +1717,13 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                     self.appdelegate.main.fire()
                     //self.appdelegate.main.refresh()
                 }else if self.appdelegate.second.view.hidden == false {
-                    if self.appdelegate.second.webState == "follow" {
-                        self.appdelegate.second.following()
-                    }else if self.appdelegate.second.webState == "all" {
-                        self.appdelegate.second.all()
-                    }else if self.appdelegate.second.webState == "category" {
-                        
-                    }
+//                    if self.appdelegate.second.webState == "follow" {
+//                        self.appdelegate.second.following()
+//                    }else if self.appdelegate.second.webState == "all" {
+//                        self.appdelegate.second.all()
+//                    }else if self.appdelegate.second.webState == "category" {
+//                        
+//                    }
                 }else if self.appdelegate.myfeed.view.hidden == false {
                     self.appdelegate.myfeed.fire()
                     self.navigationController?.navigationBarHidden = true
@@ -1757,13 +1757,13 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                 self.appdelegate.main.fire()
                 //self.appdelegate.main.refresh()
             }else if self.appdelegate.second.view.hidden == false {
-                if self.appdelegate.second.webState == "follow" {
-                    self.appdelegate.second.following()
-                }else if self.appdelegate.second.webState == "all" {
-                    self.appdelegate.second.all()
-                }else if self.appdelegate.second.webState == "category" {
-                    
-                }
+//                if self.appdelegate.second.webState == "follow" {
+//                    self.appdelegate.second.following()
+//                }else if self.appdelegate.second.webState == "all" {
+//                    self.appdelegate.second.all()
+//                }else if self.appdelegate.second.webState == "category" {
+//                    
+//                }
             }else if self.appdelegate.myfeed.view.hidden == false {
                 self.appdelegate.myfeed.fire()
                 self.navigationController?.navigationBarHidden = true

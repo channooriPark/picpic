@@ -28,6 +28,7 @@ class ServiceViewController: UIViewController {
         let url = NSURL (string:urlpath!)
         let requestObj = NSURLRequest(URL: url!)
         webView.loadRequest(requestObj)
+        webView.contentMode = .ScaleAspectFit
     }
 
     override func didReceiveMemoryWarning() {

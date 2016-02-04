@@ -29,6 +29,9 @@ class SettingTableViewController: UITableViewController , UIAlertViewDelegate{
     
     @IBOutlet weak var alarmSwitch: UISwitch!
     @IBOutlet weak var alarmLabel: UILabel!
+    
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.topItem?.title = self.appdelegate.ment["setting"].stringValue
@@ -73,6 +76,7 @@ class SettingTableViewController: UITableViewController , UIAlertViewDelegate{
     
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
         if indexPath.section == 2 {
             if indexPath.row == 2 {
                 self.performSegueWithIdentifier("logout", sender: self)

@@ -38,12 +38,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
     //MainView
     var contentview : ContentViewController!
     var tabbar : TabBarTestViewController!
-    var main : MainInterViewController!//HomeNativeViewController!
+    var main : HomeNativeViewController!
     var testNavi : UINavigationController!
     var alram : AlramViewController!
-    var second : TestSecondViewController!
+    var second : SecondNativeViewController!
     var camera : CameraViewController!
-    var myfeed : MyFeedPageViewController!
+    var myfeed : MyFeedNativeViewController!//MyFeedPageViewController!
     var signin : UINavigationController!
     
     //SubView
@@ -655,11 +655,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
     func loadView() {
         contentview = ContentViewController()
         tabbar = TabBarTestViewController()
-        main = MainInterViewController()//HomeNativeViewController()
+        main = HomeNativeViewController()
         alram = self.storyboard.instantiateViewControllerWithIdentifier("AlramViewController")as! AlramViewController
-        second = TestSecondViewController()
+        second = SecondNativeViewController()
         camera = self.storyboard.instantiateViewControllerWithIdentifier("CameraViewController")as! CameraViewController
-        myfeed = MyFeedPageViewController()
+        myfeed = MyFeedNativeViewController()//MyFeedPageViewController()
         login = self.storyboard.instantiateViewControllerWithIdentifier("LoginViewController")as! LoginViewController
         
         testNavi = self.storyboard.instantiateViewControllerWithIdentifier("testNavi")as! UINavigationController
@@ -688,11 +688,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
     func reloadView(){
         contentview = ContentViewController()
         tabbar = TabBarTestViewController()
-        main = MainInterViewController()//HomeNativeViewController()
+        main = HomeNativeViewController()
         alram = self.storyboard.instantiateViewControllerWithIdentifier("AlramViewController")as! AlramViewController
-        second = TestSecondViewController()
+        second = SecondNativeViewController()
         camera = self.storyboard.instantiateViewControllerWithIdentifier("CameraViewController")as! CameraViewController
-        myfeed = MyFeedPageViewController()
+        myfeed = MyFeedNativeViewController()//MyFeedPageViewController()
         login = self.storyboard.instantiateViewControllerWithIdentifier("LoginViewController")as! LoginViewController
         testNavi = self.storyboard.instantiateViewControllerWithIdentifier("testNavi")as! UINavigationController
     }

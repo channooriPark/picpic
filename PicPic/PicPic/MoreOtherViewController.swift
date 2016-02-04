@@ -39,16 +39,16 @@ class MoreOtherViewController: UIViewController {
     }
     
     func DismissKeyboard(){
-        var count = self.appdelegate.testNavi.viewControllers.count-2
-        if count < 0 {
-            count = 0
-        }
-        //        print(count)
-        let a = self.appdelegate.testNavi.viewControllers[count] as! SubViewController
-        if a.type == "post" {
-            let post = self.appdelegate.testNavi.viewControllers[count]as! PostPageViewController
-            post.postImage.enterForeground()
-        }
+//        var count = self.appdelegate.testNavi.viewControllers.count-2
+//        if count < 0 {
+//            count = 0
+//        }
+//        //        print(count)
+//        let a = self.appdelegate.testNavi.viewControllers[count] as! SubViewController
+//        if a.type == "post" {
+//            let post = self.appdelegate.testNavi.viewControllers[count]as! PostPageViewController
+//            post.postImage.enterForeground()
+//        }
         appdelegate.moreToggle = false
         self.view.removeFromSuperview()
     }

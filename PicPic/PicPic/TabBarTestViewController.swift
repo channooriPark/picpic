@@ -94,7 +94,7 @@ class TabBarTestViewController: UIViewController ,UIImagePickerControllerDelegat
         appdelegate.alram.view.hidden = true
         appdelegate.myfeed.view.hidden = true 
         appdelegate.testNavi.navigationBarHidden = false
-        appdelegate.second.fire()
+        //appdelegate.second.fire()
         
         button1.setImage(UIImage(named: "home"), forState: .Normal)
         button2.setImage(UIImage(named: "feed_c"), forState: .Normal)
