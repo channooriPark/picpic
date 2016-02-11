@@ -300,6 +300,7 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
             cell.gifImageView.image = img
             
             cell.playCountLabel.text = String(dic["play_cnt"] as! Int)
+            //gif image cell 셀마다 캐싱해주는 프레임워크 이거가지고 이미지 댓글 이용하면 된다
             cell.profileImageView.sd_setImageWithURL(NSURL(string: "http://gif.picpic.world/" + (dic["profile_picture"] as! String)))
             cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.width / 2
             cell.profileImageView.layer.masksToBounds = true

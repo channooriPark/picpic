@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
     var main : HomeNativeViewController!
     var testNavi : UINavigationController!
     var alram : AlramViewController!
-    var second : SecondNativeViewController!
+    var second : TestSecondViewController! //SecondNativeViewController!
     var camera : CameraViewController!
     var myfeed : MyFeedNativeViewController!//MyFeedPageViewController!
     var signin : UINavigationController!
@@ -680,7 +680,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
         tabbar = TabBarTestViewController()
         main = HomeNativeViewController()
         alram = self.storyboard.instantiateViewControllerWithIdentifier("AlramViewController")as! AlramViewController
-        second = SecondNativeViewController()
+        second = TestSecondViewController() //SecondNativeViewController()
         camera = self.storyboard.instantiateViewControllerWithIdentifier("CameraViewController")as! CameraViewController
         myfeed = MyFeedNativeViewController()//MyFeedPageViewController()
         login = self.storyboard.instantiateViewControllerWithIdentifier("LoginViewController")as! LoginViewController
@@ -713,7 +713,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
         tabbar = TabBarTestViewController()
         main = HomeNativeViewController()
         alram = self.storyboard.instantiateViewControllerWithIdentifier("AlramViewController")as! AlramViewController
-        second = SecondNativeViewController()
+        second = TestSecondViewController() //SecondNativeViewController()
         camera = self.storyboard.instantiateViewControllerWithIdentifier("CameraViewController")as! CameraViewController
         myfeed = MyFeedNativeViewController()//MyFeedPageViewController()
         login = self.storyboard.instantiateViewControllerWithIdentifier("LoginViewController")as! LoginViewController

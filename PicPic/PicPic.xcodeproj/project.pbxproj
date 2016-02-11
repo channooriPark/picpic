@@ -527,7 +527,6 @@
 		6C616EE51C5C96FA000932DB /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		6C616EE61C5C96FA000932DB /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		6C616EE71C5C96FA000932DB /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
-		6C616F011C5D3A53000932DB /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
 		6C616F031C5DDAF1000932DB /* ActiveLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActiveLabel.h; sourceTree = "<group>"; };
 		6C616F041C5DDAF1000932DB /* ActiveLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveLabel.swift; sourceTree = "<group>"; };
 		6C616F051C5DDAF1000932DB /* ActiveType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveType.swift; sourceTree = "<group>"; };
@@ -1482,7 +1481,6 @@
 		E44580301BE3882000AF186C = {
 			isa = PBXGroup;
 			children = (
-				6C616F011C5D3A53000932DB /* MyPlayground.playground */,
 				E47BEFF11C44842D008E93E8 /* GoogleService-Info.plist */,
 				E4AB455A1C166E98002EA053 /* Fabric.framework */,
 				E4AB455B1C166E98002EA053 /* TwitterKit.framework */,
