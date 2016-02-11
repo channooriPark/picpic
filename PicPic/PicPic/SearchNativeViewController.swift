@@ -41,7 +41,9 @@ class SearchNativeViewController: UIViewController, UISearchBarDelegate{
 
 
         
-        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
         
         // Do any additional setup after loading the view.
     }
@@ -49,6 +51,11 @@ class SearchNativeViewController: UIViewController, UISearchBarDelegate{
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
     }
     
     @IBAction func tagButtonTouched() {
