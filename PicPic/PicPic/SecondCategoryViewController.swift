@@ -13,6 +13,7 @@ import Alamofire
 class SecondCategoryViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, CHTCollectionViewDelegateWaterfallLayout, TagListCellDelegate {
 
     var category: String!
+    var categoryNum: String!
     var _hud: MBProgressHUD = MBProgressHUD()
     var currentPage = "1"
     var postInfos: Array<[String: AnyObject]> = []
@@ -79,9 +80,9 @@ class SecondCategoryViewController: UIViewController, UICollectionViewDataSource
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         currentPage = "1"
         
-        let mes = JSON(["my_id" : appdelegate.email, "page" : "1", "category" : self.category])
+        let mes = JSON(["my_id" : appdelegate.email, "page" : "1", "category_num" : self.categoryNum])
 
-        appdelegate.doIt(802, message: mes, callback: {(json) in
+        appdelegate.doIt(522, message: mes, callback: {(json) in
             self.postInfos = json["data"].arrayObject! as! [[String: AnyObject]]
             self.collectionView.reloadData()
             self._hud.hide(true)
@@ -95,9 +96,9 @@ class SecondCategoryViewController: UIViewController, UICollectionViewDataSource
         
         let newPage = Int(self.currentPage)! + 1
         
-        let mes: JSON = JSON(["my_id" : appdelegate.email, "page" : "\(newPage)", "category" : self.category])
+        let mes: JSON = JSON(["my_id" : appdelegate.email, "page" : "\(newPage)", "category_num" : self.categoryNum])
         
-        appdelegate.doIt(802, message: mes, callback: {(json) in
+        appdelegate.doIt(522, message: mes, callback: {(json) in
             if json["data"].type == .Null
             {
                 self._hud.hide(true)
@@ -194,23 +195,23 @@ class SecondCategoryViewController: UIViewController, UICollectionViewDataSource
         
         cell.playCountLabel.text = String(dic["play_cnt"] as! Int)
         cell.playCountLabel.sizeToFit()
-        cell.profileImageView.image = nil//.sd_setImageWithURL(NSURL(string: "http://gif.picpic.world/" + (dic["profile_picture"] as! String)))
+        cell.profileImageView.sd_setImageWithURL(NSURL(string: "http://gif.picpic.world/" + (dic["profile_picture"] as! String)))
         cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.width / 2
         cell.profileImageView.layer.masksToBounds = true
         
         cell.likeCountLabel.text = String(format: "%d", dic["like_cnt"] as! Int)
-        cell.commentCountLabel.text = nil//String(format: "%d", dic["com_cnt"] as! Int)
+        cell.commentCountLabel.text = String(format: "%d", dic["com_cnt"] as! Int)
         
         if (dic["like_yn"] as! String) != "N"
         {
             cell.likeButton.setImage(UIImage(named: "icon_timeline_like_c"), forState: .Normal)
         }
         
-//        if (dic["follow_yn"] as! String) != "N"
-//        {
-//            cell.followButton.setImage(UIImage(named: "icon_find_plus_c"), forState: .Normal)
-//        }
-        cell.followButton.hidden = true
+        if (dic["follow_yn"] as! String) != "N"
+        {
+            cell.followButton.setImage(UIImage(named: "icon_find_plus_c"), forState: .Normal)
+        }
+//        cell.followButton.hidden = true
         
         cell.layer.cornerRadius = 3.0
         cell.layer.masksToBounds = true
