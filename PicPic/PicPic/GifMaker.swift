@@ -297,41 +297,41 @@ class GifMaker {
                 
                 
                 
-//                if(img.size.width > img.size.height) { //가로로 자르기
-//                    let imgRatio = Float((img.size.width) / (img.size.height))
-//                    let ratio = Float(16.0/9.0)
-//                    self.log.log("imgRatio  :  \(imgRatio) +- ratio : \(ratio)")
-//                    if imgRatio == ratio {
-//                        //16:9기준
-//                        //                            img = img.cropToBounds(720, height: 720)
-//                        img = img.resizeImage(CGSize(width: 1280, height: 720))
-//                    } else { // 4:3기준
-//                        var width = Double(img.size.width)
-//                        if(img.size.height<img.size.width) {
-//                            width = Double(img.size.height)
-//                        }
-//                        let height = width*3/4
-//                        
-//                        print("img 가로기준 ",img.size.width,"x",img.size.height)
-//                        print(width,"x",height)
-//                        
-//                        //                            img = img.cropToBounds(width, height: height)
-//                        if( Double(Config.getInstance().wid) < width) {
-//                            img = img.resizeImage(CGSize(width: 1280, height: 960))
-//                        }
-//                    }
-//                } else { // 세로로 자르기
-//                    var width = Double(img.size.width)
-//                    if(img.size.height<img.size.width) {
-//                        width = Double(img.size.height)
-//                    }
-//                    let height = width*4/3
-//                    
-//                    img = img.cropToBounds(width, height: height)
-//                    if( Double(Config.getInstance().wid) < width) {
-//                        img = img.resizeImage(CGSize(width: 960, height: 1280))
-//                    }
-//                }
+                //                if(img.size.width > img.size.height) { //가로로 자르기
+                //                    let imgRatio = Float((img.size.width) / (img.size.height))
+                //                    let ratio = Float(16.0/9.0)
+                //                    self.log.log("imgRatio  :  \(imgRatio) +- ratio : \(ratio)")
+                //                    if imgRatio == ratio {
+                //                        //16:9기준
+                //                        //                            img = img.cropToBounds(720, height: 720)
+                //                        img = img.resizeImage(CGSize(width: 1280, height: 720))
+                //                    } else { // 4:3기준
+                //                        var width = Double(img.size.width)
+                //                        if(img.size.height<img.size.width) {
+                //                            width = Double(img.size.height)
+                //                        }
+                //                        let height = width*3/4
+                //
+                //                        print("img 가로기준 ",img.size.width,"x",img.size.height)
+                //                        print(width,"x",height)
+                //
+                //                        //                            img = img.cropToBounds(width, height: height)
+                //                        if( Double(Config.getInstance().wid) < width) {
+                //                            img = img.resizeImage(CGSize(width: 1280, height: 960))
+                //                        }
+                //                    }
+                //                } else { // 세로로 자르기
+                //                    var width = Double(img.size.width)
+                //                    if(img.size.height<img.size.width) {
+                //                        width = Double(img.size.height)
+                //                    }
+                //                    let height = width*4/3
+                //
+                //                    img = img.cropToBounds(width, height: height)
+                //                    if( Double(Config.getInstance().wid) < width) {
+                //                        img = img.resizeImage(CGSize(width: 960, height: 1280))
+                //                    }
+                //                }
                 
                 UIImageJPEGRepresentation(img, 100)!.writeToFile(imagePath, atomically: true)
             } catch let error as NSError {
@@ -378,41 +378,41 @@ class GifMaker {
                     
                     
                     
-//                    if(img.size.width > img.size.height) { //가로로 자르기
-//                        let imgRatio = Float((img.size.width) / (img.size.height))
-//                        let ratio = Float(16.0/9.0)
-//                        self.log.log("imgRatio  :  \(imgRatio) +- ratio : \(ratio)")
-//                        if imgRatio == ratio {
-//                            //16:9기준
-//                            //                            img = img.cropToBounds(720, height: 720)
-//                            img = img.resizeImage(CGSize(width: 1280, height: 720))
-//                        } else { // 4:3기준
-//                            var width = Double(img.size.width)
-//                            if(img.size.height<img.size.width) {
-//                                width = Double(img.size.height)
-//                            }
-//                            let height = width*3/4
-//                            
-//                            print("img 가로기준 ",img.size.width,"x",img.size.height)
-//                            print(width,"x",height)
-//                            
-//                            //                            img = img.cropToBounds(width, height: height)
-//                            if( Double(Config.getInstance().wid) < width) {
-//                                img = img.resizeImage(CGSize(width: 1280, height: 960))
-//                            }
-//                        }
-//                    } else { // 세로로 자르기
-//                        var width = Double(img.size.width)
-//                        if(img.size.height<img.size.width) {
-//                            width = Double(img.size.height)
-//                        }
-//                        let height = width*4/3
-//                        
-//                        img = img.cropToBounds(width, height: height)
-//                        if( Double(Config.getInstance().wid) < width) {
-//                            img = img.resizeImage(CGSize(width: 960, height: 1280))
-//                        }
-//                    }
+                    //                    if(img.size.width > img.size.height) { //가로로 자르기
+                    //                        let imgRatio = Float((img.size.width) / (img.size.height))
+                    //                        let ratio = Float(16.0/9.0)
+                    //                        self.log.log("imgRatio  :  \(imgRatio) +- ratio : \(ratio)")
+                    //                        if imgRatio == ratio {
+                    //                            //16:9기준
+                    //                            //                            img = img.cropToBounds(720, height: 720)
+                    //                            img = img.resizeImage(CGSize(width: 1280, height: 720))
+                    //                        } else { // 4:3기준
+                    //                            var width = Double(img.size.width)
+                    //                            if(img.size.height<img.size.width) {
+                    //                                width = Double(img.size.height)
+                    //                            }
+                    //                            let height = width*3/4
+                    //
+                    //                            print("img 가로기준 ",img.size.width,"x",img.size.height)
+                    //                            print(width,"x",height)
+                    //
+                    //                            //                            img = img.cropToBounds(width, height: height)
+                    //                            if( Double(Config.getInstance().wid) < width) {
+                    //                                img = img.resizeImage(CGSize(width: 1280, height: 960))
+                    //                            }
+                    //                        }
+                    //                    } else { // 세로로 자르기
+                    //                        var width = Double(img.size.width)
+                    //                        if(img.size.height<img.size.width) {
+                    //                            width = Double(img.size.height)
+                    //                        }
+                    //                        let height = width*4/3
+                    //
+                    //                        img = img.cropToBounds(width, height: height)
+                    //                        if( Double(Config.getInstance().wid) < width) {
+                    //                            img = img.resizeImage(CGSize(width: 960, height: 1280))
+                    //                        }
+                    //                    }
                     
                     UIImageJPEGRepresentation(img, 100)!.writeToFile(imagePath, atomically: true)
                 } catch let error as NSError {

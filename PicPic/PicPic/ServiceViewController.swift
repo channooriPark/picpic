@@ -30,7 +30,8 @@ class ServiceViewController: UIViewController ,UIWebViewDelegate{
         webView.loadRequest(requestObj)
 //        webView.frame.size = CGSize(width: self.view.frame.size.width, height: webView.scrollView.contentSize.height)
 //        webView.scrollView.contentSize = CGSize(width: self.view.frame.size.width, height: webView.scrollView.contentSize.height)
-        webView.contentMode = .ScaleAspectFit
+        webView.frame.size = CGSize(width: 200, height: webView.scrollView.contentSize.height)
+        webView.scrollView.contentSize = CGSize(width: 200, height: webView.scrollView.contentSize.height)
         print("webView content Size ",webView.scrollView.contentSize)
         print("webView frame   :  ",webView.frame)
     }

@@ -170,7 +170,7 @@ class SecondCategoryViewController: UIViewController, UICollectionViewDataSource
         
         
         cell.idLabel.text = (dic["id"] as? String)
-        cell.dateLabel.text = intervalText
+        cell.dateLabel.text = Config.getInstance().uploadedDate(dic["date"]as! String)//intervalText
         cell.dateLabel.sizeToFit()
         
         let label = ActiveLabel()

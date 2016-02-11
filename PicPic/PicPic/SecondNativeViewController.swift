@@ -20,23 +20,6 @@ class SecondNativeViewController: UIViewController, UICollectionViewDataSource, 
     @IBOutlet weak var categoryTabEnableView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var postInfos: Array<[String: AnyObject]> = []
-    var postGifData: [String: UIImage] = [:] {
-        didSet{
-            if postInfos.count == postGifData.count
-            {
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.collectionView.reloadData()
-                    self._hud.hide(true)
-                    self.collectionView.infiniteScrollingView.stopAnimating()
-                })
-            }
-        }
-    }
-    var currentPage = "1"
-    var _hud: MBProgressHUD = MBProgressHUD()
-    let enabledColor = Config.getInstance().color  //UIColor(red: 148/255, green: 158/255, blue: 241/255, alpha: 1.0)
-    
     var data = [["일상" : UIImage(named: "category_daylife")],
         ["동물": UIImage(named: "category_animal")],
         ["연예인": UIImage(named: "category_celebrities")],
@@ -62,7 +45,12 @@ class SecondNativeViewController: UIViewController, UICollectionViewDataSource, 
         ["스티커": UIImage(named: "category_sticker")],
         ["과학": UIImage(named: "category_science")],
         ["특별한날": UIImage(named: "category_holidays")]]
-    
+
+    let enabledColor = Config.getInstance().color //UIColor(red: 148/255, green: 158/255, blue: 241/255, alpha: 1.0)
+    var _hud: MBProgressHUD = MBProgressHUD()
+    var currentPage = "1"
+    var postInfos: Array<[String: AnyObject]> = []
+    var postGifData: [String: UIImage] = [:]
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -293,7 +281,7 @@ class SecondNativeViewController: UIViewController, UICollectionViewDataSource, 
             
             
             cell.idLabel.text = (dic["id"] as? String)
-            cell.dateLabel.text = intervalText
+            cell.dateLabel.text = Config.getInstance().uploadedDate(dic["date"]as! String)//intervalText
             cell.dateLabel.sizeToFit()
             
             let label = ActiveLabel()

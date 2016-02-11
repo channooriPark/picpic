@@ -24,12 +24,13 @@ class ContentViewController: SubViewController {
         self.navigationController?.navigationBar.addGestureRecognizer(tap)
         
         self.addChildViewController(appdelegate.tabbar)
+        self.addChildViewController(appdelegate.main)
         self.addChildViewController(appdelegate.second)
         self.addChildViewController(appdelegate.alram)
         self.addChildViewController(appdelegate.myfeed)
-        self.addChildViewController(appdelegate.main)
         
         appdelegate.main.view.frame = visibleFrame
+        
         if self.appdelegate.notiType == 0 {
             appdelegate.second.view.hidden = true
             appdelegate.alram.view.hidden = true
@@ -53,31 +54,19 @@ class ContentViewController: SubViewController {
         
         
         
-
-        self.view.addSubview(appdelegate.tabbar.view)
-        self.view.addSubview(appdelegate.second.view)
-        self.view.addSubview(appdelegate.alram.view)
-        self.view.addSubview(appdelegate.myfeed.view)
-        self.view.addSubview(appdelegate.main.view)
         print("contentView Controller")
     }
     
     
     override func viewWillAppear(animated: Bool) {
         self.type = "content"
-        if appdelegate.myfeed.view.hidden == false {
-            print("content      hahahahahahahahahahahahahahahahahahahahahahahahahahaha")
-            appdelegate.testNavi.navigationBarHidden = true
-            appdelegate.tabbar.click5(appdelegate.tabbar.button5)
-            print(appdelegate.testNavi.navigationBarHidden)
-        }
     }
     
     func refresh() {
         print("refresh()")
         if appdelegate.main.view.hidden == false {
-//            appdelegate.main.wkwebView.scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
-//            appdelegate.main.refresh()
+            //appdelegate.main.wkwebView.scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+            appdelegate.main.refresh()
         }else if appdelegate.second.view.hidden == false {
 //            appdelegate.second.wkwebView.scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
 //            if appdelegate.second.followT {

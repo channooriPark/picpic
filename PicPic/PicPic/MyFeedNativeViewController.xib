@@ -8,7 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MyFeedNativeViewController" customModule="PicPic" customModuleProvider="target">
             <connections>
                 <outlet property="collectionView" destination="D1V-cE-QzK" id="kcg-8W-mcc"/>
-                <outlet property="settingButton" destination="u7H-BD-Yee" id="gS8-nO-piU"/>
+                <outlet property="settingButton" destination="u7H-BD-Yee" id="u4M-7m-LwF"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

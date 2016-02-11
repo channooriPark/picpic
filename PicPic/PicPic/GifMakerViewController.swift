@@ -885,7 +885,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             self.view.bringSubviewToFront(self.progressContainerView!)
         }
         
-
+        
         /*self.view.bringSubviewToFront(spring)
         self.spring.startAnimation(true)*/
         //NSThread.sleepForTimeInterval(0.3)
@@ -903,7 +903,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         
         var imgArr = [UIImage]()
         var tempArr = [[UIImage]]()
-//        tempArr = playImageArr
+        //        tempArr = playImageArr
         
         
         let progress = 1.0 / Float(tempArr.count)
@@ -1038,13 +1038,13 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                         }
                         self.progressContainerView.hidden = true
                 })
-            
+                
                 
             })
         })
-    
+        
     }
-
+    
     func image(image: UIImage, didFinishSavingWithError error: NSErrorPointer, contextInfo:UnsafePointer<Void>) {
         if error != nil{
             print(error)
@@ -1768,20 +1768,20 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             
             
             // 촬영구간 편집 jis
-//            for var i=0; i<self.playImageArr.count; i++ {
-//                
-//                let len = self.playImageArr[i].count
-//                
-//                print("Range slider value changed: (\(i) \(self.lowerArr[i+1]) \(self.upperArr[i+1]))")
-//                
-//                let start = Int(Double(len) * self.lowerArr[i+1])
-//                let end = Int(Double(len) * self.upperArr[i+1])
-//                
-//                tempArr.append([UIImage]())
-//                for var j=start; j<end; j++ {
-//                    tempArr[i].append(self.playImageArr[i][j])
-//                }
-//            }
+            //            for var i=0; i<self.playImageArr.count; i++ {
+            //
+            //                let len = self.playImageArr[i].count
+            //
+            //                print("Range slider value changed: (\(i) \(self.lowerArr[i+1]) \(self.upperArr[i+1]))")
+            //
+            //                let start = Int(Double(len) * self.lowerArr[i+1])
+            //                let end = Int(Double(len) * self.upperArr[i+1])
+            //
+            //                tempArr.append([UIImage]())
+            //                for var j=start; j<end; j++ {
+            //                    tempArr[i].append(self.playImageArr[i][j])
+            //                }
+            //            }
             
             
             for var i=0; i<tempArr.count; i++ {
@@ -1831,13 +1831,13 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                     self.appdelegate.main.fire()
                     //self.appdelegate.main.refresh()
                 }else if self.appdelegate.second.view.hidden == false {
-//                    if self.appdelegate.second.webState == "follow" {
-//                        self.appdelegate.second.following()
-//                    }else if self.appdelegate.second.webState == "all" {
-//                        self.appdelegate.second.all()
-//                    }else if self.appdelegate.second.webState == "category" {
-//                        
-//                    }
+                    //                    if self.appdelegate.second.webState == "follow" {
+                    //                        self.appdelegate.second.following()
+                    //                    }else if self.appdelegate.second.webState == "all" {
+                    //                        self.appdelegate.second.all()
+                    //                    }else if self.appdelegate.second.webState == "category" {
+                    //
+                    //                    }
                 }else if self.appdelegate.myfeed.view.hidden == false {
                     self.appdelegate.myfeed.fire()
                     self.navigationController?.navigationBarHidden = true
@@ -1871,13 +1871,13 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                 self.appdelegate.main.fire()
                 //self.appdelegate.main.refresh()
             }else if self.appdelegate.second.view.hidden == false {
-//                if self.appdelegate.second.webState == "follow" {
-//                    self.appdelegate.second.following()
-//                }else if self.appdelegate.second.webState == "all" {
-//                    self.appdelegate.second.all()
-//                }else if self.appdelegate.second.webState == "category" {
-//                    
-//                }
+                //                if self.appdelegate.second.webState == "follow" {
+                //                    self.appdelegate.second.following()
+                //                }else if self.appdelegate.second.webState == "all" {
+                //                    self.appdelegate.second.all()
+                //                }else if self.appdelegate.second.webState == "category" {
+                //
+                //                }
             }else if self.appdelegate.myfeed.view.hidden == false {
                 self.appdelegate.myfeed.fire()
                 self.navigationController?.navigationBarHidden = true
@@ -1970,9 +1970,9 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     
     // 촬영길이 편집 슬라이더
     func rangeSliderValueChanged(rangeSlider: RangeSlider) {
-//        self.lowerArr[selectedCellIndex] = rangeSlider.lowerValue
-//        self.upperArr[selectedCellIndex] = rangeSlider.upperValue
-//        print("Range slider value changed: (\(rangeSlider.lowerValue) \(rangeSlider.upperValue))")
+        //        self.lowerArr[selectedCellIndex] = rangeSlider.lowerValue
+        //        self.upperArr[selectedCellIndex] = rangeSlider.upperValue
+        //        print("Range slider value changed: (\(rangeSlider.lowerValue) \(rangeSlider.upperValue))")
         
         self.lowerArr[selectedCellIndex] = rangeSlider.lowerValue
         self.upperArr[selectedCellIndex] = rangeSlider.upperValue
@@ -2743,7 +2743,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                 self.rangeSlider.hidden = false
                 self.rangeSlider.lowerValue = self.lowerArr[selectedCellIndex]
                 self.rangeSlider.upperValue = self.upperArr[selectedCellIndex]
-
+                
                 
                 log.log("cellArr.count \(cellArr.count)")
                 for var i=0; i<cellArr.count; i++ {
@@ -2936,7 +2936,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         }else {
             return CGSizeMake(80.0, 80.0)
         }
-           // jis
+        // jis
     }
     
     
@@ -3045,7 +3045,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         var eraserImage = playImageArr[0][0]
         let filter = GPUImageBrightnessFilter()
         filter.brightness = 0.02
-//        applyFilter(&eraserImage, filterName: self.filterCurrent)
+        //        applyFilter(&eraserImage, filterName: self.filterCurrent)
         let imageRef = eraserImage.CGImage
         let maskRef = maskImage.image?.CGImage
         

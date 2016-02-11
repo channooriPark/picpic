@@ -10,8 +10,9 @@ import UIKit
 import SwiftyJSON
 import Alamofire
 
-class UserNativeViewController: SubViewController, UICollectionViewDelegate, UICollectionViewDataSource, CHTCollectionViewDelegateWaterfallLayout, TagListCellDelegate {
+class UserNativeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, CHTCollectionViewDelegateWaterfallLayout, TagListCellDelegate {
 
+    let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var backButton: UIButton!
     var userEmail: String!
@@ -43,7 +44,6 @@ class UserNativeViewController: SubViewController, UICollectionViewDelegate, UIC
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.type = "user"
         self.navigationController?.navigationBarHidden = true
     }
     
@@ -279,16 +279,8 @@ class UserNativeViewController: SubViewController, UICollectionViewDelegate, UIC
             cell.cellIndexPath = indexPath
             cell.delegate = self
             
-            let dateFormatter =  NSDateFormatter()
-            dateFormatter.dateFormat = "yyyyMMddHHmmss"
-            let date = dateFormatter.dateFromString(dic["date"] as! String)
-            let interval = NSDate().timeIntervalSinceDate(date!)
-            dateFormatter.dateFormat = "yyyy.MM.dd"
-            let intervalText = (interval / 3600 < 12) ? String(format: "%d시간전", Int(interval / 3600)) : dateFormatter.stringFromDate(date!)
-            
-            
             cell.userIdLabel.text = (dic["id"] as? String)
-            cell.dateLabel.text = intervalText
+            cell.dateLabel.text = Config.getInstance().uploadedDate(dic["date"]as!String) //intervalText
             
             let label = ActiveLabel()
             label.numberOfLines = 0
@@ -318,8 +310,8 @@ class UserNativeViewController: SubViewController, UICollectionViewDelegate, UIC
             cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.width / 2
             cell.profileImageView.layer.masksToBounds = true
             
-            cell.likeCountButton.setTitle(String(format: "좋아요 %d개", dic["like_cnt"] as! Int), forState: .Normal)
-            cell.commentCountButton.setTitle(String(format: "댓글 %d개", dic["com_cnt"] as! Int), forState: .Normal)
+            cell.likeCountButton.setTitle(String(format: "\(self.appdelegate.ment["like"].stringValue) %d\(self.appdelegate.ment["timeline_count"].stringValue)", dic["like_cnt"] as! Int), forState: .Normal)
+            cell.commentCountButton.setTitle(String(format: "\(self.appdelegate.ment["comment"].stringValue) %d\(self.appdelegate.ment["timeline_count"].stringValue)", dic["com_cnt"] as! Int), forState: .Normal)
             
             if (dic["like_yn"] as! String) != "N"
             {

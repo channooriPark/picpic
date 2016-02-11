@@ -74,7 +74,7 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
     var textEmpty = true
     
     
-//    // gif 만들어주는 메소드
+    //    // gif 만들어주는 메소드
     func createGifFromURL(url: NSURL) {
     }
     
@@ -145,8 +145,8 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
         image.addGestureRecognizer(tap)
         self.navigationItem.leftBarButtonItem = backButton
         
-//        self.messageView.text = self.appdelegate.ment["post_write"].stringValue
-//        self.messageView.textColor = UIColor.lightGrayColor()
+        //        self.messageView.text = self.appdelegate.ment["post_write"].stringValue
+        //        self.messageView.textColor = UIColor.lightGrayColor()
         
         let dismissKeyboard = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         self.view.addGestureRecognizer(dismissKeyboard)
@@ -156,7 +156,7 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
         scrollView.scrollIndicatorInsets = contentInsets
         
         messageView.delegate = self
-//        messageView.becomeFirstResponder()
+        //        messageView.becomeFirstResponder()
         let complete : UIBarButtonItem = UIBarButtonItem(title: self.appdelegate.ment["complete"].stringValue, style: UIBarButtonItemStyle.Plain, target: self, action: Selector("showCategoryView"))
         complete.setTitleTextAttributes([NSFontAttributeName:UIFont.systemFontOfSize(15)], forState: .Normal)
         self.navigationItem.rightBarButtonItem  = complete
@@ -182,9 +182,9 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
         categoryViewHeight.constant = 350
         setcategory()
         
-//        facebookButton.hidden = true
-//        facebookImage.hidden = true
-//        facebookLabel.hidden = true
+        //        facebookButton.hidden = true
+        //        facebookImage.hidden = true
+        //        facebookLabel.hidden = true
     }
     
     func showCategoryView(){
@@ -476,7 +476,7 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
     
     // 이전 버튼 눌렀을 때
     @IBAction func movePreview(sender: UIButton) {
-//        self.navigationController?.popViewControllerAnimated(true)
+        //        self.navigationController?.popViewControllerAnimated(true)
         self.navigationController?.navigationBarHidden = false
         if self.appdelegate.myfeed.view.hidden == false {
             self.navigationController?.navigationBarHidden = true
@@ -517,16 +517,16 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
         let upload_url = "http://gif.picpic.world/uploadToServerForPicPic.php"
         let parameters = ["": ""]
         let request = urlRequestWithComponents(upload_url, parameters: parameters, imageData: data_gif)
-//        print(request.0.URLRequest.URLString)
+        //        print(request.0.URLRequest.URLString)
         Alamofire1.manager.upload(request.0, data: request.1)
             .progress { (bytesWritten, totalBytesWritten, totalBytesExpectedToWrite) in
-//                //print("\(totalBytesWritten) / \(totalBytesExpectedToWrite)")
+                //                //print("\(totalBytesWritten) / \(totalBytesExpectedToWrite)")
             }
             .responseJSON(completionHandler: { (request, response, data, error) in
                 print(request,"         ::             ",response,"          ",data)
                 self.dispatch_async_global {
                     if error != nil {
-//                        //print("error: \(error!)")
+                        //                        //print("error: \(error!)")
                     }
                     self.dispatch_async_main {
                         if let dir: NSString = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true).first {
@@ -559,24 +559,24 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
                         })
                         message = ["my_id":self.appdelegate.email,"body":body,"url":self.filename,"tags":tag,"type":"W","user_tags":"","and_tag":"","post_id":""]
                         print("message : ",message)
-//                        connection = URLConnection(serviceCode: 232, message: message)
-//                        readData = connection.connection()
+                        //                        connection = URLConnection(serviceCode: 232, message: message)
+                        //                        readData = connection.connection()
                         self.appdelegate.doIt(232, message: message, callback: { (readData) -> () in
                             if readData["msg"].string! == "success" {
                                 self.post_id = readData["post_id"].stringValue
                                 //self.appdelegate.myfeed.fire()
-
-//                                if self.appdelegate.second.wkwebView != nil {
-//                                    if self.appdelegate.second.webState == "follow" {
-//                                        self.appdelegate.second.following()
-//                                    }else if self.appdelegate.second.webState == "all" {
-//                                        self.appdelegate.second.all()
-//                                    }else if self.appdelegate.second.webState == "category" {
-//                                    }
-//                                }
+                                
+                                //                                if self.appdelegate.second.wkwebView != nil {
+                                //                                    if self.appdelegate.second.webState == "follow" {
+                                //                                        self.appdelegate.second.following()
+                                //                                    }else if self.appdelegate.second.webState == "all" {
+                                //                                        self.appdelegate.second.all()
+                                //                                    }else if self.appdelegate.second.webState == "category" {
+                                //                                    }
+                                //                                }
                                 
                                 self.url = self.filename
-//                                self.facebook()
+                                //                                self.facebook()
                                 self.twitter()
                             }
                         })
@@ -607,7 +607,7 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
                 uploadData.appendString("Content-Disposition: form-data; name=\"\(key)\"\(lineEnd)\(lineEnd)")
                 uploadData.appendString("\(value)\(lineEnd)")
                 uploadData.appendString("\(twoHyphens)\(boundaryConstant)\(lineEnd)")
-//                //print("\(key): \(value)")
+                //                //print("\(key): \(value)")
             }
         }
         //data
@@ -651,9 +651,9 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
         log.log("keyboard show")
         let info: NSDictionary  = notification.userInfo!
         let kbSize = info.valueForKey(UIKeyboardFrameEndUserInfoKey)?.CGRectValue.size
-//        let contentInsets: UIEdgeInsets  = UIEdgeInsetsMake(120.0, 0.0, kbSize!.height, 0.0)
-//        scrollView.contentInset = contentInsets
-//        scrollView.scrollIndicatorInsets = contentInsets
+        //        let contentInsets: UIEdgeInsets  = UIEdgeInsetsMake(120.0, 0.0, kbSize!.height, 0.0)
+        //        scrollView.contentInset = contentInsets
+        //        scrollView.scrollIndicatorInsets = contentInsets
         scrollView.setContentOffset(CGPoint(x: 0, y: 330), animated: true)
         let aRect: CGRect = self.view.frame
         if let keyboardSize = (info.valueForKey(UIKeyboardFrameEndUserInfoKey) as? NSValue)?.CGRectValue() {
@@ -663,10 +663,10 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
             return
         }
         //스크롤이 필요 없다면 그냥 보여짐
-//        if (!CGRectContainsPoint(aRect, activeView!.frame.origin) ) {
-//            let scrollPoint:CGPoint = CGPointMake(0.0, activeView!.frame.origin.y - kbSize!.height)
-//            scrollView.setContentOffset(scrollPoint, animated: true)
-//        }
+        //        if (!CGRectContainsPoint(aRect, activeView!.frame.origin) ) {
+        //            let scrollPoint:CGPoint = CGPointMake(0.0, activeView!.frame.origin.y - kbSize!.height)
+        //            scrollView.setContentOffset(scrollPoint, animated: true)
+        //        }
         log.log("gifView frame   \(gifView.frame)    \(control.frame)")
     }
     
@@ -689,18 +689,18 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
         if let keyboardSize = (info.valueForKey(UIKeyboardFrameEndUserInfoKey) as? NSValue)?.CGRectValue() {
             self.scrollViewBottom.constant -= keyboardSize.size.height
         }
-//        let scrollPoint : CGPoint = CGPointMake(0, 200)
-//        scrollView.setContentOffset(CGPointMake(100,100), animated: true)
+        //        let scrollPoint : CGPoint = CGPointMake(0, 200)
+        //        scrollView.setContentOffset(CGPointMake(100,100), animated: true)
         
-//        aRect.size.height -= kbSize!.height
+        //        aRect.size.height -= kbSize!.height
         if activeView == nil {
             return
         }
         //스크롤이 필요 없다면 그냥 보여짐
-//        if (!CGRectContainsPoint(aRect, activeView!.frame.origin) ) {
-//            let scrollPoint:CGPoint = CGPointMake(0.0, 0.0)
-//            scrollView.setContentOffset(scrollPoint, animated: true)
-//        }
+        //        if (!CGRectContainsPoint(aRect, activeView!.frame.origin) ) {
+        //            let scrollPoint:CGPoint = CGPointMake(0.0, 0.0)
+        //            scrollView.setContentOffset(scrollPoint, animated: true)
+        //        }
         
     }
     
@@ -720,21 +720,21 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
     
     // 텍스트필드 선택시 발생하는 이벤트
     func textViewDidBeginEditing(textView: UITextView) {
-//        if textEmpty {
-//            textView.text = ""
-//            textView.textColor = UIColor.blackColor()
-//        }
+        //        if textEmpty {
+        //            textView.text = ""
+        //            textView.textColor = UIColor.blackColor()
+        //        }
         activeView = textView
-//        self.scrollView.setContentOffset(CGPointMake(0,self.gifView.bounds.size.height), animated: true)
+        //        self.scrollView.setContentOffset(CGPointMake(0,self.gifView.bounds.size.height), animated: true)
     }
     // 텍스트필드에서 다른 곳이 터치 됐을 때 발생하는 이벤트
     func textViewDidEndEditing(textView: UITextView) {
-//        //print("###### textViewDidEndEditing")
-//        if textView.text.isEmpty {
-//            textView.text = self.appdelegate.ment["post_write"].stringValue
-//            textView.textColor = UIColor.lightGrayColor()
-//            textEmpty = true
-//        }
+        //        //print("###### textViewDidEndEditing")
+        //        if textView.text.isEmpty {
+        //            textView.text = self.appdelegate.ment["post_write"].stringValue
+        //            textView.textColor = UIColor.lightGrayColor()
+        //            textEmpty = true
+        //        }
         activeView = nil
     }
     
@@ -777,9 +777,9 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
     
     
     @IBAction func hashTag(sender: AnyObject) {
-//        if textEmpty {
-//            messageView.text = ""
-//        }
+        //        if textEmpty {
+        //            messageView.text = ""
+        //        }
         text_type = TEXT_TYPE_UNMARK
         text_color = text_color_1
         let str = self.messageView.text as String
@@ -794,7 +794,7 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
         messageView.becomeFirstResponder()
         refresh(messageView)
     }
-
+    
     @IBAction func userTag(sender: AnyObject) {
         let usertag = self.storyboard?.instantiateViewControllerWithIdentifier("WriteSearchPageViewController")as! WriteSearchPageViewController
         usertag.typeText = "W"
@@ -806,14 +806,14 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
     
     func replaceText(str:String){
         print("replacetext     ",str)
-//        if textEmpty {
-//            messageView.text = " "
-//        }
+        //        if textEmpty {
+        //            messageView.text = " "
+        //        }
         text_type = TEXT_TYPE_MARK
         let astr = messageView.text as String
-//        if astr.characters.count == 0 {
-//            messageView.text = " "
-//        }
+        //        if astr.characters.count == 0 {
+        //            messageView.text = " "
+        //        }
         
         let strArr = str.componentsSeparatedByString(",")
         for var i = 0; i<strArr.count; i++ {
@@ -866,11 +866,11 @@ extension GIFViewController {
         if( (str.characters.count - range.location) <= 1) { // 커서가 제일 뒤에 있는 경우
             print("text_type  ",text_type)
             if(text == " " || text == "\n") {
-//                if(text_type == TEXT_TYPE_MARKING) {
-                    print("unmark")
-                    text_type = TEXT_TYPE_UNMARK
-                    range_start = range.location
-//                }
+                //                if(text_type == TEXT_TYPE_MARKING) {
+                print("unmark")
+                text_type = TEXT_TYPE_UNMARK
+                range_start = range.location
+                //                }
             } else if(text_type == TEXT_TYPE_NONE) {
                 if(text == "#") {
                     print("hash")
@@ -1025,6 +1025,6 @@ extension GIFViewController {
         } else if(text_type == TEXT_TYPE_MARKING) {
             
         }
-//        realDelegate.textViewDidChange(self)
+        //        realDelegate.textViewDidChange(self)
     }
 }

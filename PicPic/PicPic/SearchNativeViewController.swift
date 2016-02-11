@@ -64,7 +64,7 @@ class SearchNativeViewController: UIViewController, UISearchBarDelegate{
         self.hotUser?.view.removeFromSuperview()
         self.hotUser = nil
         
-        let enabledColor = UIColor(red: 148/255, green: 158/255, blue: 241/255, alpha: 1.0)
+        let enabledColor = Config.getInstance().color //UIColor(red: 148/255, green: 158/255, blue: 241/255, alpha: 1.0)
         
         self.tagButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
         self.userButton.setTitleColor(UIColor(red: 178/255, green: 178/255, blue: 178/255, alpha: 1.0), forState: .Normal)
@@ -93,7 +93,7 @@ class SearchNativeViewController: UIViewController, UISearchBarDelegate{
             self.view.addSubview(self.hotUser!.view)
         }
         
-        let enabledColor = UIColor(red: 148/255, green: 158/255, blue: 241/255, alpha: 1.0)
+        let enabledColor = Config.getInstance().color //UIColor(red: 148/255, green: 158/255, blue: 241/255, alpha: 1.0)
         
         self.tagButton.setTitleColor(UIColor(red: 178/255, green: 178/255, blue: 178/255, alpha: 1.0), forState: .Normal)
         self.userButton.setTitleColor(UIColor.blackColor(), forState: .Normal)

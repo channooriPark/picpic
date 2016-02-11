@@ -10,8 +10,9 @@ import UIKit
 import SwiftyJSON
 import Alamofire
 
-class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, CHTCollectionViewDelegateWaterfallLayout, TagListCellDelegate,UIScrollViewDelegate {
+class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, CHTCollectionViewDelegateWaterfallLayout, TagListCellDelegate {
 
+    @IBOutlet weak var settingButton: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
     var statusbar: UIView!
     var infoDic: [String : AnyObject] = [:]
@@ -35,14 +36,11 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
     var isWaterFall = true
     var _hud: MBProgressHUD = MBProgressHUD()
     let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    @IBOutlet weak var settingButton: UIButton!
     
     override func viewWillAppear(animated: Bool) {
         if !self.view.hidden
         {
-            print("myfeed page not hidden  ")
             self.navigationController?.navigationBarHidden = true
-            self.appdelegate.testNavi.navigationBarHidden = true
         }
 
     }
@@ -62,6 +60,7 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
         
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
+        
         self.collectionView.registerNib(UINib(nibName: "TagCell", bundle: nil), forCellWithReuseIdentifier: "tagCell")
         self.collectionView.registerNib(UINib(nibName: "TagListCell", bundle: nil), forCellWithReuseIdentifier: "tagTimelineCell")
         
@@ -78,8 +77,7 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
         
         self.collectionView.alwaysBounceVertical = true
         self.collectionView.addInfiniteScrollingWithActionHandler({ _ in self.refreshWithAdditionalPage(self.currentPage)})
-        self.refresh()
-        
+        //self.refresh()
     }
     
     override func didReceiveMemoryWarning() {
@@ -138,14 +136,6 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
             })
         })
         
-    }
-    
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        if self.collectionView.contentOffset.y > 150 {
-            self.settingButton.hidden = true
-        }else {
-            self.settingButton.hidden = false
-        }
     }
     
     func refreshWithoutProfileReload(repic: Bool, str: String) // user, repic, 검색
@@ -250,14 +240,13 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let post = appdelegate.storyboard.instantiateViewControllerWithIdentifier("PostPageViewController")as! PostPageViewController
-//        appdelegate.controller.append(post)
+        appdelegate.controller.append(post)
         //            post.index = appdelegate.controller.count - 1
         post.type = "post"
         post.email = appdelegate.email
         post.postId = self.postInfos[indexPath.item]["post_id"] as! String
         
         self.navigationController?.pushViewController(post, animated: true)
-//        self.appdelegate.testNavi.pushViewController(post, animated: true)
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -279,16 +268,8 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
             cell.cellIndexPath = indexPath
             cell.delegate = self
             
-            let dateFormatter =  NSDateFormatter()
-            dateFormatter.dateFormat = "yyyyMMddHHmmss"
-            let date = dateFormatter.dateFromString(dic["date"] as! String)
-            let interval = NSDate().timeIntervalSinceDate(date!)
-            dateFormatter.dateFormat = "yyyy.MM.dd"
-            let intervalText = (interval / 3600 < 12) ? String(format: "%d시간전", Int(interval / 3600)) : dateFormatter.stringFromDate(date!)
-            
-            
             cell.userIdLabel.text = (dic["id"] as? String)
-            cell.dateLabel.text = intervalText
+            cell.dateLabel.text =  Config.getInstance().uploadedDate(dic["date"] as! String) //intervalText
             
             let label = ActiveLabel()
             label.numberOfLines = 0
@@ -314,13 +295,15 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
             cell.gifImageView.image = img
             
             cell.playCountLabel.text = String(dic["play_cnt"] as! Int)
-            //gif image cell 셀마다 캐싱해주는 프레임워크 이거가지고 이미지 댓글 이용하면 된다
             cell.profileImageView.sd_setImageWithURL(NSURL(string: "http://gif.picpic.world/" + (dic["profile_picture"] as! String)))
             cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.width / 2
             cell.profileImageView.layer.masksToBounds = true
             
-            cell.likeCountButton.setTitle(String(format: "좋아요 %d개", dic["like_cnt"] as! Int), forState: .Normal)
-            cell.commentCountButton.setTitle(String(format: "댓글 %d개", dic["com_cnt"] as! Int), forState: .Normal)
+            cell.lastCommentImageView.layer.cornerRadius = cell.profileImageView.frame.width / 2
+            cell.lastCommentImageView.layer.masksToBounds = true
+            
+            cell.likeCountButton.setTitle(String(format: "\(self.appdelegate.ment["like"].stringValue) %d\(self.appdelegate.ment["timeline_count"].stringValue)", dic["like_cnt"] as! Int), forState: .Normal)
+            cell.commentCountButton.setTitle(String(format: "\(self.appdelegate.ment["comment"].stringValue) %d\(self.appdelegate.ment["timeline_count"].stringValue)", dic["com_cnt"] as! Int), forState: .Normal)
             
             if (dic["like_yn"] as! String) != "N"
             {
@@ -400,6 +383,14 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
         return (self.isWaterFall) ? imgSize : CGSizeMake(imgSize.width, height)
     }
     
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if self.collectionView.contentOffset.y > 150 {
+            self.settingButton.hidden = true
+        }else {
+            self.settingButton.hidden = false 
+        }
+    }
     
     
     func collectionView(collectionView: UICollectionView!, layout collectionViewLayout: UICollectionViewLayout!, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
@@ -570,6 +561,8 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
         self.navigationController?.presentViewController(setting, animated: true, completion: nil)
     }
 
+    
+    
     
 
 }

@@ -36,6 +36,7 @@ class TagListCell: UICollectionViewCell {
     
     var cellIndexPath: NSIndexPath!
     var delegate: TagListCellDelegate?
+    let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -61,8 +62,8 @@ class TagListCell: UICollectionViewCell {
         self.lastCommentTitleLabel.text = nil
         self.lastCommentTextLabel.text = nil
         
-        self.likeCountButton.setTitle("좋아요 0개", forState: .Normal)
-        self.commentCountButton.setTitle("댓글 0개", forState: .Normal)
+        self.likeCountButton.setTitle("\(self.appdelegate.ment["like"].stringValue) 0\(self.appdelegate.ment["timeline_count"].stringValue)", forState: .Normal)
+        self.commentCountButton.setTitle("\(self.appdelegate.ment["comment"].stringValue) 0\(self.appdelegate.ment["timeline_count"].stringValue)", forState: .Normal)
         
         for view in self.bodyView.subviews
         {

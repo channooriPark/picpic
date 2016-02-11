@@ -328,7 +328,7 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
                 }
             }
         }
-        //MyFeed NativeViewController.Swift 참조해서 다시 짜기
+        
         
         if cell.urlState {
             cell.imageComViewSet { (image) -> Void in

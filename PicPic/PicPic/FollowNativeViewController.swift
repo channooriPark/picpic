@@ -20,7 +20,6 @@ class FollowNativeViewController: UIViewController, UITableViewDelegate, UITable
     var tagId: String!
     var type: FollowType!
     var datas: Array<[String: String]> = []
-    let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     @IBOutlet weak var tableView: UITableView!
     
     override func viewWillAppear(animated: Bool) {
@@ -116,31 +115,16 @@ class FollowNativeViewController: UIViewController, UITableViewDelegate, UITable
         // Dispose of any resources that can be recreated.
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 65
-    }
-    
     func back()
     {
-        var count = (self.navigationController?.viewControllers.count)!-2
-        if count < 0 {
-            count = 0
-        }
-        print(count)
-        let a = self.navigationController?.viewControllers[count] as! SubViewController
-        if a.type == "tag" || a.type == "post" || a.type == "user" || a.type == "search" || a.type == "tag_name" {
-            self.navigationController?.navigationBarHidden = true
-        }else {
-            self.navigationController?.navigationBarHidden = false
-        }
-        self.appdelegate.tabbar.view.hidden = false
-        if !self.appdelegate.myfeed.view.hidden {
-            self.navigationController?.navigationBarHidden = true
-        }
         self.navigationController?.popViewControllerAnimated(true)
     }
     
 
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 65
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.datas.count
     }

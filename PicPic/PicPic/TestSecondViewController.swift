@@ -32,12 +32,6 @@ class TestSecondViewController: SubViewController , UIScrollViewDelegate{
     var currentPoint:CGFloat!
     
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        appdelegate.testNavi.navigationBarHidden = false
-    }
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         if appdelegate.locale == "ko_KR" {

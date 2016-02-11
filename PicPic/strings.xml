@@ -113,8 +113,7 @@
     <string name="popup_confirm">확인</string>
     <string name="popup_cancel">취소</string>
     <string name="video_not_search">동영상이 없습니다.</string>
-    <string name="popup_delete">삭제하시겠습니까?</string>
-    <string name="popup_block">차단하시겠습니까?</string>
+    
     
     <string name="popup2_edit">수정하기</string>
     <string name="popup2_delete">삭제하기</string>

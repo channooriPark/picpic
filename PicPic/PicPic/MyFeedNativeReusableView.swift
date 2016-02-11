@@ -95,7 +95,7 @@ class MyFeedNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
         leftButton.titleLabel?.font = UIFont.boldSystemFontOfSize(15)
         rightButton.titleLabel?.font = UIFont.systemFontOfSize(15)
         
-        leftButtonEnableView.backgroundColor = Config.getInstance().color//UIColor(red: 148/255, green: 158/255, blue: 241/255, alpha: 1.0)
+        leftButtonEnableView.backgroundColor = Config.getInstance().color //UIColor(red: 148/255, green: 158/255, blue: 241/255, alpha: 1.0)
         rightButtonEnableView.backgroundColor = UIColor.whiteColor()
         
         let str = self.searchBar.text ?? ""
@@ -124,6 +124,7 @@ class MyFeedNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
         layout.columnCount = 1
         layout.itemRenderDirection = CHTCollectionViewWaterfallLayoutItemRenderDirection.ShortestFirst
         self.parent.isWaterFall = false
+        self.parent.collectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
         self.parent.collectionView.collectionViewLayout = layout
         self.parent.collectionView.reloadData()
     }

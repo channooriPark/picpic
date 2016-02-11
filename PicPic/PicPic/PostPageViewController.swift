@@ -62,6 +62,7 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate{
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true)
         self.navigationController?.navigationBarHidden = true
     }
     
@@ -405,18 +406,16 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate{
 //            self.navigationController?.navigationBarHidden = true
 //        }else {
 //            self.navigationController?.navigationBarHidden = false
-//            self.appdelegate.testNavi.navigationBarHidden = false
 //        }
 //        
 //        if !self.appdelegate.myfeed.view.hidden {
-//            print("myfeed")
-//            self.appdelegate.testNavi.navigationBarHidden = true
+//            self.navigationController?.navigationBarHidden = true
 //        }
 //        
 //        self.appdelegate.tabbar.view.hidden = false
         self.postImage.enterBackground()
         self.postImage.gifRemoveObserver()
-        self.appdelegate.testNavi?.popViewControllerAnimated(true)
+        self.navigationController?.popViewControllerAnimated(true)
         UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
     }
     
