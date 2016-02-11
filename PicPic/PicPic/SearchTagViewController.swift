@@ -32,7 +32,7 @@ class SearchTagViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.tagDatas.count == 1
         {
-            if self.tagDatas.first!["tag_name"] as! String == "null"
+            if self.tagDatas.first!["tag_str"] as! String == "null"
             {
                 return 0
             }
@@ -50,7 +50,7 @@ class SearchTagViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = self.tableView.dequeueReusableCellWithIdentifier("searchTagCell") as! SearchTagCell
         let dic = self.tagDatas[indexPath.row]
-        cell.tagLabel.text = dic["tag_name"] as? String
+        cell.tagLabel.text = "#" + (dic["tag_str"] as! String)
         
         return cell
     }
@@ -59,7 +59,7 @@ class SearchTagViewController: UIViewController, UITableViewDelegate, UITableVie
         let dic = self.tagDatas[indexPath.row]
         
         let vc = TagNativeViewController()
-        vc.tagName = dic["tag_name"] as! String
+        vc.tagName = dic["tag_str"] as! String
         
         self.parentViewController?.navigationController?.pushViewController(vc, animated: true)
     }
@@ -67,11 +67,19 @@ class SearchTagViewController: UIViewController, UITableViewDelegate, UITableVie
     func setTableWithNewString(str: String)
     {
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        let message = JSON(["my_id" : appdelegate.email, "str_list" : [["str" : str]], "type" : "T", "page" : "1"])
-        appdelegate.doIt(515, message: message, callback: {(json) in
-            if json["tag"].type != .Null && json["tag"].stringValue != "null"
+        
+        let message = JSON(["tag_name" : str,"page" : "1"])
+        
+        
+        appdelegate.doIt(501, message: message, callback: {(json) in
+            if json["data"].type == .Null || json["data"].stringValue == "null"
             {
-                self.tagDatas = json["tag"].arrayObject as! Array<[String : AnyObject]>
+                self.tagDatas = []
+                self.tableView.reloadData()
+            }
+            else
+            {
+                self.tagDatas = json["data"].arrayObject as! Array<[String : AnyObject]>
                 self.tableView.reloadData()
             }
         })

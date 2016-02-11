@@ -206,7 +206,7 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
         let code = self.isRepic ? 510 : 511
         
         appdelegate.doIt(code, message: mes, callback: {(json) in
-            if json["data"].type == .Null
+            if json["data"].type == .Null || json["data"].stringValue == "null"
             {
                 self._hud.hide(true)
                 self.collectionView.infiniteScrollingView.stopAnimating()

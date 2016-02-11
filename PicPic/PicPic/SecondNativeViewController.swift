@@ -227,6 +227,7 @@ class SecondNativeViewController: UIViewController, UICollectionViewDataSource, 
         {
             let vc = SecondCategoryViewController()
             vc.category = self.data[indexPath.item].keys.first!
+            vc.categoryNum = "\(indexPath.item + 1)"
             
             self.navigationController?.pushViewController(vc, animated: true)
         }
