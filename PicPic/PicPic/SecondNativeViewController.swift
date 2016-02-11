@@ -35,7 +35,7 @@ class SecondNativeViewController: UIViewController {
     }
     var currentPage = "1"
     var _hud: MBProgressHUD = MBProgressHUD()
-    let enabledColor = UIColor(red: 148/255, green: 158/255, blue: 241/255, alpha: 1.0)
+    let enabledColor = Config.getInstance().color  //UIColor(red: 148/255, green: 158/255, blue: 241/255, alpha: 1.0)
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)

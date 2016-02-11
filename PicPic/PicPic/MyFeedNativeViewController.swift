@@ -10,7 +10,7 @@ import UIKit
 import SwiftyJSON
 import Alamofire
 
-class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, CHTCollectionViewDelegateWaterfallLayout, TagListCellDelegate {
+class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, CHTCollectionViewDelegateWaterfallLayout, TagListCellDelegate,UIScrollViewDelegate {
 
     @IBOutlet weak var collectionView: UICollectionView!
     var statusbar: UIView!
@@ -34,11 +34,15 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
     var currentString = ""
     var isWaterFall = true
     var _hud: MBProgressHUD = MBProgressHUD()
+    let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    @IBOutlet weak var settingButton: UIButton!
     
     override func viewWillAppear(animated: Bool) {
         if !self.view.hidden
         {
+            print("myfeed page not hidden  ")
             self.navigationController?.navigationBarHidden = true
+            self.appdelegate.testNavi.navigationBarHidden = true
         }
     }
     
@@ -57,7 +61,6 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
         
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
-        
         self.collectionView.registerNib(UINib(nibName: "TagCell", bundle: nil), forCellWithReuseIdentifier: "tagCell")
         self.collectionView.registerNib(UINib(nibName: "TagListCell", bundle: nil), forCellWithReuseIdentifier: "tagTimelineCell")
         
@@ -75,6 +78,7 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
         self.collectionView.alwaysBounceVertical = true
         self.collectionView.addInfiniteScrollingWithActionHandler({ _ in self.refreshWithAdditionalPage(self.currentPage)})
         self.refresh()
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -133,6 +137,14 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
             })
         })
         
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if self.collectionView.contentOffset.y > 150 {
+            self.settingButton.hidden = true
+        }else {
+            self.settingButton.hidden = false
+        }
     }
     
     func refreshWithoutProfileReload(repic: Bool, str: String) // user, repic, 검색
@@ -237,13 +249,14 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let post = appdelegate.storyboard.instantiateViewControllerWithIdentifier("PostPageViewController")as! PostPageViewController
-        appdelegate.controller.append(post)
+//        appdelegate.controller.append(post)
         //            post.index = appdelegate.controller.count - 1
         post.type = "post"
         post.email = appdelegate.email
         post.postId = self.postInfos[indexPath.item]["post_id"] as! String
         
         self.navigationController?.pushViewController(post, animated: true)
+//        self.appdelegate.testNavi.pushViewController(post, animated: true)
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {

@@ -41,9 +41,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
     var main : HomeNativeViewController!
     var testNavi : UINavigationController!
     var alram : AlramViewController!
-    var second : TestSecondViewController! //SecondNativeViewController!
+    var second : SecondNativeViewController! //TestSecondViewController!
     var camera : CameraViewController!
-    var myfeed : MyFeedNativeViewController!//MyFeedPageViewController!
+    var myfeed : MyFeedNativeViewController! //MyFeedPageViewController!
     var signin : UINavigationController!
     var launch : LaunchViewController!
     
@@ -680,7 +680,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
         tabbar = TabBarTestViewController()
         main = HomeNativeViewController()
         alram = self.storyboard.instantiateViewControllerWithIdentifier("AlramViewController")as! AlramViewController
-        second = TestSecondViewController() //SecondNativeViewController()
+        second = SecondNativeViewController() //TestSecondViewController()
         camera = self.storyboard.instantiateViewControllerWithIdentifier("CameraViewController")as! CameraViewController
         myfeed = MyFeedNativeViewController()//MyFeedPageViewController()
         login = self.storyboard.instantiateViewControllerWithIdentifier("LoginViewController")as! LoginViewController
@@ -713,9 +713,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
         tabbar = TabBarTestViewController()
         main = HomeNativeViewController()
         alram = self.storyboard.instantiateViewControllerWithIdentifier("AlramViewController")as! AlramViewController
-        second = TestSecondViewController() //SecondNativeViewController()
+        second = SecondNativeViewController() //TestSecondViewController()
         camera = self.storyboard.instantiateViewControllerWithIdentifier("CameraViewController")as! CameraViewController
-        myfeed = MyFeedNativeViewController()//MyFeedPageViewController()
+        myfeed = MyFeedNativeViewController() //MyFeedPageViewController()
         login = self.storyboard.instantiateViewControllerWithIdentifier("LoginViewController")as! LoginViewController
         testNavi = self.storyboard.instantiateViewControllerWithIdentifier("testNavi")as! UINavigationController
     }

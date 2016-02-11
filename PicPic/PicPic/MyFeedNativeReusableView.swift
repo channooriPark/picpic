@@ -95,7 +95,7 @@ class MyFeedNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
         leftButton.titleLabel?.font = UIFont.boldSystemFontOfSize(15)
         rightButton.titleLabel?.font = UIFont.systemFontOfSize(15)
         
-        leftButtonEnableView.backgroundColor = UIColor(red: 148/255, green: 158/255, blue: 241/255, alpha: 1.0)
+        leftButtonEnableView.backgroundColor = Config.getInstance().color//UIColor(red: 148/255, green: 158/255, blue: 241/255, alpha: 1.0)
         rightButtonEnableView.backgroundColor = UIColor.whiteColor()
         
         let str = self.searchBar.text ?? ""
@@ -109,7 +109,7 @@ class MyFeedNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
         rightButton.titleLabel?.font = UIFont.boldSystemFontOfSize(15)
         leftButton.titleLabel?.font = UIFont.systemFontOfSize(15)
         
-        rightButtonEnableView.backgroundColor = UIColor(red: 148/255, green: 158/255, blue: 241/255, alpha: 1.0)
+        rightButtonEnableView.backgroundColor = Config.getInstance().color //UIColor(red: 148/255, green: 158/255, blue: 241/255, alpha: 1.0)
         leftButtonEnableView.backgroundColor = UIColor.whiteColor()
         
         let str = self.searchBar.text ?? ""

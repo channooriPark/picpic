@@ -10,7 +10,7 @@ import UIKit
 import SwiftyJSON
 import Alamofire
 
-class TagNativeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, CHTCollectionViewDelegateWaterfallLayout, TagListCellDelegate{
+class TagNativeViewController: SubViewController, UICollectionViewDelegate, UICollectionViewDataSource, CHTCollectionViewDelegateWaterfallLayout, TagListCellDelegate{
 
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -39,6 +39,7 @@ class TagNativeViewController: UIViewController, UICollectionViewDelegate, UICol
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        self.type = "tag"
         self.navigationController?.navigationBarHidden = true
     }
     
