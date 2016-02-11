@@ -395,25 +395,25 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate{
     }
     
     func backTo() {
-        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
-        var count = (self.navigationController?.viewControllers.count)!-2
-        if count < 0 {
-            count = 0
-        }
-        let a = self.navigationController?.viewControllers[count] as! SubViewController
-        if a.type == "tag" || a.type == "post" || a.type == "user" || a.type == "search" || a.type == "tag_name" {
-            self.navigationController?.navigationBarHidden = true
-        }else {
-            self.navigationController?.navigationBarHidden = false
-            self.appdelegate.testNavi.navigationBarHidden = false
-        }
-        
-        if !self.appdelegate.myfeed.view.hidden {
-            print("myfeed")
-            self.appdelegate.testNavi.navigationBarHidden = true
-        }
-        
-        self.appdelegate.tabbar.view.hidden = false
+//        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
+//        var count = (self.navigationController?.viewControllers.count)!-2
+//        if count < 0 {
+//            count = 0
+//        }
+//        let a = self.navigationController?.viewControllers[count] as! SubViewController
+//        if a.type == "tag" || a.type == "post" || a.type == "user" || a.type == "search" || a.type == "tag_name" {
+//            self.navigationController?.navigationBarHidden = true
+//        }else {
+//            self.navigationController?.navigationBarHidden = false
+//            self.appdelegate.testNavi.navigationBarHidden = false
+//        }
+//        
+//        if !self.appdelegate.myfeed.view.hidden {
+//            print("myfeed")
+//            self.appdelegate.testNavi.navigationBarHidden = true
+//        }
+//        
+//        self.appdelegate.tabbar.view.hidden = false
         self.postImage.enterBackground()
         self.postImage.gifRemoveObserver()
         self.appdelegate.testNavi?.popViewControllerAnimated(true)

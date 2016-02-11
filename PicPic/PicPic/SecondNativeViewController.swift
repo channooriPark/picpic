@@ -37,6 +37,33 @@ class SecondNativeViewController: UIViewController, UICollectionViewDataSource, 
     var _hud: MBProgressHUD = MBProgressHUD()
     let enabledColor = Config.getInstance().color  //UIColor(red: 148/255, green: 158/255, blue: 241/255, alpha: 1.0)
     
+    var data = [["일상" : UIImage(named: "category_daylife")],
+        ["동물": UIImage(named: "category_animal")],
+        ["연예인": UIImage(named: "category_celebrities")],
+        ["감정": UIImage(named: "category_emotion")],
+        ["애니": UIImage(named: "category_animation")],
+        ["푸드": UIImage(named: "category_food")],
+        ["패션": UIImage(named: "category_fashion")],
+        ["뷰티": UIImage(named: "category_beauty")],
+        ["예술": UIImage(named: "category_artdesign")],
+        ["스포츠": UIImage(named: "category_sports")],
+        ["영화": UIImage(named: "category_movie")],
+        ["TV": UIImage(named: "category_tv")],
+        ["게임": UIImage(named: "category_game")],
+        ["만화": UIImage(named: "category_cartoon")],
+        ["반응": UIImage(named: "category_reaction")],
+        ["운송수단": UIImage(named: "category_vehicle")],
+        ["음악": UIImage(named: "category_music")],
+        ["표현": UIImage(named: "category_expression")],
+        ["행동": UIImage(named: "category_action")],
+        ["관심사": UIImage(named: "category_interest")],
+        ["년대": UIImage(named: "category_decades")],
+        ["자연": UIImage(named: "category_nature")],
+        ["스티커": UIImage(named: "category_sticker")],
+        ["과학": UIImage(named: "category_science")],
+        ["특별한날": UIImage(named: "category_holidays")]]
+    
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
