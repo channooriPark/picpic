@@ -90,13 +90,15 @@ class ContentViewController: SubViewController {
     
     
     @IBAction func search(sender:UIBarButtonItem){
-        let search = self.storyboard?.instantiateViewControllerWithIdentifier("SearchPageViewController")as! SearchPageViewController
-        self.appdelegate.controller.append(search)
+//        let search = self.storyboard?.instantiateViewControllerWithIdentifier("SearchPageViewController")as! SearchPageViewController
+//        self.appdelegate.controller.append(search)
 //        search.index = self.appdelegate.controller.count - 1
-        search.type = "search"
-        self.appdelegate.testNavi.pushViewController(search, animated: true)
-        self.appdelegate.testNavi.navigationBarHidden = true
-        self.appdelegate.tabbar.view.hidden = true
+//        search.type = "search"
+//        self.appdelegate.testNavi.pushViewController(search, animated: true)
+//        self.appdelegate.testNavi.navigationBarHidden = true
+//        self.appdelegate.tabbar.view.hidden = true
+        let search = SearchNativeViewController()
+        self.navigationController?.pushViewController(search, animated: true)
     }
 }
 

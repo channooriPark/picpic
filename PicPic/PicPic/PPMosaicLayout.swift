@@ -80,7 +80,7 @@ class PPMosaicLayout: UICollectionViewLayout {
             {
                 self.growColumnHeightsBy(headerLayoutAttributes.frame.size.height + interitemSpacing, section: sectionIndex)
             }
-            
+
             // Calculate Cell attributes in each section
 
             for cellIndex in 0 ..< self.collectionView!.numberOfItemsInSection(sectionIndex)
@@ -322,15 +322,26 @@ class PPMosaicLayout: UICollectionViewLayout {
             }
         }
         
-        var indexOfShortestColumns = twoFlatIndicesWithHeight.first!.0
+        var smallestKey = twoFlatIndicesWithHeight.keys.first!
         
-        for (key, height) in twoFlatIndicesWithHeight.enumerate()
+        for key in twoFlatIndicesWithHeight.keys
         {
-            if height.1 < twoFlatIndicesWithHeight.first!.1
+            if key < smallestKey
+            {
+                smallestKey = key
+            }
+        }
+        
+        var indexOfShortestColumns = smallestKey
+        
+        for (key, height) in twoFlatIndicesWithHeight
+        {
+            if height < twoFlatIndicesWithHeight[indexOfShortestColumns]
             {
                 indexOfShortestColumns = key
             }
         }
+
         
         return indexOfShortestColumns
     }

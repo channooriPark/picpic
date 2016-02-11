@@ -11,7 +11,7 @@
                 <outlet property="allTabEnableView" destination="7OW-fc-NDn" id="KkS-H4-zmy"/>
                 <outlet property="categoryTabButton" destination="t9b-V8-sl7" id="FeF-2f-u0u"/>
                 <outlet property="categoryTabEnableView" destination="fTt-bA-IGj" id="bQh-Hi-2BY"/>
-                <outlet property="collectionView" destination="nJI-DO-Zl9" id="SBt-N8-dPH"/>
+                <outlet property="collectionView" destination="hij-lw-fqy" id="nD0-P2-Afe"/>
                 <outlet property="followTabButton" destination="WbF-iZ-OFL" id="Qwc-Gy-WOy"/>
                 <outlet property="followTabEnableView" destination="0xb-bx-cWf" id="zZn-ie-mGF"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -82,15 +82,19 @@
                         <constraint firstAttribute="height" constant="3" id="up2-US-fSf"/>
                     </constraints>
                 </view>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="nJI-DO-Zl9">
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="hij-lw-fqy">
                     <rect key="frame" x="0.0" y="45" width="321" height="523"/>
-                    <color key="backgroundColor" red="0.8666666666666667" green="0.8666666666666667" blue="0.8666666666666667" alpha="1" colorSpace="calibratedRGB"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Njw-vi-7ht">
+                    <color key="backgroundColor" red="0.86666666670000003" green="0.86666666670000003" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="0Xj-Au-eVe">
                         <size key="itemSize" width="50" height="50"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="l80-aH-by7"/>
+                        <outlet property="delegate" destination="-1" id="Ol6-zL-tfb"/>
+                    </connections>
                 </collectionView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -98,26 +102,26 @@
                 <constraint firstItem="eAo-Tu-Zrc" firstAttribute="leading" secondItem="WbF-iZ-OFL" secondAttribute="trailing" id="3FP-mQ-i8x"/>
                 <constraint firstItem="0xb-bx-cWf" firstAttribute="centerX" secondItem="WbF-iZ-OFL" secondAttribute="centerX" id="9uX-Oc-NSo"/>
                 <constraint firstItem="t9b-V8-sl7" firstAttribute="width" secondItem="eAo-Tu-Zrc" secondAttribute="width" id="AEf-F6-PZi"/>
-                <constraint firstItem="nJI-DO-Zl9" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="AP5-Xj-ufB"/>
-                <constraint firstAttribute="trailing" secondItem="nJI-DO-Zl9" secondAttribute="trailing" id="HSZ-KT-rDB"/>
                 <constraint firstItem="fTt-bA-IGj" firstAttribute="bottom" secondItem="t9b-V8-sl7" secondAttribute="bottom" id="IFT-lu-yyG"/>
+                <constraint firstItem="hij-lw-fqy" firstAttribute="top" secondItem="fTt-bA-IGj" secondAttribute="bottom" id="Inf-Qc-byf"/>
                 <constraint firstItem="7OW-fc-NDn" firstAttribute="centerX" secondItem="eAo-Tu-Zrc" secondAttribute="centerX" id="K5N-Gu-mop"/>
                 <constraint firstItem="t9b-V8-sl7" firstAttribute="width" secondItem="WbF-iZ-OFL" secondAttribute="width" id="K8l-z2-Gjn"/>
-                <constraint firstAttribute="bottom" secondItem="nJI-DO-Zl9" secondAttribute="bottom" id="OIV-rG-e8h"/>
                 <constraint firstItem="WbF-iZ-OFL" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Svg-4u-BjP"/>
                 <constraint firstItem="eAo-Tu-Zrc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="ULB-wN-frW"/>
                 <constraint firstItem="0xb-bx-cWf" firstAttribute="width" secondItem="WbF-iZ-OFL" secondAttribute="width" id="W12-Tb-vaO"/>
+                <constraint firstAttribute="trailing" secondItem="hij-lw-fqy" secondAttribute="trailing" id="Yi5-nc-DKn"/>
                 <constraint firstItem="t9b-V8-sl7" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="dGS-zf-u6B"/>
                 <constraint firstItem="eAo-Tu-Zrc" firstAttribute="leading" secondItem="WbF-iZ-OFL" secondAttribute="trailing" id="dJ7-Rn-4kQ"/>
                 <constraint firstItem="7OW-fc-NDn" firstAttribute="bottom" secondItem="eAo-Tu-Zrc" secondAttribute="bottom" id="eew-eO-68G"/>
                 <constraint firstItem="0xb-bx-cWf" firstAttribute="bottom" secondItem="WbF-iZ-OFL" secondAttribute="bottom" id="fiq-T2-klm"/>
-                <constraint firstItem="nJI-DO-Zl9" firstAttribute="top" secondItem="fTt-bA-IGj" secondAttribute="bottom" id="jAB-2l-1Ft"/>
                 <constraint firstAttribute="trailing" secondItem="t9b-V8-sl7" secondAttribute="trailing" id="jcR-k7-uqd"/>
                 <constraint firstItem="t9b-V8-sl7" firstAttribute="leading" secondItem="eAo-Tu-Zrc" secondAttribute="trailing" id="knE-KY-JCU"/>
                 <constraint firstItem="fTt-bA-IGj" firstAttribute="centerX" secondItem="t9b-V8-sl7" secondAttribute="centerX" id="p5O-9D-FXO"/>
                 <constraint firstItem="fTt-bA-IGj" firstAttribute="width" secondItem="t9b-V8-sl7" secondAttribute="width" id="pRc-bk-lPS"/>
                 <constraint firstItem="t9b-V8-sl7" firstAttribute="leading" secondItem="eAo-Tu-Zrc" secondAttribute="trailing" id="rjk-hb-FDr"/>
                 <constraint firstItem="7OW-fc-NDn" firstAttribute="width" secondItem="eAo-Tu-Zrc" secondAttribute="width" id="s9g-PA-bMQ"/>
+                <constraint firstAttribute="bottom" secondItem="hij-lw-fqy" secondAttribute="bottom" id="uMP-Zv-6tY"/>
+                <constraint firstItem="hij-lw-fqy" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="vlk-8C-hVl"/>
                 <constraint firstItem="WbF-iZ-OFL" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="yCT-yb-0Ee"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>

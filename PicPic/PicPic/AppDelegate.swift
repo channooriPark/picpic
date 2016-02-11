@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
     //MainView
     var contentview : ContentViewController!
     var tabbar : TabBarTestViewController!
-    var main : HomeNativeViewController!
+    var main : HomeNativeViewController! //MainInterViewController!
     var testNavi : UINavigationController!
     var alram : AlramViewController!
     var second : SecondNativeViewController! //TestSecondViewController!
@@ -678,7 +678,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
     func loadView() {
         contentview = ContentViewController()
         tabbar = TabBarTestViewController()
-        main = HomeNativeViewController()
+        main = HomeNativeViewController() //MainInterViewController!
         alram = self.storyboard.instantiateViewControllerWithIdentifier("AlramViewController")as! AlramViewController
         second = SecondNativeViewController() //TestSecondViewController()
         camera = self.storyboard.instantiateViewControllerWithIdentifier("CameraViewController")as! CameraViewController
@@ -711,7 +711,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
     func reloadView(){
         contentview = ContentViewController()
         tabbar = TabBarTestViewController()
-        main = HomeNativeViewController()
+        main = HomeNativeViewController() //MainInterViewController!
         alram = self.storyboard.instantiateViewControllerWithIdentifier("AlramViewController")as! AlramViewController
         second = SecondNativeViewController() //TestSecondViewController()
         camera = self.storyboard.instantiateViewControllerWithIdentifier("CameraViewController")as! CameraViewController

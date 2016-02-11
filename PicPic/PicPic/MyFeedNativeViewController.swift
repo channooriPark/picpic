@@ -44,6 +44,7 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
             self.navigationController?.navigationBarHidden = true
             self.appdelegate.testNavi.navigationBarHidden = true
         }
+
     }
     
     override func viewDidLoad() {
