@@ -28,7 +28,7 @@ class HomeTagCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        self.gifImageView.image = nil
+        self.gifImageView.image = UIImage(named: "non_interest")
         self.tagLabel.text = nil
     }
     

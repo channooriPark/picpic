@@ -30,6 +30,9 @@
                                     <constraint firstAttribute="width" constant="20" id="jWO-d9-jFl"/>
                                 </constraints>
                                 <state key="normal" image="icon_find_plus"/>
+                                <connections>
+                                    <action selector="followButtonTouched" destination="gTV-IL-0wX" eventType="touchUpInside" id="sik-VK-3Oe"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JIt-Iw-TUZ">
                                 <rect key="frame" x="60" y="8" width="101" height="16"/>
@@ -37,36 +40,42 @@
                                     <constraint firstAttribute="height" constant="16" id="31T-HQ-KmH"/>
                                     <constraint firstAttribute="width" constant="101" id="oJc-Jc-tTo"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P7g-9Z-UEh">
-                                <rect key="frame" x="60" y="37" width="50" height="14"/>
+                                <rect key="frame" x="60" y="37" width="120" height="14"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="50" id="OEJ-kU-nnz"/>
+                                    <constraint firstAttribute="width" constant="120" id="OEJ-kU-nnz"/>
                                     <constraint firstAttribute="height" constant="14" id="YFJ-ZF-o81"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <color key="textColor" red="0.4823529412" green="0.4823529412" blue="0.4823529412" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_timeline_play" translatesAutoresizingMaskIntoConstraints="NO" id="Ou6-NE-I3R">
-                                <rect key="frame" x="189" y="4" width="11" height="11"/>
+                                <rect key="frame" x="218" y="4" width="11" height="11"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="11" id="2rl-Mu-j0g"/>
                                     <constraint firstAttribute="width" constant="11" id="sUZ-1h-flh"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12345" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xzl-8f-knC">
-                                <rect key="frame" x="201" y="4" width="34" height="12"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xzl-8f-knC">
+                                <rect key="frame" x="230" y="4" width="5" height="12"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="34" id="APY-JD-Rt8"/>
+                                    <constraint firstAttribute="width" constant="12" id="APY-JD-Rt8"/>
                                     <constraint firstAttribute="height" constant="12" id="Mfw-Cf-skx"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                 <color key="textColor" red="0.4823529412" green="0.4823529412" blue="0.4823529412" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="APY-JD-Rt8"/>
+                                        <exclude reference="Mfw-Cf-skx"/>
+                                    </mask>
+                                </variation>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -93,7 +102,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wKY-Hf-ZHo">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="non_interest" translatesAutoresizingMaskIntoConstraints="NO" id="wKY-Hf-ZHo">
                         <rect key="frame" x="0.0" y="55" width="240" height="147"/>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b7T-vj-wd5">
@@ -146,13 +155,13 @@
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nJF-gW-HYN">
-                        <rect key="frame" x="37" y="235" width="5.5" height="13.5"/>
+                        <rect key="frame" x="37" y="235" width="6" height="14"/>
                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                         <color key="textColor" red="0.4823529412" green="0.4823529412" blue="0.4823529412" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LfV-Py-XGP">
-                        <rect key="frame" x="117" y="235" width="5.5" height="13.5"/>
+                        <rect key="frame" x="117" y="235" width="6" height="14"/>
                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                         <color key="textColor" red="0.4823529412" green="0.4823529412" blue="0.4823529412" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -197,9 +206,11 @@
                 <outlet property="followButton" destination="MOC-0f-ecs" id="Y3T-zh-Zsx"/>
                 <outlet property="gifImageView" destination="wKY-Hf-ZHo" id="E6W-xU-RmP"/>
                 <outlet property="idLabel" destination="JIt-Iw-TUZ" id="Dce-FE-GIB"/>
+                <outlet property="likeButton" destination="sFa-EI-w1R" id="zLb-lg-SIW"/>
                 <outlet property="likeCountLabel" destination="nJF-gW-HYN" id="yzz-IC-GdB"/>
                 <outlet property="playCountLabel" destination="xzl-8f-knC" id="1hk-FY-t4n"/>
                 <outlet property="profileImageView" destination="LoL-IU-2kb" id="sig-2q-a7Y"/>
+                <outlet property="userView" destination="0gn-PR-4We" id="EQI-26-sQk"/>
             </connections>
             <point key="canvasLocation" x="230" y="158"/>
         </collectionViewCell>
@@ -210,5 +221,6 @@
         <image name="icon_timeline_like" width="21" height="18"/>
         <image name="icon_timeline_play" width="13" height="13"/>
         <image name="icon_timeline_share_c" width="19" height="21"/>
+        <image name="non_interest" width="359" height="359"/>
     </resources>
 </document>

@@ -10,6 +10,7 @@ import UIKit
 
 class SecondCell: UICollectionViewCell {
 
+    @IBOutlet weak var userView: UIView!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var followButton: UIButton!
     @IBOutlet weak var idLabel: UILabel!
@@ -20,18 +21,68 @@ class SecondCell: UICollectionViewCell {
     @IBOutlet weak var bodyViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var likeCountLabel: UILabel!
     @IBOutlet weak var commentCountLabel: UILabel!
-    
+    @IBOutlet weak var likeButton: UIButton!
+    var cellIndexPath: NSIndexPath!
+    var delegate: TagListCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        let tap = UITapGestureRecognizer()
+        tap.addTarget(self, action: "userViewTouched:")
+        self.userView.addGestureRecognizer(tap)
+    }
+    
+    override func prepareForReuse() {
+        self.profileImageView.image = nil
+        self.followButton.setImage(UIImage(named: "icon_find_plus"), forState: .Normal)
+        self.idLabel.text = nil
+        self.dateLabel.text = nil
+        self.playCountLabel.text = nil
+        self.gifImageView.image = UIImage(named: "non_interest")
+        
+        for view in bodyView.subviews
+        {
+            view.removeFromSuperview()
+        }
+        
+        self.likeButton.setImage(UIImage(named: "icon_timeline_like"), forState: .Normal)
+        
+        self.likeCountLabel.text = "0"
+        self.commentCountLabel.text = "0"
+    }
+    func userViewTouched(sender: AnyObject) {
+        self.delegate?.userViewTouched(self.cellIndexPath)
     }
 
+    @IBAction func followButtonTouched() {
+        self.delegate?.followButtonTouched(self.cellIndexPath)
+        if self.followButton.imageForState(.Normal) == UIImage(named: "icon_find_plus")
+        {
+            self.followButton.setImage(UIImage(named: "icon_find_plus_c"), forState: .Normal)
+        }
+        else
+        {
+            self.followButton.setImage(UIImage(named: "icon_find_plus"), forState: .Normal)
+        }
+        self.followButton.layoutIfNeeded()
+    }
     @IBAction func likeButtonTouched() {
+        self.delegate?.likeButtonTouched(self.cellIndexPath)
+        if self.likeButton.imageForState(.Normal) == UIImage(named: "icon_timeline_like")
+        {
+            self.likeButton.setImage(UIImage(named: "icon_timeline_like_c"), forState: .Normal)
+        }
+        else
+        {
+            self.likeButton.setImage(UIImage(named: "icon_timeline_like"), forState: .Normal)
+        }
     }
     @IBAction func commentButtonTouched() {
+        self.delegate?.commentButtonTouched(self.cellIndexPath)
     }
     @IBAction func shareButtonTouched() {
+        self.delegate?.shareButtonTouched(self.cellIndexPath)
     }
     
 }

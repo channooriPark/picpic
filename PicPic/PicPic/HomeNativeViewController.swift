@@ -15,9 +15,10 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
     @IBOutlet weak var collectionView: UICollectionView!
     
     var tagData: Array<[String: String]>  = []
-    var gifData: [String : UIImage] = [ : ]{
+    var gifData: [String : UIImage] = [ : ]
+    var friendData: Array<[String: String]> = []{
         didSet{
-            if self.dataAllReceived()
+            if friendData.count == 12 && self.tagData.count > 0
             {
                 dispatch_async(dispatch_get_main_queue(), {
                     self._hud.hide(true)
@@ -26,18 +27,7 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
             }
         }
     }
-    var friendData: Array<[String: String]> = []
-    var imageData: [String : UIImage] = [ : ]{
-        didSet{
-            if self.dataAllReceived()
-            {
-                dispatch_async(dispatch_get_main_queue(), {
-                    self._hud.hide(true)
-                    self.collectionView.reloadData()
-                })
-            }
-        }
-    }
+    
     
     var _hud: MBProgressHUD = MBProgressHUD()
     
@@ -75,7 +65,6 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
     {
         self._hud.show(true)
         self.gifData = [:]
-        self.imageData = [:]
         self.tagData = []
         self.friendData = []
         
@@ -107,25 +96,25 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
                             self.friendData.append(dic.dictionaryObject as! [String : String])
                         }
                         
-                        for (index, dic) in self.tagData.enumerate()
-                        {
-                            let url = dic["url"]!.substringWithRange(dic["url"]!.startIndex ..< dic["url"]!.endIndex.advancedBy(-6)).stringByAppendingString("_1.gif")
-                            
-                            Alamofire.request(.GET, "http://gif.picpic.world/" + url, parameters: ["foo": "bar"]).response { request, response, data, error in
-                                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
-                                    self.gifData["\(index)"] = UIImage.gifWithData(data!) ?? UIImage()
-                                })
-                            }
-                            
-                        }
-                        
-                        
-                        for (index, dic) in self.friendData.enumerate()
-                        {
-                            Alamofire.request(.GET, "http://gif.picpic.world/" + dic["profile_picture"]!, parameters: ["foo": "bar"]).response { request, response, data, error in
-                                self.imageData["\(index)"] = UIImage(data:data!)
-                            }
-                        }
+//                        for (index, dic) in self.tagData.enumerate()
+//                        {
+//                            let url = dic["url"]!.substringWithRange(dic["url"]!.startIndex ..< dic["url"]!.endIndex.advancedBy(-6)).stringByAppendingString("_1.gif")
+//                            
+//                            Alamofire.request(.GET, "http://gif.picpic.world/" + url, parameters: ["foo": "bar"]).response { request, response, data, error in
+//                                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+//                                    self.gifData["\(index)"] = UIImage.gifWithData(data!) ?? UIImage()
+//                                })
+//                            }
+//                            
+//                        }
+//                        
+//                        
+//                        for (index, dic) in self.friendData.enumerate()
+//                        {
+//                            Alamofire.request(.GET, "http://gif.picpic.world/" + dic["profile_picture"]!, parameters: ["foo": "bar"]).response { request, response, data, error in
+//                                self.imageData["\(index)"] = UIImage(data:data!)
+//                            }
+//                        }
                         
                         
                     })
@@ -138,42 +127,8 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
     
     func fire()
     {
-        self.refresh()
     }
     
-    func dataAllReceived() -> Bool
-    {
-        var gArray = [Bool](count: self.tagData.count, repeatedValue: false)
-        for key in self.gifData.keys
-        {
-            gArray[Int(key)!] = true
-        }
-        print("g ", terminator: "")
-        for (index, received) in gArray.enumerate()
-        {
-            if !received
-            {
-                print("\(index) ", terminator:"")
-            }
-        }
-        print("")
-        
-        var fArray = [Bool](count: self.friendData.count, repeatedValue: false)
-        for key in self.imageData.keys
-        {
-            fArray[Int(key)!] = true
-        }
-        print("f ", terminator: "")
-        for (index, received) in fArray.enumerate()
-        {
-            if !received
-            {
-                print("\(index) ", terminator: "")
-            }
-        }
-        print("")
-        return self.tagData.count == self.gifData.count && self.tagData.count != 0 && self.imageData.count == 12
-    }
     
     
     func followClicked(indexPath: NSIndexPath) {
@@ -214,7 +169,7 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: PPMosaicLayout, heightForHeaderInSection section: Int) -> CGFloat {
-        if gifData.count < 18 { return 0.0 }
+        if tagData.count < 18 { return 0.0 }
         
         if section == 1 || section == 3 || section == 4
         {
@@ -225,7 +180,7 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if gifData.count < 18 { return 0 }
+        if tagData.count < 18 { return 0 }
         
         if section == 0
         {
@@ -237,7 +192,7 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
         }
         else if section == 4
         {
-            return self.gifData.count - 18 >= 0 ? self.gifData.count - 18 : 0
+            return self.tagData.count - 18 >= 0 ? self.tagData.count - 18 : 0
         }
         
         return 6
@@ -262,7 +217,23 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
                 index += self.collectionView.numberOfItemsInSection(0) + self.collectionView.numberOfItemsInSection(2)
             }
 
-            cell.gifImageView.image = self.gifData["\(index)"]
+            if self.gifData["\(index)"] == nil
+            {
+                let dic = self.tagData[index]
+                let url = dic["url"]!.substringWithRange(dic["url"]!.startIndex ..< dic["url"]!.endIndex.advancedBy(-6)).stringByAppendingString("_1.gif")
+                Alamofire.request(.GET, "http://gif.picpic.world/" + url, parameters: ["foo": "bar"]).response { request, response, data, error in
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+                        self.gifData["\(index)"] = UIImage.gifWithData(data!) ?? UIImage()
+                        dispatch_async(dispatch_get_main_queue(), {
+                            cell.gifImageView.image = self.gifData["\(index)"]
+                        })
+                    })
+                }
+            }
+            else
+            {
+                cell.gifImageView.image = self.gifData["\(index)"]
+            }
             let text = self.tagData[index]["tag_name"]
             cell.tagLabel.font = (index == 0 || index == 7 || index == 12) ? UIFont.systemFontOfSize(18) : UIFont.systemFontOfSize(13)
             cell.tagLabel.text = "#\(text!)"
@@ -279,8 +250,12 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
             var index = indexPath.item
             
             if indexPath.section == 3 {index += 6}
+            
+            if self.friendData.count < index + 1{
+                return cell
+            }
 
-            cell.profileImageView.image = self.imageData["\(index)"]
+            cell.profileImageView.sd_setImageWithURL(NSURL(string: "http://gif.picpic.world/" + self.friendData[index]["profile_picture"]!), placeholderImage: UIImage(named: "noprofile"))
             cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.width / 2
             cell.profileImageView.layer.masksToBounds = true
             
