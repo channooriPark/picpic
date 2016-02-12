@@ -94,6 +94,9 @@ class CommentCell: UITableViewCell {
     
     func setBody(){
         if data["url"].string == "" {
+            urlState = false
+            bodyLabel.backgroundColor = UIColor.redColor()
+            print("이미지댓글 아니야",urlState)
             urlString = nil
             imageComView.frame.size.height = 0
         }else {
@@ -119,6 +122,7 @@ class CommentCell: UITableViewCell {
             print("setBody bodyHeight    :   ",self.bodyHeight)
             self.height = 94 + (bodyLabel.frame.size.height - 50)
             if urlState {
+                print("이미지 댓글 있어",urlState)
                 let width = self.upperContentView.frame.size.width - 56 - 10
                 let height = width/3*4
                 self.bodyHeight = bodyLabel.frame.size.height + bodyLabel.frame.origin.y
@@ -247,63 +251,79 @@ class CommentCell: UITableViewCell {
     var isImageFirst = true
     func imageComViewSet(completionHandler : ((image : UIImage) -> Void)) {
         if urlState {
-            if self.imageData == nil {
-                let imageURL = NSURL(string: self.imageURL.gifImageUrl(data["url"].stringValue))
-                let request : NSURLRequest = NSURLRequest(URL: imageURL!)
-                let mainQueue = NSOperationQueue.mainQueue()
-                NSURLConnection.sendAsynchronousRequest(request, queue: mainQueue, completionHandler: { (response, data, error) -> Void in
-                    
-                    if error == nil {
-                        self.imageData = data
-                        let image = UIImage.animatedImageWithAnimatedGIFData(data!)
-                        if image != nil {
-                            let width = self.upperContentView.frame.size.width - 56 - 10
-                            var imagewidth = image.size.width - width
-                            var imageHeight = image.size.height - (image.size.width - imagewidth)
-                            if image.size.width > image.size.height {
-                                imagewidth = width
-                                imageHeight = imagewidth/4*3
-                            }else if image.size.width < image.size.height {
-                                imagewidth = width
-                                imageHeight = imagewidth/3*4
-                            }else {
-                                imagewidth = width
-                                imageHeight = width
-                            }
-                            let posY = self.bodyHeight
-                            print("posY",posY," height ",self.bodyHeight," y ",self.bodyLabel.frame.origin.y)
-                            self.imageComView.frame = CGRectMake(self.bodyLabel.frame.origin.x, posY, self.bodyLabel.frame.size.width-10, imageHeight)
-                            self.imageComView.frame = CGRectMake(self.bodyLabel.frame.origin.x, posY, self.bodyLabel.frame.size.width-10, imageHeight)
-                            print("likeCountSpace : ",self.likeCountSpace.constant)
-                            self.height = 109 + (self.bodyLabel.frame.size.height - 60) + self.imageComView.frame.size.height + 10
-                            print("body Label Height : ",self.bodyLabel.frame.size.height)
-                            print("image    height      ",self.height)
-                            print(self.imageComView.frame)
-                            self.comment.height[self.index] = self.height
-                            self.imageCom = image
-                            self.imageComView.image = image
-                        }
-                        completionHandler(image: image!)
-                        self.isImageFirst = false
+            
+            let imageURL = NSURL(string: self.imageURL.gifImageUrl(data["url"].stringValue))
+            self.imageComView.sd_setImageWithURL(imageURL, completed: { (image, error, Type, url) -> Void in
+                print(image)
+                if image != nil {
+                    let width = self.upperContentView.frame.size.width - 56 - 10
+                    var imagewidth = image.size.width - width
+                    var imageHeight = image.size.height - (image.size.width - imagewidth)
+                    if image.size.width > image.size.height {
+                        imagewidth = width
+                        imageHeight = imagewidth/4*3
+                    }else if image.size.width < image.size.height {
+                        imagewidth = width
+                        imageHeight = imagewidth/3*4
                     }else {
-                        print("image comment error  :  ",error)
+                        imagewidth = width
+                        imageHeight = width
                     }
-                })
-            }else {
-                self.imageComView.image = UIImage.animatedImageWithAnimatedGIFData(self.imageData)
-                self.height = 109 + (self.bodyLabel.frame.size.height - 60) + self.imageComView.frame.size.height + 10
-                self.comment.height[self.index] = self.height
-                
-                
-                self.upperContentView.bringSubviewToFront(self.likeCountLabel)
-//                print("likeCountSpace : ",self.likeCountSpace.constant)
-//                print("bodyLabel Frame",self.bodyLabel.frame)
-//                print("imageComView Frame",self.imageComView.frame)
-                print("bodyHeight : ",self.bodyHeight)
-                print("\(self.index)  height : ",self.height)
-//                print("upperContentView frame : ",self.upperContentView.frame)
-                
-            }
+                    let posY = self.bodyHeight
+                    print("posY",posY," height ",self.bodyHeight," y ",self.bodyLabel.frame.origin.y)
+                    self.imageComView.frame = CGRectMake(self.bodyLabel.frame.origin.x, posY, imagewidth, imageHeight)
+                    self.imageComView.frame = CGRectMake(self.bodyLabel.frame.origin.x, posY, imagewidth, imageHeight)
+                    print("likeCountSpace : ",self.likeCountSpace.constant)
+                    self.height = 109 + (self.bodyLabel.frame.size.height - 60) + self.imageComView.frame.size.height + 10
+                    print("body Label Height : ",self.bodyLabel.frame.size.height)
+                    print("image    height      ",self.height)
+                    print(self.imageComView.frame)
+                    self.comment.height[self.index] = self.height
+                    self.imageCom = image
+                    self.imageComView.image = image
+                    
+                }
+                completionHandler(image: image!)
+                self.isImageFirst = false
+            })
+            
+            
+            
+//            if self.imageData == nil {
+//                
+//                
+//                
+//                
+//                
+//                
+//                
+//                let request : NSURLRequest = NSURLRequest(URL: imageURL!)
+//                let mainQueue = NSOperationQueue.mainQueue()
+//                NSURLConnection.sendAsynchronousRequest(request, queue: mainQueue, completionHandler: { (response, data, error) -> Void in
+//                    
+//                    if error == nil {
+//                        self.imageData = data
+//                        
+////                        let image = UIImage.animatedImageWithAnimatedGIFData(data!)
+//                    }else {
+//                        print("image comment error  :  ",error)
+//                    }
+//                })
+//            }else {
+//                self.imageComView.image = UIImage.animatedImageWithAnimatedGIFData(self.imageData)
+//                self.height = 109 + (self.bodyLabel.frame.size.height - 60) + self.imageComView.frame.size.height + 10
+//                self.comment.height[self.index] = self.height
+//                
+//                
+//                self.upperContentView.bringSubviewToFront(self.likeCountLabel)
+////                print("likeCountSpace : ",self.likeCountSpace.constant)
+////                print("bodyLabel Frame",self.bodyLabel.frame)
+////                print("imageComView Frame",self.imageComView.frame)
+//                print("bodyHeight : ",self.bodyHeight)
+//                print("\(self.index)  height : ",self.height)
+////                print("upperContentView frame : ",self.upperContentView.frame)
+//                
+//            }
             
         }
     }

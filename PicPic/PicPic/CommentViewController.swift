@@ -95,6 +95,7 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         comTableView.dataSource = self
         comTextField.delegate = self
         
+        //내글의 댓글인지 남 글의 댓글인지 판단하기 위해서 사용
         let message : JSON = ["my_id":my_id,"post_id":post_id]
         self.appdelegate.doIt(504, message: message) { (readData) -> () in
             if self.appdelegate.email == readData["email"].stringValue {
@@ -126,14 +127,14 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         
 //        self.galleryButton.hidden = true
         
-//        let message1 : JSON = ["my_id":self.appdelegate.email,"com_id":"REPLY0000007046","post_id":self.post_id,"body":"","com_form":"D","user_tags":""]
-//        
-//        print("message    ",message1)
-//        self.appdelegate.doIt(231, message: message1, callback: { (readData) -> () in
-//            if readData["msg"].string! == "success" {
-//                print("Delete    readData : ",readData)
-//            }
-//        })
+        let message1 : JSON = ["my_id":self.appdelegate.email,"com_id":"REPLY0000008354","post_id":self.post_id,"body":"","com_form":"D","user_tags":""]
+        
+        print("message    ",message1)
+        self.appdelegate.doIt(231, message: message1, callback: { (readData) -> () in
+            if readData["msg"].string! == "success" {
+                print("Delete    readData : ",readData)
+            }
+        })
 
         
     }
@@ -329,16 +330,21 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
             }
         }
         
-        
-        if cell.urlState {
-            cell.imageComViewSet { (image) -> Void in
-                self.height[indexPath.row] = cell.height
-                self.tableView(tableView, heightForRowAtIndexPath: indexPath)
-                if cell.isImageFirst {
-                    tableView.reloadData()
+        if Rowdata["url"].stringValue != "" {
+            if cell.urlState {
+                cell.imageComViewSet { (image) -> Void in
+                    self.height[indexPath.row] = cell.height
+                    self.tableView(tableView, heightForRowAtIndexPath: indexPath)
+                    if cell.isImageFirst {
+                        tableView.reloadData()
+                    }
                 }
             }
+        }else {
+            cell.imageComView = nil
+            cell.imageComView.removeFromSuperview()
         }
+        
         
         cell.delegate = self
         
@@ -403,30 +409,33 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
             filename = ""
         }
         
-        var message : JSON = ["url":self.filename]
-        self.appdelegate.doIt(233, message: message, callback: { (readData) -> () in
-            print(readData)
-            print("ok")
-        })
-        var com_form = self.comWrite
-        if self.comWrite == "E" {
-            com_form = "E"
-        }
-        if let text = self.comTextField.text {
-            if text != "" {
-                var message : JSON = ["my_id":self.appdelegate.email,"com_id":self.com_id,"post_id":self.post_id,"body":text,"com_form":com_form,"user_tags":"","url":self.filename]
-                self.appdelegate.doIt(231, message: message, callback: { (readData) -> () in
-                    if readData["msg"].string! == "success"{
-                        message = ["my_id":self.appdelegate.email,"post_id":self.post_id,"page":"1"]
-                        self.appdelegate.doIt(321, message: message, callback: { (readData) -> () in
-                            self.dataArray.removeAll()
-                            self.getData(readData)
-                            self.comTextField.text = ""
-                        })
-                    }
-                })
+        if filename == "" {
+            var message : JSON = ["url":self.filename]
+            self.appdelegate.doIt(233, message: message, callback: { (readData) -> () in
+                print(readData)
+                print("ok")
+            })
+            var com_form = self.comWrite
+            if self.comWrite == "E" {
+                com_form = "E"
+            }
+            if let text = self.comTextField.text {
+                if text != "" {
+                    var message : JSON = ["my_id":self.appdelegate.email,"com_id":self.com_id,"post_id":self.post_id,"body":text,"com_form":com_form,"user_tags":"","url":self.filename]
+                    self.appdelegate.doIt(231, message: message, callback: { (readData) -> () in
+                        if readData["msg"].string! == "success"{
+                            message = ["my_id":self.appdelegate.email,"post_id":self.post_id,"page":"1"]
+                            self.appdelegate.doIt(321, message: message, callback: { (readData) -> () in
+                                self.dataArray.removeAll()
+                                self.getData(readData)
+                                self.comTextField.text = ""
+                            })
+                        }
+                    })
+                }
             }
         }
+        
         
         
         
@@ -594,11 +603,41 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
             data, response, error in
             
             if error != nil {
+                print(error)
                 return
             }
+            
             // Print out reponse body
             let responseString = NSString(data: data!, encoding: NSUTF8StringEncoding)
-            
+            print(responseString)
+            if responseString == "success" {
+                var message : JSON = ["url":self.filename]
+                self.appdelegate.doIt(233, message: message, callback: { (readData) -> () in
+                    print(readData)
+                    print("ok")
+                })
+                var com_form = self.comWrite
+                if self.comWrite == "E" {
+                    com_form = "E"
+                }
+                if let text = self.comTextField.text {
+                    if text != "" {
+                        var message : JSON = ["my_id":self.appdelegate.email,"com_id":self.com_id,"post_id":self.post_id,"body":text,"com_form":com_form,"user_tags":"","url":self.filename]
+                        self.appdelegate.doIt(231, message: message, callback: { (readData) -> () in
+                            if readData["msg"].string! == "success"{
+                                self.filename = ""
+                                self.comImage.image = nil
+                                message = ["my_id":self.appdelegate.email,"post_id":self.post_id,"page":"1"]
+                                self.appdelegate.doIt(321, message: message, callback: { (readData) -> () in
+                                    self.dataArray.removeAll()
+                                    self.getData(readData)
+                                    self.comTextField.text = ""
+                                })
+                            }
+                        })
+                    }
+                }
+            }
             var err: NSError?
             do {
                 var json = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers) as? NSDictionary

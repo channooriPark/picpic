@@ -17,49 +17,34 @@
 */
 
 /*!
- @header
- 카카오 관련 이미지들
+ @header KakaoPushMessageObject.h
+ Push 전송 시 보낼 메시지 객체
  */
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
+#import "KakaoPushMessagePropertyForApns.h"
+#import "KakaoPushMessagePropertyForGcm.h"
 
 /*!
- 카카오 관련 이미지들
+ @class KakaoPushMessageObject
+ @discussion Push 전송 시 보낼 메시지 객체
  */
-@interface KOImages : NSObject
+@interface KakaoPushMessageObject : NSObject
 
 /*!
- 버튼용 카카오 미니로고
+ * @property forApns
+ * @abstract iOS 기기에 보낼 메시지
  */
-+ (UIImage *)kakaoLogoForButton;
+@property(nonatomic, readonly) KakaoPushMessagePropertyForApns *forApns;
 
 /*!
- 카카오 로고
+ * @property forGcm
+ * @abstract Android 기기에 보낼 메시지
  */
-+ (UIImage *)kakaoLogo;
+@property(nonatomic, readonly) KakaoPushMessagePropertyForGcm *forGcm;
 
-/*!
- 카카오톡 아이콘
- */
-+ (UIImage *)kakaoTalkIconForButton;
+- (id)initWithApnsProperty:(KakaoPushMessagePropertyForApns *)forApns
+               gcmProperty:(KakaoPushMessagePropertyForGcm *)forGcm;
 
-/*!
- 카카오스토리 아이콘
- */
-+ (UIImage *)kakaoStoryIconForButton;
-
-/*!
- 카카오계정 아이콘
- */
-+ (UIImage *)kakaoAccountIconForButton;
-
-/*!
- 웹뷰용
- */
-+ (UIImage *)webViewBackButton;
-
-+ (UIImage *)webViewButton;
-
-+ (UIImage *)webViewHead;
+- (NSDictionary *)asDictionary;
 
 @end
+

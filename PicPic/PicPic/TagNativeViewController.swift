@@ -108,8 +108,8 @@ class TagNativeViewController: UIViewController, UICollectionViewDelegate, UICol
                     self._hud.hide(true)
                     self.collectionView.infiniteScrollingView.stopAnimating()
                     self.collectionView.infiniteScrollingView.enabled = false
-                    let alert = UIAlertController(title: "Alert", message: "존재하지않는 태그입니다.", preferredStyle: UIAlertControllerStyle.Alert)
-                    alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: {_ in self.backTouched()}))
+                    let alert = UIAlertController(title: nil, message: self.appdelegate.ment["toast_msg_not_exists_tag"].stringValue, preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: self.appdelegate.ment["popup_confirm"].stringValue, style: UIAlertActionStyle.Default, handler: {_ in self.backTouched()}))
                     self.presentViewController(alert, animated: true, completion: nil)
                     return
                 }

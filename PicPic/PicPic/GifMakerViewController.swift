@@ -181,6 +181,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     var isScratch : Bool = false
     var addImageUrlArr : [Int:UIImage] = [Int:UIImage]()
     var resizeType = 0 //4:3 = 0 / 1:1 = 1 / 16:9 = 2  고화질 저장 할 때 사용하는 type 변수
+    @IBOutlet weak var collectionSpace: NSLayoutConstraint!
     
     override func viewDidDisappear(animated: Bool) {
         self.view = nil
@@ -1406,6 +1407,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     @IBAction func actEditor(sender: UIButton) {
         //        //print("에디터 오픈")
         self.collectionHei.constant = 70
+        self.collectionSpace.constant = 70
         
         self.collectionView.hidden = false
         self.editplus.hidden = false
@@ -1576,6 +1578,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         selectedCellIndex = -1
         collections = []
         self.collectionHei.constant = self.playspeedHei.constant
+        self.collectionSpace.constant = 0
         
         self.collectionView.hidden = false
         self.rangeSlider.hidden = true

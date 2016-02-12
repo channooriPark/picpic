@@ -16,13 +16,32 @@
  * limitations under the License.
  */
 
+/*!
+ @header KOAccessTokenInfo.h
+ access token의 정보를 담고 있는 구조체.
+ */
+
 #import <Foundation/Foundation.h>
 
-@interface NSDictionary (SafeValue)
+/*!
+ @class KOAccessTokenInfo
+ @discussion access token의 정보를 담고 있는 구조체.
+ */
+@interface KOAccessTokenInfo : NSObject
 
-- (id)safeValueForKey:(NSString *)key;
-- (id)safeObjectForKey:(NSString *)key;
-- (NSNumber *)safeNumberForKey:(NSString *)key;
-- (NSDictionary *)safeValueDictionary;
+/*!
+ @property ID
+ @abstract 해당 access token에 해당되는 사용자의 ID
+ */
+@property(nonatomic, readonly) NSUInteger ID;
+
+/*!
+ @property expiresInMillis
+ @abstract 해당 access token의 남은 만료시간. 0보다 큰 milli-second가 반환됨.
+ */
+@property(nonatomic, readonly) NSUInteger expiresInMillis;
+
+
++ (instancetype)responseWithDictionary:(NSDictionary *)dictionary;
 
 @end

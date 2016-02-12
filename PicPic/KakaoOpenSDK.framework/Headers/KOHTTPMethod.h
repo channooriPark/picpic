@@ -1,5 +1,5 @@
 /**
-* Copyright 2015 Kakao Corp.
+* Copyright 2015  Kakao Corp.
 *
 * Redistribution and modification in source or binary forms are not permitted without specific prior written permission.
 *
@@ -16,50 +16,13 @@
 * limitations under the License.
 */
 
-/*!
- @header
- 카카오 관련 이미지들
- */
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
+#ifndef kakao_open_sdk_ios_KOHTTPMethod_h
+#define kakao_open_sdk_ios_KOHTTPMethod_h
 
-/*!
- 카카오 관련 이미지들
- */
-@interface KOImages : NSObject
+typedef enum : NSInteger {
+    KORequestHTTPMethodGet = 0,
+    KORequestHTTPMethodPost = 1,
+    KORequestHTTPMethodDelete = 2
+} KORequestHTTPMethod;
 
-/*!
- 버튼용 카카오 미니로고
- */
-+ (UIImage *)kakaoLogoForButton;
-
-/*!
- 카카오 로고
- */
-+ (UIImage *)kakaoLogo;
-
-/*!
- 카카오톡 아이콘
- */
-+ (UIImage *)kakaoTalkIconForButton;
-
-/*!
- 카카오스토리 아이콘
- */
-+ (UIImage *)kakaoStoryIconForButton;
-
-/*!
- 카카오계정 아이콘
- */
-+ (UIImage *)kakaoAccountIconForButton;
-
-/*!
- 웹뷰용
- */
-+ (UIImage *)webViewBackButton;
-
-+ (UIImage *)webViewButton;
-
-+ (UIImage *)webViewHead;
-
-@end
+#endif

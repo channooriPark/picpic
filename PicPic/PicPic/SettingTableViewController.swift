@@ -78,8 +78,11 @@ class SettingTableViewController: UITableViewController , UIAlertViewDelegate{
                 self.performSegueWithIdentifier("logout", sender: self)
             }
         }
-        
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
+    
+    
+    
     
     @IBAction func accountSetting(sender: AnyObject) {
         var message : JSON = ["email":self.appdelegate.email,"close_yn":""]
