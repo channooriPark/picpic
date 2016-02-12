@@ -17,32 +17,33 @@
 */
 
 /*!
- @header KOStoryCommentInfo.h
- 카카오스토리의 댓글 정보를 담고 있는 구조체.
+ @header KOStoryActorInfo.h
+ 카카오스토리의 작성자 정보를 담고 있는 구조체.
  */
 
 #import <Foundation/Foundation.h>
-#import "KOStoryActorInfo.h"
 
 /*!
- @class KOStoryCommentInfo
- @discussion 카카오스토리의 댓글 정보를 담고 있는 구조체.
+ @class KOStoryActorInfo
+ @discussion 카카오스토리의 작성자 정보를 담고 있는 구조체.
  */
-@interface KOStoryCommentInfo : NSObject
+@interface KOStoryActorInfo : NSObject <NSCopying>
 
 /*!
- @property text
- @abstract 댓글의 텍스트 내용
+ @property profileThumbnailUrl
+ @abstract 작성자의 썸네일에 대한 URL
  */
-@property(nonatomic, readonly) NSString *text;
+@property(nonatomic, readonly) NSString *profileThumbnailUrl;
 
 /*!
- @property writer
- @abstract 댓글의 작성자
+ @property displayName
+ @abstract 작성자의 표시되는 이름
  */
-@property(nonatomic, readonly) KOStoryActorInfo *writer;
+@property(nonatomic, readonly) NSString *displayName;
 
-- (id)initWithText:(NSString *)text
-            writer:(KOStoryActorInfo *)writer;
+- (id)initWithProfileThumbnailUrl:(NSString *)profileThumbnailUrl
+                      displayName:(NSString *)displayName;
+
+- (id)copyWithZone:(NSZone *)zone;
 
 @end

@@ -196,6 +196,54 @@ class CommentCell: UITableViewCell {
     }
     
     
+    //이미지 댓글 관련
+    /*
+    if urlState {
+    //            self.imageComView.sd_setImageWithURL(NSURL(string: self.data["url"].stringValue))
+    self.imageComView.sd_setImageWithURL(NSURL(string: self.imageURL.gifImageUrl(self.data["url"].stringValue)), placeholderImage: nil, completed: { (image, error, type, url) -> Void in
+    if image != nil {
+    let width = self.upperContentView.frame.size.width - 56 - 10
+    var imagewidth = image!.size.width - width
+    var imageHeight = image!.size.height - (image!.size.width - imagewidth)
+    if image!.size.width > image!.size.height {
+    imagewidth = width
+    imageHeight = imagewidth/4*3
+    }else if image!.size.width < image!.size.height {
+    imagewidth = width
+    imageHeight = imagewidth/3*4
+    }else {
+    imagewidth = width
+    imageHeight = width
+    }
+    let posY = self.bodyHeight
+    print("posY",posY," height ",self.bodyHeight," y ",self.bodyLabel.frame.origin.y)
+    self.imageComView.frame = CGRectMake(self.bodyLabel.frame.origin.x, posY, self.bodyLabel.frame.size.width-10, imageHeight)
+    self.imageComView.frame = CGRectMake(self.bodyLabel.frame.origin.x, posY, self.bodyLabel.frame.size.width-10, imageHeight)
+    print("likeCountSpace : ",self.likeCountSpace.constant)
+    self.height = 109 + (self.bodyLabel.frame.size.height - 60) + self.imageComView.frame.size.height + 10
+    print("body Label Height : ",self.bodyLabel.frame.size.height)
+    print("image    height      ",self.height)
+    print(self.imageComView.frame)
+    self.comment.height[self.index] = self.height
+    }
+    completionHandler(image: image!)
+    self.isImageFirst = false
+    })
+    //            let image = self.imageComView.image
+    
+    //                self.imageCom = image
+    //                self.imageComView.image = image
+    
+    
+    
+    //            self.height = 109 + (self.bodyLabel.frame.size.height - 60) + self.imageComView.frame.size.height + 10
+    //            self.comment.height[self.index] = self.height
+    //
+    //
+    //            self.upperContentView.bringSubviewToFront(self.likeCountLabel)
+    }
+    */
+    
     var isImageFirst = true
     func imageComViewSet(completionHandler : ((image : UIImage) -> Void)) {
         if urlState {

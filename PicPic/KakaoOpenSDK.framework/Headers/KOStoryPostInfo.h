@@ -17,32 +17,25 @@
 */
 
 /*!
- @header KOStoryCommentInfo.h
- 카카오스토리의 댓글 정보를 담고 있는 구조체.
+ @header KOStoryPostInfo.h
+ 카카오스토리에 포스팅 한 정보를 담고 있는 구조체.
  */
 
 #import <Foundation/Foundation.h>
-#import "KOStoryActorInfo.h"
 
 /*!
- @class KOStoryCommentInfo
- @discussion 카카오스토리의 댓글 정보를 담고 있는 구조체.
+ @class KOStoryPostInfo
+ @discussion 카카오스토리에 포스팅 한 정보를 담고 있는 구조체.
  */
-@interface KOStoryCommentInfo : NSObject
+
+@interface KOStoryPostInfo : NSObject
 
 /*!
- @property text
- @abstract 댓글의 텍스트 내용
+ @property ID
+ @abstract 포스팅 한 내스토리 정보의 id(포스트 id)
  */
-@property(nonatomic, readonly) NSString *text;
+@property(nonatomic, readonly) NSString *ID;
 
-/*!
- @property writer
- @abstract 댓글의 작성자
- */
-@property(nonatomic, readonly) KOStoryActorInfo *writer;
-
-- (id)initWithText:(NSString *)text
-            writer:(KOStoryActorInfo *)writer;
+- (id)initWithID:(NSString *)myStoryID;
 
 @end

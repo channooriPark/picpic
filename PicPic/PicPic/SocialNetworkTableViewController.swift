@@ -22,7 +22,7 @@ class SocialNetworkTableViewController: UITableViewController {
     @IBOutlet weak var twitterSwitch: UISwitch!
     @IBOutlet weak var tumblrSwitch: UISwitch!
     @IBOutlet weak var pinterestSwitch: UISwitch!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let image = UIImageView(frame: CGRectMake(0, 0, 30, 30))
@@ -44,35 +44,35 @@ class SocialNetworkTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        if self.appdelegate.standardUserDefaults.valueForKey("Facebook_Setting") == nil
-            || self.appdelegate.standardUserDefaults.valueForKey("Facebook_Setting")as! String == "N" {
-                self.facebookSwitch.on = false
-        }
-        else {
+        if self.appdelegate.standardUserDefaults.valueForKey("Facebook_Setting") == nil {
+            self.facebookSwitch.on = true
+        } else if self.appdelegate.standardUserDefaults.valueForKey("Facebook_Setting")as! String == "N" {
+            self.facebookSwitch.on = false
+        } else {
             self.facebookSwitch.on = true
         }
         
-        if self.appdelegate.standardUserDefaults.valueForKey("Twitter_Setting") == nil
-            || self.appdelegate.standardUserDefaults.valueForKey("Twitter_Setting")as! String == "N" {
-                self.twitterSwitch.on = false
-        }
-        else {
+        if self.appdelegate.standardUserDefaults.valueForKey("Twitter_Setting") == nil {
+            self.twitterSwitch.on = true
+        } else if self.appdelegate.standardUserDefaults.valueForKey("Twitter_Setting")as! String == "N" {
+            self.twitterSwitch.on = false
+        } else {
             self.twitterSwitch.on = true
         }
         
-        if self.appdelegate.standardUserDefaults.valueForKey("Tumblr_Setting") == nil
-            || self.appdelegate.standardUserDefaults.valueForKey("Tumblr_Setting")as! String == "N" {
-                self.tumblrSwitch.on = false
-        }
-        else {
+        if self.appdelegate.standardUserDefaults.valueForKey("Tumblr_Setting") == nil {
+            self.tumblrSwitch.on = true
+        } else if self.appdelegate.standardUserDefaults.valueForKey("Tumblr_Setting")as! String == "N" {
+            self.tumblrSwitch.on = false
+        } else {
             self.tumblrSwitch.on = true
         }
         
-        if self.appdelegate.standardUserDefaults.valueForKey("Pinterest_Setting") == nil
-            || self.appdelegate.standardUserDefaults.valueForKey("Pinterest_Setting")as! String == "N" {
-                self.pinterestSwitch.on = false
-        }
-        else {
+        if self.appdelegate.standardUserDefaults.valueForKey("Pinterest_Setting") == nil {
+            self.pinterestSwitch.on = true
+        } else if self.appdelegate.standardUserDefaults.valueForKey("Pinterest_Setting")as! String == "N" {
+            self.pinterestSwitch.on = false
+        } else {
             self.pinterestSwitch.on = true
         }
     }
@@ -101,18 +101,18 @@ class SocialNetworkTableViewController: UITableViewController {
             self.appdelegate.standardUserDefaults.setValue("N", forKey: "Pinterest_Setting")
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return 4
     }
 }

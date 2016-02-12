@@ -29,9 +29,6 @@ class SettingTableViewController: UITableViewController , UIAlertViewDelegate{
     
     @IBOutlet weak var alarmSwitch: UISwitch!
     @IBOutlet weak var alarmLabel: UILabel!
-    
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.topItem?.title = self.appdelegate.ment["setting"].stringValue
@@ -76,7 +73,6 @@ class SettingTableViewController: UITableViewController , UIAlertViewDelegate{
     
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
         if indexPath.section == 2 {
             if indexPath.row == 2 {
                 self.performSegueWithIdentifier("logout", sender: self)
@@ -118,14 +114,11 @@ class SettingTableViewController: UITableViewController , UIAlertViewDelegate{
         }
     }
     @IBAction func alarmSetting(sender: AnyObject) {
-        print(alarmSwitch.on)
         if self.alarmSwitch.on == false {
-            print("알림 안받어")
             UIApplication.sharedApplication().unregisterForRemoteNotifications()
             self.appdelegate.standardUserDefaults.setBool(false, forKey: "push")
         }else {
-            print("알림 받어")
-            if UIApplication.sharedApplication().isRegisteredForRemoteNotifications() == false {
+            if UIApplication.sharedApplication().isRegisteredForRemoteNotifications() {
                 let settings: UIUserNotificationSettings =
                 UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
                 UIApplication.sharedApplication().registerUserNotificationSettings(settings)
@@ -134,7 +127,6 @@ class SettingTableViewController: UITableViewController , UIAlertViewDelegate{
             self.appdelegate.standardUserDefaults.setBool(true, forKey: "push")
         }
         print(UIApplication.sharedApplication().currentUserNotificationSettings())
-        print(UIApplication.sharedApplication().isRegisteredForRemoteNotifications())
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

@@ -17,32 +17,14 @@
 */
 
 /*!
- @header KOStoryCommentInfo.h
- 카카오스토리의 댓글 정보를 담고 있는 구조체.
+ @header KOLoginButton.h
+ '카카오계정으로 로그인' 버튼
  */
-
-#import <Foundation/Foundation.h>
-#import "KOStoryActorInfo.h"
+#import <UIKit/UIKit.h>
 
 /*!
- @class KOStoryCommentInfo
- @discussion 카카오스토리의 댓글 정보를 담고 있는 구조체.
+ @abstract '카카오계정으로 로그인' 버튼
  */
-@interface KOStoryCommentInfo : NSObject
-
-/*!
- @property text
- @abstract 댓글의 텍스트 내용
- */
-@property(nonatomic, readonly) NSString *text;
-
-/*!
- @property writer
- @abstract 댓글의 작성자
- */
-@property(nonatomic, readonly) KOStoryActorInfo *writer;
-
-- (id)initWithText:(NSString *)text
-            writer:(KOStoryActorInfo *)writer;
+@interface KOLoginButton : UIButton
 
 @end

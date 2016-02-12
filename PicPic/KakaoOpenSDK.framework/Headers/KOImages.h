@@ -17,32 +17,49 @@
 */
 
 /*!
- @header KOStoryCommentInfo.h
- 카카오스토리의 댓글 정보를 담고 있는 구조체.
+ @header
+ 카카오 관련 이미지들
  */
-
 #import <Foundation/Foundation.h>
-#import "KOStoryActorInfo.h"
+#import <UIKit/UIKit.h>
 
 /*!
- @class KOStoryCommentInfo
- @discussion 카카오스토리의 댓글 정보를 담고 있는 구조체.
+ 카카오 관련 이미지들
  */
-@interface KOStoryCommentInfo : NSObject
+@interface KOImages : NSObject
 
 /*!
- @property text
- @abstract 댓글의 텍스트 내용
+ 버튼용 카카오 미니로고
  */
-@property(nonatomic, readonly) NSString *text;
++ (UIImage *)kakaoLogoForButton;
 
 /*!
- @property writer
- @abstract 댓글의 작성자
+ 카카오 로고
  */
-@property(nonatomic, readonly) KOStoryActorInfo *writer;
++ (UIImage *)kakaoLogo;
 
-- (id)initWithText:(NSString *)text
-            writer:(KOStoryActorInfo *)writer;
+/*!
+ 카카오톡 아이콘
+ */
++ (UIImage *)kakaoTalkIconForButton;
+
+/*!
+ 카카오스토리 아이콘
+ */
++ (UIImage *)kakaoStoryIconForButton;
+
+/*!
+ 카카오계정 아이콘
+ */
++ (UIImage *)kakaoAccountIconForButton;
+
+/*!
+ 웹뷰용
+ */
++ (UIImage *)webViewBackButton;
+
++ (UIImage *)webViewButton;
+
++ (UIImage *)webViewHead;
 
 @end

@@ -16,33 +16,18 @@
 * limitations under the License.
 */
 
-/*!
- @header KOStoryCommentInfo.h
- 카카오스토리의 댓글 정보를 담고 있는 구조체.
- */
+#import "KOError.h"
+#import "KOImages.h"
+#import "KOLoginButton.h"
+#import "KOAppCall.h"
+#import "KOSession.h"
+#import "KOSessionTask+UserManagementAPI.h"
+#import "KOSessionTask+TalkAPI.h"
+#import "KOSessionTask+StoryAPI.h"
+#import "KOSessionTask+PushAPI.h"
+#import "KOSessionTask+TokenAPI.h"
+#import "KOSessionTask+FriendAPI.h"
+#import "KOSessionTask+AgeAuthAPI.h"
+#import "KOSessionTask+StorageAPI.h"
 
-#import <Foundation/Foundation.h>
-#import "KOStoryActorInfo.h"
-
-/*!
- @class KOStoryCommentInfo
- @discussion 카카오스토리의 댓글 정보를 담고 있는 구조체.
- */
-@interface KOStoryCommentInfo : NSObject
-
-/*!
- @property text
- @abstract 댓글의 텍스트 내용
- */
-@property(nonatomic, readonly) NSString *text;
-
-/*!
- @property writer
- @abstract 댓글의 작성자
- */
-@property(nonatomic, readonly) KOStoryActorInfo *writer;
-
-- (id)initWithText:(NSString *)text
-            writer:(KOStoryActorInfo *)writer;
-
-@end
+#define KAKAO_SDK_IOS_VERSION_STRING @"1.0.44"

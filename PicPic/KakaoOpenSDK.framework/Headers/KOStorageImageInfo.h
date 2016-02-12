@@ -17,30 +17,36 @@
  */
 
 /*!
- @header KOAccessTokenInfo.h
- access token의 정보를 담고 있는 구조체.
+ @header KOStorageImageInfo.h
+ Storage API를 통해서 이미지를 업로드 후, 이미지 URL 정보를 얻을 수 있습니다.
  */
 
 #import <Foundation/Foundation.h>
 
 /*!
- @class KOAccessTokenInfo
- @discussion access token의 정보를 담고 있는 구조체.
+ @class KOStorageImageInfo
+ @discussion 저장소에 업로드된 이미지 URL 정보를 얻을 수 있습니다.
  */
-@interface KOAccessTokenInfo : NSObject
+
+@interface KOStorageImageInfo : NSObject
 
 /*!
- @property ID
- @abstract 해당 access token에 해당되는 사용자의 ID
+ @property originImageURL
+ @abstract 원본 이미지 URL
  */
-@property(nonatomic, readonly) NSUInteger ID;
+@property (nonatomic, readonly) NSString *originImageURL;
 
 /*!
- @property expiresInMillis
- @abstract 해당 access token의 남은 만료시간. 0보다 큰 milli-second가 반환됨.
+ @property profileImageURL
+ @abstract 프로필 이미지 URL. 사이즈 640px * 640px
  */
-@property(nonatomic, readonly) NSUInteger expiresInMillis;
+@property (nonatomic, readonly) NSString *profileImageURL;
 
+/*!
+ @property thumbnailImageURL
+ @abstract 썸네일 이미지 URL. 사이즈 110px * 110px
+ */
+@property (nonatomic, readonly) NSString *thumbnailImageURL;
 
 + (instancetype)responseWithDictionary:(NSDictionary *)dictionary;
 

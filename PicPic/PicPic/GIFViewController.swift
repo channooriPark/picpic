@@ -11,6 +11,7 @@ import SwiftyJSON
 import Social
 import FBSDKShareKit
 import FBSDKCoreKit
+import Alamofire
 import Accounts
 
 class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDelegate {
@@ -74,6 +75,7 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
     var textEmpty = true
     
     
+    
     //    // gif 만들어주는 메소드
     func createGifFromURL(url: NSURL) {
     }
@@ -81,54 +83,57 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        facebookLabel.text = self.appdelegate.ment["facebook"].stringValue
+        if(facebookLabel != nil) {
+            facebookLabel.text = self.appdelegate.ment["facebook"].stringValue
+            
+            if self.appdelegate.standardUserDefaults.valueForKey("Facebook_Setting") == nil {
+                self.facebookImage.image = UIImage(named: "icon_popup3_facebook_c")
+                self.facebookState = true
+            } else if self.appdelegate.standardUserDefaults.valueForKey("Facebook_Setting")as! String == "N" {
+                self.facebookImage.image = UIImage(named: "icon_popup3_facebook")
+                self.facebookState = false
+            } else {
+                self.facebookImage.image = UIImage(named: "icon_popup3_facebook_c")
+                self.facebookState = true
+            }
+        }
+        
         twitterLabel.text = self.appdelegate.ment["twitter"].stringValue
         tumblrLabel.text = self.appdelegate.ment["tumblr"].stringValue
         pinterestLabel.text = self.appdelegate.ment["pinterest"].stringValue
         
-        
-        
-        if self.appdelegate.standardUserDefaults.valueForKey("Facebook_Setting") == nil
-            || self.appdelegate.standardUserDefaults.valueForKey("Facebook_Setting")as! String == "N" {
-                self.facebookImage.image = UIImage(named: "icon_popup3_facebook")
-                self.facebookState = false
-        }
-        else {
-            self.facebookImage.image = UIImage(named: "icon_popup3_facebook_c")
-            self.facebookState = true
-        }
-        
-        if self.appdelegate.standardUserDefaults.valueForKey("Twitter_Setting") == nil
-            || self.appdelegate.standardUserDefaults.valueForKey("Twitter_Setting")as! String == "N" {
-                self.twitterImage.image = UIImage(named: "icon_popup3_twiiter")
-                self.twitterState = false
-        }
-        else {
+        if self.appdelegate.standardUserDefaults.valueForKey("Twitter_Setting") == nil {
+            self.twitterImage.image = UIImage(named: "icon_popup3_twiiter_c")
+            self.twitterState = true
+        } else if self.appdelegate.standardUserDefaults.valueForKey("Twitter_Setting")as! String == "N" {
+            self.twitterImage.image = UIImage(named: "icon_popup3_twiiter")
+            self.twitterState = false
+        } else {
             self.twitterImage.image = UIImage(named: "icon_popup3_twiiter_c")
             self.twitterState = true
         }
         
-        if self.appdelegate.standardUserDefaults.valueForKey("Tumblr_Setting") == nil
-            || self.appdelegate.standardUserDefaults.valueForKey("Tumblr_Setting")as! String == "N" {
-                self.tumblrImage.image = UIImage(named: "icon_popup3_tumblr")
-                self.tumblrState = false
-        }
-        else {
+        if self.appdelegate.standardUserDefaults.valueForKey("Tumblr_Setting") == nil {
+            self.tumblrImage.image = UIImage(named: "icon_popup3_tumblr_c")
+            self.tumblrState = true
+        } else if self.appdelegate.standardUserDefaults.valueForKey("Tumblr_Setting")as! String == "N" {
+            self.tumblrImage.image = UIImage(named: "icon_popup3_tumblr")
+            self.tumblrState = false
+        } else {
             self.tumblrImage.image = UIImage(named: "icon_popup3_tumblr_c")
             self.tumblrState = true
         }
         
-        if self.appdelegate.standardUserDefaults.valueForKey("Pinterest_Setting") == nil
-            || self.appdelegate.standardUserDefaults.valueForKey("Pinterest_Setting")as! String == "N" {
-                self.pinterestImage.image = UIImage(named: "icon_popup3_pinterest")
-                self.pinterestState = false
-        }
-        else {
+        if self.appdelegate.standardUserDefaults.valueForKey("Pinterest_Setting") == nil {
+            self.pinterestImage.image = UIImage(named: "icon_popup3_pinterest_c")
+            self.pinterestState = true
+        } else if self.appdelegate.standardUserDefaults.valueForKey("Pinterest_Setting")as! String == "N" {
+            self.pinterestImage.image = UIImage(named: "icon_popup3_pinterest")
+            self.pinterestState = false
+        } else {
             self.pinterestImage.image = UIImage(named: "icon_popup3_pinterest_c")
             self.pinterestState = true
         }
-        
-        
         
         self.categoryView.layer.cornerRadius = 10
         self.categoryView.layer.masksToBounds = true
@@ -305,6 +310,23 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
         dialog.show()
         //        DismissKeyboard()
         log.log("FACEBOOK");
+        
+        //        let fbAccessToken = FBSDKAccessToken.currentAccessToken()
+        //        let url = NSURL(string: "http://tumblr01.cloudapp.net:8080/examples/sns.jsp")!
+        //        Alamofire.request(.POST, url, parameters: ["accessToken":fbAccessToken, "message":"PicPic"])
+        //            .responseString { response in
+        //                self.log.log("\(response.result.value)")
+        //                switch response.result {
+        //                case .Success:
+        //                    if let value = response.result.value {
+        //                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        //                            self.twitter()
+        //                        })
+        //                    }
+        //                case .Failure(let error):
+        //                    self.log.log("error")
+        //                }
+        //        }
     }
     
     
@@ -329,21 +351,23 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
             return
         }
         
-        let twitter : SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+        //        let twitter : SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
         let path = imageURL.gifImageUrl(url)
         let data = NSData(contentsOfURL: NSURL(string: path)!)!
-        let im = UIImage.gifWithData(data)
-        twitter.addImage(im)
-        twitter.addURL(NSURL(string: path))
-        twitter.completionHandler = {
-            (result:SLComposeViewControllerResult) in
-            if result == SLComposeViewControllerResult.Done {
-                //                self.DismissKeyboard()
-                self.log.log("TWITTER COMPLETE");
-                self.tumblr()
-            }
-        }
-        self.presentViewController(twitter, animated: true, completion: nil)
+        
+        self.tweetWithImage(data)
+        //        let im = UIImage.gifWithData(data)
+        //        twitter.addImage(im)
+        //        twitter.addURL(NSURL(string: path))
+        //        twitter.completionHandler = {
+        //            (result:SLComposeViewControllerResult) in
+        //            if result == SLComposeViewControllerResult.Done {
+        //                //                self.DismissKeyboard()
+        //                self.log.log("TWITTER COMPLETE");
+        //                self.tumblr()
+        //            }
+        //        }
+        //        self.presentViewController(twitter, animated: true, completion: nil)
     }
     //                        message["status"] = "Test Tweet with image"
     //https://api.twitter.com/1.1/statuses/update_with_media.json
@@ -380,27 +404,26 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
                             (responseData: NSData!,
                             urlResponse: NSHTTPURLResponse!,
                             error: NSError!) -> Void in
-                            if let err = error {
-                                print("Error : \(err.localizedDescription)")
-                            }
-                            if urlResponse.statusCode == 200 {
-                                let alert = UIAlertView(title: "\(urlResponse.statusCode)", message: "", delegate: nil, cancelButtonTitle: "확인")
-                                alert.show()
-                                //                                self.loading(false)
-                            }else {
-                                let alert = UIAlertView(title: "\(urlResponse.statusCode)", message: "", delegate: nil, cancelButtonTitle: "확인")
-                                alert.show()
-                                //                                self.loading(false)
-                            }
                             
+                            if let err = error {
+                                let alert = UIAlertView(title: "Twitter", message: "Error : \(err.localizedDescription)", delegate: nil, cancelButtonTitle: "확인")
+                                alert.show()
+                            } else {
+                                self.tumblr()
+                            }
                             
                             print("Twitter HTTP response \(urlResponse.statusCode)")
                             
                         })
+                    } else {
+                        let alert = UIAlertView(title: "Twitter", message: "You have no twitter account", delegate: nil, cancelButtonTitle: "OK")
+                        alert.show()
                     }
                 }
                 else
                 {
+                    let alert = UIAlertView(title: "Twitter", message: "Permission not granted", delegate: nil, cancelButtonTitle: "OK")
+                    alert.show()
                 }
         })
         
@@ -450,11 +473,11 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
     }
     
     func finishPost() {
-        self.navigationController!.navigationBarHidden = false
-        if self.navigationController!.view.hidden == false {
-            self.navigationController!.navigationBarHidden = true
+        self.appdelegate.testNavi.navigationBarHidden = false
+        if self.appdelegate.myfeed.view.hidden == false {
+            self.appdelegate.testNavi.navigationBarHidden = true
         }
-        self.navigationController!.popToRootViewControllerAnimated(true)
+        self.appdelegate.testNavi.popToRootViewControllerAnimated(true)
     }
     
     
@@ -564,20 +587,21 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
                         self.appdelegate.doIt(232, message: message, callback: { (readData) -> () in
                             if readData["msg"].string! == "success" {
                                 self.post_id = readData["post_id"].stringValue
-                                //self.appdelegate.myfeed.fire()
-                                
-                                //                                if self.appdelegate.second.wkwebView != nil {
-                                //                                    if self.appdelegate.second.webState == "follow" {
-                                //                                        self.appdelegate.second.following()
-                                //                                    }else if self.appdelegate.second.webState == "all" {
-                                //                                        self.appdelegate.second.all()
-                                //                                    }else if self.appdelegate.second.webState == "category" {
-                                //                                    }
-                                //                                }
+//                                if self.appdelegate.myfeed.wkwebView != nil {
+//                                    self.appdelegate.myfeed.fire()
+//                                }
+//                                if self.appdelegate.second.wkwebView != nil {
+//                                    if self.appdelegate.second.webState == "follow" {
+//                                        self.appdelegate.second.following()
+//                                    }else if self.appdelegate.second.webState == "all" {
+//                                        self.appdelegate.second.all()
+//                                    }else if self.appdelegate.second.webState == "category" {
+//                                    }
+//                                }
                                 
                                 self.url = self.filename
-                                //                                self.facebook()
-                                self.twitter()
+                                self.facebook()
+                                //                                self.twitter()
                             }
                         })
                     }

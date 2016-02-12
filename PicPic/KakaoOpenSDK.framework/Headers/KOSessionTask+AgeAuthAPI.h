@@ -16,32 +16,27 @@
  * limitations under the License.
  */
 
-/*!
- @header KOAccessTokenInfo.h
- access token의 정보를 담고 있는 구조체.
- */
-
-#import <Foundation/Foundation.h>
+#ifndef kakao_open_sdk_ios_KOSessionTask_AgeAuthAPI_h
+#define kakao_open_sdk_ios_KOSessionTask_AgeAuthAPI_h
 
 /*!
- @class KOAccessTokenInfo
- @discussion access token의 정보를 담고 있는 구조체.
+ @header KOSessionTask+AgeAuthAPI.h
+ 인증된 세션정보로 연령인증 관련 API를 정의합니다. 제휴를 통해 권한이 부여된 특정 앱에서만 호출 가능합니다.
  */
-@interface KOAccessTokenInfo : NSObject
+
+#import "KOSessionTask.h"
 
 /*!
- @property ID
- @abstract 해당 access token에 해당되는 사용자의 ID
+ 인증된 세션정보로 연령인증 관련 API를 정의한다. 제휴를 통해 권한이 부여된 특정 앱에서만 호출 가능합니다.
  */
-@property(nonatomic, readonly) NSUInteger ID;
+@interface KOSessionTask (AgeAuthAPI)
 
 /*!
- @property expiresInMillis
- @abstract 해당 access token의 남은 만료시간. 0보다 큰 milli-second가 반환됨.
+ @abstract 연령인증 정보를 얻는다.
+ @param completionHandler 연령인증 정보를 가져와서 처리하는 핸들러.
  */
-@property(nonatomic, readonly) NSUInteger expiresInMillis;
-
-
-+ (instancetype)responseWithDictionary:(NSDictionary *)dictionary;
++ (instancetype)ageAuthTaskWithCompletionHandler:(KOSessionTaskCompletionHandler)completionHandler;
 
 @end
+
+#endif
