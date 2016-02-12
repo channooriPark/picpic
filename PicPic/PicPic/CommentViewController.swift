@@ -340,9 +340,6 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
                     }
                 }
             }
-        }else {
-            cell.imageComView = nil
-            cell.imageComView.removeFromSuperview()
         }
         
         

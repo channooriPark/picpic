@@ -74,6 +74,7 @@ class ContentViewController: SubViewController {
 //            }else if appdelegate.second.allT {
 //                appdelegate.second.all()
 //            }
+            appdelegate.second.refresh()
         }
     }
     

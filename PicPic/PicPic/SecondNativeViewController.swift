@@ -105,6 +105,7 @@ class SecondNativeViewController: UIViewController, UICollectionViewDataSource, 
             self.postInfos = json["data"].arrayObject! as! [[String: AnyObject]]
             self.collectionView.reloadData()
             self._hud.hide(true)
+            self.collectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
         })
     }
     
