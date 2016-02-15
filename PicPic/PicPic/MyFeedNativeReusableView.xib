@@ -30,7 +30,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="포스팅" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hA-Pf-VLi">
-                            <rect key="frame" x="61" y="192" width="43" height="14.5"/>
+                            <rect key="frame" x="61" y="192" width="43" height="15"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="43" id="rxq-tp-0xQ"/>
                             </constraints>
@@ -39,7 +39,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="팔로워" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zWa-69-bMa">
-                            <rect key="frame" x="139" y="192" width="42" height="14.5"/>
+                            <rect key="frame" x="139" y="192" width="42" height="15"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="42" id="U20-W3-Ggz"/>
                             </constraints>
@@ -48,7 +48,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q4p-Dx-vvj">
-                            <rect key="frame" x="62" y="177" width="42" height="13.5"/>
+                            <rect key="frame" x="62" y="177" width="42" height="14"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="42" id="tsQ-ym-nXh"/>
                             </constraints>
@@ -83,7 +83,7 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="팔로잉" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wgT-j7-BLz">
-                            <rect key="frame" x="216" y="192" width="42" height="14.5"/>
+                            <rect key="frame" x="216" y="192" width="42" height="15"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="42" id="Kft-Sd-x6Q"/>
                             </constraints>

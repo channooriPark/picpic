@@ -96,7 +96,19 @@ class UserNativeViewController: UIViewController, UICollectionViewDelegate, UICo
         
         appdelegate.doIt(406, message: message, callback: {(json) in
             self.infoDic = json.dictionaryObject!
-            
+            print("json data ",self.infoDic)
+            if let string = json["withdraw_yn"].string {
+                if string as! String == "Y" {
+                    //탈퇴사용자 alert
+                    self._hud.hide(true)
+                    self.collectionView.infiniteScrollingView.stopAnimating()
+                    self.collectionView.infiniteScrollingView.enabled = false
+                    let alert = UIAlertController(title: nil, message: self.appdelegate.ment["toast_msg_not_exists_user"].stringValue, preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: self.appdelegate.ment["popup_confirm"].stringValue, style: UIAlertActionStyle.Default, handler: {_ in self.backButtonTouched()}))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                    return
+                }
+            }
             
             let mes: JSON = ["my_id" :appdelegate.email,"user_id": self.userEmail, "range" : "N", "str" : "", "page": "1"]
             
@@ -119,18 +131,21 @@ class UserNativeViewController: UIViewController, UICollectionViewDelegate, UICo
                     return
                 }
                 self.postInfos = array
+                print("postInfos                                       \n\n\n\n\n\n\n\n",self.postInfos)
                 for (index, dic) in self.postInfos.enumerate()
                 {
+                    
+                    
                     if let string = dic["is_closed"]
                     {
                         if string as! String == "Y"
                         {
-                            //탈퇴사용자 alert
+                            //사용자비공개 alert
                             self._hud.hide(true)
                             self.collectionView.infiniteScrollingView.stopAnimating()
                             self.collectionView.infiniteScrollingView.enabled = false
-                            let alert = UIAlertController(title: "Alert", message: "존재하지않는 사용자입니다.", preferredStyle: UIAlertControllerStyle.Alert)
-                            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: {_ in self.backButtonTouched()}))
+                            let alert = UIAlertController(title: nil, message: self.appdelegate.ment["toast_msg_is_closed_y"].stringValue, preferredStyle: UIAlertControllerStyle.Alert)
+                            alert.addAction(UIAlertAction(title: self.appdelegate.ment["popup_confirm"].stringValue, style: UIAlertActionStyle.Default, handler: {_ in self.backButtonTouched()}))
                             self.presentViewController(alert, animated: true, completion: nil)
                             return
 
@@ -309,6 +324,9 @@ class UserNativeViewController: UIViewController, UICollectionViewDelegate, UICo
             cell.profileImageView.sd_setImageWithURL(NSURL(string: "http://gif.picpic.world/" + (dic["profile_picture"] as! String)))
             cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.width / 2
             cell.profileImageView.layer.masksToBounds = true
+            
+            cell.lastCommentImageView.layer.cornerRadius = cell.profileImageView.frame.width / 2
+            cell.lastCommentImageView.layer.masksToBounds = true
             
             cell.likeCountButton.setTitle(String(format: "\(self.appdelegate.ment["like"].stringValue) %d\(self.appdelegate.ment["timeline_count"].stringValue)", dic["like_cnt"] as! Int), forState: .Normal)
             cell.commentCountButton.setTitle(String(format: "\(self.appdelegate.ment["comment"].stringValue) %d\(self.appdelegate.ment["timeline_count"].stringValue)", dic["com_cnt"] as! Int), forState: .Normal)

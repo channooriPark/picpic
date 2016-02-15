@@ -95,7 +95,6 @@ class CommentCell: UITableViewCell {
     func setBody(){
         if data["url"].string == "" {
             urlState = false
-            bodyLabel.backgroundColor = UIColor.redColor()
             print("이미지댓글 아니야",urlState)
             urlString = nil
             imageComView.frame.size.height = 0
@@ -105,7 +104,7 @@ class CommentCell: UITableViewCell {
         }
         bodyLabel.putText(data["body"].string!,url: urlString)
         bodyLabel.textContainer.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        
+        print(bodyLabel)
         let fixedWidth = bodyLabel.frame.size.width
         bodyLabel.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
         let newSize = bodyLabel.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
@@ -138,6 +137,8 @@ class CommentCell: UITableViewCell {
         
         //업로드 시간
         let uploadDateText = data["time"].string!
+        
+        //좋아요
         if self.data["like_yn"].stringValue == "Y" {
             self.heartImage.hidden = false
             self.likeCountLabel.hidden = false
@@ -147,10 +148,15 @@ class CommentCell: UITableViewCell {
             self.likeButton.setTitle("\(self.appdelegate.ment["like_cancel"].stringValue)", forState: UIControlState.Normal)
             like_yn = self.data["like_yn"].string!
         }else {
-            self.heartImage.hidden = true
-            self.likeCountLabel.hidden = true
-            self.like_yn = "N"
             count = self.data["like"].int!
+            if count > 0 {
+                self.heartImage.hidden = false
+                self.likeCountLabel.hidden = false
+            }else {
+                self.heartImage.hidden = true
+                self.likeCountLabel.hidden = true
+            }
+            self.like_yn = "N"
             self.likeCountLabel.text = String(count)
             self.likeButton.setTitle("\(self.appdelegate.ment["like"].stringValue)", forState: UIControlState.Normal)
             like_yn = self.data["like_yn"].string!
@@ -290,13 +296,6 @@ class CommentCell: UITableViewCell {
             
             
 //            if self.imageData == nil {
-//                
-//                
-//                
-//                
-//                
-//                
-//                
 //                let request : NSURLRequest = NSURLRequest(URL: imageURL!)
 //                let mainQueue = NSOperationQueue.mainQueue()
 //                NSURLConnection.sendAsynchronousRequest(request, queue: mainQueue, completionHandler: { (response, data, error) -> Void in
@@ -481,13 +480,17 @@ class CommentCell: UITableViewCell {
                     self.count--
                     self.like_yn = "N"
                         self.likeButton.setTitle("\(self.appdelegate.ment["like"].stringValue)", forState: UIControlState.Normal)
-                    self.heartImage.hidden = true
-                    self.likeCountLabel.hidden = true
+                    if self.count > 0 {
+                        self.heartImage.hidden = false
+                        self.likeCountLabel.hidden = false
+                    }else {
+                        self.heartImage.hidden = true
+                        self.likeCountLabel.hidden = true
+                    }
                     self.likeCountLabel.text = String(self.count)
                     self.data["like_yn"].string = self.like_yn
-                    self.data[].int = self.count
+                    self.data["like"].int = self.count
                     self.comment.dataArray[self.index] = self.data
-//                    print(self.data)
                 }
             })
         }else {
@@ -500,10 +503,8 @@ class CommentCell: UITableViewCell {
                     self.likeCountLabel.hidden = false
                     self.likeCountLabel.text = String(self.count)
                     self.data["like_yn"].string = self.like_yn
-//                    self.data["like_yn"].stringValue = self.like_yn
                     self.data["like"].int = self.count
                     self.comment.dataArray[self.index] = self.data
-//                    print(self.data)
                 }
             })
         }

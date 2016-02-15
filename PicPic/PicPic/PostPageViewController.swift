@@ -10,7 +10,7 @@ import UIKit
 import SwiftyJSON
 import SpringIndicator
 
-class PostPageViewController: SubViewController , UIAlertViewDelegate{
+class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherDelegate {
     
     let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     @IBOutlet weak var scrollView: UIScrollView!
@@ -412,7 +412,7 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate{
 //            self.navigationController?.navigationBarHidden = true
 //        }
 //        
-//        self.appdelegate.tabbar.view.hidden = false
+        self.appdelegate.tabbar.view.hidden = false
         self.postImage.enterBackground()
         self.postImage.gifRemoveObserver()
         self.navigationController?.popViewControllerAnimated(true)
@@ -534,9 +534,6 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate{
     
     @IBAction func share(sender: AnyObject) {
         let count = self.appdelegate.testNavi.viewControllers.count - 1
-        //            message = ["my_id":self.email,"post_id":send_id]
-        //            let connection = URLConnection(serviceCode: 504, message: message)
-        //            let readData = connection.connection()
         let share = self.storyboard!.instantiateViewControllerWithIdentifier("ShareViewController")as! ShareViewController
         share.post_id = data["post_id"].stringValue
         share.url = data["url"].stringValue
@@ -561,10 +558,15 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate{
         }else {
             let count = self.appdelegate.testNavi.viewControllers.count - 1
             let moreother = self.storyboard!.instantiateViewControllerWithIdentifier("MoreOtherViewController")as! MoreOtherViewController
+            moreother.delegate = self
             moreother.post_id = data["post_id"].stringValue
             self.appdelegate.testNavi.viewControllers[count].addChildViewController(moreother)
             self.appdelegate.testNavi.viewControllers[count].view.addSubview(moreother.view)
         }
+    }
+    
+    func reportClicked() {
+        postImage.enterBackground()
     }
     
     @IBAction func likeList(sender: AnyObject) {

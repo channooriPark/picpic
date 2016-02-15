@@ -566,14 +566,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
             }
             
             log.log("user_name \(send_id)")
-            let user = self.storyboard.instantiateViewControllerWithIdentifier("CommentUserPageViewController")as! CommentUserPageViewController
-            self.controller.append(user)
-            user.type = "user"
-            //            user.index = self.controller.count - 1
-            user.myId = self.email
-            user.userId = send_id as String
-            self.testNavi.navigationBarHidden = true
-            self.testNavi.pushViewController(user, animated: true)
+//            let user = self.storyboard.instantiateViewControllerWithIdentifier("CommentUserPageViewController")as! CommentUserPageViewController
+//            self.controller.append(user)
+//            user.type = "user"
+//            //            user.index = self.controller.count - 1
+//            user.myId = self.email
+//            user.userId = send_id as String
+//            self.testNavi.navigationBarHidden = true
+//            self.testNavi.pushViewController(user, animated: true)
+            
+            let vc = UserNativeViewController()
+            vc.userEmail = send_id as String
+            
+            self.testNavi.pushViewController(vc, animated: true)
+            
             break
         case "tag_name" :
             
@@ -588,16 +594,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
                 let a = self.controller[count]as! PostPageViewController
                 a.postImage.enterBackground()
             }
-            log.log("tag_name \(send_id)")
-            let tagview = self.storyboard.instantiateViewControllerWithIdentifier("CommentTagPageViewController")as! CommentTagPageViewController
-            self.controller.append(tagview)
-            tagview.type = "tag_name"
-            //            tagview.index = self.controller.count - 1
-            tagview.tagId = send_id as String
-            tagview.email = self.email
-            self.testNavi.navigationBarHidden = true
-            self.tabbar.view.hidden = true
-            self.testNavi.pushViewController(tagview, animated: true)
+//            log.log("tag_name \(send_id)")
+//            let tagview = self.storyboard.instantiateViewControllerWithIdentifier("CommentTagPageViewController")as! CommentTagPageViewController
+//            self.controller.append(tagview)
+//            tagview.type = "tag_name"
+//            //            tagview.index = self.controller.count - 1
+//            tagview.tagId = send_id as String
+//            tagview.email = self.email
+//            self.testNavi.navigationBarHidden = true
+//            self.tabbar.view.hidden = true
+//            self.testNavi.pushViewController(tagview, animated: true)
+            
+            let vc = TagNativeViewController()
+            vc.tagName = send_id as String
+            
+            self.testNavi.pushViewController(vc, animated: true)
+            
             break
             
         case "like_list" :

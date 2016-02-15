@@ -20,6 +20,7 @@ class MoreOtherViewController: UIViewController {
     @IBOutlet weak var moreView: UIView!
     
     @IBOutlet weak var backView: UIView!
+    var delegate : MoreOtherDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -77,6 +78,7 @@ class MoreOtherViewController: UIViewController {
     }
 
     @IBAction func report(sender: AnyObject) {
+        self.delegate?.reportClicked()
         self.appdelegate.testNavi.navigationBarHidden = false
         self.appdelegate.testNavi.navigationBar.topItem?.title = self.appdelegate.ment["popup2_report"].stringValue
         let report = self.storyboard?.instantiateViewControllerWithIdentifier("ReportViewController")as! ReportViewController
@@ -86,6 +88,9 @@ class MoreOtherViewController: UIViewController {
         self.view.removeFromSuperview()
         
     }
-   
+}
 
+
+protocol MoreOtherDelegate {
+    func reportClicked()
 }

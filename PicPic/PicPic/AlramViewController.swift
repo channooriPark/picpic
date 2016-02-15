@@ -553,14 +553,16 @@ class AlramViewController: SubViewController ,UITableViewDataSource , UITableVie
                 let postrequest : NSURLRequest = NSURLRequest(URL: url!)
                 let postmainQueue = NSOperationQueue.mainQueue()
                 NSURLConnection.sendAsynchronousRequest(postrequest, queue: postmainQueue, completionHandler: { (response, data, error) -> Void in
-                    if let image = UIImage(data: data!) {
-                        post = image
-                    }else {
-                        post = UIImage()
+                    if let data = data {
+                        if let image = UIImage(data: data) {
+                            post = image
+                        }else {
+                            post = UIImage()
+                        }
+                        
+                        cell.post = post
+                        self.postData[postStr] = post
                     }
-                    
-                    cell.post = post
-                    self.postData[postStr] = post
                 })
             }
         }

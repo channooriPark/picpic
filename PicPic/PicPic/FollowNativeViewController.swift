@@ -159,6 +159,11 @@ class FollowNativeViewController: UIViewController, UITableViewDelegate, UITable
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
+        print(datas[indexPath.row])
+        let vc = UserNativeViewController()
+        vc.userEmail = self.datas[indexPath.item]["email"]! 
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func followTouched(indexPath: NSIndexPath) {

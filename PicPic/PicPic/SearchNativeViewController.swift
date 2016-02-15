@@ -22,7 +22,7 @@ class SearchNativeViewController: UIViewController, UISearchBarDelegate{
     var userTable: SearchUserViewController?
     var tagTable: SearchTagViewController?
     var hotUser: SearchHotUserViewController?
-    
+    let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     
     override func viewWillAppear(animated: Bool) {
@@ -108,6 +108,7 @@ class SearchNativeViewController: UIViewController, UISearchBarDelegate{
     }
     @IBAction func backButtonTouched()
     {
+        self.appdelegate.tabbar.view.hidden = false
         self.navigationController?.popToRootViewControllerAnimated(true)
     }
 
