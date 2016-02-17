@@ -334,6 +334,7 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
             view.firstTagName = tags.first!["tag_name"]! != "null" ? tags.first!["tag_name"]! : ""
             view.tagIdButton.setTitle("#" + view.firstTagName, forState: .Normal)
             view.tagCountButton.setTitle("+" + String(tags.count), forState: .Normal)
+            view.tagIdButton.sizeToFit()
             
             view.profileImageView.sd_setImageWithURL(NSURL(string: "http://gif.picpic.world/" + (infoDic["profile_picture"] as! String)))
             view.profileImageView.layer.cornerRadius = view.profileImageView.frame.width / 2

@@ -309,6 +309,11 @@ class TagNativeViewController: UIViewController, UICollectionViewDelegate, UICol
                 cell.lastCommentTextLabel.sizeToFit()
             }
             
+//            let doubleTap = UITapGestureRecognizer()
+//            doubleTap.numberOfTapsRequired = 2
+//            doubleTap.addTarget(self, action: "doubleTapCell:")
+//            cell.addGestureRecognizer(doubleTap)
+            
             return cell
         }
     }
@@ -540,4 +545,8 @@ class TagNativeViewController: UIViewController, UICollectionViewDelegate, UICol
         self.view.addSubview(moreother.view)
     }
 
+    func doubleTapCell(sender: UITapGestureRecognizer)
+    {
+        
+    }
 }

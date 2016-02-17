@@ -92,6 +92,7 @@ class CommentCell: UITableViewCell {
         self.resetConstToZero(false, notifyDelegateDidClose: false)
     }
     
+    
     func setBody(){
         if data["url"].string == "" {
             urlState = false
