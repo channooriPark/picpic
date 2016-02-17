@@ -16,20 +16,9 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
     @IBOutlet weak var collectionView: UICollectionView!
     var statusbar: UIView!
     var infoDic: [String : AnyObject] = [:]
-    var gifData = UIImage()
+    var gifData: UIImage?
     var postInfos: Array<[String: AnyObject]> = []
-    var postGifData: [String: UIImage] = [:] {
-        didSet{
-            if postInfos.count == postGifData.count
-            {
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.collectionView.reloadData()
-                    self._hud.hide(true)
-                    self.collectionView.infiniteScrollingView.stopAnimating()
-                })
-            }
-        }
-    }
+    var postGifData: [String: UIImage] = [:]
     var currentPage = "1"
     var isRepic = false
     var currentString = ""
@@ -38,6 +27,7 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
     let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         if !self.view.hidden
         {
             self.navigationController?.navigationBarHidden = true
@@ -112,29 +102,10 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
                 }
                 
                 self.postInfos = json["data"].arrayObject as! Array<[String: AnyObject]>
-                for (index, dic) in self.postInfos.enumerate()
-                {
-                    if let string = dic["is_closed"]
-                    {
-                        if string as! String == "Y"
-                        {
-                            // 
-                            self._hud.hide(true)
-                            self.collectionView.infiniteScrollingView.stopAnimating()
-                            self.collectionView.infiniteScrollingView.enabled = false
-                            return
-                        }
-                    }
-                    let str = dic["url"]! as! String
-                    let url = str.substringWithRange(str.startIndex ..< str.endIndex.advancedBy(-6)).stringByAppendingString("_1.gif")
-                    
-                    Alamofire.request(.GET, "http://gif.picpic.world/" + url, parameters: ["foo": "bar"]).response { request, response, data, error in
-                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-                            self.postGifData["\(index)"] = UIImage.gifWithData(data!) ?? UIImage()
-                            
-                        })
-                    }
-                }
+                self.collectionView.reloadData()
+                self._hud.hide(true)
+                self.collectionView.infiniteScrollingView.stopAnimating()
+
             })
         })
         
@@ -170,20 +141,10 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
                 return
             }
             self.postInfos = json["data"].arrayObject as! Array<[String: AnyObject]>
-            for (index, dic) in self.postInfos.enumerate()
-            {
-                let str = dic["url"]! as! String
-                let url = str.substringWithRange(str.startIndex ..< str.endIndex.advancedBy(-6)).stringByAppendingString("_1.gif")
-                
-                Alamofire.request(.GET, "http://gif.picpic.world/" + url, parameters: ["foo": "bar"]).response { request, response, data, error in
-                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-                        self.postGifData["\(index)"] = UIImage.gifWithData(data!) ?? UIImage()
-                        
-                    })
-                }
-            }
-            
-            
+            self.collectionView.reloadData()
+            self._hud.hide(true)
+            self.collectionView.infiniteScrollingView.stopAnimating()
+
         })
     }
     
@@ -209,20 +170,10 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
             let newData = json["data"].arrayObject as! Array<[String: AnyObject]>
             self.currentPage = "\(newPage)"
             self.postInfos.appendContentsOf(newData)
-            for (index, dic) in newData.enumerate()
-            {
-                let str = dic["url"]! as! String
-                let url = str.substringWithRange(str.startIndex ..< str.endIndex.advancedBy(-6)).stringByAppendingString("_1.gif")
-                let currentCounts = self.postGifData.count
-                Alamofire.request(.GET, "http://gif.picpic.world/" + url, parameters: ["foo": "bar"]).response { request, response, data, error in
-                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-                        self.postGifData["\(index + currentCounts)"] = UIImage.gifWithData(data!) ?? UIImage()
-                        
-                    })
-                }
-            }
-            
-            
+            self.collectionView.reloadData()
+            self._hud.hide(true)
+            self.collectionView.infiniteScrollingView.stopAnimating()
+
         })
     }
     
@@ -232,7 +183,7 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return postGifData.count
+        return postInfos.count
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -256,7 +207,26 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
         {
             let cell = self.collectionView.dequeueReusableCellWithReuseIdentifier("tagCell", forIndexPath: indexPath) as! TagCell
             
-            cell.imageView.image = self.postGifData["\(indexPath.item)"]
+            let dic = self.postInfos[indexPath.item]
+            
+            if self.postGifData["\(indexPath.item)"] == nil
+            {
+                let str = dic["url"]! as! String
+                let url = str.substringWithRange(str.startIndex ..< str.endIndex.advancedBy(-6)).stringByAppendingString("_1.gif")
+                
+                Alamofire.request(.GET, "http://gif.picpic.world/" + url, parameters: ["foo": "bar"]).response { request, response, data, error in
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                        self.postGifData["\(indexPath.item)"] = UIImage.gifWithData(data!) ?? UIImage()
+                        dispatch_async(dispatch_get_main_queue(), {
+                            cell.imageView.image = self.postGifData["\(indexPath.item)"]
+                        })
+                    })
+                }
+            }
+            else
+            {
+                cell.imageView.image = self.postGifData["\(indexPath.item)"]
+            }
             cell.cellIndexPath = indexPath
             
             return cell
@@ -265,7 +235,25 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
         {
             let cell = self.collectionView.dequeueReusableCellWithReuseIdentifier("tagTimelineCell", forIndexPath: indexPath) as! TagListCell
             let dic = self.postInfos[indexPath.item]
-            let img = self.postGifData["\(indexPath.item)"]
+
+            if self.postGifData["\(indexPath.item)"] == nil
+            {
+                let str = dic["url"]! as! String
+                let url = str.substringWithRange(str.startIndex ..< str.endIndex.advancedBy(-6)).stringByAppendingString("_1.gif")
+                
+                Alamofire.request(.GET, "http://gif.picpic.world/" + url, parameters: ["foo": "bar"]).response { request, response, data, error in
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                        self.postGifData["\(indexPath.item)"] = UIImage.gifWithData(data!) ?? UIImage()
+                        dispatch_async(dispatch_get_main_queue(), {
+                            cell.gifImageView.image = self.postGifData["\(indexPath.item)"]
+                        })
+                    })
+                }
+            }
+            else
+            {
+                cell.gifImageView.image = self.postGifData["\(indexPath.item)"]
+            }
             
             cell.cellIndexPath = indexPath
             cell.delegate = self
@@ -292,9 +280,6 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
             label.frame = CGRectMake(0, 0, cell.bodyView.frame.width, CGFloat(20 * self.rowsNeededForText(label.text!)))
             cell.bodyViewHeightConstraint.constant = CGFloat(20 * self.rowsNeededForText(label.text!))
             cell.bodyView.addSubview(label)
-            
-            
-            cell.gifImageView.image = img
             
             cell.playCountLabel.text = String(dic["play_cnt"] as! Int)
             cell.profileImageView.sd_setImageWithURL(NSURL(string: "http://gif.picpic.world/" + (dic["profile_picture"] as! String)))
@@ -351,6 +336,7 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
             view.firstTagName = tags.first!["tag_name"]! != "null" ? tags.first!["tag_name"]! : ""
             view.tagIdButton.setTitle("#" + view.firstTagName, forState: .Normal)
             view.tagCountButton.setTitle("+" + String(tags.count), forState: .Normal)
+            view.tagIdButton.sizeToFit()
             
             view.profileImageView.sd_setImageWithURL(NSURL(string: "http://gif.picpic.world/" + (infoDic["profile_picture"] as! String)))
             view.profileImageView.layer.cornerRadius = view.profileImageView.frame.width / 2
@@ -366,7 +352,7 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         
         let dic = self.postInfos[indexPath.item]
-        let imgSize =  self.postGifData["\(indexPath.item)"]!.size
+        let imgSize =  CGSizeMake(dic["width1"] as! CGFloat, dic["height1"] as! CGFloat)
         
         //18, 45, 21, 50
         let body = dic["body"] as! String

@@ -22,6 +22,7 @@ class SecondCell: UICollectionViewCell {
     @IBOutlet weak var likeCountLabel: UILabel!
     @IBOutlet weak var commentCountLabel: UILabel!
     @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var heartImage: UIImageView!
     var cellIndexPath: NSIndexPath!
     var delegate: TagListCellDelegate?
     
@@ -40,6 +41,7 @@ class SecondCell: UICollectionViewCell {
         self.dateLabel.text = nil
         self.playCountLabel.text = nil
         self.gifImageView.image = UIImage(named: "non_interest")
+        self.heartImage.image = UIImage(named: "heart")
         
         for view in bodyView.subviews
         {
@@ -71,6 +73,11 @@ class SecondCell: UICollectionViewCell {
         self.delegate?.likeButtonTouched(self.cellIndexPath)
         if self.likeButton.imageForState(.Normal) == UIImage(named: "icon_timeline_like")
         {
+            self.heartImage.fadeOut(completion: { (finished: Bool) -> Void in
+                self.heartImage.fadeIn(completion: { (finished: Bool) -> Void in
+                    self.heartImage.fadeOut()
+                })
+            })
             self.likeButton.setImage(UIImage(named: "icon_timeline_like_c"), forState: .Normal)
         }
         else

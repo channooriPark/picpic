@@ -871,6 +871,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
                 else
                 {
                     print(error)
+                    self.doItSocket(serviceCode, message: message, callback: callback)
                 }
             }
             

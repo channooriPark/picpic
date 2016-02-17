@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -166,6 +166,13 @@
                         <color key="textColor" red="0.4823529412" green="0.4823529412" blue="0.4823529412" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart" translatesAutoresizingMaskIntoConstraints="NO" id="6NW-Co-kMF">
+                        <rect key="frame" x="70" y="86" width="100" height="85"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="100" id="cmO-hN-l2P"/>
+                            <constraint firstAttribute="height" constant="85" id="pDz-LS-9cn"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
@@ -173,6 +180,7 @@
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="Zhm-Fg-P7L" secondAttribute="bottom" id="01A-jK-M2T"/>
                 <constraint firstItem="qys-hS-smw" firstAttribute="width" secondItem="Zhm-Fg-P7L" secondAttribute="width" id="0K7-OY-h25"/>
+                <constraint firstItem="6NW-Co-kMF" firstAttribute="centerY" secondItem="wKY-Hf-ZHo" secondAttribute="centerY" id="399-ty-Xes"/>
                 <constraint firstItem="LfV-Py-XGP" firstAttribute="top" secondItem="Zhm-Fg-P7L" secondAttribute="bottom" constant="-21" id="4bA-cj-oON"/>
                 <constraint firstItem="Zhm-Fg-P7L" firstAttribute="leading" secondItem="sFa-EI-w1R" secondAttribute="trailing" id="4qF-hp-Hut"/>
                 <constraint firstItem="qys-hS-smw" firstAttribute="leading" secondItem="Zhm-Fg-P7L" secondAttribute="trailing" id="6ys-5j-r74"/>
@@ -196,6 +204,7 @@
                 <constraint firstItem="Zhm-Fg-P7L" firstAttribute="leading" secondItem="sFa-EI-w1R" secondAttribute="trailing" id="leL-dC-4sT"/>
                 <constraint firstItem="b7T-vj-wd5" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="pFO-h7-A6j"/>
                 <constraint firstItem="nJF-gW-HYN" firstAttribute="centerX" secondItem="sFa-EI-w1R" secondAttribute="centerX" id="uJo-UM-RUl"/>
+                <constraint firstItem="6NW-Co-kMF" firstAttribute="centerX" secondItem="wKY-Hf-ZHo" secondAttribute="centerX" id="zWp-iD-IW1"/>
             </constraints>
             <size key="customSize" width="240" height="256"/>
             <connections>
@@ -205,6 +214,7 @@
                 <outlet property="dateLabel" destination="P7g-9Z-UEh" id="fQr-OO-rue"/>
                 <outlet property="followButton" destination="MOC-0f-ecs" id="Y3T-zh-Zsx"/>
                 <outlet property="gifImageView" destination="wKY-Hf-ZHo" id="E6W-xU-RmP"/>
+                <outlet property="heartImage" destination="6NW-Co-kMF" id="XOG-Mb-M6B"/>
                 <outlet property="idLabel" destination="JIt-Iw-TUZ" id="Dce-FE-GIB"/>
                 <outlet property="likeButton" destination="sFa-EI-w1R" id="zLb-lg-SIW"/>
                 <outlet property="likeCountLabel" destination="nJF-gW-HYN" id="yzz-IC-GdB"/>
@@ -216,6 +226,7 @@
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="heart" width="108" height="100"/>
         <image name="icon_find_plus" width="33" height="33"/>
         <image name="icon_timeline_commnet" width="21" height="20"/>
         <image name="icon_timeline_like" width="21" height="18"/>

@@ -94,6 +94,7 @@ class CommentCell: UITableViewCell {
         self.height = 93
     }
     
+    
     func setBody(){
         if data["url"].string == "" {
             urlState = false

@@ -33,10 +33,12 @@ class TagListCell: UICollectionViewCell {
     @IBOutlet weak var commentButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var moreButton: UIButton!
+    @IBOutlet weak var heartImage: UIImageView!
     
     var cellIndexPath: NSIndexPath!
     var delegate: TagListCellDelegate?
     let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -49,6 +51,14 @@ class TagListCell: UICollectionViewCell {
         let commentTap = UITapGestureRecognizer()
         commentTap.addTarget(self, action: "commentButtonTouched")
         self.lastCommentView.addGestureRecognizer(commentTap)
+        
+        
+        let doubleTap = UITapGestureRecognizer()
+        doubleTap.numberOfTapsRequired = 2
+        doubleTap.addTarget(self, action: "likeButtonTouched")
+        self.gifImageView.userInteractionEnabled = true
+        
+        self.gifImageView.addGestureRecognizer(doubleTap)
     }
     
     override func prepareForReuse() {
@@ -57,6 +67,7 @@ class TagListCell: UICollectionViewCell {
         self.userIdLabel.text = nil
         self.playCountLabel.text = nil
         self.followButton.setImage(UIImage(named: "icon_find_plus"), forState: .Normal)
+        self.heartImage.image = UIImage(named: "heart")
         
         self.lastCommentImageView.image = nil
         self.lastCommentTitleLabel.text = nil
@@ -99,11 +110,18 @@ class TagListCell: UICollectionViewCell {
         if self.likeButton.imageForState(.Normal) == UIImage(named: "icon_timeline_like")
         {
             self.likeButton.setImage(UIImage(named: "icon_timeline_like_c"), forState: .Normal)
+            self.heartImage.fadeOut(completion: { (finished: Bool) -> Void in
+                self.heartImage.fadeIn(completion: { (finished: Bool) -> Void in
+                    self.heartImage.fadeOut()
+                })
+            })
         }
         else
         {
             self.likeButton.setImage(UIImage(named: "icon_timeline_like"), forState: .Normal)
         }
+        
+        
     }
     
     @IBAction func commentButtonTouched() {
