@@ -124,9 +124,9 @@ class MyFeedNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
         layout.columnCount = 1
         layout.itemRenderDirection = CHTCollectionViewWaterfallLayoutItemRenderDirection.ShortestFirst
         self.parent.isWaterFall = false
-        self.parent.collectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
         self.parent.collectionView.collectionViewLayout = layout
         self.parent.collectionView.reloadData()
+        self.parent.collectionView.setContentOffset(CGPointZero, animated: true)
     }
     @IBAction func waterFallViewButtonTouched() {
         self.listViewButton.setImage(UIImage(named: "icon_my_list"), forState: .Normal)
@@ -138,6 +138,7 @@ class MyFeedNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
         self.parent.isWaterFall = true
         self.parent.collectionView.collectionViewLayout = layout
         self.parent.collectionView.reloadData()
+        self.parent.collectionView.setContentOffset(CGPointZero, animated: true)
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {

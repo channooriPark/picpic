@@ -83,7 +83,7 @@ class EmailViewController: UIViewController ,UITextViewDelegate,UITextFieldDeleg
         if self.appdelegate.locale == "ko_KR" {
             para.addAttribute(NSLinkAttributeName, value: "picpic://service", range: NSMakeRange(13, 4))
             
-            para.addAttribute(NSLinkAttributeName, value: "picpic://policy", range: NSMakeRange(21, 8))
+            para.addAttribute(NSLinkAttributeName, value: "picpic://policy", range: NSMakeRange(20, 8))
         }else {
             para.addAttribute(NSLinkAttributeName, value: "picpic://service", range: NSMakeRange(31, 17))
             

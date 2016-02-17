@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
     var alram : AlramViewController!
     var second : SecondNativeViewController!
     var camera : CameraViewController!
-    var myfeed : MyFeedNativeViewController!//MyFeedPageViewController!
+    var myfeed : MyFeedNativeViewController! //MyFeedPageViewController!
     var signin : UINavigationController!
     var launch : LaunchViewController!
     
@@ -645,13 +645,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         
-        
         return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }
     
     @available(iOS 9.0, *)
     func application(application: UIApplication,
         openURL url: NSURL, options: [String: AnyObject]) -> Bool {
+            print("open url url ")
+            URLopenPage(url)
             if url.scheme == "fb1610072682575169" {
                 return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: options[UIApplicationOpenURLOptionsSourceApplicationKey]as! String?, annotation: options[UIApplicationOpenURLOptionsAnnotationKey])
             }else {
@@ -694,7 +695,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
         alram = self.storyboard.instantiateViewControllerWithIdentifier("AlramViewController")as! AlramViewController
         second = SecondNativeViewController()
         camera = self.storyboard.instantiateViewControllerWithIdentifier("CameraViewController")as! CameraViewController
-        myfeed = MyFeedNativeViewController()//MyFeedPageViewController()
+        myfeed = MyFeedNativeViewController() //MyFeedPageViewController()
         login = self.storyboard.instantiateViewControllerWithIdentifier("LoginViewController")as! LoginViewController
         
         testNavi = self.storyboard.instantiateViewControllerWithIdentifier("testNavi")as! UINavigationController
@@ -727,7 +728,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
         alram = self.storyboard.instantiateViewControllerWithIdentifier("AlramViewController")as! AlramViewController
         second = SecondNativeViewController()
         camera = self.storyboard.instantiateViewControllerWithIdentifier("CameraViewController")as! CameraViewController
-        myfeed = MyFeedNativeViewController()//MyFeedPageViewController()
+        myfeed = MyFeedNativeViewController() //MyFeedPageViewController()
         login = self.storyboard.instantiateViewControllerWithIdentifier("LoginViewController")as! LoginViewController
         testNavi = self.storyboard.instantiateViewControllerWithIdentifier("testNavi")as! UINavigationController
     }

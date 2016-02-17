@@ -548,5 +548,6 @@
     <string name="google_friend">구굴+에 있는 친구</string>
     <string name="recommend_friend">추천친구를 팔로워 해보아요!</string>
     <string name="friend_count">명</string>
+    <string name="giflist_not">GIF가 없습니다</string>
 
 </resources>

@@ -76,6 +76,14 @@ class GifListViewController: UIViewController , RAReorderableLayoutDelegate, RAR
             
         }
             self.collectionView.reloadData()
+            if self.collections.count == 0 {
+                let alert = UIAlertController(title: nil, message: self.appdelegate.ment["popup_confirm"].stringValue, preferredStyle: .Alert)
+                let confirm = UIAlertAction(title: self.appdelegate.ment["giflist_not"].stringValue, style: .Default, handler: { (confirm) -> Void in
+                    
+                })
+                alert.addAction(confirm)
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
             print("collections count      ",self.collections.count)
         })
     }

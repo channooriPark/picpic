@@ -97,8 +97,10 @@ class UserNativeViewController: UIViewController, UICollectionViewDelegate, UICo
         appdelegate.doIt(406, message: message, callback: {(json) in
             self.infoDic = json.dictionaryObject!
             print("json data ",self.infoDic)
+            
             if let string = json["withdraw_yn"].string {
                 if string as! String == "Y" {
+                    
                     //탈퇴사용자 alert
                     self._hud.hide(true)
                     self.collectionView.infiniteScrollingView.stopAnimating()
@@ -140,15 +142,18 @@ class UserNativeViewController: UIViewController, UICollectionViewDelegate, UICo
                     {
                         if string as! String == "Y"
                         {
-                            //사용자비공개 alert
-                            self._hud.hide(true)
-                            self.collectionView.infiniteScrollingView.stopAnimating()
-                            self.collectionView.infiniteScrollingView.enabled = false
-                            let alert = UIAlertController(title: nil, message: self.appdelegate.ment["toast_msg_is_closed_y"].stringValue, preferredStyle: UIAlertControllerStyle.Alert)
-                            alert.addAction(UIAlertAction(title: self.appdelegate.ment["popup_confirm"].stringValue, style: UIAlertActionStyle.Default, handler: {_ in self.backButtonTouched()}))
-                            self.presentViewController(alert, animated: true, completion: nil)
-                            return
-
+                            if let string = dic["follow_yn"] {
+                                if string as! String == "N" {
+                                    //사용자비공개 alert
+                                    self._hud.hide(true)
+                                    self.collectionView.infiniteScrollingView.stopAnimating()
+                                    self.collectionView.infiniteScrollingView.enabled = false
+                                    let alert = UIAlertController(title: nil, message: self.appdelegate.ment["toast_msg_is_closed_y"].stringValue, preferredStyle: UIAlertControllerStyle.Alert)
+                                    alert.addAction(UIAlertAction(title: self.appdelegate.ment["popup_confirm"].stringValue, style: UIAlertActionStyle.Default, handler: {_ in self.backButtonTouched()}))
+                                    self.presentViewController(alert, animated: true, completion: nil)
+                                    return
+                                }
+                            }
                         }
                     }
                     let str = dic["url"]! as! String

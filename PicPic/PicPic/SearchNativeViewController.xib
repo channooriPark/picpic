@@ -33,10 +33,10 @@
                     </connections>
                 </searchBar>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BUl-9K-mRe">
-                    <rect key="frame" x="0.0" y="62" width="160" height="40"/>
+                    <rect key="frame" x="0.0" y="62" width="160" height="43"/>
                     <color key="backgroundColor" red="0.90980392156862744" green="0.89803921568627454" blue="0.94901960784313721" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="40" id="PJA-Ku-9jq"/>
+                        <constraint firstAttribute="height" constant="43" id="PJA-Ku-9jq"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                     <state key="normal" title="# 태그">
@@ -61,10 +61,10 @@
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FXQ-Ya-sVP">
-                    <rect key="frame" x="160" y="62" width="160" height="40"/>
+                    <rect key="frame" x="160" y="62" width="160" height="43"/>
                     <color key="backgroundColor" red="0.90980392160000001" green="0.8980392157" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="40" id="838-l9-URn"/>
+                        <constraint firstAttribute="height" constant="43" id="838-l9-URn"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <state key="normal" title="사용자">
@@ -100,12 +100,12 @@
                 <constraint firstItem="BUl-9K-mRe" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="JrX-KV-fON"/>
                 <constraint firstItem="uWe-9f-GH1" firstAttribute="top" secondItem="Uuh-pH-lKt" secondAttribute="bottom" id="Lah-60-Alz"/>
                 <constraint firstAttribute="trailing" secondItem="qgk-pQ-dwt" secondAttribute="trailing" id="P3K-iK-4WY"/>
-                <constraint firstItem="aeP-5l-1hu" firstAttribute="top" secondItem="BUl-9K-mRe" secondAttribute="bottom" id="PIJ-uk-PLe"/>
+                <constraint firstItem="aeP-5l-1hu" firstAttribute="top" secondItem="BUl-9K-mRe" secondAttribute="bottom" constant="-3" id="PIJ-uk-PLe"/>
                 <constraint firstItem="c7W-3F-VAd" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Rag-Ia-fAR"/>
                 <constraint firstItem="aeP-5l-1hu" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="VmZ-Dk-n6e"/>
                 <constraint firstItem="FXQ-Ya-sVP" firstAttribute="width" secondItem="BUl-9K-mRe" secondAttribute="width" id="WqN-gp-KPp"/>
                 <constraint firstItem="qgk-pQ-dwt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="26" id="Xzs-E4-AI3"/>
-                <constraint firstItem="Uuh-pH-lKt" firstAttribute="top" secondItem="FXQ-Ya-sVP" secondAttribute="bottom" id="aHL-W3-n7L"/>
+                <constraint firstItem="Uuh-pH-lKt" firstAttribute="top" secondItem="FXQ-Ya-sVP" secondAttribute="bottom" constant="-3" id="aHL-W3-n7L"/>
                 <constraint firstItem="Uuh-pH-lKt" firstAttribute="leading" secondItem="aeP-5l-1hu" secondAttribute="trailing" id="bFF-Sc-PB0"/>
                 <constraint firstAttribute="trailing" secondItem="Uuh-pH-lKt" secondAttribute="trailing" id="eMj-db-EBl"/>
                 <constraint firstItem="BUl-9K-mRe" firstAttribute="top" secondItem="c7W-3F-VAd" secondAttribute="bottom" id="h31-UZ-fso"/>
