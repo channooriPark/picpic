@@ -80,10 +80,21 @@ typedef NS_ENUM(NSInteger, KOAgeAuthLevel) {
  @constant KOAgeAuthLimitType19 19세 인증.
  */
 typedef NS_ENUM(NSInteger, KOAgeAuthLimit) {
+    KOAgeAuthLimitTypeNone = 0,
     KOAgeAuthLimitType12 = 12,
     KOAgeAuthLimitType15 = 15,
     KOAgeAuthLimitType19 = 19
 };
+
+/*!
+ @abstract KOAgeAuthProperty 연령인증 정보 요청시 추가로 더 요청할 수 있는 목록
+ @constant ACCOUNT_CI "account_ci" 를 의미.
+ */
+typedef NS_ENUM(NSInteger, KOAgeAuthProperty) {
+    KOAgeAuthPropertyAccountCi = 1
+};
+
+@class KOAgeAuthQueryStringBuilder;
 
 /*!
  * @class KOSession
@@ -230,8 +241,7 @@ typedef NS_ENUM(NSInteger, KOAgeAuthLimit) {
 /*!
  새로운 연령 인증이 필요할 경우 사용자에게 연령 인증관련 창을 띄워서 연령 인증을 유도합니다. 제휴를 통해 권한이 부여된 특정 앱에서만 호출 가능합니다.
  */
-- (void)showAgeAuthWithAuthLevel:(KOAgeAuthLevel)authLevel
-                       authLimit:(KOAgeAuthLimit)authLimit
+- (void)showAgeAuthWithAuthLevel:(KOAgeAuthQueryStringBuilder *) ageAuthQueryStringBuilder
                completionHandler:(KOCompletionSuccessHandler)completionHandler;
 
 @end

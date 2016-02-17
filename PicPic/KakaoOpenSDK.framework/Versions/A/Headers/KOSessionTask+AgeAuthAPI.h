@@ -24,6 +24,7 @@
  인증된 세션정보로 연령인증 관련 API를 정의합니다. 제휴를 통해 권한이 부여된 특정 앱에서만 호출 가능합니다.
  */
 
+#import "KOSession.h"
 #import "KOSessionTask.h"
 
 /*!
@@ -32,10 +33,22 @@
 @interface KOSessionTask (AgeAuthAPI)
 
 /*!
- @abstract 연령인증 정보를 얻는다.
+ @abstract 연령인증 정보를 얻는다. (일부 앱에서만 제한적 허용/deprecated 될 예정)
  @param completionHandler 연령인증 정보를 가져와서 처리하는 핸들러.
  */
 + (instancetype)ageAuthTaskWithCompletionHandler:(KOSessionTaskCompletionHandler)completionHandler;
+
+/*!
+ @abstract 해당 유저의 연령인증 정보를 얻는다.
+ @param ageLimit response의 bypass_age_limit(true/false)를 판단하는 기준 제한 연령. default 는 앱에 설정된 제한 연령기준.
+                 앱에 설정이 없고 param 으로 주어지지 않으면 bypass_age_limit 은 response 에 포함되지 않음.
+ @param propertyKeys 추가 동의가 필요로 하는 인증정보를 response 에 포함하고 싶은 경우 해당 KOAgeAuthProperty 셋.
+ @param completionHandler 연령인증 정보를 가져와서 처리하는 핸들러.
+ */
++ (instancetype)ageAuthTaskWithCompletionHandler: (KOAgeAuthLimit)ageLimit
+                                    propertyKeys: (NSSet *)propertyKeys
+                               completionHandler: (KOSessionTaskCompletionHandler)completionHandler;
+
 
 @end
 
