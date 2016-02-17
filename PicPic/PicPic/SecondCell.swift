@@ -71,19 +71,6 @@ class SecondCell: UICollectionViewCell {
     }
     @IBAction func likeButtonTouched() {
         self.delegate?.likeButtonTouched(self.cellIndexPath)
-        if self.likeButton.imageForState(.Normal) == UIImage(named: "icon_timeline_like")
-        {
-            self.heartImage.fadeOut(completion: { (finished: Bool) -> Void in
-                self.heartImage.fadeIn(completion: { (finished: Bool) -> Void in
-                    self.heartImage.fadeOut()
-                })
-            })
-            self.likeButton.setImage(UIImage(named: "icon_timeline_like_c"), forState: .Normal)
-        }
-        else
-        {
-            self.likeButton.setImage(UIImage(named: "icon_timeline_like"), forState: .Normal)
-        }
     }
     @IBAction func commentButtonTouched() {
         self.delegate?.commentButtonTouched(self.cellIndexPath)
