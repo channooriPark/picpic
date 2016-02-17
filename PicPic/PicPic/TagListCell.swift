@@ -107,20 +107,6 @@ class TagListCell: UICollectionViewCell {
     
     @IBAction func likeButtonTouched() {
         self.delegate?.likeButtonTouched(self.cellIndexPath)
-        if self.likeButton.imageForState(.Normal) == UIImage(named: "icon_timeline_like")
-        {
-            self.likeButton.setImage(UIImage(named: "icon_timeline_like_c"), forState: .Normal)
-            self.heartImage.fadeOut(completion: { (finished: Bool) -> Void in
-                self.heartImage.fadeIn(completion: { (finished: Bool) -> Void in
-                    self.heartImage.fadeOut()
-                })
-            })
-        }
-        else
-        {
-            self.likeButton.setImage(UIImage(named: "icon_timeline_like"), forState: .Normal)
-        }
-        
         
     }
     
