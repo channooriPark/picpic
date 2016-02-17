@@ -1025,9 +1025,9 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                 
                 //save the gifs to Photos
                 PHPhotoLibrary.sharedPhotoLibrary().performChanges({
-                    let img = UIImage.animatedImageWithAnimatedGIFData(gif!)
-                    let assetRequest = PHAssetChangeRequest.creationRequestForAssetFromImage(img!)
-                    let assetPlaceholder = assetRequest.placeholderForCreatedAsset
+
+                    let assetRequest = PHAssetChangeRequest.creationRequestForAssetFromImageAtFileURL(NSURL(string: path)!)
+                    let assetPlaceholder = assetRequest!.placeholderForCreatedAsset
                     photosAsset = PHAsset.fetchAssetsInAssetCollection(collection, options: nil)
                     let albumChangeRequest = PHAssetCollectionChangeRequest(forAssetCollection: collection, assets: photosAsset)
                     albumChangeRequest!.addAssets([assetPlaceholder!])
