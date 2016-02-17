@@ -38,6 +38,7 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
     let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         if !self.view.hidden
         {
             self.navigationController?.navigationBarHidden = true
