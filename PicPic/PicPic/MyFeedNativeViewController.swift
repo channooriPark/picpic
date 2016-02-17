@@ -67,7 +67,7 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
         
         self.collectionView.alwaysBounceVertical = true
         self.collectionView.addInfiniteScrollingWithActionHandler({ _ in self.refreshWithAdditionalPage(self.currentPage)})
-        self.refresh()
+//        self.refresh()
     }
     
     override func didReceiveMemoryWarning() {
