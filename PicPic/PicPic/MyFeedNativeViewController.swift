@@ -188,7 +188,7 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func cellTapped(indexPath: NSIndexPath){
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let post = appdelegate.storyboard.instantiateViewControllerWithIdentifier("PostPageViewController")as! PostPageViewController
         appdelegate.controller.append(post)
@@ -226,6 +226,7 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
                 cell.imageView.image = self.postGifData["\(indexPath.item)"]
             }
             cell.cellIndexPath = indexPath
+            cell.delegate = self
             
             return cell
         }
@@ -333,6 +334,7 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
             let tags = self.infoDic["p_tag_1"] as! Array<[String : String]>
             view.firstTagName = tags.first!["tag_name"]! != "null" ? tags.first!["tag_name"]! : ""
             view.tagIdButton.setTitle("#" + view.firstTagName, forState: .Normal)
+            view.tagIdButton.sizeToFit()
             view.tagCountButton.setTitle("+" + String(tags.count), forState: .Normal)
             
             view.profileImageView.sd_setImageWithURL(NSURL(string: "http://gif.picpic.world/" + (infoDic["profile_picture"] as! String)))
@@ -481,12 +483,28 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let message : JSON = ["post_reply_id" : self.postInfos[indexPath.item]["post_id"] as! String, "click_id" : appdelegate.email, "like_form": "P"]
         
+        let cell = self.collectionView.cellForItemAtIndexPath(indexPath) as! TagListCell
+        
+        if cell.likeButton.imageForState(.Normal) == UIImage(named: "icon_timeline_like")
+        {
+            cell.heartImage.fadeOut(completion: { (finished: Bool) -> Void in
+                cell.heartImage.fadeIn(completion: { (finished: Bool) -> Void in
+                    cell.heartImage.fadeOut()
+                })
+            })
+            cell.likeButton.setImage(UIImage(named: "icon_timeline_like_c"), forState: .Normal)
+        }
+        else
+        {
+            cell.likeButton.setImage(UIImage(named: "icon_timeline_like"), forState: .Normal)
+        }
+        
         if self.postInfos[indexPath.item]["like_yn"] as! String == "N"
         {
             self.postInfos[indexPath.item]["like_yn"] = "Y"
             self.postInfos[indexPath.item]["like_cnt"] = (self.postInfos[indexPath.item]["like_cnt"] as! Int) + 1
             appdelegate.doIt(302, message: message, callback: { _ in
-                self.collectionView.reloadData()
+                cell.likeCountButton.setTitle(String(format: "\(self.appdelegate.ment["like"].stringValue) %d\(self.appdelegate.ment["timeline_count"].stringValue)", self.postInfos[indexPath.item]["like_cnt"] as! Int), forState: .Normal)
             })
         }
         else
@@ -494,7 +512,7 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
             self.postInfos[indexPath.item]["like_yn"] = "N"
             self.postInfos[indexPath.item]["like_cnt"] = (self.postInfos[indexPath.item]["like_cnt"] as! Int) - 1
             appdelegate.doIt(303, message: message, callback: { _ in
-                self.collectionView.reloadData()
+                cell.likeCountButton.setTitle(String(format: "\(self.appdelegate.ment["like"].stringValue) %d\(self.appdelegate.ment["timeline_count"].stringValue)", self.postInfos[indexPath.item]["like_cnt"] as! Int), forState: .Normal)
             })
         }
     }
@@ -529,8 +547,9 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
     func moreButtonTouched(indexPath: NSIndexPath)
     {
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        let moreother = appdelegate.storyboard.instantiateViewControllerWithIdentifier("MoreOtherViewController")as! MoreOtherViewController
+        let moreother = appdelegate.storyboard.instantiateViewControllerWithIdentifier("MoreMeViewController")as! MoreMeViewController
         moreother.post_id = self.postInfos[indexPath.item]["post_id"] as! String
+        moreother.email = appdelegate.email
         
         self.addChildViewController(moreother)
         self.view.addSubview(moreother.view)

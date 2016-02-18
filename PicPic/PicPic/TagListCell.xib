@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -211,6 +211,13 @@
                             <constraint firstItem="aEr-II-q19" firstAttribute="leading" secondItem="t6i-Bg-0nx" secondAttribute="trailing" constant="8" id="zIg-EF-M78"/>
                         </constraints>
                     </view>
+                    <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart" translatesAutoresizingMaskIntoConstraints="NO" id="APD-sG-qsP">
+                        <rect key="frame" x="94" y="114" width="100" height="85"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="85" id="1xl-HY-4ks"/>
+                            <constraint firstAttribute="width" constant="100" id="F4z-GH-FMp"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
@@ -225,6 +232,7 @@
                 <constraint firstItem="sTG-eE-xa5" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="7DN-7G-WS1"/>
                 <constraint firstAttribute="trailing" secondItem="QB0-8m-I2j" secondAttribute="trailing" id="9Tu-kN-eel"/>
                 <constraint firstItem="9uF-0M-HMK" firstAttribute="top" secondItem="p6z-gv-hRR" secondAttribute="bottom" constant="6" id="AE2-Mb-Ond"/>
+                <constraint firstItem="APD-sG-qsP" firstAttribute="centerX" secondItem="ltx-8w-8yV" secondAttribute="centerX" id="ErH-xS-vrb"/>
                 <constraint firstItem="Kkz-Zo-dJa" firstAttribute="width" secondItem="Q12-vq-dVc" secondAttribute="width" id="FqJ-Zi-EUk"/>
                 <constraint firstItem="ubD-UV-Cfw" firstAttribute="top" secondItem="9uF-0M-HMK" secondAttribute="bottom" id="Ga2-5E-UyV"/>
                 <constraint firstItem="p6z-gv-hRR" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="Kmz-M6-AnA"/>
@@ -245,6 +253,7 @@
                 <constraint firstItem="ltx-8w-8yV" firstAttribute="top" secondItem="sTG-eE-xa5" secondAttribute="bottom" constant="2" id="j8H-xk-ek6"/>
                 <constraint firstItem="p6z-gv-hRR" firstAttribute="top" secondItem="gID-xa-GQ1" secondAttribute="bottom" constant="10" id="jyq-pJ-Oc6"/>
                 <constraint firstItem="Unk-p0-0aS" firstAttribute="centerY" secondItem="p6z-gv-hRR" secondAttribute="centerY" id="nRQ-gh-y7V"/>
+                <constraint firstItem="APD-sG-qsP" firstAttribute="centerY" secondItem="ltx-8w-8yV" secondAttribute="centerY" id="oqC-IZ-blK"/>
                 <constraint firstItem="QB0-8m-I2j" firstAttribute="leading" secondItem="ubD-UV-Cfw" secondAttribute="trailing" id="tBB-ww-0cT"/>
                 <constraint firstAttribute="bottom" secondItem="Q12-vq-dVc" secondAttribute="bottom" id="xHg-fU-Qsb"/>
             </constraints>
@@ -257,6 +266,7 @@
                 <outlet property="dateLabel" destination="pXo-e2-vUb" id="rSb-Wy-BOp"/>
                 <outlet property="followButton" destination="Aqd-bq-QR6" id="75n-xf-8JD"/>
                 <outlet property="gifImageView" destination="ltx-8w-8yV" id="bLg-eY-YdA"/>
+                <outlet property="heartImage" destination="APD-sG-qsP" id="wo4-OL-2Bx"/>
                 <outlet property="lastCommentImageView" destination="t6i-Bg-0nx" id="4i2-Nt-L08"/>
                 <outlet property="lastCommentTextLabel" destination="aEr-II-q19" id="QCX-xs-f3G"/>
                 <outlet property="lastCommentTitleLabel" destination="wRH-Id-2bf" id="luj-BL-fPa"/>
@@ -274,6 +284,7 @@
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="heart" width="108" height="100"/>
         <image name="icon_find_plus" width="33" height="33"/>
         <image name="icon_timeline_commnet" width="21" height="20"/>
         <image name="icon_timeline_like" width="21" height="18"/>

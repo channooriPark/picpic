@@ -20,6 +20,8 @@ class FollowNativeViewController: UIViewController, UITableViewDelegate, UITable
     var tagId: String!
     var type: FollowType!
     var datas: Array<[String: String]> = []
+    var currentPage = "1"
+    var _hud: MBProgressHUD = MBProgressHUD()
     @IBOutlet weak var tableView: UITableView!
     
     override func viewWillAppear(animated: Bool) {
@@ -52,10 +54,16 @@ class FollowNativeViewController: UIViewController, UITableViewDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        _hud.mode = MBProgressHUDModeIndeterminate
+        _hud.center = self.view.center
+        self.view.addSubview(_hud)
+        _hud.hide(false)
+        
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
         self.tableView.registerNib(UINib(nibName: "FollowerViewCell", bundle: nil), forCellReuseIdentifier: "followerCell")
+        self.tableView.addInfiniteScrollingWithActionHandler({_ in self.refreshWithAdditionalPage()})
         
         self.refresh()
         // Do any additional setup after loading the view.
@@ -67,7 +75,7 @@ class FollowNativeViewController: UIViewController, UITableViewDelegate, UITable
         switch self.type!
         {
         case .Follower:
-            let message = JSON(["my_id" : self.email, "user_id" : self.tagId])
+            let message = JSON(["my_id" : self.email, "user_id" : self.tagId, "page" : "1"])
             appdelegate.doIt(408, message: message, callback: {(json) in
                 if json["data"].type == .Null {return}
                 if (json["data"].arrayObject!.first as! [String: String])["email"] != "null"
@@ -77,7 +85,7 @@ class FollowNativeViewController: UIViewController, UITableViewDelegate, UITable
                 }
             })
         case .Following:
-            let message = JSON(["my_id" : self.email, "user_id" : self.tagId])
+            let message = JSON(["my_id" : self.email, "user_id" : self.tagId, "page" : "1"])
             appdelegate.doIt(404, message: message, callback: {(json) in
                 if json["data"].type == .Null {return}
                 if (json["data"].arrayObject!.first as! [String: String])["email"] != "null"
@@ -87,7 +95,7 @@ class FollowNativeViewController: UIViewController, UITableViewDelegate, UITable
                 }
             })
         case .Like:
-            let message = JSON(["my_id" : self.email, "post_reply_id" : self.tagId])
+            let message = JSON(["my_id" : self.email, "post_reply_id" : self.tagId, "page" : "1"])
             appdelegate.doIt(320, message: message, callback: {(json) in
                 if json["data"].type == .Null {return}
                 if (json["data"].arrayObject!.first as! [String: String])["email"] != "null"
@@ -97,12 +105,99 @@ class FollowNativeViewController: UIViewController, UITableViewDelegate, UITable
                 }
             })
         case .TagFollower:
-            let message = JSON(["my_id" : self.email, "tag_id" : self.tagId])
+            let message = JSON(["my_id" : self.email, "tag_id" : self.tagId, "page" : "1"])
             appdelegate.doIt(409, message: message, callback: {(json) in
                 if json["data"].type == .Null {return}
                 if (json["data"].arrayObject!.first as! [String: String])["email"] != "null"
                 {
                     self.datas = json["data"].arrayObject as! Array<[String: String]>
+                    self.tableView.reloadData()
+                }
+            })
+            
+        }
+    }
+    
+    func refreshWithAdditionalPage()
+    {
+        let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let newPage = Int(self.currentPage)! + 1
+        
+        switch self.type!
+        {
+        case .Follower:
+            let message = JSON(["my_id" : self.email, "user_id" : self.tagId, "page" : "\(newPage)"])
+            appdelegate.doIt(408, message: message, callback: {(json) in
+                if json["data"].type == .Null {
+                    self._hud.hide(true)
+                    self.tableView.infiniteScrollingView.stopAnimating()
+                    self.tableView.infiniteScrollingView.enabled = false
+                    self.tableView.reloadData()
+                    return
+                }
+                if (json["data"].arrayObject!.first as! [String: String])["email"] != "null"
+                {
+                    self.datas.appendContentsOf(json["data"].arrayObject as! Array<[String: String]>)
+                    self._hud.hide(true)
+                    self.tableView.infiniteScrollingView.stopAnimating()
+                    self.currentPage = "\(newPage)"
+                    self.tableView.reloadData()
+                }
+            })
+        case .Following:
+            let message = JSON(["my_id" : self.email, "user_id" : self.tagId, "page" : "\(newPage)"])
+            appdelegate.doIt(404, message: message, callback: {(json) in
+                if json["data"].type == .Null {
+                    self._hud.hide(true)
+                    self.tableView.infiniteScrollingView.stopAnimating()
+                    self.tableView.infiniteScrollingView.enabled = false
+                    self.tableView.reloadData()
+                    return
+                }
+                if (json["data"].arrayObject!.first as! [String: String])["email"] != "null"
+                {
+                    self.datas.appendContentsOf(json["data"].arrayObject as! Array<[String: String]>)
+                    self._hud.hide(true)
+                    self.tableView.infiniteScrollingView.stopAnimating()
+                    self.currentPage = "\(newPage)"
+                    self.tableView.reloadData()
+                }
+            })
+        case .Like:
+            let message = JSON(["my_id" : self.email, "post_reply_id" : self.tagId, "page" : "\(newPage)"])
+            appdelegate.doIt(320, message: message, callback: {(json) in
+                if json["data"].type == .Null {
+                    self._hud.hide(true)
+                    self.tableView.infiniteScrollingView.stopAnimating()
+                    self.tableView.infiniteScrollingView.enabled = false
+                    self.tableView.reloadData()
+                    return
+                }
+                if (json["data"].arrayObject!.first as! [String: String])["email"] != "null"
+                {
+                    self.datas.appendContentsOf(json["data"].arrayObject as! Array<[String: String]>)
+                    self._hud.hide(true)
+                    self.tableView.infiniteScrollingView.stopAnimating()
+                    self.currentPage = "\(newPage)"
+                    self.tableView.reloadData()
+                }
+            })
+        case .TagFollower:
+            let message = JSON(["my_id" : self.email, "tag_id" : self.tagId, "page" : "\(newPage)"])
+            appdelegate.doIt(409, message: message, callback: {(json) in
+                if json["data"].type == .Null {
+                    self._hud.hide(true)
+                    self.tableView.infiniteScrollingView.stopAnimating()
+                    self.tableView.infiniteScrollingView.enabled = false
+                    self.tableView.reloadData()
+                    return
+                }
+                if (json["data"].arrayObject!.first as! [String: String])["email"] != "null"
+                {
+                    self.datas.appendContentsOf(json["data"].arrayObject as! Array<[String: String]>)
+                    self._hud.hide(true)
+                    self.tableView.infiniteScrollingView.stopAnimating()
+                    self.currentPage = "\(newPage)"
                     self.tableView.reloadData()
                 }
             })

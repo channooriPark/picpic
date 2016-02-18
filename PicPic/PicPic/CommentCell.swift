@@ -180,26 +180,27 @@ class CommentCell: UITableViewCell {
             //내글
             if data["email"].stringValue == self.appdelegate.email {
                 //내 댓글
-                self.hiddenButton1.setImage(UIImage(named: "icon_mycomment_modify"), forState: .Normal)
-                self.hiddenButton2.setImage(UIImage(named: "icon_mycomment_delete"), forState: .Normal)
+                self.hiddenButton1.setBackgroundImage(UIImage(named: "icon_mycomment_modify"), forState: .Normal)
+                self.hiddenButton2.setBackgroundImage(UIImage(named: "icon_mycomment_delete"), forState: .Normal)
+    
                 self.comType = 0
             }else {
                 //남 댓글
-                self.hiddenButton1.setImage(UIImage(named: "icon_mycomment_reteg"), forState: .Normal)
-                self.hiddenButton2.setImage(UIImage(named: "icon_mycomment_delete"), forState: .Normal)
+                self.hiddenButton1.setBackgroundImage(UIImage(named: "icon_mycomment_reteg"), forState: .Normal)
+                self.hiddenButton2.setBackgroundImage(UIImage(named: "icon_mycomment_delete"), forState: .Normal)
                 self.comType = 1
             }
         }else {
             //남의 글
             if data["email"].stringValue == self.appdelegate.email {
                 //내 댓글
-                self.hiddenButton1.setImage(UIImage(named: "icon_mycomment_modify"), forState: .Normal)
-                self.hiddenButton2.setImage(UIImage(named: "icon_mycomment_delete"), forState: .Normal)
+                self.hiddenButton1.setBackgroundImage(UIImage(named: "icon_mycomment_modify"), forState: .Normal)
+                self.hiddenButton2.setBackgroundImage(UIImage(named: "icon_mycomment_delete"), forState: .Normal)
                 self.comType = 0
             }else {
                 //남 댓글
-                self.hiddenButton1.setImage(UIImage(named: "icon_mycomment_reteg"), forState: .Normal)
-                self.hiddenButton2.setImage(UIImage(named: "icon_othercomment_report"), forState: .Normal)
+                self.hiddenButton1.setBackgroundImage(UIImage(named: "icon_mycomment_reteg"), forState: .Normal)
+                self.hiddenButton2.setBackgroundImage(UIImage(named: "icon_othercomment_report"), forState: .Normal)
                 self.comType = 1
             }
         }

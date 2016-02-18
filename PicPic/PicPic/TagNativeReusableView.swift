@@ -39,6 +39,18 @@ class TagNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
         self.bringSubviewToFront(self.leftButton)
         self.bringSubviewToFront(self.rightButton)
 
+        
+        let tap = UITapGestureRecognizer()
+        tap.addTarget(self, action: "founderLabelTouched")
+        self.tagFounderLabel.addGestureRecognizer(tap)
+    }
+    
+    func founderLabelTouched()
+    {
+        let vc = UserNativeViewController()
+        vc.userEmail = self.parent.infoDic["tag_founder"] as! String
+        
+        self.parent.navigationController?.pushViewController(vc, animated: true)
     }
     
 

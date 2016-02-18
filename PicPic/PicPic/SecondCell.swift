@@ -22,8 +22,11 @@ class SecondCell: UICollectionViewCell {
     @IBOutlet weak var likeCountLabel: UILabel!
     @IBOutlet weak var commentCountLabel: UILabel!
     @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var heartImage: UIImageView!
+
     var cellIndexPath: NSIndexPath!
     var delegate: TagListCellDelegate?
+
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,6 +34,16 @@ class SecondCell: UICollectionViewCell {
         let tap = UITapGestureRecognizer()
         tap.addTarget(self, action: "userViewTouched:")
         self.userView.addGestureRecognizer(tap)
+        
+        let singleTap = UITapGestureRecognizer()
+        singleTap.addTarget(self, action: "singleTapped")
+        self.addGestureRecognizer(singleTap)
+        
+        let doubleTap = UITapGestureRecognizer()
+        doubleTap.numberOfTapsRequired = 2
+        singleTap.requireGestureRecognizerToFail(doubleTap)
+        doubleTap.addTarget(self, action: "doubleTapped")
+        self.addGestureRecognizer(doubleTap)
     }
     
     override func prepareForReuse() {
@@ -69,14 +82,6 @@ class SecondCell: UICollectionViewCell {
     }
     @IBAction func likeButtonTouched() {
         self.delegate?.likeButtonTouched(self.cellIndexPath)
-        if self.likeButton.imageForState(.Normal) == UIImage(named: "icon_timeline_like")
-        {
-            self.likeButton.setImage(UIImage(named: "icon_timeline_like_c"), forState: .Normal)
-        }
-        else
-        {
-            self.likeButton.setImage(UIImage(named: "icon_timeline_like"), forState: .Normal)
-        }
     }
     @IBAction func commentButtonTouched() {
         self.delegate?.commentButtonTouched(self.cellIndexPath)
@@ -84,5 +89,13 @@ class SecondCell: UICollectionViewCell {
     @IBAction func shareButtonTouched() {
         self.delegate?.shareButtonTouched(self.cellIndexPath)
     }
+    func singleTapped()
+    {
+        self.delegate?.cellTapped(self.cellIndexPath)
+    }
     
+    func doubleTapped()
+    {
+        self.likeButtonTouched()
+    }
 }

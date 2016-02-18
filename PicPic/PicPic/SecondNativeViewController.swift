@@ -211,7 +211,7 @@ class SecondNativeViewController: UIViewController, UICollectionViewDataSource, 
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func cellTapped(indexPath: NSIndexPath) {
         if self.categoryTabEnableView.backgroundColor == self.enabledColor
         {
             let vc = SecondCategoryViewController()
@@ -242,6 +242,8 @@ class SecondNativeViewController: UIViewController, UICollectionViewDataSource, 
             
             cell.imageView.image = dic.values.first!
             cell.label.text = dic.keys.first
+            cell.cellIndexPath = indexPath
+            cell.delegate = self
             
             return cell
         }
@@ -452,12 +454,28 @@ class SecondNativeViewController: UIViewController, UICollectionViewDataSource, 
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let message : JSON = ["post_reply_id" : self.postInfos[indexPath.item]["post_id"] as! String, "click_id" : appdelegate.email, "like_form": "P"]
         
+        let cell = self.collectionView.cellForItemAtIndexPath(indexPath) as! SecondCell
+        
+        if cell.likeButton.imageForState(.Normal) == UIImage(named: "icon_timeline_like")
+        {
+            cell.heartImage.fadeOut(completion: { (finished: Bool) -> Void in
+                cell.heartImage.fadeIn(completion: { (finished: Bool) -> Void in
+                    cell.heartImage.fadeOut()
+                })
+            })
+            cell.likeButton.setImage(UIImage(named: "icon_timeline_like_c"), forState: .Normal)
+        }
+        else
+        {
+            cell.likeButton.setImage(UIImage(named: "icon_timeline_like"), forState: .Normal)
+        }
+        
         if self.postInfos[indexPath.item]["like_yn"] as! String == "N"
         {
             self.postInfos[indexPath.item]["like_yn"] = "Y"
             self.postInfos[indexPath.item]["like_cnt"] = (self.postInfos[indexPath.item]["like_cnt"] as! Int) + 1
             appdelegate.doIt(302, message: message, callback: { _ in
-                self.collectionView.reloadData()
+                cell.likeCountLabel.text = "\(self.postInfos[indexPath.item]["like_cnt"] as! Int)"
             })
         }
         else
@@ -465,7 +483,7 @@ class SecondNativeViewController: UIViewController, UICollectionViewDataSource, 
             self.postInfos[indexPath.item]["like_yn"] = "N"
             self.postInfos[indexPath.item]["like_cnt"] = (self.postInfos[indexPath.item]["like_cnt"] as! Int) - 1
             appdelegate.doIt(303, message: message, callback: { _ in
-                self.collectionView.reloadData()
+                cell.likeCountLabel.text = "\(self.postInfos[indexPath.item]["like_cnt"] as! Int)"
             })
         }
     }

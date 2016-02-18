@@ -99,10 +99,12 @@ class UserNativeViewController: UIViewController, UICollectionViewDelegate, UICo
                 }
             }
             
+            
             let mes: JSON = ["my_id" :appdelegate.email,"user_id": self.userEmail, "range" : "N", "str" : "", "page": "1"]
             
             appdelegate.doIt(511, message: mes, callback: {(json) in
                 print(json)
+                
                 if json["data"].type == .Null || json["data"].rawValue.isKindOfClass(NSNull)
                 {
                     self._hud.hide(true)
@@ -261,7 +263,7 @@ class UserNativeViewController: UIViewController, UICollectionViewDelegate, UICo
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func cellTapped(indexPath: NSIndexPath) {
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let post = appdelegate.storyboard.instantiateViewControllerWithIdentifier("PostPageViewController")as! PostPageViewController
         appdelegate.controller.append(post)
@@ -299,6 +301,7 @@ class UserNativeViewController: UIViewController, UICollectionViewDelegate, UICo
                 cell.imageView.image = self.postGifData["\(indexPath.item)"]
             }
             cell.cellIndexPath = indexPath
+            cell.delegate = self
             
             return cell
         }
@@ -405,6 +408,7 @@ class UserNativeViewController: UIViewController, UICollectionViewDelegate, UICo
             let tags = self.infoDic["p_tag_1"] as! Array<[String : String]>
             view.firstTagName = tags.first!["tag_name"]! != "null" ? tags.first!["tag_name"]! : ""
             view.tagIdButton.setTitle("#" + view.firstTagName, forState: .Normal)
+            view.tagIdButton.sizeToFit()
             view.tagCountButton.setTitle("+" + String(tags.count), forState: .Normal)
 //            view.tagFounderLabel.text = "@" + (self.infoDic["id"]! as! String)
 //            view.tagId = (self.infoDic["tag_id"]! as! String)
@@ -566,12 +570,28 @@ class UserNativeViewController: UIViewController, UICollectionViewDelegate, UICo
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let message : JSON = ["post_reply_id" : self.postInfos[indexPath.item]["post_id"] as! String, "click_id" : appdelegate.email, "like_form": "P"]
         
+        let cell = self.collectionView.cellForItemAtIndexPath(indexPath) as! TagListCell
+        
+        if cell.likeButton.imageForState(.Normal) == UIImage(named: "icon_timeline_like")
+        {
+            cell.heartImage.fadeOut(completion: { (finished: Bool) -> Void in
+                cell.heartImage.fadeIn(completion: { (finished: Bool) -> Void in
+                    cell.heartImage.fadeOut()
+                })
+            })
+            cell.likeButton.setImage(UIImage(named: "icon_timeline_like_c"), forState: .Normal)
+        }
+        else
+        {
+            cell.likeButton.setImage(UIImage(named: "icon_timeline_like"), forState: .Normal)
+        }
+        
         if self.postInfos[indexPath.item]["like_yn"] as! String == "N"
         {
             self.postInfos[indexPath.item]["like_yn"] = "Y"
             self.postInfos[indexPath.item]["like_cnt"] = (self.postInfos[indexPath.item]["like_cnt"] as! Int) + 1
             appdelegate.doIt(302, message: message, callback: { _ in
-                self.collectionView.reloadData()
+                cell.likeCountButton.setTitle(String(format: "\(self.appdelegate.ment["like"].stringValue) %d\(self.appdelegate.ment["timeline_count"].stringValue)", self.postInfos[indexPath.item]["like_cnt"] as! Int), forState: .Normal)
             })
         }
         else
@@ -579,7 +599,7 @@ class UserNativeViewController: UIViewController, UICollectionViewDelegate, UICo
             self.postInfos[indexPath.item]["like_yn"] = "N"
             self.postInfos[indexPath.item]["like_cnt"] = (self.postInfos[indexPath.item]["like_cnt"] as! Int) - 1
             appdelegate.doIt(303, message: message, callback: { _ in
-                self.collectionView.reloadData()
+                cell.likeCountButton.setTitle(String(format: "\(self.appdelegate.ment["like"].stringValue) %d\(self.appdelegate.ment["timeline_count"].stringValue)", self.postInfos[indexPath.item]["like_cnt"] as! Int), forState: .Normal)
             })
         }
     }

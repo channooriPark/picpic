@@ -190,7 +190,8 @@ class TagNativeViewController: UIViewController, UICollectionViewDelegate, UICol
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func cellTapped(indexPath: NSIndexPath)
+    {
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let post = appdelegate.storyboard.instantiateViewControllerWithIdentifier("PostPageViewController")as! PostPageViewController
         appdelegate.controller.append(post)
@@ -227,6 +228,7 @@ class TagNativeViewController: UIViewController, UICollectionViewDelegate, UICol
                 cell.imageView.image = self.postGifData["\(indexPath.item)"]
             }
             cell.cellIndexPath = indexPath
+            cell.delegate = self
         
             return cell
         }
@@ -485,12 +487,28 @@ class TagNativeViewController: UIViewController, UICollectionViewDelegate, UICol
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let message : JSON = ["post_reply_id" : self.postInfos[indexPath.item]["post_id"] as! String, "click_id" : appdelegate.email, "like_form": "P"]
         
+        let cell = self.collectionView.cellForItemAtIndexPath(indexPath) as! TagListCell
+        
+        if cell.likeButton.imageForState(.Normal) == UIImage(named: "icon_timeline_like")
+        {
+            cell.heartImage.fadeOut(completion: { (finished: Bool) -> Void in
+                cell.heartImage.fadeIn(completion: { (finished: Bool) -> Void in
+                    cell.heartImage.fadeOut()
+                })
+            })
+            cell.likeButton.setImage(UIImage(named: "icon_timeline_like_c"), forState: .Normal)
+        }
+        else
+        {
+            cell.likeButton.setImage(UIImage(named: "icon_timeline_like"), forState: .Normal)
+        }
+
         if self.postInfos[indexPath.item]["like_yn"] as! String == "N"
         {
             self.postInfos[indexPath.item]["like_yn"] = "Y"
             self.postInfos[indexPath.item]["like_cnt"] = (self.postInfos[indexPath.item]["like_cnt"] as! Int) + 1
             appdelegate.doIt(302, message: message, callback: { _ in
-                self.collectionView.reloadData()
+                cell.likeCountButton.setTitle(String(format: "\(self.appdelegate.ment["like"].stringValue) %d\(self.appdelegate.ment["timeline_count"].stringValue)", self.postInfos[indexPath.item]["like_cnt"] as! Int), forState: .Normal)
             })
         }
         else
@@ -498,7 +516,7 @@ class TagNativeViewController: UIViewController, UICollectionViewDelegate, UICol
             self.postInfos[indexPath.item]["like_yn"] = "N"
             self.postInfos[indexPath.item]["like_cnt"] = (self.postInfos[indexPath.item]["like_cnt"] as! Int) - 1
             appdelegate.doIt(303, message: message, callback: { _ in
-                self.collectionView.reloadData()
+                cell.likeCountButton.setTitle(String(format: "\(self.appdelegate.ment["like"].stringValue) %d\(self.appdelegate.ment["timeline_count"].stringValue)", self.postInfos[indexPath.item]["like_cnt"] as! Int), forState: .Normal)
             })
         }
     }

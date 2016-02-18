@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -3323,7 +3323,7 @@
                             <constraint firstItem="DsY-c0-YNT" firstAttribute="leading" secondItem="SdH-2H-JQp" secondAttribute="leadingMargin" constant="-11" id="PDG-BV-bWo"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="1EC0E958-B602-47C2-B8F4-7D12AA1C51B6" id="QqF-Li-2ct"/>
+                    <tabBarItem key="tabBarItem" title="" image="AB60AC15-0ABB-48B1-A61E-0A4EA8A070FA" id="QqF-Li-2ct"/>
                     <navigationItem key="navigationItem" id="0aK-XR-PxR"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
@@ -7507,7 +7507,7 @@
                             <constraint firstItem="x9I-39-yvM" firstAttribute="leading" secondItem="Y3S-o4-VFB" secondAttribute="leadingMargin" constant="-11" id="Yxw-LI-fvC"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="77B7AF5D-E63E-4EDD-8BB7-95989BE7EA03" id="urB-TV-Wsz"/>
+                    <tabBarItem key="tabBarItem" title="" image="5CB06B4E-E896-479C-A558-083701E00BD6" id="urB-TV-Wsz"/>
                     <navigationItem key="navigationItem" id="jnl-Uw-H5F"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
@@ -8102,7 +8102,6 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="60" id="mVS-Il-V0B"/>
                                                             </constraints>
-                                                            <state key="normal" image=" delete"/>
                                                             <connections>
                                                                 <action selector="hiddenButtonTouched:" destination="Uh2-4m-G9E" eventType="touchUpInside" id="hyA-2E-NgS"/>
                                                             </connections>
@@ -8112,7 +8111,7 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="60" id="9Tw-r8-OAU"/>
                                                             </constraints>
-                                                            <state key="normal" image="edit">
+                                                            <state key="normal">
                                                                 <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             </state>
                                                             <connections>
@@ -8234,6 +8233,7 @@
                                                         <constraint firstItem="j2g-P2-E2Y" firstAttribute="leading" secondItem="ipM-60-utV" secondAttribute="leadingMargin" id="4Pg-mH-b46"/>
                                                         <constraint firstItem="i1f-EN-zSZ" firstAttribute="leading" secondItem="s6Z-QM-SyP" secondAttribute="trailing" id="89Z-c7-nr3"/>
                                                         <constraint firstItem="s6Z-QM-SyP" firstAttribute="top" secondItem="ipM-60-utV" secondAttribute="topMargin" id="9FI-Cc-ZUq"/>
+                                                        <constraint firstItem="s6Z-QM-SyP" firstAttribute="height" secondItem="ipM-60-utV" secondAttribute="height" id="M87-hA-Gvc"/>
                                                         <constraint firstItem="i1f-EN-zSZ" firstAttribute="top" secondItem="ipM-60-utV" secondAttribute="topMargin" constant="12" id="c41-aN-LoK"/>
                                                         <constraint firstAttribute="trailingMargin" secondItem="i1f-EN-zSZ" secondAttribute="trailing" id="cHG-8R-94O"/>
                                                         <constraint firstAttribute="trailingMargin" secondItem="i1f-EN-zSZ" secondAttribute="trailing" id="dlv-Ea-gSr"/>
@@ -8250,11 +8250,18 @@
                                                         <mask key="constraints">
                                                             <exclude reference="e2K-iw-AfX"/>
                                                             <exclude reference="iKf-cR-HYn"/>
+                                                            <exclude reference="2lS-zp-nIZ"/>
+                                                            <exclude reference="M87-hA-Gvc"/>
                                                             <exclude reference="c41-aN-LoK"/>
                                                             <exclude reference="dlv-Ea-gSr"/>
+                                                            <exclude reference="l7u-53-yUR"/>
                                                         </mask>
                                                     </variation>
                                                 </tableViewCellContentView>
+                                                <constraints>
+                                                    <constraint firstItem="s6Z-QM-SyP" firstAttribute="height" secondItem="Uh2-4m-G9E" secondAttribute="height" id="57A-UP-jfs"/>
+                                                    <constraint firstItem="i1f-EN-zSZ" firstAttribute="height" secondItem="Uh2-4m-G9E" secondAttribute="height" id="akN-CS-hrg"/>
+                                                </constraints>
                                                 <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
                                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 <connections>
@@ -10139,8 +10146,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name=" delete" width="375" height="667"/>
-        <image name="1EC0E958-B602-47C2-B8F4-7D12AA1C51B6" width="20" height="25">
+        <image name="5CB06B4E-E896-479C-A558-083701E00BD6" width="20" height="25">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -10224,7 +10230,7 @@ AKcAqQCrAK0AsgC1ALcAuQC7AL0AwgDZANsA3RFPEVQRXxFoEXsRfxGKEZMRmBGgEaMRqBG3EbsRwhHK
 EdcR3BHeEeAR5RHtEfAR9RH9EgASEhIVEhoAAAAAAAACAQAAAAAAAABBAAAAAAAAAAAAAAAAAAASHA
 </mutableData>
         </image>
-        <image name="77B7AF5D-E63E-4EDD-8BB7-95989BE7EA03" width="20" height="25">
+        <image name="AB60AC15-0ABB-48B1-A61E-0A4EA8A070FA" width="20" height="25">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -10328,7 +10334,6 @@ EdcR3BHeEeAR5RHtEfAR9RH9EgASEhIVEhoAAAAAAAACAQAAAAAAAABBAAAAAAAAAAAAAAAAAAASHA
         <image name="delete" width="35" height="35"/>
         <image name="download" width="264" height="54"/>
         <image name="download_c" width="264" height="54"/>
-        <image name="edit" width="375" height="667"/>
         <image name="email_" width="375" height="283"/>
         <image name="facebook" width="264" height="54"/>
         <image name="facebook_c" width="264" height="54"/>
