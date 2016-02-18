@@ -33,6 +33,9 @@ class SearchNativeViewController: UIViewController, UISearchBarDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.searchBar.placeholder = self.appdelegate.ment["search_tag"].stringValue
+        tagButton.setTitle(self.appdelegate.ment["interest_search_tag"].stringValue, forState: .Normal)
+        userButton.setTitle(self.appdelegate.ment["interest_search_user"].stringValue, forState: .Normal)
 
         self.statusbar = UIView()
         self.statusbar.frame = UIApplication.sharedApplication().statusBarFrame
@@ -73,9 +76,9 @@ class SearchNativeViewController: UIViewController, UISearchBarDelegate{
         self.userButton.titleLabel?.font = UIFont.systemFontOfSize(12)
         
         self.tagButtonEnableView.backgroundColor = enabledColor
-        self.userButtonEnableView.backgroundColor = UIColor.whiteColor()
+        self.userButtonEnableView.backgroundColor = UIColor(netHex: 0xE8E5F2)
         
-        self.searchBar.placeholder = "태그 검색하기"
+        self.searchBar.placeholder = self.appdelegate.ment["search_tag"].stringValue
     }
     @IBAction func userButtonTouched()
     {
@@ -101,10 +104,10 @@ class SearchNativeViewController: UIViewController, UISearchBarDelegate{
         self.tagButton.titleLabel?.font = UIFont.systemFontOfSize(12)
         self.userButton.titleLabel?.font = UIFont.boldSystemFontOfSize(12)
         
-        self.tagButtonEnableView.backgroundColor = UIColor.whiteColor()
+        self.tagButtonEnableView.backgroundColor = UIColor(netHex: 0xE8E5F2)
         self.userButtonEnableView.backgroundColor = enabledColor
         
-        self.searchBar.placeholder = "유저 검색하기"
+        self.searchBar.placeholder = self.appdelegate.ment["search_user"].stringValue
     }
     @IBAction func backButtonTouched()
     {

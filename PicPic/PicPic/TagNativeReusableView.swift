@@ -32,9 +32,22 @@ class TagNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
     var tagId: String!
     var parent: TagNativeViewController!
     
+    let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    
+    @IBOutlet weak var postingLabel: UILabel!
+    @IBOutlet weak var followerLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        postingLabel.text = self.appdelegate.ment["posting"].stringValue
+        followerLabel.text = self.appdelegate.ment["follower"].stringValue
+        
+        followButton.setTitle(self.appdelegate.ment["follow_plus"].stringValue, forState: .Normal)
+        leftButton.setTitle(self.appdelegate.ment["fresh"].stringValue, forState: .Normal)
+        rightButton.setTitle(self.appdelegate.ment["hot"].stringValue, forState: .Normal)
+        
         searchBar.enablesReturnKeyAutomatically = false
         self.bringSubviewToFront(self.leftButton)
         self.bringSubviewToFront(self.rightButton)
@@ -47,10 +60,12 @@ class TagNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
         if self.followButton.imageForState(.Normal) == UIImage(named: "follow")
         {
             followButton.setImage(UIImage(named: "follow_c"), forState: .Normal)
+            followButton.setTitle(self.appdelegate.ment["following"].stringValue, forState: .Normal)
         }
         else
         {
             followButton.setImage(UIImage(named: "follow"), forState: .Normal)
+            followButton.setTitle(self.appdelegate.ment["follow_plus"].stringValue, forState: .Normal)
         }
         let message : JSON = ["myId":appdelegate.email,"tag_id":self.tagId]
 
@@ -94,6 +109,7 @@ class TagNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
         
         let str = self.searchBar.text ?? ""
         self.parent.refreshWithoutProfileReload("N", str: str)
+        self.parent.collectionView.setContentOffset(CGPointZero, animated: true)
     }
     @IBAction func rightButtonTouched() {
         
@@ -108,6 +124,7 @@ class TagNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
         
         let str = self.searchBar.text ?? ""
         self.parent.refreshWithoutProfileReload("P", str: str)
+        self.parent.collectionView.setContentOffset(CGPointZero, animated: true)
     }
 
     @IBAction func listViewButtonTouched() {
@@ -120,6 +137,7 @@ class TagNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
         self.parent.isWaterFall = false
         self.parent.collectionView.collectionViewLayout = layout
         self.parent.collectionView.reloadData()
+        self.parent.collectionView.setContentOffset(CGPointZero, animated: true)
     }
     @IBAction func waterFallViewButtonTouched() {
         self.listViewButton.setImage(UIImage(named: "icon_my_list"), forState: .Normal)
@@ -131,6 +149,7 @@ class TagNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
         self.parent.isWaterFall = true
         self.parent.collectionView.collectionViewLayout = layout
         self.parent.collectionView.reloadData()
+        self.parent.collectionView.setContentOffset(CGPointZero, animated: true)
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {

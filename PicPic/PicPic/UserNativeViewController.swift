@@ -10,7 +10,7 @@ import UIKit
 import SwiftyJSON
 import Alamofire
 
-class UserNativeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, CHTCollectionViewDelegateWaterfallLayout, TagListCellDelegate {
+class UserNativeViewController: SubViewController, UICollectionViewDelegate, UICollectionViewDataSource, CHTCollectionViewDelegateWaterfallLayout, TagListCellDelegate {
 
     let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     @IBOutlet weak var collectionView: UICollectionView!
@@ -123,13 +123,8 @@ class UserNativeViewController: UIViewController, UICollectionViewDelegate, UICo
                 }
                 self.postInfos = array
                 self._hud.hide(true)
-                self.collectionView.infiniteScrollingView.stopAnimating()
-                self.collectionView.reloadData()
-                print("postInfos                                       \n\n\n\n\n\n\n\n",self.postInfos)
                 for (index, dic) in self.postInfos.enumerate()
                 {
-                    
-                    
                     if let string = dic["is_closed"]
                     {
                         if string as! String == "Y"
@@ -148,6 +143,8 @@ class UserNativeViewController: UIViewController, UICollectionViewDelegate, UICo
                             }
                         }
                     }
+                    self.collectionView.infiniteScrollingView.stopAnimating()
+                    self.collectionView.reloadData()
                     let str = dic["url"]! as! String
                     let url = str.substringWithRange(str.startIndex ..< str.endIndex.advancedBy(-6)).stringByAppendingString("_1.gif")
                     

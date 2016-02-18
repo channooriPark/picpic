@@ -62,6 +62,15 @@ class DeActivateViewController: UIViewController {
                 self.appdelegate.login = nil
                 self.appdelegate.testNavi = nil
                 
+                if UIApplication.sharedApplication().currentUserNotificationSettings()?.types.rawValue == 0 {
+                    print("Not Notification")
+                    self.appdelegate.standardUserDefaults.setBool(false, forKey: "push")
+                }else {
+                    print("Accept Notification")
+                    self.appdelegate.standardUserDefaults.setBool(true, forKey: "push")
+                }
+                self.appdelegate.standardUserDefaults.setValue(self.appdelegate.deviceId, forKey: "uuid")
+                
                 let intro = self.storyboard?.instantiateViewControllerWithIdentifier("IntroMainViewController")as! IntroMainViewController
                 self.appdelegate.window?.rootViewController = intro
                 self.appdelegate.reloadView()

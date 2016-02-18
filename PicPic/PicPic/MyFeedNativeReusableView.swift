@@ -38,9 +38,24 @@ class MyFeedNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
     var parent: MyFeedNativeViewController!
     var firstTagName: String!
     
+    
+    @IBOutlet weak var postingLabel: UILabel!
+    @IBOutlet weak var followerLabel: UILabel!
+    @IBOutlet weak var followingLabel: UILabel!
+    
+    let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        self.postingLabel.text = self.appdelegate.ment["posting"].stringValue
+        self.followerLabel.text = self.appdelegate.ment["follower"].stringValue
+        self.followingLabel.text = self.appdelegate.ment["following"].stringValue
+        
+        self.leftButton.setTitle(self.appdelegate.ment["user"].stringValue, forState: .Normal)
+        self.rightButton.setTitle(self.appdelegate.ment["repic"].stringValue, forState: .Normal)
+        
         searchBar.enablesReturnKeyAutomatically = false
         self.bringSubviewToFront(self.leftButton)
         self.bringSubviewToFront(self.rightButton)

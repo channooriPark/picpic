@@ -264,7 +264,7 @@ class CommentCell: UITableViewCell {
             
             let imageURL = NSURL(string: self.imageURL.gifImageUrl(data["url"].stringValue))
             self.imageComView.sd_setImageWithURL(imageURL, completed: { (image, error, Type, url) -> Void in
-                print(image)
+                
                 if image != nil {
                     let width = self.upperContentView.frame.size.width - 56 - 10
                     var imagewidth = image.size.width - width
@@ -292,6 +292,8 @@ class CommentCell: UITableViewCell {
                     self.imageCom = image
                     self.imageComView.image = image
                     self.upperContentView.bringSubviewToFront(self.imageComView)
+                }else {
+                    return
                 }
                 completionHandler(image: image!)
                 self.isImageFirst = false

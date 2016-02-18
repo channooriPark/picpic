@@ -85,9 +85,6 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
         appdelegate.doIt(406, message: message, callback: {(json) in
             self.infoDic = json.dictionaryObject!
             
-            
-            
-            
             let mes: JSON = ["my_id" :appdelegate.email,"user_id": appdelegate.email, "range" : "N", "str" : "", "page": "1"]
             
             appdelegate.doIt(511, message: mes, callback: {(json) in

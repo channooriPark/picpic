@@ -56,6 +56,11 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
     
     var imageComArr = [String:UIImage]()
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        print("commentViewcontroller view Will Appear ")
+        self.navigationController?.navigationBarHidden = false
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -149,25 +154,23 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
     }
     
     func back(sender:UIBarButtonItem){
-//        var count = (self.navigationController?.viewControllers.count)!-2
-//        if count < 0 {
-//            count = 0
-//        }
-//        let a = self.navigationController?.viewControllers[count] as! SubViewController
+        var count = (self.navigationController?.viewControllers.count)!-2
+        if count < 0 {
+            count = 0
+        }
+        let a = self.navigationController?.viewControllers[count] as! SubViewController
         
-//        if a.type == "tag" || a.type == "post" || a.type == "user" || a.type == "search"{
-//            self.navigationController?.navigationBarHidden = true
-//        }else {
-//            self.navigationController?.navigationBarHidden = false
-//        }
+        if a.type == "post" {
+            let post = self.navigationController?.viewControllers[count]as! PostPageViewController
+            post.postImage.enterForeground()
+            post.setCommentCount(self.dataArray.count)
+        }
         
-//        if a.type == "post" {
-//            let post = self.navigationController?.viewControllers[count]as! PostPageViewController
-//            post.postImage.enterForeground()
-//            post.setCommentCount(self.dataArray.count)
-//        }
         self.navigationController?.popViewControllerAnimated(true)
-//        self.appdelegate.tabbar.view.hidden = false
+        if a.type == "content" {
+            self.appdelegate.tabbar.view.hidden = false
+        }
+        
 //        self.appdelegate.main.view.hidden = false
     }
     

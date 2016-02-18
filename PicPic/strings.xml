@@ -162,6 +162,12 @@
     <string name="follower">팔로워</string>
     <string name="following">팔로잉</string>
     <string name="follow_plus">+ 팔로잉</string>
+    
+    <string name="fresh">최신순</string>
+    <string name="hot">인기순</string>
+    <string name="imageComment_gifList_notting">움짤이 없습니다! 픽픽에서 댓글에 사용할 움짤을 다운받아보세요!</string>
+    
+    
 
     <string name="follow_me_list">나를 팔로우한 사람</string>
     <string name="follow_he_list">내가 팔로우한 사람</string>

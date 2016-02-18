@@ -270,7 +270,7 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
         
         let lastviewtap = UITapGestureRecognizer(target: self, action: "lastcom_comment")
         self.lastCommentView.addGestureRecognizer(lastviewtap)
-        
+        print(";alsdjf;iozjd;fjvz;cklxjasd;oifxczjg;dlskszfj;xlkfjdz;lfjs;zlkxfjvz;lxkfjzxvc;lzjs;ozixj;ldskjzco;sdijf;lxckvjs;oxifjslk;fjdo;fijds;flkzdjfaso;dijsl;kxcvjxco;dsijzlx;kjcdivzjdiofdsjzlxkcjdoijzx;cvlkjdzoixfjdlkj   ")
         
         print(self.likeButton.titleLabel?.text)
         //print(self.likeButton.frame)

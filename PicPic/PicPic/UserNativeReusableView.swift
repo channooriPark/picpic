@@ -37,9 +37,22 @@ class UserNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
     var parent: UserNativeViewController!
     var firstTagName: String!
     
+    @IBOutlet weak var postingLabel: UILabel!
+    @IBOutlet weak var followerLabel: UILabel!
+    @IBOutlet weak var followingLabel: UILabel!
+    let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        postingLabel.text = self.appdelegate.ment["posting"].stringValue
+        followerLabel.text = self.appdelegate.ment["follower"].stringValue
+        followingLabel.text = self.appdelegate.ment["following"].stringValue
+        
+        leftButton.setTitle(self.appdelegate.ment["user"].stringValue, forState: .Normal)
+        rightButton.setTitle(self.appdelegate.ment["repic"].stringValue, forState: .Normal)
+        
         searchBar.enablesReturnKeyAutomatically = false
         self.bringSubviewToFront(self.leftButton)
         self.bringSubviewToFront(self.rightButton)
@@ -155,6 +168,7 @@ class UserNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
         self.parent.isWaterFall = false
         self.parent.collectionView.collectionViewLayout = layout
         self.parent.collectionView.reloadData()
+        self.parent.collectionView.setContentOffset(CGPointZero, animated: true)
     }
     @IBAction func waterFallViewButtonTouched() {
         self.listViewButton.setImage(UIImage(named: "icon_my_list"), forState: .Normal)
@@ -166,6 +180,7 @@ class UserNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
         self.parent.isWaterFall = true
         self.parent.collectionView.collectionViewLayout = layout
         self.parent.collectionView.reloadData()
+        self.parent.collectionView.setContentOffset(CGPointZero, animated: true)
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
