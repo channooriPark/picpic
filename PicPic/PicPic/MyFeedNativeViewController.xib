@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MyFeedNativeViewController" customModule="PicPic" customModuleProvider="target">
@@ -28,7 +28,7 @@
                     </collectionViewFlowLayout>
                 </collectionView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u7H-BD-Yee">
-                    <rect key="frame" x="279" y="52" width="32" height="32"/>
+                    <rect key="frame" x="279" y="26" width="32" height="32"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="32" id="kLV-JU-adr"/>
                         <constraint firstAttribute="width" constant="32" id="lK0-eb-QXh"/>
@@ -45,7 +45,7 @@
                 <constraint firstItem="D1V-cE-QzK" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="Jsb-Mh-oEW"/>
                 <constraint firstAttribute="bottom" secondItem="D1V-cE-QzK" secondAttribute="bottom" id="bWM-zS-AGk"/>
                 <constraint firstItem="u7H-BD-Yee" firstAttribute="leading" secondItem="D1V-cE-QzK" secondAttribute="trailing" constant="-41" id="h9P-hn-DXE"/>
-                <constraint firstItem="D1V-cE-QzK" firstAttribute="top" secondItem="u7H-BD-Yee" secondAttribute="bottom" constant="-64" id="uMv-KM-lXM"/>
+                <constraint firstItem="D1V-cE-QzK" firstAttribute="top" secondItem="u7H-BD-Yee" secondAttribute="bottom" constant="-38" id="uMv-KM-lXM"/>
                 <constraint firstItem="D1V-cE-QzK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="xVJ-d5-kMJ"/>
             </constraints>
             <point key="canvasLocation" x="920" y="552"/>

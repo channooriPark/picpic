@@ -57,6 +57,7 @@ extern NSString *const KOErrorDomain;
  @constant  KOServerErrorAgeResultMismatched 이전에 인증했던 정보와 불일치 한 경우
  @constant  KOServerErrorCIResultMismatched CI 정보가 불일치 할 경우
  @constant  KOServerErrorNotTalkUser 카카오톡 유저가 아닐때
+ @constant  KOServerErrorUserDeviceUnsupported 유저 디바이스가 해당 기능을 지원하지 않는 경우
  @constant  KOServerErrorTalkMessageDisabled 받는이가 메시지 수신 거부를 설정한 경우
  @constant  KOServerErrorTalkSendMessageMonthlyLimitExceed 한명이 특정앱에 대해 특정인에게 보낼 수 있는 한달 쿼터 초과시 발생
  @constant  KOServerErrorTalkSendMessageDailyLimitExceed 한명이 특정앱에 대해 보낼 수 있는 하루 쿼터(받는 사람 관계없이) 초과시 발생
@@ -91,7 +92,7 @@ typedef enum {
 
     KOServerErrorNotSignedUpUser = -101,
     KOServerErrorAlreadySignedUpUser = -102,
-    KOServerErrorNotKakaoAcccountUser = -103,
+    KOServerErrorNotKakaoAccountUser = -103,
 
     KOServerErrorInvalidUserPropertyKey = -201,
 
@@ -107,6 +108,7 @@ typedef enum {
     KOServerErrorCIResultMismatched = -481,
 
     KOServerErrorNotTalkUser = -501,
+    KOServerErrorUserDeviceUnsupported = -504,
     KOServerErrorTalkMessageDisabled = -530,
     KOServerErrorTalkSendMessageMonthlyLimitExceed = -531,
     KOServerErrorTalkSendMessageDailyLimitExceed = -532,

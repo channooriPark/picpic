@@ -19,38 +19,16 @@ class SecondNativeViewController: UIViewController, UICollectionViewDataSource, 
     @IBOutlet weak var allTabEnableView: UIView!
     @IBOutlet weak var categoryTabEnableView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
-    
-    var data = [["일상" : UIImage(named: "category_daylife")],
-        ["동물": UIImage(named: "category_animal")],
-        ["연예인": UIImage(named: "category_celebrities")],
-        ["감정": UIImage(named: "category_emotion")],
-        ["애니": UIImage(named: "category_animation")],
-        ["푸드": UIImage(named: "category_food")],
-        ["패션": UIImage(named: "category_fashion")],
-        ["뷰티": UIImage(named: "category_beauty")],
-        ["예술": UIImage(named: "category_artdesign")],
-        ["스포츠": UIImage(named: "category_sports")],
-        ["영화": UIImage(named: "category_movie")],
-        ["TV": UIImage(named: "category_tv")],
-        ["게임": UIImage(named: "category_game")],
-        ["만화": UIImage(named: "category_cartoon")],
-        ["반응": UIImage(named: "category_reaction")],
-        ["운송수단": UIImage(named: "category_vehicle")],
-        ["음악": UIImage(named: "category_music")],
-        ["표현": UIImage(named: "category_expression")],
-        ["행동": UIImage(named: "category_action")],
-        ["관심사": UIImage(named: "category_interest")],
-        ["년대": UIImage(named: "category_decades")],
-        ["자연": UIImage(named: "category_nature")],
-        ["스티커": UIImage(named: "category_sticker")],
-        ["과학": UIImage(named: "category_science")],
-        ["특별한날": UIImage(named: "category_holidays")]]
+    let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    var data : [Dictionary<String,UIImage?>] = [["":UIImage()]]
 
     let enabledColor = Config.getInstance().color //UIColor(red: 148/255, green: 158/255, blue: 241/255, alpha: 1.0)
     var _hud: MBProgressHUD = MBProgressHUD()
     var currentPage = "1"
     var postInfos: Array<[String: AnyObject]> = []
     var postGifData: [String: UIImage] = [:]
+    let buttonDefault = ["category_non","category_daylife","category_animal","category_celebrities","category_emotion","category_animation","category_food","category_fashion","category_beauty","category_artdesign","category_sports","category_movie","category_tv","category_game","category_cartoon","category_reaction","category_vehicle","category_music","category_expression","category_action","category_interest","category_decades","category_nature","category_sticker","category_science","category_holidays"]
+    
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -60,6 +38,13 @@ class SecondNativeViewController: UIViewController, UICollectionViewDataSource, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.data.removeAll()
+        for var i = 1; i<26; i++ {
+            data.append([self.appdelegate.ment["category_\(i)"].stringValue : UIImage(named: buttonDefault[i])])
+        }
+        self.followTabButton.setTitle(self.appdelegate.ment["timeline_following"].stringValue, forState: .Normal)
+        self.allTabButton.setTitle(self.appdelegate.ment["timeline_all"].stringValue, forState: .Normal)
+        self.categoryTabButton.setTitle(self.appdelegate.ment["timeline_category"].stringValue, forState: .Normal)
         
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
@@ -225,7 +210,6 @@ class SecondNativeViewController: UIViewController, UICollectionViewDataSource, 
             let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
             let post = appdelegate.storyboard.instantiateViewControllerWithIdentifier("PostPageViewController")as! PostPageViewController
             appdelegate.controller.append(post)
-            //            post.index = appdelegate.controller.count - 1
             post.type = "post"
             post.email = appdelegate.email
             post.postId = self.postInfos[indexPath.item]["post_id"] as! String

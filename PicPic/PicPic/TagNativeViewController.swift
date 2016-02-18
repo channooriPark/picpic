@@ -10,7 +10,7 @@ import UIKit
 import SwiftyJSON
 import Alamofire
 
-class TagNativeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, CHTCollectionViewDelegateWaterfallLayout, TagListCellDelegate{
+class TagNativeViewController: SubViewController, UICollectionViewDelegate, UICollectionViewDataSource, CHTCollectionViewDelegateWaterfallLayout, TagListCellDelegate{
 
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -311,6 +311,11 @@ class TagNativeViewController: UIViewController, UICollectionViewDelegate, UICol
                 cell.lastCommentTextLabel.sizeToFit()
             }
             
+//            let doubleTap = UITapGestureRecognizer()
+//            doubleTap.numberOfTapsRequired = 2
+//            doubleTap.addTarget(self, action: "doubleTapCell:")
+//            cell.addGestureRecognizer(doubleTap)
+            
             return cell
         }
     }
@@ -558,4 +563,8 @@ class TagNativeViewController: UIViewController, UICollectionViewDelegate, UICol
         self.view.addSubview(moreother.view)
     }
 
+    func doubleTapCell(sender: UITapGestureRecognizer)
+    {
+        
+    }
 }

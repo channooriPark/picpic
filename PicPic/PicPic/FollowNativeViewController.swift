@@ -23,6 +23,7 @@ class FollowNativeViewController: UIViewController, UITableViewDelegate, UITable
     var currentPage = "1"
     var _hud: MBProgressHUD = MBProgressHUD()
     @IBOutlet weak var tableView: UITableView!
+    let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -31,15 +32,15 @@ class FollowNativeViewController: UIViewController, UITableViewDelegate, UITable
         //좋아하는사람 팔로우한사람 팔로잉한사람
         if self.type == .Like
         {
-            self.navigationItem.title = "좋아하는 사람"
+            self.navigationItem.title = self.appdelegate.ment["timeline_like_user"].stringValue
         }
         else if self.type == .Following
         {
-            self.navigationItem.title = "팔로잉한 사람"
+            self.navigationItem.title = self.appdelegate.ment["follow_he_list"].stringValue
         }
         else
         {
-            self.navigationItem.title = "팔로우한 사람"
+            self.navigationItem.title = self.appdelegate.ment["follow_me_list"].stringValue
         }
         
         self.navigationItem.backBarButtonItem = nil
@@ -212,6 +213,16 @@ class FollowNativeViewController: UIViewController, UITableViewDelegate, UITable
     
     func back()
     {
+        var count = (self.navigationController?.viewControllers.count)!-2
+        if count < 0 {
+            count = 0
+        }
+        let a = self.navigationController?.viewControllers[count] as! SubViewController
+        
+        if a.type == "post" {
+            let post = self.navigationController?.viewControllers[count]as! PostPageViewController
+            post.postImage.enterForeground()
+        }
         self.navigationController?.popViewControllerAnimated(true)
     }
     

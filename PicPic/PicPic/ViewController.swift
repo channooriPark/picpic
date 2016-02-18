@@ -85,7 +85,6 @@ class ViewController: UIViewController,GIDSignInDelegate, GIDSignInUIDelegate{
             let req = FBSDKGraphRequest(graphPath: "me", parameters: ["fields":"email,name,birthday,gender"], tokenString: FBSDKAccessToken.currentAccessToken().tokenString, version: nil, HTTPMethod: "GET")
             req.startWithCompletionHandler { (connection, result, error : NSError!) -> Void in
                 if error == nil {
-//                    print(result)
                     if let name = result.valueForKey("name"){
                         self.id = name as! String
                     }
@@ -125,6 +124,7 @@ class ViewController: UIViewController,GIDSignInDelegate, GIDSignInUIDelegate{
             let email = user.profile.email
             settingData()
             var message:JSON = ["email":email]
+            print("userId ",userId)
             self.appdelegate.doIt(213, message: message, callback: { (readData) -> () in
                 print(readData["register_form"].stringValue)
                 if readData["data"].stringValue == "1" && readData["register_form"].stringValue == "10001" {
@@ -135,6 +135,7 @@ class ViewController: UIViewController,GIDSignInDelegate, GIDSignInUIDelegate{
                 }else if readData["data"].stringValue == "1" {
                     message = ["email":email,"password":userId,"register_form":"10003","country":self.language,"device_id":self.appdelegate.deviceId,"push_token":self.appdelegate.token,"regist_day":self.currentDate]
                     self.appdelegate.doIt(202, message: message, callback: { (readData) -> () in
+                        
                         if readData["msg"].string! == "success" {
                             //                        NSLog("success")
                             self.log.log("success")

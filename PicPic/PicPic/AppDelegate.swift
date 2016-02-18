@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
     var alram : AlramViewController!
     var second : SecondNativeViewController!
     var camera : CameraViewController!
-    var myfeed : MyFeedNativeViewController!//MyFeedPageViewController!
+    var myfeed : MyFeedNativeViewController! //MyFeedPageViewController!
     var signin : UINavigationController!
     var launch : LaunchViewController!
     
@@ -575,10 +575,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
 //            self.testNavi.navigationBarHidden = true
 //            self.testNavi.pushViewController(user, animated: true)
             
-            let vc = UserNativeViewController()
-            vc.userEmail = send_id as String
             
-            self.testNavi.pushViewController(vc, animated: true)
+            let message : JSON = ["my_id":self.email,"user_id":send_id as String]
+            doIt(518, message: message, callback: { (readData) -> () in
+                let vc = UserNativeViewController()
+                vc.userEmail = readData["email"].stringValue
+                self.testNavi.pushViewController(vc, animated: true)
+            })
+            
+            
+            
+            
             
             break
         case "tag_name" :
@@ -645,13 +652,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         
-        
         return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }
     
     @available(iOS 9.0, *)
     func application(application: UIApplication,
         openURL url: NSURL, options: [String: AnyObject]) -> Bool {
+            print("open url url ",url.scheme)
+            if url.scheme == "picpic" {
+                URLopenPage(url)
+            }
             if url.scheme == "fb1610072682575169" {
                 return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: options[UIApplicationOpenURLOptionsSourceApplicationKey]as! String?, annotation: options[UIApplicationOpenURLOptionsAnnotationKey])
             }else {
@@ -694,7 +704,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
         alram = self.storyboard.instantiateViewControllerWithIdentifier("AlramViewController")as! AlramViewController
         second = SecondNativeViewController()
         camera = self.storyboard.instantiateViewControllerWithIdentifier("CameraViewController")as! CameraViewController
-        myfeed = MyFeedNativeViewController()//MyFeedPageViewController()
+        myfeed = MyFeedNativeViewController() //MyFeedPageViewController()
         login = self.storyboard.instantiateViewControllerWithIdentifier("LoginViewController")as! LoginViewController
         
         testNavi = self.storyboard.instantiateViewControllerWithIdentifier("testNavi")as! UINavigationController
@@ -727,7 +737,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
         alram = self.storyboard.instantiateViewControllerWithIdentifier("AlramViewController")as! AlramViewController
         second = SecondNativeViewController()
         camera = self.storyboard.instantiateViewControllerWithIdentifier("CameraViewController")as! CameraViewController
-        myfeed = MyFeedNativeViewController()//MyFeedPageViewController()
+        myfeed = MyFeedNativeViewController() //MyFeedPageViewController()
         login = self.storyboard.instantiateViewControllerWithIdentifier("LoginViewController")as! LoginViewController
         testNavi = self.storyboard.instantiateViewControllerWithIdentifier("testNavi")as! UINavigationController
     }
@@ -755,10 +765,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
                                 callback(json)
                             })
                         }
-                    case .Failure(let error):
-                        self.alert = UIAlertView(title: "", message: self.ment["app_error"].stringValue, delegate: self, cancelButtonTitle: nil)
-                        self.alert.show()
-                        NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("clearAlert:"), userInfo: nil, repeats: false)
+                    case .Failure(let error): break
+//                        self.alert = UIAlertView(title: "", message: self.ment["app_error"].stringValue, delegate: self, cancelButtonTitle: nil)
+//                        self.alert.show()
+//                        NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("clearAlert:"), userInfo: nil, repeats: false)
+//                        self.doIt(serviceCode, message: message, callback: { (readData) -> () in
+//                            callback(readData)
+//                        })
                     }
             }
         }

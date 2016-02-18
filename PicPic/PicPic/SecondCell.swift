@@ -53,6 +53,7 @@ class SecondCell: UICollectionViewCell {
         self.dateLabel.text = nil
         self.playCountLabel.text = nil
         self.gifImageView.image = UIImage(named: "non_interest")
+        self.heartImage.image = UIImage(named: "heart")
         
         for view in bodyView.subviews
         {

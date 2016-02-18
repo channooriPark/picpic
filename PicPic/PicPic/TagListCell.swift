@@ -38,6 +38,7 @@ class TagListCell: UICollectionViewCell {
     var cellIndexPath: NSIndexPath!
     var delegate: TagListCellDelegate?
     let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -68,6 +69,7 @@ class TagListCell: UICollectionViewCell {
         self.userIdLabel.text = nil
         self.playCountLabel.text = nil
         self.followButton.setImage(UIImage(named: "icon_find_plus"), forState: .Normal)
+        self.heartImage.image = UIImage(named: "heart")
         
         self.lastCommentImageView.image = nil
         self.lastCommentTitleLabel.text = nil

@@ -180,6 +180,7 @@
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="Zhm-Fg-P7L" secondAttribute="bottom" id="01A-jK-M2T"/>
                 <constraint firstItem="qys-hS-smw" firstAttribute="width" secondItem="Zhm-Fg-P7L" secondAttribute="width" id="0K7-OY-h25"/>
+                <constraint firstItem="6NW-Co-kMF" firstAttribute="centerY" secondItem="wKY-Hf-ZHo" secondAttribute="centerY" id="399-ty-Xes"/>
                 <constraint firstItem="LfV-Py-XGP" firstAttribute="top" secondItem="Zhm-Fg-P7L" secondAttribute="bottom" constant="-21" id="4bA-cj-oON"/>
                 <constraint firstItem="Zhm-Fg-P7L" firstAttribute="leading" secondItem="sFa-EI-w1R" secondAttribute="trailing" id="4qF-hp-Hut"/>
                 <constraint firstItem="qys-hS-smw" firstAttribute="leading" secondItem="Zhm-Fg-P7L" secondAttribute="trailing" id="6ys-5j-r74"/>
@@ -205,6 +206,7 @@
                 <constraint firstItem="Zhm-Fg-P7L" firstAttribute="leading" secondItem="sFa-EI-w1R" secondAttribute="trailing" id="leL-dC-4sT"/>
                 <constraint firstItem="b7T-vj-wd5" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="pFO-h7-A6j"/>
                 <constraint firstItem="nJF-gW-HYN" firstAttribute="centerX" secondItem="sFa-EI-w1R" secondAttribute="centerX" id="uJo-UM-RUl"/>
+                <constraint firstItem="6NW-Co-kMF" firstAttribute="centerX" secondItem="wKY-Hf-ZHo" secondAttribute="centerX" id="zWp-iD-IW1"/>
             </constraints>
             <size key="customSize" width="240" height="256"/>
             <connections>

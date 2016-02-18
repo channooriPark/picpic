@@ -21,6 +21,9 @@
 #import "KOLoginButton.h"
 #import "KOAppCall.h"
 #import "KOSession.h"
+#import "KOUtils.h"
+#import "KOAgeAuthQueryStringBuilder.h"
+
 #import "KOSessionTask+UserManagementAPI.h"
 #import "KOSessionTask+TalkAPI.h"
 #import "KOSessionTask+StoryAPI.h"
@@ -30,4 +33,4 @@
 #import "KOSessionTask+AgeAuthAPI.h"
 #import "KOSessionTask+StorageAPI.h"
 
-#define KAKAO_SDK_IOS_VERSION_STRING @"1.0.44"
+#define KAKAO_SDK_IOS_VERSION_STRING @"1.0.51"

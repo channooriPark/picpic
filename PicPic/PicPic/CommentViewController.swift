@@ -56,6 +56,11 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
     
     var imageComArr = [String:UIImage]()
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        print("commentViewcontroller view Will Appear ")
+        self.navigationController?.navigationBarHidden = false
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -127,14 +132,14 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         
 //        self.galleryButton.hidden = true
         
-        let message1 : JSON = ["my_id":self.appdelegate.email,"com_id":"REPLY0000008354","post_id":self.post_id,"body":"","com_form":"D","user_tags":""]
-        
-        print("message    ",message1)
-        self.appdelegate.doIt(231, message: message1, callback: { (readData) -> () in
-            if readData["msg"].string! == "success" {
-                print("Delete    readData : ",readData)
-            }
-        })
+//        let message1 : JSON = ["my_id":self.appdelegate.email,"com_id":"REPLY0000008354","post_id":self.post_id,"body":"","com_form":"D","user_tags":""]
+//        
+//        print("message    ",message1)
+//        self.appdelegate.doIt(231, message: message1, callback: { (readData) -> () in
+//            if readData["msg"].string! == "success" {
+//                print("Delete    readData : ",readData)
+//            }
+//        })
 
         
     }
@@ -167,7 +172,10 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
 //            post.setCommentCount(self.dataArray.count)
 //        }
         self.navigationController?.popViewControllerAnimated(true)
-//        self.appdelegate.tabbar.view.hidden = false
+        if a.type == "content" {
+            self.appdelegate.tabbar.view.hidden = false
+        }
+        
 //        self.appdelegate.main.view.hidden = false
     }
     
@@ -352,6 +360,8 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         {
             cell.openCell()
         }
+        
+        cell.layoutIfNeeded()
         
         return cell
     }

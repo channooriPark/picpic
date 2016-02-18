@@ -67,7 +67,7 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
         
         self.collectionView.alwaysBounceVertical = true
         self.collectionView.addInfiniteScrollingWithActionHandler({ _ in self.refreshWithAdditionalPage(self.currentPage)})
-        //self.refresh()
+//        self.refresh()
     }
     
     override func didReceiveMemoryWarning() {
@@ -84,7 +84,6 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
         
         appdelegate.doIt(406, message: message, callback: {(json) in
             self.infoDic = json.dictionaryObject!
-            
             
             let mes: JSON = ["my_id" :appdelegate.email,"user_id": appdelegate.email, "range" : "N", "str" : "", "page": "1"]
             
@@ -336,6 +335,7 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
             view.tagIdButton.setTitle("#" + view.firstTagName, forState: .Normal)
             view.tagIdButton.sizeToFit()
             view.tagCountButton.setTitle("+" + String(tags.count), forState: .Normal)
+            view.tagIdButton.sizeToFit()
             
             view.profileImageView.sd_setImageWithURL(NSURL(string: "http://gif.picpic.world/" + (infoDic["profile_picture"] as! String)))
             view.profileImageView.layer.cornerRadius = view.profileImageView.frame.width / 2

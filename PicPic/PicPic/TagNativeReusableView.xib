@@ -52,18 +52,19 @@
                                 <constraint firstAttribute="height" constant="37" id="hkx-ag-f3O"/>
                             </constraints>
                             <state key="normal" image="follow"/>
+                            <state key="highlighted" image="follow_c"/>
                             <connections>
                                 <action selector="followTouched" destination="U6b-Vx-4bR" eventType="touchUpInside" id="qfw-sw-zPH"/>
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="포스팅" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="822-og-eMn">
-                            <rect key="frame" x="91" y="142" width="43" height="15"/>
+                            <rect key="frame" x="79" y="142" width="66" height="15"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="팔로워" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pqk-lc-5Sd">
-                            <rect key="frame" x="187" y="142" width="42" height="15"/>
+                            <rect key="frame" x="176" y="142" width="64" height="15"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -108,17 +109,17 @@
                         <constraint firstItem="7Xd-T9-7U7" firstAttribute="centerX" secondItem="54e-vQ-2Nn" secondAttribute="centerX" id="H3S-jH-Ppx"/>
                         <constraint firstItem="uGy-9n-reV" firstAttribute="leading" secondItem="54e-vQ-2Nn" secondAttribute="leading" constant="5" id="HuW-Zt-eMQ"/>
                         <constraint firstItem="5AO-Nl-WOF" firstAttribute="centerX" secondItem="822-og-eMn" secondAttribute="centerX" id="KCn-Rl-dKL"/>
-                        <constraint firstAttribute="trailing" secondItem="pqk-lc-5Sd" secondAttribute="trailing" constant="91" id="NTz-01-RHd"/>
+                        <constraint firstAttribute="trailing" secondItem="pqk-lc-5Sd" secondAttribute="trailing" constant="80" id="NTz-01-RHd"/>
                         <constraint firstAttribute="bottom" secondItem="uGy-9n-reV" secondAttribute="bottom" constant="3" id="QZO-pU-1DB"/>
                         <constraint firstAttribute="height" constant="190" id="RNM-SI-oXc"/>
-                        <constraint firstItem="pqk-lc-5Sd" firstAttribute="leading" secondItem="822-og-eMn" secondAttribute="trailing" constant="53" id="ZRP-Eo-xJh"/>
+                        <constraint firstItem="pqk-lc-5Sd" firstAttribute="leading" secondItem="822-og-eMn" secondAttribute="trailing" constant="31" id="ZRP-Eo-xJh"/>
                         <constraint firstItem="cVQ-1y-bWy" firstAttribute="centerX" secondItem="pqk-lc-5Sd" secondAttribute="centerX" id="aoV-4p-yBI"/>
-                        <constraint firstItem="822-og-eMn" firstAttribute="leading" secondItem="54e-vQ-2Nn" secondAttribute="leading" constant="91" id="efV-Pv-u2k"/>
+                        <constraint firstItem="822-og-eMn" firstAttribute="leading" secondItem="54e-vQ-2Nn" secondAttribute="leading" constant="79" id="efV-Pv-u2k"/>
                         <constraint firstItem="0kW-hh-d1U" firstAttribute="centerX" secondItem="54e-vQ-2Nn" secondAttribute="centerX" id="fVY-W3-K0B"/>
                         <constraint firstItem="pqk-lc-5Sd" firstAttribute="centerY" secondItem="822-og-eMn" secondAttribute="centerY" id="mZN-W3-itA"/>
                         <constraint firstItem="7Xd-T9-7U7" firstAttribute="top" secondItem="54e-vQ-2Nn" secondAttribute="top" constant="43" id="tGB-Fg-RYo"/>
                         <constraint firstItem="822-og-eMn" firstAttribute="top" secondItem="5AO-Nl-WOF" secondAttribute="bottom" constant="-1" id="xfy-l3-tgk"/>
-                        <constraint firstItem="pqk-lc-5Sd" firstAttribute="width" secondItem="822-og-eMn" secondAttribute="width" id="yjc-VY-SUz"/>
+                        <constraint firstItem="pqk-lc-5Sd" firstAttribute="width" secondItem="822-og-eMn" secondAttribute="width" constant="-2" id="yjc-VY-SUz"/>
                     </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ird-Aa-btL">
@@ -200,6 +201,7 @@
             </constraints>
             <connections>
                 <outlet property="followButton" destination="0kW-hh-d1U" id="ebp-ev-HYw"/>
+                <outlet property="followerLabel" destination="pqk-lc-5Sd" id="ihn-zz-jGp"/>
                 <outlet property="followerNumberButton" destination="cVQ-1y-bWy" id="S4N-2F-PL9"/>
                 <outlet property="gifImageView" destination="63O-mW-OKp" id="lpX-EA-rZO"/>
                 <outlet property="imageCoverView" destination="54e-vQ-2Nn" id="UKh-JC-aaZ"/>
@@ -207,6 +209,7 @@
                 <outlet property="leftButtonEnableView" destination="3id-4x-y6B" id="ZEc-RH-H3F"/>
                 <outlet property="listViewButton" destination="ird-Aa-btL" id="9fm-vK-BOu"/>
                 <outlet property="postNumberLabel" destination="5AO-Nl-WOF" id="RMA-bP-N5u"/>
+                <outlet property="postingLabel" destination="822-og-eMn" id="YLk-oY-4Wj"/>
                 <outlet property="rightButton" destination="1hL-eb-eoG" id="g5O-xR-MBp"/>
                 <outlet property="rightButtonEnableView" destination="zkh-He-5Qz" id="g8u-I0-YJ0"/>
                 <outlet property="searchBar" destination="h0M-X6-JhN" id="2Lp-Gy-sHg"/>
@@ -219,6 +222,7 @@
     </objects>
     <resources>
         <image name="follow" width="170" height="56"/>
+        <image name="follow_c" width="170" height="56"/>
         <image name="icon_my_gather_c" width="20" height="20"/>
         <image name="icon_my_list" width="22" height="20"/>
     </resources>

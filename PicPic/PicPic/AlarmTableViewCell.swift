@@ -173,7 +173,7 @@ class AlarmTableViewCell: UITableViewCell {
         }else if type == "TMC" {
             self.body.text = "\(id) \(self.appdelegate.ment["notification_comment_tag_ment"].stringValue)"
         }else if type == "TMP" {
-            self.body.text = "\(id) \(self.appdelegate.ment["notification_comment_post_ment"].stringValue)"
+            self.body.text = "\(id) \(self.appdelegate.ment["notification_post_tag_ment"].stringValue)"
         }else if type == "RP" {
             self.body.text = "\(id) \(self.appdelegate.ment["notification_replay_comment_ment"].stringValue)"
             

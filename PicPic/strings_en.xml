@@ -193,6 +193,11 @@
     <string name="follower">Follower</string>
     <string name="following">Following</string>
     <string name="follow_plus">+ Follow</string>
+    
+    <string name="fresh">FRESH</string>
+    <string name="hot">HOT</string>
+    <string name="imageComment_gifList_notting">Oops! Can't find GIFs in you phone. Try to download some from PicPic!</string>
+    
 
     <string name="follow_me_list">Follower List</string>
     <string name="follow_he_list">Following List</string>

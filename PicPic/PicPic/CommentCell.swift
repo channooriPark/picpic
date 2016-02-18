@@ -90,17 +90,21 @@ class CommentCell: UITableViewCell {
         // cell이 재사용될때 open되있을수 있으므로 close
         super.prepareForReuse()
         self.resetConstToZero(false, notifyDelegateDidClose: false)
+        self.imageComView = nil
+        self.height = 93
     }
+    
     
     func setBody(){
         if data["url"].string == "" {
             urlState = false
             print("이미지댓글 아니야",urlState)
             urlString = nil
-            imageComView.frame.size.height = 0
+//            imageComView.frame.size.height = 0
         }else {
             urlString = data["url"].stringValue
             urlState = true
+            self.imageComView = UIImageView()
         }
         bodyLabel.putText(data["body"].string!,url: urlString)
         bodyLabel.textContainer.lineBreakMode = NSLineBreakMode.ByWordWrapping
@@ -261,7 +265,7 @@ class CommentCell: UITableViewCell {
             
             let imageURL = NSURL(string: self.imageURL.gifImageUrl(data["url"].stringValue))
             self.imageComView.sd_setImageWithURL(imageURL, completed: { (image, error, Type, url) -> Void in
-                print(image)
+                
                 if image != nil {
                     let width = self.upperContentView.frame.size.width - 56 - 10
                     var imagewidth = image.size.width - width
@@ -288,7 +292,9 @@ class CommentCell: UITableViewCell {
                     self.comment.height[self.index] = self.height
                     self.imageCom = image
                     self.imageComView.image = image
-                    
+                    self.upperContentView.bringSubviewToFront(self.imageComView)
+                }else {
+                    return
                 }
                 completionHandler(image: image!)
                 self.isImageFirst = false

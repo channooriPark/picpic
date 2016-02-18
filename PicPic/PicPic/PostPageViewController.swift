@@ -270,7 +270,7 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
         
         let lastviewtap = UITapGestureRecognizer(target: self, action: "lastcom_comment")
         self.lastCommentView.addGestureRecognizer(lastviewtap)
-        
+        print(";alsdjf;iozjd;fjvz;cklxjasd;oifxczjg;dlskszfj;xlkfjdz;lfjs;zlkxfjvz;lxkfjzxvc;lzjs;ozixj;ldskjzco;sdijf;lxckvjs;oxifjslk;fjdo;fijds;flkzdjfaso;dijsl;kxcvjxco;dsijzlx;kjcdivzjdiofdsjzlxkcjdoijzx;cvlkjdzoixfjdlkj   ")
         
         print(self.likeButton.titleLabel?.text)
         //print(self.likeButton.frame)
@@ -344,13 +344,7 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
                 self.appdelegate.doIt(302, message: message, callback: { (readData) -> () in
                     if readData["msg"].string! == "success"{
                         if self.appdelegate.second.view.hidden == false {
-//                            if self.appdelegate.second.webState == "follow" {
-//                                self.appdelegate.second.following()
-//                            }else if self.appdelegate.second.webState == "all" {
-//                                self.appdelegate.second.all()
-//                            }else if self.appdelegate.second.webState == "category" {
-//                                self.appdelegate.second.category()
-//                            }
+                            self.appdelegate.second.refresh()
                         }
                     }
                     self.likeToggle = true
@@ -369,13 +363,7 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
                 self.appdelegate.doIt(303, message: message, callback: { (readData) -> () in
                     if readData["msg"].string! == "success"{
                         if self.appdelegate.second.view.hidden == false {
-//                            if self.appdelegate.second.webState == "follow" {
-//                                self.appdelegate.second.following()
-//                            }else if self.appdelegate.second.webState == "all" {
-//                                self.appdelegate.second.all()
-//                            }else if self.appdelegate.second.webState == "category" {
-//                                self.appdelegate.second.category()
-//                            }
+                            self.appdelegate.second.refresh()
                         }
                         self.likeToggle = false
                         self.likeCount--
@@ -396,22 +384,6 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
     }
     
     func backTo() {
-//        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
-//        var count = (self.navigationController?.viewControllers.count)!-2
-//        if count < 0 {
-//            count = 0
-//        }
-//        let a = self.navigationController?.viewControllers[count] as! SubViewController
-//        if a.type == "tag" || a.type == "post" || a.type == "user" || a.type == "search" || a.type == "tag_name" {
-//            self.navigationController?.navigationBarHidden = true
-//        }else {
-//            self.navigationController?.navigationBarHidden = false
-//        }
-//        
-//        if !self.appdelegate.myfeed.view.hidden {
-//            self.navigationController?.navigationBarHidden = true
-//        }
-//        
         self.appdelegate.tabbar.view.hidden = false
         self.postImage.enterBackground()
         self.postImage.gifRemoveObserver()
@@ -462,31 +434,22 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
     }
     
     func userViewTap() {
-        //userpage
-        //print("aaaaaaaaaaaaaaa")
-        let user = self.storyboard!.instantiateViewControllerWithIdentifier("UserPageViewController")as! UserPageViewController
-        self.appdelegate.controller.append(user)
-        user.type = "user"
-//        user.index = self.appdelegate.controller.count - 1
-        user.myId = self.email
-        user.userId = data["email"].stringValue
+        let vc = UserNativeViewController()
+        vc.userEmail = data["last_com"]["email"].stringValue
+        
         self.postImage.enterBackground()
         self.appdelegate.testNavi.navigationBarHidden = true
-        self.appdelegate.testNavi.pushViewController(user, animated: true)
+        self.appdelegate.testNavi.pushViewController(vc, animated: true)
         UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
     }
     
     func profileTap() {
-        //print("bbbbbbbbbbbbbbbbbbbbbbbbb")
-        let user = self.storyboard!.instantiateViewControllerWithIdentifier("UserPageViewController")as! UserPageViewController
-        self.appdelegate.controller.append(user)
-        user.type = "user"
-//        user.index = self.appdelegate.controller.count - 1
-        user.myId = self.email
-        user.userId = data["last_com"]["email"].stringValue
+        let vc = UserNativeViewController()
+        vc.userEmail = data["last_com"]["email"].stringValue
+        
         self.postImage.enterBackground()
         self.appdelegate.testNavi.navigationBarHidden = true
-        self.appdelegate.testNavi.pushViewController(user, animated: true)
+        self.appdelegate.testNavi.pushViewController(vc, animated: true)
         UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
     }
     
@@ -570,14 +533,8 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
     }
     
     @IBAction func likeList(sender: AnyObject) {
-//        let like = self.storyboard!.instantiateViewControllerWithIdentifier("LikeListViewController")as! LikeListViewController
-//        like.email = self.email
-//        like.tagId = self.data["post_id"].stringValue
-//        self.appdelegate.testNavi.navigationBarHidden = false
-//        self.appdelegate.tabbar.view.hidden = true
-//        self.postImage.enterBackground()
-//        self.appdelegate.testNavi.pushViewController(like, animated: true)
-//        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
+        self.postImage.enterBackground()
+        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
         
         let like = FollowNativeViewController()
         like.type = .Like
