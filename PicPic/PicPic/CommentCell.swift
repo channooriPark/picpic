@@ -293,6 +293,7 @@ class CommentCell: UITableViewCell {
                     self.imageCom = image
                     self.imageComView.image = image
                     self.upperContentView.bringSubviewToFront(self.imageComView)
+                    
                 }else {
                     return
                 }
