@@ -25,18 +25,27 @@ public enum ActiveType {
 struct ActiveBuilder {
     
     static func createMentionElements(fromText text: String, range: NSRange) -> [(range: NSRange, element: ActiveElement)] {
-        let mentions = RegexParser.getMentions(fromText: text, range: range)
+
         let nsstring = text as NSString
         var elements: [(range: NSRange, element: ActiveElement)] = []
         
-        for mention in mentions where mention.range.length > 2 {
-            let range = NSRange(location: mention.range.location + 1, length: mention.range.length - 1)
-            var word = nsstring.substringWithRange(range)
-            if word.hasPrefix("@") {
-                word.removeAtIndex(word.startIndex)
+//        for mention in mentions where mention.range.length > 2 {
+//            let range = NSRange(location: mention.range.location + 1, length: mention.range.length - 1)
+//            var word = nsstring.substringWithRange(range)
+//            if word.hasPrefix("@") {
+//                word.removeAtIndex(word.startIndex)
+//            }
+//            let element = ActiveElement.Mention(word)
+//            elements.append((mention.range, element))
+//        }
+        
+        for chunk in text.stringByReplacingOccurrencesOfString("\n", withString: " ").componentsSeparatedByString(" ")
+        {
+            if chunk.hasPrefix("@")
+            {
+                elements.append((nsstring.rangeOfString(chunk), ActiveElement.Hashtag(chunk)))
+                //태그명에 같은단어가들어갈경우 앞의 range 반환하는문제있음
             }
-            let element = ActiveElement.Mention(word)
-            elements.append((mention.range, element))
         }
         return elements
     }

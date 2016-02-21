@@ -35,15 +35,6 @@ class SecondCell: UICollectionViewCell {
         tap.addTarget(self, action: "userViewTouched:")
         self.userView.addGestureRecognizer(tap)
         
-        let singleTap = UITapGestureRecognizer()
-        singleTap.addTarget(self, action: "singleTapped")
-        self.addGestureRecognizer(singleTap)
-        
-        let doubleTap = UITapGestureRecognizer()
-        doubleTap.numberOfTapsRequired = 2
-        singleTap.requireGestureRecognizerToFail(doubleTap)
-        doubleTap.addTarget(self, action: "doubleTapped")
-        self.addGestureRecognizer(doubleTap)
     }
     
     override func prepareForReuse() {
@@ -90,13 +81,5 @@ class SecondCell: UICollectionViewCell {
     @IBAction func shareButtonTouched() {
         self.delegate?.shareButtonTouched(self.cellIndexPath)
     }
-    func singleTapped()
-    {
-        self.delegate?.cellTapped(self.cellIndexPath)
-    }
     
-    func doubleTapped()
-    {
-        self.likeButtonTouched()
-    }
 }

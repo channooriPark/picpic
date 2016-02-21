@@ -55,6 +55,12 @@ class SecondCategoryViewController: UIViewController, UICollectionViewDataSource
         self.collectionView.addInfiniteScrollingWithActionHandler({ _ in self.refreshWithAdditionalPage(self.currentPage)})
         self.refresh()
         // Do any additional setup after loading the view.
+        
+        let doubleTap = UITapGestureRecognizer(target: self, action: "doubleTapped:")
+        doubleTap.numberOfTapsRequired = 2
+        doubleTap.delaysTouchesBegan = true
+        
+        self.collectionView.addGestureRecognizer(doubleTap)
     }
 
     override func didReceiveMemoryWarning() {
@@ -119,7 +125,17 @@ class SecondCategoryViewController: UIViewController, UICollectionViewDataSource
         return 1
     }
     
-    func cellTapped(indexPath: NSIndexPath){
+    func doubleTapped(gesture: UITapGestureRecognizer)
+    {
+        
+        let point = gesture.locationInView(self.collectionView)
+        let indexPath = self.collectionView.indexPathForItemAtPoint(point)
+        let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! SecondCell
+            
+        cell.likeButtonTouched()
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let post = appdelegate.storyboard.instantiateViewControllerWithIdentifier("PostPageViewController")as! PostPageViewController

@@ -17,9 +17,7 @@ class TagCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        let singleTap = UITapGestureRecognizer()
-        singleTap.addTarget(self, action: "singleTapped")
-        self.addGestureRecognizer(singleTap)
+    
     }
     
     override func prepareForReuse() {
@@ -27,8 +25,6 @@ class TagCell: UICollectionViewCell {
         self.imageView.image = nil
     }
     
-    func singleTapped()
-    {
-        self.delegate?.cellTapped(self.cellIndexPath)
-    }
+    
+    
 }

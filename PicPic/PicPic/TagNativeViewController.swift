@@ -65,6 +65,12 @@ class TagNativeViewController: SubViewController, UICollectionViewDelegate, UICo
         self.collectionView.alwaysBounceVertical = true
         self.collectionView.addInfiniteScrollingWithActionHandler({ _ in self.refreshWithAdditionalPage(self.currentPage)})
         self.refresh()
+        
+        let doubleTap = UITapGestureRecognizer(target: self, action: "doubleTapped:")
+        doubleTap.numberOfTapsRequired = 2
+        doubleTap.delaysTouchesBegan = true
+        
+        self.collectionView.addGestureRecognizer(doubleTap)
     }
 
     override func didReceiveMemoryWarning() {
@@ -92,7 +98,7 @@ class TagNativeViewController: SubViewController, UICollectionViewDelegate, UICo
             
             appdelegate.doIt(507, message: mes, callback: {(json) in
                 print(json)
-                if json["data"].type == .Null
+                if json["data"].type == .Null || json["data"].string == ""
                 {
                     self._hud.hide(true)
                     self.collectionView.infiniteScrollingView.stopAnimating()
@@ -190,7 +196,24 @@ class TagNativeViewController: SubViewController, UICollectionViewDelegate, UICo
         return 1
     }
     
-    func cellTapped(indexPath: NSIndexPath)
+    func doubleTapped(gesture: UITapGestureRecognizer)
+    {
+        if !self.isWaterFall
+        {
+            let point = gesture.locationInView(self.collectionView)
+            let indexPath = self.collectionView.indexPathForItemAtPoint(point)
+            let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! TagListCell
+            
+            cell.likeButtonTouched()
+        }
+        else
+        {
+            return
+        }
+    }
+    
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
     {
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let post = appdelegate.storyboard.instantiateViewControllerWithIdentifier("PostPageViewController")as! PostPageViewController
@@ -277,6 +300,14 @@ class TagNativeViewController: SubViewController, UICollectionViewDelegate, UICo
                 
                 self.navigationController?.pushViewController(vc, animated: true)
             })
+            
+            label.handleMentionTap({(string) in
+                let vc = UserNativeViewController()
+                vc.userEmail = string.substringFromIndex(string.startIndex.advancedBy(1))
+                
+                self.navigationController?.pushViewController(vc, animated: true)
+            })
+            
             
             label.frame = CGRectMake(0, 0, cell.bodyView.frame.width, CGFloat(20 * self.rowsNeededForText(label.text!)))
             cell.bodyViewHeightConstraint.constant = CGFloat(20 * self.rowsNeededForText(label.text!))

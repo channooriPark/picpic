@@ -10,7 +10,7 @@ import UIKit
 import SwiftyJSON
 import Alamofire
 
-class SecondNativeViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, CHTCollectionViewDelegateWaterfallLayout, TagListCellDelegate{
+class SecondNativeViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, CHTCollectionViewDelegateWaterfallLayout, TagListCellDelegate, UIGestureRecognizerDelegate{
 
     @IBOutlet weak var followTabButton: UIButton!
     @IBOutlet weak var allTabButton: UIButton!
@@ -34,6 +34,7 @@ class SecondNativeViewController: UIViewController, UICollectionViewDataSource, 
         super.viewWillAppear(animated)
         
         self.navigationController?.navigationBarHidden = false
+        
     }
     
     override func viewDidLoad() {
@@ -63,7 +64,26 @@ class SecondNativeViewController: UIViewController, UICollectionViewDataSource, 
         // Do any additional setup after loading the view.
         self.collectionView.alwaysBounceVertical = true
         self.collectionView.addInfiniteScrollingWithActionHandler({ _ in self.refreshWithAdditionalPage(self.currentPage)})
+        self.followTabEnableView.backgroundColor = self.enabledColor
         self.refresh()
+        
+        let doubleTap = UITapGestureRecognizer(target: self, action: "doubleTapped:")
+        doubleTap.numberOfTapsRequired = 2
+        doubleTap.delaysTouchesBegan = true
+        
+        self.collectionView.addGestureRecognizer(doubleTap)
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: "didSwipeRight")
+        swipeRight.direction = .Right
+        swipeRight.delegate = self
+        self.view.addGestureRecognizer(swipeRight)
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: "didSwipeLeft")
+        swipeLeft.direction = .Left
+        swipeLeft.delegate = self
+        self.view.addGestureRecognizer(swipeLeft)
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -196,7 +216,23 @@ class SecondNativeViewController: UIViewController, UICollectionViewDataSource, 
         return 1
     }
     
-    func cellTapped(indexPath: NSIndexPath) {
+    func doubleTapped(gesture: UITapGestureRecognizer)
+    {
+        if self.categoryTabEnableView.backgroundColor != self.enabledColor
+        {
+            let point = gesture.locationInView(self.collectionView)
+            let indexPath = self.collectionView.indexPathForItemAtPoint(point)
+            let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! SecondCell
+            
+            cell.likeButtonTouched()
+        }
+        else
+        {
+            return
+        }
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if self.categoryTabEnableView.backgroundColor == self.enabledColor
         {
             let vc = SecondCategoryViewController()
@@ -227,7 +263,6 @@ class SecondNativeViewController: UIViewController, UICollectionViewDataSource, 
             cell.imageView.image = dic.values.first!
             cell.label.text = dic.keys.first
             cell.cellIndexPath = indexPath
-            cell.delegate = self
             
             return cell
         }
@@ -258,13 +293,6 @@ class SecondNativeViewController: UIViewController, UICollectionViewDataSource, 
             
             cell.cellIndexPath = indexPath
             cell.delegate = self
-            
-            let dateFormatter =  NSDateFormatter()
-            dateFormatter.dateFormat = "yyyyMMddHHmmss"
-            let date = dateFormatter.dateFromString(dic["date"] as! String)
-            let interval = NSDate().timeIntervalSinceDate(date!)
-            dateFormatter.dateFormat = "yyyy.MM.dd"
-            let intervalText = (interval / 3600 < 12) ? String(format: "%d시간전", Int(interval / 3600)) : dateFormatter.stringFromDate(date!)
             
             
             cell.idLabel.text = (dic["id"] as? String)
@@ -502,5 +530,49 @@ class SecondNativeViewController: UIViewController, UICollectionViewDataSource, 
     func moreButtonTouched(indexPath: NSIndexPath)
     {
         
+    }
+    
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
+    func didSwipeRight()
+    {
+        if self._hud.alpha != 0
+        {
+            return
+        }
+        if self.followTabEnableView.backgroundColor == self.enabledColor
+        {
+            self.categoryTabTouched()
+        }
+        else if self.allTabEnableView.backgroundColor == self.enabledColor
+        {
+            self.followTabTouched()
+        }
+        else if self.categoryTabEnableView.backgroundColor == self.enabledColor
+        {
+            self.allTabTouched(self)
+        }
+    }
+    
+    func didSwipeLeft()
+    {
+        if self._hud.alpha != 0
+        {
+            return
+        }
+        if self.followTabEnableView.backgroundColor == self.enabledColor
+        {
+            self.allTabTouched(self)
+        }
+        else if self.allTabEnableView.backgroundColor == self.enabledColor
+        {
+            self.categoryTabTouched()
+        }
+        else if self.categoryTabEnableView.backgroundColor == self.enabledColor
+        {
+            self.followTabTouched()
+        }
     }
 }

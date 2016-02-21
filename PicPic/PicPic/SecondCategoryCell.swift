@@ -13,14 +13,10 @@ class SecondCategoryCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var label: UILabel!
     var cellIndexPath: NSIndexPath!
-    var delegate: TagListCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        let singleTap = UITapGestureRecognizer()
-        singleTap.addTarget(self, action: "singleTapped")
-        self.addGestureRecognizer(singleTap)
     }
 
     override func prepareForReuse() {
@@ -29,8 +25,4 @@ class SecondCategoryCell: UICollectionViewCell {
         self.label.text = nil
     }
     
-    func singleTapped()
-    {
-        self.delegate?.cellTapped(self.cellIndexPath)
-    }
 }

@@ -69,6 +69,12 @@ class UserNativeViewController: SubViewController, UICollectionViewDelegate, UIC
         self.collectionView.alwaysBounceVertical = true
         self.collectionView.addInfiniteScrollingWithActionHandler({ _ in self.refreshWithAdditionalPage(self.currentPage)})
         self.refresh()
+        
+        let doubleTap = UITapGestureRecognizer(target: self, action: "doubleTapped:")
+        doubleTap.numberOfTapsRequired = 2
+        doubleTap.delaysTouchesBegan = true
+        
+        self.collectionView.addGestureRecognizer(doubleTap)
     }
     
     override func didReceiveMemoryWarning() {
@@ -265,7 +271,23 @@ class UserNativeViewController: SubViewController, UICollectionViewDelegate, UIC
         return 1
     }
     
-    func cellTapped(indexPath: NSIndexPath) {
+    func doubleTapped(gesture: UITapGestureRecognizer)
+    {
+        if !self.isWaterFall
+        {
+            let point = gesture.locationInView(self.collectionView)
+            let indexPath = self.collectionView.indexPathForItemAtPoint(point)
+            let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! TagListCell
+            
+            cell.likeButtonTouched()
+        }
+        else
+        {
+            return
+        }
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let post = appdelegate.storyboard.instantiateViewControllerWithIdentifier("PostPageViewController")as! PostPageViewController
         appdelegate.controller.append(post)
@@ -349,6 +371,13 @@ class UserNativeViewController: SubViewController, UICollectionViewDelegate, UIC
             label.handleHashtagTap({(string) in
                 let vc = TagNativeViewController()
                 vc.tagName = string.substringFromIndex(string.startIndex.advancedBy(1))
+                
+                self.navigationController?.pushViewController(vc, animated: true)
+            })
+            
+            label.handleMentionTap({(string) in
+                let vc = UserNativeViewController()
+                vc.userEmail = string.substringFromIndex(string.startIndex.advancedBy(1))
                 
                 self.navigationController?.pushViewController(vc, animated: true)
             })

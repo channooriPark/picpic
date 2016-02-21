@@ -67,7 +67,14 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
         
         self.collectionView.alwaysBounceVertical = true
         self.collectionView.addInfiniteScrollingWithActionHandler({ _ in self.refreshWithAdditionalPage(self.currentPage)})
-//        self.refresh()
+        self.refresh()
+        
+        let doubleTap = UITapGestureRecognizer(target: self, action: "doubleTapped:")
+        doubleTap.numberOfTapsRequired = 2
+        doubleTap.delaysTouchesBegan = true
+        
+        self.collectionView.addGestureRecognizer(doubleTap)
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -176,7 +183,7 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
     
     func fire()
     {
-        self.refresh()
+        self.refreshWithoutProfileReload(self.isRepic, str: self.currentString)
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -187,7 +194,23 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
         return 1
     }
     
-    func cellTapped(indexPath: NSIndexPath){
+    func doubleTapped(gesture: UITapGestureRecognizer)
+    {
+        if !self.isWaterFall
+        {
+            let point = gesture.locationInView(self.collectionView)
+            let indexPath = self.collectionView.indexPathForItemAtPoint(point)
+            let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! TagListCell
+            
+            cell.likeButtonTouched()
+        }
+        else
+        {
+            return
+        }
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let post = appdelegate.storyboard.instantiateViewControllerWithIdentifier("PostPageViewController")as! PostPageViewController
         appdelegate.controller.append(post)
@@ -274,6 +297,15 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
                 
                 self.navigationController?.pushViewController(vc, animated: true)
             })
+            
+            label.handleMentionTap({(string) in
+                let vc = UserNativeViewController()
+                vc.userEmail = string.substringFromIndex(string.startIndex.advancedBy(1))
+                
+                self.navigationController?.pushViewController(vc, animated: true)
+            })
+            
+            label.gestureRecognizers?.first?.cancelsTouchesInView = true
             
             label.frame = CGRectMake(0, 0, cell.bodyView.frame.width, CGFloat(20 * self.rowsNeededForText(label.text!)))
             cell.bodyViewHeightConstraint.constant = CGFloat(20 * self.rowsNeededForText(label.text!))

@@ -52,15 +52,6 @@ class TagListCell: UICollectionViewCell {
         commentTap.addTarget(self, action: "commentButtonTouched")
         self.lastCommentView.addGestureRecognizer(commentTap)
         
-        let singleTap = UITapGestureRecognizer()
-        singleTap.addTarget(self, action: "singleTapped")
-        self.addGestureRecognizer(singleTap)
-        
-        let doubleTap = UITapGestureRecognizer()
-        doubleTap.numberOfTapsRequired = 2
-        singleTap.requireGestureRecognizerToFail(doubleTap)
-        doubleTap.addTarget(self, action: "doubleTapped")
-        self.addGestureRecognizer(doubleTap)
     }
     
     override func prepareForReuse() {
@@ -123,15 +114,7 @@ class TagListCell: UICollectionViewCell {
         self.delegate?.moreButtonTouched(self.cellIndexPath)
     }
     
-    func singleTapped()
-    {
-        self.delegate?.cellTapped(self.cellIndexPath)
-    }
-    
-    func doubleTapped()
-    {
-        self.likeButtonTouched()
-    }
+
 }
 
 protocol TagListCellDelegate
@@ -143,5 +126,4 @@ protocol TagListCellDelegate
     func commentButtonTouched(indexPath: NSIndexPath)
     func shareButtonTouched(indexPath: NSIndexPath)
     func moreButtonTouched(indexPath: NSIndexPath)
-    func cellTapped(indexPath: NSIndexPath)
 }

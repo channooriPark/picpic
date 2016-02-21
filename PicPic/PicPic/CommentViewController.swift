@@ -172,9 +172,9 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
 //            post.setCommentCount(self.dataArray.count)
 //        }
         self.navigationController?.popViewControllerAnimated(true)
-        if a.type == "content" {
-            self.appdelegate.tabbar.view.hidden = false
-        }
+//        if a.type == "content" {
+//            self.appdelegate.tabbar.view.hidden = false
+//        }
         
 //        self.appdelegate.main.view.hidden = false
     }
