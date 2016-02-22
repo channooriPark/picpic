@@ -435,8 +435,7 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
     
     func userViewTap() {
         let vc = UserNativeViewController()
-        vc.userEmail = data["last_com"]["email"].stringValue
-        
+        vc.userEmail = data["email"].stringValue
         self.postImage.enterBackground()
         self.appdelegate.testNavi.navigationBarHidden = true
         self.appdelegate.testNavi.pushViewController(vc, animated: true)
@@ -445,7 +444,7 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
     
     func profileTap() {
         let vc = UserNativeViewController()
-        vc.userEmail = data["last_com"]["email"].stringValue
+        vc.userEmail = data["email"].stringValue
         
         self.postImage.enterBackground()
         self.appdelegate.testNavi.navigationBarHidden = true

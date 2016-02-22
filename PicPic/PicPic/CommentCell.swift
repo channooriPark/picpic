@@ -96,11 +96,11 @@ class CommentCell: UITableViewCell {
     
     
     func setBody(){
+        bodyLabel.backgroundColor = UIColor.redColor()
         if data["url"].string == "" {
             urlState = false
             print("이미지댓글 아니야",urlState)
             urlString = nil
-//            imageComView.frame.size.height = 0
         }else {
             urlString = data["url"].stringValue
             urlState = true
@@ -132,12 +132,10 @@ class CommentCell: UITableViewCell {
                 upperContentView.addSubview(imageComView)
                 imageComView.frame = CGRectMake(bodyLabel.frame.origin.x, bodyHeight, width, height)
                 self.height = 109 + (bodyLabel.frame.size.height - 60) + imageComView.frame.size.height + 10
+                
             }
             isFirst = false
         }
-        
-        
-        
         
         //업로드 시간
         let uploadDateText = data["time"].string!
@@ -184,27 +182,35 @@ class CommentCell: UITableViewCell {
             //내글
             if data["email"].stringValue == self.appdelegate.email {
                 //내 댓글
-                self.hiddenButton1.setBackgroundImage(UIImage(named: "icon_mycomment_modify"), forState: .Normal)
-                self.hiddenButton2.setBackgroundImage(UIImage(named: "icon_mycomment_delete"), forState: .Normal)
+                self.hiddenButton1.setImage(UIImage(named: "icon_mycomment_modify"), forState: .Normal)
+                self.hiddenButton2.setImage(UIImage(named: "icon_mycomment_delete"), forState: .Normal)
+                self.hiddenButton1.backgroundColor = UIColor(colorLiteralRed: 0.77, green: 0.77, blue: 0.77, alpha: 1.00)
+                self.hiddenButton2.backgroundColor = UIColor(colorLiteralRed: 1.00, green: 0.40, blue: 0.41, alpha: 1.00)
     
                 self.comType = 0
             }else {
                 //남 댓글
-                self.hiddenButton1.setBackgroundImage(UIImage(named: "icon_mycomment_reteg"), forState: .Normal)
-                self.hiddenButton2.setBackgroundImage(UIImage(named: "icon_mycomment_delete"), forState: .Normal)
+                self.hiddenButton1.setImage(UIImage(named: "icon_mycomment_reteg"), forState: .Normal)
+                self.hiddenButton2.setImage(UIImage(named: "icon_mycomment_delete"), forState: .Normal)
+                self.hiddenButton1.backgroundColor = UIColor(colorLiteralRed: 0.77, green: 0.77, blue: 0.77, alpha: 1.00)
+                self.hiddenButton2.backgroundColor = UIColor(colorLiteralRed: 1.00, green: 0.40, blue: 0.41, alpha: 1.00)
                 self.comType = 1
             }
         }else {
             //남의 글
             if data["email"].stringValue == self.appdelegate.email {
                 //내 댓글
-                self.hiddenButton1.setBackgroundImage(UIImage(named: "icon_mycomment_modify"), forState: .Normal)
-                self.hiddenButton2.setBackgroundImage(UIImage(named: "icon_mycomment_delete"), forState: .Normal)
+                self.hiddenButton1.setImage(UIImage(named: "icon_mycomment_modify"), forState: .Normal)
+                self.hiddenButton2.setImage(UIImage(named: "icon_mycomment_delete"), forState: .Normal)
+                self.hiddenButton1.backgroundColor = UIColor(colorLiteralRed: 0.77, green: 0.77, blue: 0.77, alpha: 1.00)
+                self.hiddenButton2.backgroundColor = UIColor(colorLiteralRed: 1.00, green: 0.40, blue: 0.41, alpha: 1.00)
                 self.comType = 0
             }else {
                 //남 댓글
-                self.hiddenButton1.setBackgroundImage(UIImage(named: "icon_mycomment_reteg"), forState: .Normal)
-                self.hiddenButton2.setBackgroundImage(UIImage(named: "icon_othercomment_report"), forState: .Normal)
+                self.hiddenButton1.setImage(UIImage(named: "icon_mycomment_reteg"), forState: .Normal)
+                self.hiddenButton2.setImage(UIImage(named: "icon_othercomment_report"), forState: .Normal)
+                self.hiddenButton1.backgroundColor = UIColor(colorLiteralRed: 0.77, green: 0.77, blue: 0.77, alpha: 1.00)
+                self.hiddenButton2.backgroundColor = UIColor(colorLiteralRed: 1.00, green: 0.40, blue: 0.41, alpha: 1.00)
                 self.comType = 1
             }
         }
