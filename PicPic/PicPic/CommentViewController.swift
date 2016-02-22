@@ -154,11 +154,11 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
     }
     
     func back(sender:UIBarButtonItem){
-//        var count = (self.navigationController?.viewControllers.count)!-2
-//        if count < 0 {
-//            count = 0
-//        }
-//        let a = self.navigationController?.viewControllers[count] as! SubViewController
+        var count = (self.navigationController?.viewControllers.count)!-2
+        if count < 0 {
+            count = 0
+        }
+        let a = self.navigationController?.viewControllers[count] as! SubViewController
         
 //        if a.type == "tag" || a.type == "post" || a.type == "user" || a.type == "search"{
 //            self.navigationController?.navigationBarHidden = true
@@ -338,6 +338,7 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         }
         
         if Rowdata["url"].stringValue != "" {
+            print("url 있어",Rowdata["url"].stringValue)
             if cell.urlState {
                 cell.imageComViewSet { (image) -> Void in
                     self.height[indexPath.row] = cell.height
