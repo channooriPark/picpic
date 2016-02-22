@@ -118,7 +118,7 @@ class SearchNativeViewController: UIViewController, UISearchBarDelegate{
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         if !searchText.isEmpty
         {
-            if self.tagButtonEnableView.backgroundColor == UIColor.whiteColor() //user
+            if self.tagButtonEnableView.backgroundColor == UIColor(netHex: 0xE8E5F2) //user
             {
                 self.tagTable?.view.removeFromSuperview()
                 self.tagTable = nil
@@ -156,7 +156,7 @@ class SearchNativeViewController: UIViewController, UISearchBarDelegate{
             self.tagTable = nil
             self.userTable = nil
             
-            if self.tagButtonEnableView.backgroundColor == UIColor.whiteColor() //hot
+            if self.tagButtonEnableView.backgroundColor == UIColor(netHex: 0xE8E5F2) //hot
             {
                 if self.hotUser == nil
                 {
