@@ -73,9 +73,10 @@ class GifListViewController: UIViewController , RAReorderableLayoutDelegate, RAR
                 
             } else {
             }
-            
+            self.collectionView.reloadData()
         }
             self.collectionView.reloadData()
+            print("gif list reloadData")
             if self.collections.count == 0 {
                 let alert = UIAlertController(title: nil, message: self.appdelegate.ment["imageComment_gifList_notting"].stringValue, preferredStyle: .Alert)
                 let confirm = UIAlertAction(title: self.appdelegate.ment["popup_confirm"].stringValue, style: .Default, handler: { (confirm) -> Void in

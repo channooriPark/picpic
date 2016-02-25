@@ -707,6 +707,7 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
     
     func secondBUttonTouched(writeType: Int, comType: Int,data:JSON,index : NSIndexPath) {
         print("hidden button 2 touched",writeType , "    " , comType)
+        
         self.cellDidClose(index)
         if writeType == 1 && comType == 1 {
             let report = self.storyboard?.instantiateViewControllerWithIdentifier("ReportViewController")as! ReportViewController

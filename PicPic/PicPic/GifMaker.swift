@@ -857,6 +857,7 @@ class GifMaker {
         // set agif encoder x, y position
         QAGIFEncSetPosition(agifencPtr, 0, 0)
         // set agif encoder repeat value
+        //
         QAGIFEncSetRepeat(agifencPtr, 0)
         
         // set transparent

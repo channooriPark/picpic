@@ -23,7 +23,7 @@ class VideoGalleryViewController : UIViewController, UICollectionViewDelegate, U
     @IBOutlet weak var nextWidth: NSLayoutConstraint!
     @IBOutlet weak var backButton: UIButton!
     
-    public var cameradelegate: CameraViewController!
+    internal var cameradelegate: CameraViewController!
     let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     private var groups: [String]?
@@ -381,6 +381,7 @@ class VideoGalleryViewController : UIViewController, UICollectionViewDelegate, U
         
         self.selectedAsset!.fetchAVAssetWithCompleteBlock { (avAsset) in
             dispatch_async(dispatch_get_main_queue(), { () in
+                print(avAsset?.URL)
                 self.playVideo(avAsset!.URL)
             })
         }

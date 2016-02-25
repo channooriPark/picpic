@@ -674,36 +674,75 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         }else {
             print("하하하하하하하하핳하하하하하하핳하하하하하하하하하하하하하하하하하핳하하ㅏㅎ하하하하하하하하하하하핳하하하핳하하핳하하ㅏㅎ하하하하")
             print(scratchPath!)
+            let imgSize = playImageArr[0][0].size
             
-            let mask = UIImage(contentsOfFile: scratchPath!) // 기본 마스크 이미지,
+            if imgSize.width > imgSize.height {
+                let nWidth = UIScreen.mainScreen().bounds.width;
+                let nHeight = nWidth * (imgSize.height) / (imgSize.width)
+                let posY = (Config.getInstance().wid/8)*3
+                self.gifView.frame = CGRectMake(0, posY, nWidth, nHeight)
+                self.image.frame = CGRectMake(0, posY, nWidth, nHeight)
+                imageHei.constant = nHeight
+                imagePosY.constant = posY
+            }
+            
+            if playImageArr[0][0].size.width > playImageArr[0][0].size.height {
+                self.resizeType = 2
+                let nWidth = UIScreen.mainScreen().bounds.width;
+                let nHeight = nWidth * (imgSize.height) / (imgSize.width)
+                let posY = Config.getInstance().wid/8*2-10
+                self.gifView.frame = CGRectMake(0, posY, nWidth, nHeight)
+                self.imageHei.constant = nHeight
+                self.imagePosY.constant = posY
+            }else if playImageArr[0][0].size.width == playImageArr[0][0].size.height {
+                self.resizeType = 1
+                self.image.frame.origin.y = (UIScreen.mainScreen().bounds.width/8)*2
+                self.imagePosY.constant = (UIScreen.mainScreen().bounds.width/8)*2
+                self.gifView.frame.origin.y = (UIScreen.mainScreen().bounds.width/8)*2
+            }
+            
+            
+            var mImage : UIImage!
+            if let mask = UIImage(contentsOfFile: scratchPath!) { // 기본 마스크 이미지,
+                mImage = mask
+                maskImage.frame = gifView.frame
+                log.log("maskImage frame  \(maskImage.frame)")
+                maskImage.image = mImage
+                maskImage.backgroundColor = UIColor.blackColor()
+                maskImage.contentMode = .ScaleAspectFill
+                frontImage.frame = gifView.frame
+                var eraserImage = playImageArr[0][0]
+                let filter = GPUImageBrightnessFilter()
+                filter.brightness = 0.01
+                eraserImage = filter.imageByFilteringImage(eraserImage)
+                applyFilter(&eraserImage, filterName: self.filterCurrent)
+                frontImage.image = eraserImage
+                self.view.addSubview(frontImage)
+                self.mask()
+                
+            }else {
+                var mask = UIImage(named:"mask.jpg") // 기본 마스크 이미지,
+                
+                mask = mask?.resizeImage(playImageArr[0][0].size)
+                log.log("mask image        \(mask)")
+                // workFolder에 mask.jpg가 저장되어있으면 해당 mask를 로드한다. 필터 처리되었으면 필터처리함.
+                // 필터를 변경시에 front이미지에 필터를 처리하고, mask()를 실행하여 처리..
+                maskImage.frame = gifView.frame
+                log.log("maskImage frame  \(maskImage.frame)")
+                maskImage.image = mask
+                maskImage.backgroundColor = UIColor.blackColor()
+                maskImage.contentMode = .ScaleAspectFill
+                self.canvas.frame = gifView.frame
+            }
             // workFolder에 mask.jpg가 저장되어있으면 해당 mask를 로드한다. 필터 처리되었으면 필터처리함.
             // 필터를 변경시에 front이미지에 필터를 처리하고, mask()를 실행하여 처리..
             
-            maskImage.frame = gifView.frame
-            log.log("maskImage frame  \(maskImage.frame)")
-            maskImage.image = mask
-            maskImage.backgroundColor = UIColor.blackColor()
-            maskImage.contentMode = .ScaleAspectFill
             
-            frontImage.frame = gifView.frame
-            //                frontImage.frame.size = CGSize(width: self.image.frame.size.width, height: round(self.image.frame.size.height))
-            var eraserImage = playImageArr[0][0]
-            let filter = GPUImageBrightnessFilter()
-            filter.brightness = 0.01
-            eraserImage = filter.imageByFilteringImage(eraserImage)
-            applyFilter(&eraserImage, filterName: self.filterCurrent)
-            frontImage.image = eraserImage
-            self.view.addSubview(frontImage)
-            self.mask()
             frameIndex = 0
             currentIndex1 = 0
             previewTimer = NSTimer.scheduledTimerWithTimeInterval(interval, target: self, selector: Selector("nextImage"), userInfo: nil, repeats: true)
+            
         }
-        
-        
-        
-        
-        
         
         filterButtonName.append("None")
         filterButtonName.append("I_AMARO")

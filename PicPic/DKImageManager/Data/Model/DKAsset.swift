@@ -113,5 +113,9 @@ public class DKAsset: NSObject {
 	public func fetchAVAssetWithCompleteBlock(completeBlock: (avAsset: AVURLAsset?) -> Void) {
 		getImageManager().fetchAVAsset(self, completeBlock: completeBlock)
 	}
+    
+//    public func fetchAVAssetWithCompleteBlockSlow(completeBlock: (avAsset: AVURLAsset?) -> Void) {
+//        getImageManager().fetchAVAsset(self, completeBlock: completeBlock)
+//    }
 	
 }

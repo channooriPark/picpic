@@ -197,24 +197,42 @@ class UserNativeViewController: SubViewController, UICollectionViewDelegate, UIC
                 self.collectionView.reloadData()
                 return
             }
+            
             self.postInfos = json["data"].arrayObject as! Array<[String: AnyObject]>
             self._hud.hide(true)
-            self.collectionView.infiniteScrollingView.stopAnimating()
-            self.collectionView.reloadData()
-//            for (index, dic) in self.postInfos.enumerate()
-//            {
-//                let str = dic["url"]! as! String
-//                let url = str.substringWithRange(str.startIndex ..< str.endIndex.advancedBy(-6)).stringByAppendingString("_1.gif")
-//                
-//                Alamofire.request(.GET, "http://gif.picpic.world/" + url, parameters: ["foo": "bar"]).response { request, response, data, error in
-//                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-//                        self.postGifData["\(index)"] = UIImage.gifWithData(data!) ?? UIImage()
-//                        
-//                    })
-//                }
-//            }
             
-            
+            for (index, dic) in self.postInfos.enumerate()
+            {
+                if let string = dic["is_closed"]
+                {
+                    if string as! String == "Y"
+                    {
+                        if let string = dic["follow_yn"] {
+                            if string as! String == "N" {
+                                //사용자비공개 alert
+                                self._hud.hide(true)
+                                self.collectionView.infiniteScrollingView.stopAnimating()
+                                self.collectionView.infiniteScrollingView.enabled = false
+                                let alert = UIAlertController(title: nil, message: self.appdelegate.ment["toast_msg_is_closed_y"].stringValue, preferredStyle: UIAlertControllerStyle.Alert)
+                                alert.addAction(UIAlertAction(title: self.appdelegate.ment["popup_confirm"].stringValue, style: UIAlertActionStyle.Default, handler: {_ in self.backButtonTouched()}))
+                                self.presentViewController(alert, animated: true, completion: nil)
+                                return
+                            }
+                        }
+                    }
+                }
+                self.collectionView.infiniteScrollingView.stopAnimating()
+                self.collectionView.reloadData()
+                let str = dic["url"]! as! String
+                let url = str.substringWithRange(str.startIndex ..< str.endIndex.advancedBy(-6)).stringByAppendingString("_1.gif")
+                
+                Alamofire.request(.GET, "http://gif.picpic.world/" + url, parameters: ["foo": "bar"]).response { request, response, data, error in
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                        self.postGifData["\(index)"] = UIImage.gifWithData(data!) ?? UIImage()
+                        
+                    })
+                }
+            }
         })
     }
     

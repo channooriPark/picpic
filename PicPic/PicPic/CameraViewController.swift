@@ -393,7 +393,6 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
             return
         }
         
-        //        print("start")
         is_saved = false;
         let outputPath = String(format: "%@/%02d.mov", arguments: [workFolder!,num_of_capture])
         //        print("capture : ",outputPath)
@@ -405,7 +404,13 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         timer = NSTimer.scheduledTimerWithTimeInterval(0.02, target: self, selector: "updateTime", userInfo: nil, repeats: true)
         
         captureBar.addBar()
-        //        print("max_recording_this_frame ",max_recording_this_frame)
+        
+        if deleteState == 1 {
+            captureDelete.setImage(UIImage(named: "delete"), forState: .Normal)
+            captureBar.subviews[captureBar.subviews.count-2].backgroundColor = Config.getInstance().color
+        }
+        
+        
     }
     
     @IBAction func actCaptureStop(sender: AnyObject) {

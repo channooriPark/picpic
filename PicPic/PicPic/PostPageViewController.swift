@@ -62,13 +62,14 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        loading(false)
         UIApplication.sharedApplication().setStatusBarStyle(.Default, animated: true)
         self.navigationController?.navigationBarHidden = true
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loading(true)
+//        loading(true)
         self.likeImage = UIImageView(image: UIImage(named: "heart"))
         self.likeImage.frame = CGRectMake(self.postImage.frame.size.width/2-50, self.postImage.frame.size.height/2-42.5, 100, 85)
         self.likeImage.alpha = 0.0
@@ -89,7 +90,7 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
         self.appdelegate.doIt(504, message: message) { (readData) -> () in
             //profile
             print("readData : ",readData)
-            self.loading(false)
+//            self.loading(false)
             if readData != nil {
                 if readData["id"].stringValue != "" {
                     self.loading.startAnimation()
@@ -144,53 +145,67 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
                         self.lastComProfile.image = UIImage(data: data!)
                     }
                     
+                    //width height 값이 nil이면 파일정보가 없거나 파일이 없는것이다
+                    if readData["width2"].stringValue != "null" || readData["width2"].stringValue != "" {
+                        let nWidth = UIScreen.mainScreen().bounds.width;
+                        let nHeight = nWidth * CGFloat(readData["height2"].floatValue / readData["width2"].floatValue)
+                        self.postImageHei.constant = nHeight
+                        self.postImage.frame.size = CGSize(width: nWidth, height: nHeight)
+                        self.postImage.image = UIImage(named: "non_interest")
+                        self.likeImage.frame.origin = CGPoint(x: self.postImage.frame.size.width/2-50, y: self.postImage.frame.size.height/2-42.5 + self.postImage.frame.origin.y)
+                        self.view.addSubview(self.likeImage)
+                        self.view.bringSubviewToFront(self.likeImage)
+                        print("body frame before1",self.body.frame.origin.y)
+                        self.body.frame.origin.y = self.postImage.frame.size.height + 3
+                        self.body.updateConstraints()
+                        self.view.updateConstraints()
+                    }
+                    
+                    
+                    //postImage
+//                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                        var thumb = readData["url"].stringValue.stringByReplacingOccurrencesOfString("_2.gif", withString: ".jpg")
+//                        thumb = String(format:"http://gif.picpic.world/%@", arguments:[thumb])
+//                        let url = NSURL(string: thumb)
+//                        if let data = NSData(contentsOfURL: url!) {
+//                            if let img = UIImage(data: data) {
+//                                let nWidth = UIScreen.mainScreen().bounds.width;
+//                                let nHeight = nWidth * img.size.height / img.size.width
+//                                self.postImage.image = img
+//                                self.postImageHei.constant = nHeight
+//                                self.postImage.frame.size = CGSize(width: nWidth, height: nHeight)
+//                            }else {
+//                                self.postImage.frame.size = CGSize(width: self.postImage.frame.size.width, height: self.postImage.frame.size.width)
+//                                self.postImageHei.constant = self.postImage.frame.size.width
+//                            }
+//                        }else {
+//                            self.postImage.image = UIImage(named: "non_interest")
+//                            self.postImage.frame.size = CGSize(width: self.postImage.frame.size.width, height: self.postImage.frame.size.width)
+//                            self.postImageHei.constant = self.postImage.frame.size.width
+//                        }
+//                        self.likeImage.frame.origin = CGPoint(x: self.postImage.frame.size.width/2-50, y: self.postImage.frame.size.height/2-42.5 + self.postImage.frame.origin.y)
+//                        self.view.addSubview(self.likeImage)
+//                        self.view.bringSubviewToFront(self.likeImage)
+//                        print("body frame before1",self.body.frame.origin.y)
+//                        self.body.frame.origin.y = self.postImage.frame.size.height + 3
+//                        self.body.updateConstraints()
+//                        self.view.updateConstraints()
+//                        print("body frame 1",self.body.frame.origin.y)
+//                    })
+                    
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), { () -> Void in
-                        
-                        //postImage
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            var thumb = readData["url"].stringValue.stringByReplacingOccurrencesOfString("_2.gif", withString: ".jpg")
-                            thumb = String(format:"http://gif.picpic.world/%@", arguments:[thumb])
-                            let url = NSURL(string: thumb)
-                            if let data = NSData(contentsOfURL: url!) {
-                                if let img = UIImage(data: data) {
-                                    let nWidth = UIScreen.mainScreen().bounds.width;
-                                    let nHeight = nWidth * img.size.height / img.size.width
-                                    self.postImage.image = img
-                                    self.postImageHei.constant = nHeight
-                                    self.postImage.frame.size = CGSize(width: nWidth, height: nHeight)
-                                }else {
-                                    self.postImage.image = UIImage(named: "non_interest")
-                                    self.postImage.frame.size = CGSize(width: self.postImage.frame.size.width, height: self.postImage.frame.size.width)
-                                    self.postImageHei.constant = self.postImage.frame.size.width
-                                }
-                            }else {
-                                self.postImage.image = UIImage(named: "non_interest")
-                                self.postImage.frame.size = CGSize(width: self.postImage.frame.size.width, height: self.postImage.frame.size.width)
-                                self.postImageHei.constant = self.postImage.frame.size.width
-                            }
-                            self.likeImage.frame.origin = CGPoint(x: self.postImage.frame.size.width/2-50, y: self.postImage.frame.size.height/2-42.5 + self.postImage.frame.origin.y)
-                            self.view.addSubview(self.likeImage)
-                            self.view.bringSubviewToFront(self.likeImage)
-                            print("body frame before1",self.body.frame.origin.y)
-                            self.body.frame.origin.y = self.postImage.frame.size.height + 3
-                            self.body.updateConstraints()
-                            self.view.updateConstraints()
-                            print("body frame 1",self.body.frame.origin.y)
-                        })
-                        
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
                             //print("gif 다운로드")
                             self.postImage.animateForPicPicPost2(readData["url"].stringValue, spring: self.loading)
                             
-                            self.postImageHei.constant = self.postImage.nHeight
-                            self.likeImage.frame.origin = CGPoint(x: self.postImage.frame.size.width/2-50, y: self.postImage.frame.size.height/2-42.5 + self.postImage.frame.origin.y)
+//                            self.postImageHei.constant = self.postImage.nHeight
+//                            self.likeImage.frame.origin = CGPoint(x: self.postImage.frame.size.width/2-50, y: self.postImage.frame.size.height/2-42.5 + self.postImage.frame.origin.y)
                             self.view.bringSubviewToFront(self.likeImage)
                             print("body frame before",self.body.frame.origin.y)
                             self.body.frame.origin.y = self.postImage.frame.size.height + 3
                             self.view.updateConstraints()
                             print("body frame   ",self.body.frame.origin.y)
-                        })
-                        
+//                        })
                     })
                     
                     
@@ -270,13 +285,10 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
         
         let lastviewtap = UITapGestureRecognizer(target: self, action: "lastcom_comment")
         self.lastCommentView.addGestureRecognizer(lastviewtap)
-        print(";alsdjf;iozjd;fjvz;cklxjasd;oifxczjg;dlskszfj;xlkfjdz;lfjs;zlkxfjvz;lxkfjzxvc;lzjs;ozixj;ldskjzco;sdijf;lxckvjs;oxifjslk;fjdo;fijds;flkzdjfaso;dijsl;kxcvjxco;dsijzlx;kjcdivzjdiofdsjzlxkcjdoijzx;cvlkjdzoixfjdlkj   ")
         
-        print(self.likeButton.titleLabel?.text)
-        //print(self.likeButton.frame)
-        print(self.comment.titleLabel?.text)
         self.postImage.addSubview(self.likeImage)
         self.view.bringSubviewToFront(self.likeImage)
+        self.view.bringSubviewToFront(self.backButton)
     }
 
     override func didReceiveMemoryWarning() {
@@ -286,9 +298,7 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        print("viewWillDisappear  viewWillDisappear  viewWillDisappear  viewWillDisappear  viewWillDisappear  viewWillDisappear  viewWillDisappear  viewWillDisappear  viewWillDisappear  viewWillDisappear  viewWillDisappear  ")
         self.clickCheckCom = false
-        
     }
     
     func loading(state:Bool) {
@@ -313,6 +323,10 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
     }
     
     func dou(){
+        if data == nil {
+            return
+        }
+        
         doubleLike()
     }
     
@@ -332,6 +346,11 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
     }
     
     func doubleLike(){
+        if data == nil {
+            return
+        }
+        
+        
             if !likeToggle {
                 self.likeImage.fadeOut(completion: { (finished: Bool) -> Void in
                     self.likeImage.fadeIn(completion: { (finished: Bool) -> Void in
@@ -393,6 +412,10 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
     
     
     @IBAction func like(sender: AnyObject) {
+        if data == nil {
+            return
+        }
+        
         if !likeToggle {
             self.likeImage.fadeOut(completion: { (finished: Bool) -> Void in
                 self.likeImage.fadeIn(completion: { (finished: Bool) -> Void in
@@ -434,6 +457,10 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
     }
     
     func userViewTap() {
+        if data == nil {
+            return
+        }
+        
         let vc = UserNativeViewController()
         vc.userEmail = data["email"].stringValue
         self.postImage.enterBackground()
@@ -443,6 +470,10 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
     }
     
     func profileTap() {
+        if data == nil {
+            return
+        }
+        
         let vc = UserNativeViewController()
         vc.userEmail = data["email"].stringValue
         
@@ -454,6 +485,9 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
     
     var clickCheckCom = false
     @IBAction func comment(sender: AnyObject) {
+        if data == nil {
+            return
+        }
         if clickCheckCom {
             return
         }
@@ -466,7 +500,7 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
         comment.my_id = self.email
         comment.post_id = self.data["post_id"].stringValue
         comment.postEmail = self.data["email"].stringValue
-        self.navigationController?.navigationBarHidden = false
+//        self.navigationController?.navigationBarHidden = false
         self.appdelegate.testNavi.pushViewController(comment, animated: true)
         self.appdelegate.main.view.hidden = true
         self.appdelegate.tabbar.view.hidden = true
@@ -475,6 +509,9 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
     }
     
     func lastcom_comment(){
+        if data == nil {
+            return
+        }
         if clickCheckCom {
             return
         }
@@ -486,7 +523,7 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
         comment.my_id = self.email
         comment.post_id = self.data["post_id"].stringValue
         comment.postEmail = self.data["email"].stringValue
-        self.navigationController?.navigationBarHidden = false
+//        self.navigationController?.navigationBarHidden = false
         self.appdelegate.testNavi.pushViewController(comment, animated: true)
         self.appdelegate.main.view.hidden = true
         self.appdelegate.tabbar.view.hidden = true
@@ -495,6 +532,9 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
     
     
     @IBAction func share(sender: AnyObject) {
+        if data == nil {
+            return
+        }
         let count = self.appdelegate.testNavi.viewControllers.count - 1
         let share = self.storyboard!.instantiateViewControllerWithIdentifier("ShareViewController")as! ShareViewController
         share.post_id = data["post_id"].stringValue
@@ -509,6 +549,9 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
     }
     
     @IBAction func more(sender: AnyObject) {
+        if data == nil {
+            return
+        }
         if self.appdelegate.email == data["email"].stringValue {
             let count = self.appdelegate.testNavi.viewControllers.count - 1
             let moreme = self.storyboard!.instantiateViewControllerWithIdentifier("MoreMeViewController")as! MoreMeViewController
@@ -532,6 +575,9 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
     }
     
     @IBAction func likeList(sender: AnyObject) {
+        if data == nil {
+            return
+        }
         self.postImage.enterBackground()
         UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
         
@@ -543,6 +589,9 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
     }
     
     @IBAction func commentAgain(sender: AnyObject) {
+        if data == nil {
+            return
+        }
         comment(sender)
     }
     

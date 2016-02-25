@@ -58,13 +58,15 @@ class CommentCell: UITableViewCell {
     
     //이미지 댓글 관련
     var imageCom : UIImage!
-    var imageComView : UIImageView! = UIImageView()
+//    var imageComView : UIImageView! = UIImageView()
     var urlString : String!
     var imageData : NSData!
-    @IBOutlet weak var likeCountSpace: NSLayoutConstraint!
+//    @IBOutlet weak var likeCountSpace: NSLayoutConstraint!
     var bodyHeight : CGFloat!
     var urlState = false
     var isFirst = true
+    @IBOutlet weak var imageComView: UIImageView!
+    @IBOutlet weak var imageComHeight: NSLayoutConstraint!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -90,13 +92,12 @@ class CommentCell: UITableViewCell {
         // cell이 재사용될때 open되있을수 있으므로 close
         super.prepareForReuse()
         self.resetConstToZero(false, notifyDelegateDidClose: false)
-        self.imageComView = nil
+        self.imageComHeight.constant = 0
         self.height = 93
     }
     
     
     func setBody(){
-        bodyLabel.backgroundColor = UIColor.redColor()
         if data["url"].string == "" {
             urlState = false
             print("이미지댓글 아니야",urlState)
@@ -104,7 +105,7 @@ class CommentCell: UITableViewCell {
         }else {
             urlString = data["url"].stringValue
             urlState = true
-            self.imageComView = UIImageView()
+//            self.imageComView = UIImageView()
         }
         bodyLabel.putText(data["body"].string!,url: urlString)
         bodyLabel.textContainer.lineBreakMode = NSLineBreakMode.ByWordWrapping
@@ -129,10 +130,10 @@ class CommentCell: UITableViewCell {
                 let width = self.upperContentView.frame.size.width - 56 - 10
                 let height = width/3*4
                 self.bodyHeight = bodyLabel.frame.size.height + bodyLabel.frame.origin.y
-                upperContentView.addSubview(imageComView)
+//                upperContentView.addSubview(imageComView)
                 imageComView.frame = CGRectMake(bodyLabel.frame.origin.x, bodyHeight, width, height)
                 self.height = 109 + (bodyLabel.frame.size.height - 60) + imageComView.frame.size.height + 10
-                
+                self.imageComHeight.constant = height
             }
             isFirst = false
         }
@@ -290,8 +291,9 @@ class CommentCell: UITableViewCell {
                     print("posY",posY," height ",self.bodyHeight," y ",self.bodyLabel.frame.origin.y)
                     self.imageComView.frame = CGRectMake(self.bodyLabel.frame.origin.x, posY, imagewidth, imageHeight)
                     self.imageComView.frame = CGRectMake(self.bodyLabel.frame.origin.x, posY, imagewidth, imageHeight)
-                    print("likeCountSpace : ",self.likeCountSpace.constant)
+//                    print("likeCountSpace : ",self.likeCountSpace.constant)
                     self.height = 109 + (self.bodyLabel.frame.size.height - 60) + self.imageComView.frame.size.height + 10
+                    self.imageComHeight.constant = imageHeight
                     print("body Label Height : ",self.bodyLabel.frame.size.height)
                     print("image    height      ",self.height)
                     print(self.imageComView.frame)
@@ -305,39 +307,8 @@ class CommentCell: UITableViewCell {
                 }
                 completionHandler(image: image!)
                 self.isImageFirst = false
+                self.upperContentView.bringSubviewToFront(self.imageComView)
             })
-            
-            
-            
-//            if self.imageData == nil {
-//                let request : NSURLRequest = NSURLRequest(URL: imageURL!)
-//                let mainQueue = NSOperationQueue.mainQueue()
-//                NSURLConnection.sendAsynchronousRequest(request, queue: mainQueue, completionHandler: { (response, data, error) -> Void in
-//                    
-//                    if error == nil {
-//                        self.imageData = data
-//                        
-////                        let image = UIImage.animatedImageWithAnimatedGIFData(data!)
-//                    }else {
-//                        print("image comment error  :  ",error)
-//                    }
-//                })
-//            }else {
-//                self.imageComView.image = UIImage.animatedImageWithAnimatedGIFData(self.imageData)
-//                self.height = 109 + (self.bodyLabel.frame.size.height - 60) + self.imageComView.frame.size.height + 10
-//                self.comment.height[self.index] = self.height
-//                
-//                
-//                self.upperContentView.bringSubviewToFront(self.likeCountLabel)
-////                print("likeCountSpace : ",self.likeCountSpace.constant)
-////                print("bodyLabel Frame",self.bodyLabel.frame)
-////                print("imageComView Frame",self.imageComView.frame)
-//                print("bodyHeight : ",self.bodyHeight)
-//                print("\(self.index)  height : ",self.height)
-////                print("upperContentView frame : ",self.upperContentView.frame)
-//                
-//            }
-            
         }
     }
     
@@ -483,6 +454,8 @@ class CommentCell: UITableViewCell {
             
         }
         
+        
+        
     }
 
     @IBAction func like(sender: AnyObject) {
@@ -491,36 +464,37 @@ class CommentCell: UITableViewCell {
         if self.data["like_yn"].string! == "Y" {
             self.appdelegate.doIt(303, message: message, callback: { (readData) -> () in
                 if readData["msg"].string! == "success" {
-                    self.count--
-                    self.like_yn = "N"
-                        self.likeButton.setTitle("\(self.appdelegate.ment["like"].stringValue)", forState: UIControlState.Normal)
-                    if self.count > 0 {
-                        self.heartImage.hidden = false
-                        self.likeCountLabel.hidden = false
-                    }else {
-                        self.heartImage.hidden = true
-                        self.likeCountLabel.hidden = true
-                    }
-                    self.likeCountLabel.text = String(self.count)
-                    self.data["like_yn"].string = self.like_yn
-                    self.data["like"].int = self.count
-                    self.comment.dataArray[self.index] = self.data
+                    
                 }
             })
+            self.count--
+            self.like_yn = "N"
+            self.likeButton.setTitle("\(self.appdelegate.ment["like"].stringValue)", forState: UIControlState.Normal)
+            if self.count > 0 {
+                self.heartImage.hidden = false
+                self.likeCountLabel.hidden = false
+            }else {
+                self.heartImage.hidden = true
+                self.likeCountLabel.hidden = true
+            }
+            self.likeCountLabel.text = String(self.count)
+            self.data["like_yn"].string = self.like_yn
+            self.data["like"].int = self.count
+            self.comment.dataArray[self.index] = self.data
         }else {
             self.appdelegate.doIt(302, message: message, callback: { (readData) -> () in
                 if readData["msg"].string! == "success" {
-                    self.count++
-                    self.like_yn = "Y"
-                    self.likeButton.setTitle("\(self.appdelegate.ment["like_cancel"].stringValue)", forState: UIControlState.Normal)
-                    self.heartImage.hidden = false
-                    self.likeCountLabel.hidden = false
-                    self.likeCountLabel.text = String(self.count)
-                    self.data["like_yn"].string = self.like_yn
-                    self.data["like"].int = self.count
-                    self.comment.dataArray[self.index] = self.data
                 }
             })
+            self.count++
+            self.like_yn = "Y"
+            self.likeButton.setTitle("\(self.appdelegate.ment["like_cancel"].stringValue)", forState: UIControlState.Normal)
+            self.heartImage.hidden = false
+            self.likeCountLabel.hidden = false
+            self.likeCountLabel.text = String(self.count)
+            self.data["like_yn"].string = self.like_yn
+            self.data["like"].int = self.count
+            self.comment.dataArray[self.index] = self.data
         }
         
         
@@ -738,6 +712,7 @@ class CommentCell: UITableViewCell {
         {
             self.delegate?.secondBUttonTouched(self.writType, comType: self.comType,data: self.data,index: self.cellIndex)
         }
+        resetConstToZero(true, notifyDelegateDidClose: true)
     }
     
     override func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
