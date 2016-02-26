@@ -277,7 +277,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
         
         self.view.addSubview(rangeSlider)
         rangeSlider.addTarget(self, action: "rangeSliderValueChanged:", forControlEvents: .ValueChanged)
-        rangeSlider.frame = CGRect(x: collectionView.frame.origin.x, y: collectionView.frame.origin.y + collectionView.frame.size.height + 5,
+        rangeSlider.frame = CGRect(x: collectionView.frame.origin.x + 10, y: collectionView.frame.origin.y + collectionView.frame.size.height + 20,
             width: collectionView.frame.size.width, height: 20)
         
         var colorindex = 0
@@ -1446,7 +1446,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     @IBAction func actEditor(sender: UIButton) {
         //        //print("에디터 오픈")
         self.collectionHei.constant = 70
-        self.collectionSpace.constant = 70
+        self.collectionSpace.constant = 40
         
         self.collectionView.hidden = false
         self.editplus.hidden = false

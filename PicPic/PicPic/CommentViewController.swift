@@ -166,15 +166,15 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
 //            self.navigationController?.navigationBarHidden = false
 //        }
         
-//        if a.type == "post" {
-//            let post = self.navigationController?.viewControllers[count]as! PostPageViewController
-//            post.postImage.enterForeground()
-//            post.setCommentCount(self.dataArray.count)
-//        }
+        if a.type == "post" {
+            let post = self.navigationController?.viewControllers[count]as! PostPageViewController
+            post.postImage.enterForeground()
+            post.setCommentCount(self.dataArray.count)
+        }
         self.navigationController?.popViewControllerAnimated(true)
-//        if a.type == "content" {
-//            self.appdelegate.tabbar.view.hidden = false
-//        }
+        if a.type == "content" {
+            self.appdelegate.tabbar.view.hidden = false
+        }
         
 //        self.appdelegate.main.view.hidden = false
     }

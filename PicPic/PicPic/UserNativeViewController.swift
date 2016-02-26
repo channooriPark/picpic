@@ -550,6 +550,23 @@ class UserNativeViewController: SubViewController, UICollectionViewDelegate, UIC
     }
     
     @IBAction func backButtonTouched() {
+        var count = (self.navigationController?.viewControllers.count)!-2
+        if count < 0 {
+            count = 0
+        }
+        //        print(count)
+        let a = self.navigationController?.viewControllers[count] as! SubViewController
+        
+        if a.type == "post" {
+            let post = self.navigationController?.viewControllers[count]as! PostPageViewController
+            post.postImage.enterForeground()
+        }
+        
+        if a.type == "tag" || a.type == "post" || a.type == "user" || a.type == "search"{
+            self.navigationController?.navigationBarHidden = true
+        }else {
+            self.navigationController?.navigationBarHidden = false
+        }
         self.navigationController?.popViewControllerAnimated(true)
     }
     
@@ -608,7 +625,7 @@ class UserNativeViewController: SubViewController, UICollectionViewDelegate, UIC
     {
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let fl = FollowNativeViewController()
-        fl.type = .Like
+        fl.ftype = .Like
         fl.email = appdelegate.email
         fl.tagId = self.postInfos[indexPath.item]["post_id"] as! String
         

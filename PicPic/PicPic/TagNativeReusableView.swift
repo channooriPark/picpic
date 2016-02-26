@@ -99,7 +99,7 @@ class TagNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
     @IBAction func followerListTouched() {
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let fl = FollowNativeViewController()
-        fl.type = .TagFollower
+        fl.ftype = .TagFollower
         fl.email = appdelegate.email
         fl.tagId = self.tagId
         

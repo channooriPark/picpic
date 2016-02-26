@@ -206,6 +206,8 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
                             self.view.updateConstraints()
                             print("body frame   ",self.body.frame.origin.y)
 //                        })
+                        
+                        self.postImage.sd_setImageWithURL(NSURL(string: self.imageURL.thumnail(readData["url"].stringValue)))
                     })
                     
                     
@@ -582,7 +584,7 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
         UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
         
         let like = FollowNativeViewController()
-        like.type = .Like
+        like.ftype = .Like
         like.email = self.email
         like.tagId = self.data["post_id"].stringValue
         self.navigationController?.pushViewController(like, animated: true)

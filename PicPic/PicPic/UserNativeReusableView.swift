@@ -111,7 +111,7 @@ class UserNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
     @IBAction func followerListTouched() {
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let fl = FollowNativeViewController()
-        fl.type = .Follower
+        fl.ftype = .Follower
         fl.email = appdelegate.email
         fl.tagId = self.email
         
@@ -120,7 +120,7 @@ class UserNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
     @IBAction func followingListTouched() {
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let fl = FollowNativeViewController()
-        fl.type = .Following
+        fl.ftype = .Following
         fl.email = appdelegate.email
         fl.tagId = self.email
         

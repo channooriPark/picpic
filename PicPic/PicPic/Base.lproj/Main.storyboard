@@ -3323,7 +3323,7 @@
                             <constraint firstItem="DsY-c0-YNT" firstAttribute="leading" secondItem="SdH-2H-JQp" secondAttribute="leadingMargin" constant="-11" id="PDG-BV-bWo"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="4C202EDF-3FE7-435B-B1D1-80A7A573F633" id="QqF-Li-2ct"/>
+                    <tabBarItem key="tabBarItem" title="" image="5EED04B4-5A4D-4E62-B7AD-271FF949BEE9" id="QqF-Li-2ct"/>
                     <navigationItem key="navigationItem" id="0aK-XR-PxR"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
@@ -7508,7 +7508,7 @@
                             <constraint firstItem="x9I-39-yvM" firstAttribute="leading" secondItem="Y3S-o4-VFB" secondAttribute="leadingMargin" constant="-11" id="Yxw-LI-fvC"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="373C9B7A-53D0-4DF8-960D-DDB840C99C5B" id="urB-TV-Wsz"/>
+                    <tabBarItem key="tabBarItem" title="" image="918CF230-FBDC-4355-A0E0-81E1F2267965" id="urB-TV-Wsz"/>
                     <navigationItem key="navigationItem" id="jnl-Uw-H5F"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
@@ -9634,7 +9634,7 @@
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="NZS-fy-Ajk">
-                                <rect key="frame" x="0.0" y="320" width="320" height="60"/>
+                                <rect key="frame" x="0.0" y="348" width="320" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="320" id="Ffc-fh-vhC"/>
                                     <constraint firstAttribute="height" constant="60" id="bZE-mY-mcv"/>
@@ -9938,7 +9938,7 @@
                             <constraint firstItem="ZxX-JQ-fbK" firstAttribute="top" secondItem="isJ-5C-alK" secondAttribute="top" id="cBI-dE-JrR"/>
                             <constraint firstItem="ReW-EV-yic" firstAttribute="centerY" secondItem="XBZ-4N-vl6" secondAttribute="centerY" id="dvU-AV-ccj"/>
                             <constraint firstItem="h85-zp-Qbb" firstAttribute="trailing" secondItem="NZS-fy-Ajk" secondAttribute="trailing" id="eqr-mU-qxo"/>
-                            <constraint firstItem="isJ-5C-alK" firstAttribute="top" secondItem="NZS-fy-Ajk" secondAttribute="bottom" constant="138" id="euI-a9-gR3"/>
+                            <constraint firstItem="isJ-5C-alK" firstAttribute="top" secondItem="NZS-fy-Ajk" secondAttribute="bottom" constant="110" id="euI-a9-gR3"/>
                             <constraint firstItem="3lK-tv-YBI" firstAttribute="centerX" secondItem="vDd-Ob-wHi" secondAttribute="centerX" id="i7i-Mf-IOw"/>
                             <constraint firstItem="isJ-5C-alK" firstAttribute="leading" secondItem="vDd-Ob-wHi" secondAttribute="leading" id="kF4-nM-wOf"/>
                             <constraint firstItem="h85-zp-Qbb" firstAttribute="bottom" secondItem="8LO-Wf-S0a" secondAttribute="bottom" id="kgY-Sv-MlX"/>
@@ -10157,7 +10157,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="373C9B7A-53D0-4DF8-960D-DDB840C99C5B" width="20" height="25">
+        <image name="5EED04B4-5A4D-4E62-B7AD-271FF949BEE9" width="20" height="25">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -10241,7 +10241,7 @@ AKcAqQCrAK0AsgC1ALcAuQC7AL0AwgDZANsA3RFPEVQRXxFoEXsRfxGKEZMRmBGgEaMRqBG3EbsRwhHK
 EdcR3BHeEeAR5RHtEfAR9RH9EgASEhIVEhoAAAAAAAACAQAAAAAAAABBAAAAAAAAAAAAAAAAAAASHA
 </mutableData>
         </image>
-        <image name="4C202EDF-3FE7-435B-B1D1-80A7A573F633" width="20" height="25">
+        <image name="918CF230-FBDC-4355-A0E0-81E1F2267965" width="20" height="25">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

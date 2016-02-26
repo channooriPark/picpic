@@ -504,7 +504,7 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
     {
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let fl = FollowNativeViewController()
-        fl.type = .Like
+        fl.ftype = .Like
         fl.email = appdelegate.email
         fl.tagId = self.postInfos[indexPath.item]["post_id"] as! String
         

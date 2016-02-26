@@ -14,11 +14,11 @@ enum FollowType
     case Follower, Following, Like, TagFollower
 }
 
-class FollowNativeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FollowerViewCellProtocol {
+class FollowNativeViewController: SubViewController, UITableViewDelegate, UITableViewDataSource, FollowerViewCellProtocol {
     
     var email: String!
     var tagId: String!
-    var type: FollowType!
+    var ftype: FollowType!
     var datas: Array<[String: String]> = []
     var currentPage = "1"
     var _hud: MBProgressHUD = MBProgressHUD()
@@ -27,14 +27,14 @@ class FollowNativeViewController: UIViewController, UITableViewDelegate, UITable
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
+        self.type = "follow"
         self.navigationController?.navigationBarHidden = false
         //좋아하는사람 팔로우한사람 팔로잉한사람
-        if self.type == .Like
+        if self.ftype == .Like
         {
             self.navigationItem.title = self.appdelegate.ment["timeline_like_user"].stringValue
         }
-        else if self.type == .Following
+        else if self.ftype == .Following
         {
             self.navigationItem.title = self.appdelegate.ment["follow_he_list"].stringValue
         }
@@ -73,7 +73,7 @@ class FollowNativeViewController: UIViewController, UITableViewDelegate, UITable
     func refresh()
     {
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        switch self.type!
+        switch self.ftype!
         {
         case .Follower:
             let message = JSON(["my_id" : self.email, "user_id" : self.tagId, "page" : "1"])
@@ -124,7 +124,7 @@ class FollowNativeViewController: UIViewController, UITableViewDelegate, UITable
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let newPage = Int(self.currentPage)! + 1
         
-        switch self.type!
+        switch self.ftype!
         {
         case .Follower:
             let message = JSON(["my_id" : self.email, "user_id" : self.tagId, "page" : "\(newPage)"])
@@ -241,7 +241,7 @@ class FollowNativeViewController: UIViewController, UITableViewDelegate, UITable
         cell.delegate = self
         cell.cellIndexPath = indexPath
         
-        if self.type == .Like
+        if self.ftype == .Like
         {
             cell.profileImageView.sd_setImageWithURL(NSURL(string:"http://gif.picpic.world/" + dic["profile_picture"]!)!)
         }
