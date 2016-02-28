@@ -56,6 +56,10 @@ class TagNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
         let tap = UITapGestureRecognizer()
         tap.addTarget(self, action: "founderLabelTouched")
         self.tagFounderLabel.addGestureRecognizer(tap)
+        
+        self.searchBar.text = " "
+        let textField = searchBar.valueForKey("_searchField") as! UITextField
+        textField.clearButtonMode = .Never
     }
     
     func founderLabelTouched()
@@ -166,7 +170,14 @@ class TagNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         let str = self.searchBar.text ?? ""
-        self.parent.refreshWithoutProfileReload(self.parent.currentRange, str: str)
+        self.parent.refreshWithoutProfileReload(self.parent.currentRange, str: str.stringByReplacingOccurrencesOfString(" ", withString: ""))
     }
     
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText == "" || searchText == " "
+        {
+            searchBar.text = " "
+            (searchBar.valueForKey("_searchField") as! UITextField).clearButtonMode = .Never
+        }
+    }
 }

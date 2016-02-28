@@ -199,8 +199,12 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
         if !self.isWaterFall
         {
             let point = gesture.locationInView(self.collectionView)
-            let indexPath = self.collectionView.indexPathForItemAtPoint(point)
-            let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! TagListCell
+            guard let indexPath = self.collectionView.indexPathForItemAtPoint(point) else
+            {
+                return
+            }
+            
+            let cell = self.collectionView.cellForItemAtIndexPath(indexPath) as! TagListCell
             
             cell.likeButtonTouched()
         }
@@ -299,10 +303,15 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
             })
             
             label.handleMentionTap({(string) in
-                let vc = UserNativeViewController()
-                vc.userEmail = string.substringFromIndex(string.startIndex.advancedBy(1))
-                
-                self.navigationController?.pushViewController(vc, animated: true)
+                let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                let msg = JSON(["my_id" : appdelegate.email, "user_id" : string.substringFromIndex(string.startIndex.advancedBy(1))])
+                appdelegate.doIt(518, message: msg, callback: {(json) in
+                    let vc = UserNativeViewController()
+                    
+                    vc.userEmail = json["email"].stringValue
+                    
+                    self.navigationController?.pushViewController(vc, animated: true)
+                })
             })
             
             label.gestureRecognizers?.first?.cancelsTouchesInView = true

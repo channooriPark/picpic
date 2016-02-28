@@ -294,8 +294,11 @@ class UserNativeViewController: SubViewController, UICollectionViewDelegate, UIC
         if !self.isWaterFall
         {
             let point = gesture.locationInView(self.collectionView)
-            let indexPath = self.collectionView.indexPathForItemAtPoint(point)
-            let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! TagListCell
+            guard let indexPath = self.collectionView.indexPathForItemAtPoint(point) else
+            {
+                return
+            }
+            let cell = self.collectionView.cellForItemAtIndexPath(indexPath) as! TagListCell
             
             cell.likeButtonTouched()
         }
@@ -394,10 +397,15 @@ class UserNativeViewController: SubViewController, UICollectionViewDelegate, UIC
             })
             
             label.handleMentionTap({(string) in
-                let vc = UserNativeViewController()
-                vc.userEmail = string.substringFromIndex(string.startIndex.advancedBy(1))
-                
-                self.navigationController?.pushViewController(vc, animated: true)
+                let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                let msg = JSON(["my_id" : appdelegate.email, "user_id" : string.substringFromIndex(string.startIndex.advancedBy(1))])
+                appdelegate.doIt(518, message: msg, callback: {(json) in
+                    let vc = UserNativeViewController()
+                    
+                    vc.userEmail = json["email"].stringValue
+                    
+                    self.navigationController?.pushViewController(vc, animated: true)
+                })
             })
             
             label.frame = CGRectMake(0, 0, cell.bodyView.frame.width, CGFloat(20 * self.rowsNeededForText(label.text!)))
@@ -550,23 +558,7 @@ class UserNativeViewController: SubViewController, UICollectionViewDelegate, UIC
     }
     
     @IBAction func backButtonTouched() {
-        var count = (self.navigationController?.viewControllers.count)!-2
-        if count < 0 {
-            count = 0
-        }
-        //        print(count)
-        let a = self.navigationController?.viewControllers[count] as! SubViewController
         
-        if a.type == "post" {
-            let post = self.navigationController?.viewControllers[count]as! PostPageViewController
-            post.postImage.enterForeground()
-        }
-        
-        if a.type == "tag" || a.type == "post" || a.type == "user" || a.type == "search"{
-            self.navigationController?.navigationBarHidden = true
-        }else {
-            self.navigationController?.navigationBarHidden = false
-        }
         self.navigationController?.popViewControllerAnimated(true)
     }
     
