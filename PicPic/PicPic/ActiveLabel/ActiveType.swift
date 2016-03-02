@@ -43,7 +43,7 @@ struct ActiveBuilder {
         {
             if chunk.hasPrefix("@")
             {
-                elements.append((nsstring.rangeOfString(chunk), ActiveElement.Hashtag(chunk)))
+                elements.append((nsstring.rangeOfString(chunk), ActiveElement.Mention(chunk)))
                 //태그명에 같은단어가들어갈경우 앞의 range 반환하는문제있음
             }
         }

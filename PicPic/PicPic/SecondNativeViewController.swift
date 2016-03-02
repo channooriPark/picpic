@@ -221,8 +221,11 @@ class SecondNativeViewController: UIViewController, UICollectionViewDataSource, 
         if self.categoryTabEnableView.backgroundColor != self.enabledColor
         {
             let point = gesture.locationInView(self.collectionView)
-            let indexPath = self.collectionView.indexPathForItemAtPoint(point)
-            let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! SecondCell
+            guard let indexPath = self.collectionView.indexPathForItemAtPoint(point) else
+            {
+                return
+            }
+            let cell = self.collectionView.cellForItemAtIndexPath(indexPath) as! SecondCell
             
             cell.likeButtonTouched()
         }

@@ -2375,7 +2375,7 @@
 				TargetAttributes = {
 					E44580381BE3882000AF186C = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = SEDPMQ93PW;
+						DevelopmentTeam = ANM7DT8PCR;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
 								enabled = 0;
@@ -3130,7 +3130,7 @@
 					"-all_load",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = picpic.sikkle;
+				PRODUCT_BUNDLE_IDENTIFIER = picpic.sikkle1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PicPic/PicPic-Bridging-Header.h";
@@ -3161,7 +3161,7 @@
 					"-all_load",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = picpic.sikkle;
+				PRODUCT_BUNDLE_IDENTIFIER = picpic.sikkle1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "PicPic/PicPic-Bridging-Header.h";

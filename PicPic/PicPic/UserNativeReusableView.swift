@@ -56,6 +56,10 @@ class UserNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
         searchBar.enablesReturnKeyAutomatically = false
         self.bringSubviewToFront(self.leftButton)
         self.bringSubviewToFront(self.rightButton)
+        
+        self.searchBar.text = " "
+        let textField = searchBar.valueForKey("_searchField") as! UITextField
+        textField.clearButtonMode = .Never
     }
     
     
@@ -185,6 +189,14 @@ class UserNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         let str = self.searchBar.text ?? ""
-        self.parent.refreshWithoutProfileReload(self.parent.isRepic, str: str)
+        self.parent.refreshWithoutProfileReload(self.parent.isRepic, str: str.stringByReplacingOccurrencesOfString(" ", withString: ""))
+    }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText == "" || searchText == " "
+        {
+            searchBar.text = " "
+            (searchBar.valueForKey("_searchField") as! UITextField).clearButtonMode = .Never
+        }
     }
 }
