@@ -52,6 +52,7 @@ class ContentViewController: SubViewController {
         appdelegate.second.view.frame = visibleFrame
         appdelegate.myfeed.view.frame = CGRectMake(0, 0, self.view.frame.width, appdelegate.tabbar.view.frame.origin.y)
         
+        appdelegate.second.parent = self
         
         
         print("contentView Controller")

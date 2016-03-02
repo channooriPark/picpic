@@ -21,6 +21,7 @@ class SecondNativeViewController: UIViewController, UICollectionViewDataSource, 
     @IBOutlet weak var collectionView: UICollectionView!
     let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var data : [Dictionary<String,UIImage?>] = [["":UIImage()]]
+    var parent : ContentViewController!
 
     let enabledColor = Config.getInstance().color //UIColor(red: 148/255, green: 158/255, blue: 241/255, alpha: 1.0)
     var _hud: MBProgressHUD = MBProgressHUD()
@@ -526,8 +527,8 @@ class SecondNativeViewController: UIViewController, UICollectionViewDataSource, 
             share.url = json.dictionaryObject!["url"] as! String
             share.repicState = (json.dictionaryObject!["repic_yn"] as! String == "N") ? false : true
             
-            self.addChildViewController(share)
-            self.view.addSubview(share.view)
+            self.parent.addChildViewController(share)
+            self.parent.view.addSubview(share.view)
         })
     }
     func moreButtonTouched(indexPath: NSIndexPath)

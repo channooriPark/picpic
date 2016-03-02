@@ -39,6 +39,7 @@ class ShareViewController: UIViewController,UIAlertViewDelegate{
     @IBOutlet weak var picterestButton: UIButton!
     @IBOutlet weak var tumblrButton: UIButton!
     @IBOutlet weak var shareView: UIView!
+    var _hud: MBProgressHUD = MBProgressHUD()
     
     var repicState = false
     
@@ -46,6 +47,10 @@ class ShareViewController: UIViewController,UIAlertViewDelegate{
     @IBOutlet weak var backView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        _hud.mode = MBProgressHUDModeIndeterminate
+        _hud.center = self.view.center
+        self.view.addSubview(_hud)
+        _hud.hide(false)
         
         self.shareView.layer.cornerRadius = 3
         self.shareView.layer.masksToBounds = true
@@ -100,47 +105,103 @@ class ShareViewController: UIViewController,UIAlertViewDelegate{
     
     @IBAction func down(sender: AnyObject) {
         
-        var path = imageURL.gifImageUrl(url)
-
-        log.log("\(path)")
-        PHPhotoLibrary.requestAuthorization({(status:PHAuthorizationStatus) in
-            switch status{
-            case .Authorized:
-                dispatch_async(dispatch_get_main_queue(), {
-                    print("Authorized")
-                    self.loading(true)
-                    print("fail")
-                    let image = NSData(contentsOfURL: NSURL(string:path)!)
-                    
-                    ALAssetsLibrary().writeImageDataToSavedPhotosAlbum(image, metadata: nil, completionBlock: { (assetURL: NSURL!, error: NSError!) -> Void in
-                        print(assetURL)
-                        if error == nil {
-                            self.loading(false)
-                            let alert = UIAlertView(title: "", message: self.appdelegate.ment["download_completed"].stringValue, delegate: nil, cancelButtonTitle: self.appdelegate.ment["popup_confirm"].stringValue)
-                            alert.show()
-                        }else {
-                            self.loading(false)
-                            let alert = UIAlertView(title: "", message: self.appdelegate.ment["download_fail"].stringValue, delegate: nil, cancelButtonTitle: self.appdelegate.ment["popup_confirm"].stringValue)
-                            alert.show()
+        self._hud.show(true)
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0)) { () -> Void in
+            var path = self.imageURL.gifImageUrl(self.url)
+            let fileManager = NSFileManager.defaultManager()
+            let data = NSData(contentsOfURL: NSURL(string: path)!)
+            let formatter : NSDateFormatter = NSDateFormatter()
+            formatter.dateFormat = "yyyyMMddHHmmss"
+            let date = NSDate()
+            let currentDate = formatter.stringFromDate(date)
+            let documentDirectory = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
+            let gifsFolder = "\(documentDirectory)/gifs"
+            let gifName = currentDate + ".gif"
+            path = String(format: "%@/%@", arguments: [gifsFolder, gifName])
+            fileManager.createFileAtPath(path, contents: data, attributes: nil)
+            print(path)
+            var photosAsset: PHFetchResult!
+            var collection: PHAssetCollection!
+            var assetCollectionPlaceholder: PHObjectPlaceholder!
+            
+            //Make sure we have custom album for this app if haven't already
+            let fetchOptions = PHFetchOptions()
+            fetchOptions.predicate = NSPredicate(format: "title = %@", "PicPic")
+            collection = PHAssetCollection.fetchAssetCollectionsWithType(.Album, subtype: .Any, options: fetchOptions).firstObject as? PHAssetCollection
+            
+            //if we don't have a special album for this app yet then make one
+            if collection == nil {
+                PHPhotoLibrary.sharedPhotoLibrary().performChanges({
+                    let createAlbumRequest : PHAssetCollectionChangeRequest = PHAssetCollectionChangeRequest.creationRequestForAssetCollectionWithTitle("PicPic")
+                    assetCollectionPlaceholder = createAlbumRequest.placeholderForCreatedAssetCollection
+                    }, completionHandler: { success, error in
+                        if success {
+                            let collectionFetchResult = PHAssetCollection.fetchAssetCollectionsWithLocalIdentifiers([assetCollectionPlaceholder.localIdentifier], options: nil)
+                            print(collectionFetchResult)
+                            collection = collectionFetchResult.firstObject as! PHAssetCollection
                         }
-                        
-                    })
                 })
-                break
-            case .Denied:
-                dispatch_async(dispatch_get_main_queue(), {
-                    print("Denied")
-                    let alert = UIAlertView(title: "", message: self.appdelegate.ment["access_error"].stringValue, delegate: nil, cancelButtonTitle: self.appdelegate.ment["popup_confirm"].stringValue)
-                    alert.show()
-                })
-                break
-            default:
-                dispatch_async(dispatch_get_main_queue(), {
-                    print("Default")
-                })
-                break
             }
-        })
+            
+            PHPhotoLibrary.sharedPhotoLibrary().performChanges({
+                let assetRequest = PHAssetChangeRequest.creationRequestForAssetFromImageAtFileURL(NSURL(string: path)!)
+                print(assetRequest)
+                let assetPlaceholder = assetRequest!.placeholderForCreatedAsset
+                photosAsset = PHAsset.fetchAssetsInAssetCollection(collection, options: nil)
+                let albumChangeRequest = PHAssetCollectionChangeRequest(forAssetCollection: collection, assets: photosAsset)
+                albumChangeRequest!.addAssets([assetPlaceholder!])
+                }, completionHandler: { success, error in
+                    if success {
+                        print("added video to album")
+                        let alert = UIAlertView(title: "", message: self.appdelegate.ment["download_completed"].stringValue, delegate: nil, cancelButtonTitle: self.appdelegate.ment["popup_confirm"].stringValue)
+                        alert.show()
+                        self._hud.hide(false)
+                    }else if error != nil{
+                        print("handle error since couldn't save video    ",error)
+                        let alert = UIAlertView(title: "", message: self.appdelegate.ment["download_fail"].stringValue, delegate: nil, cancelButtonTitle: self.appdelegate.ment["popup_confirm"].stringValue)
+                        alert.show()
+                        self._hud.hide(false)
+                    }
+            })
+        }
+//        PHPhotoLibrary.requestAuthorization({(status:PHAuthorizationStatus) in
+//            switch status{
+//            case .Authorized:
+//                dispatch_async(dispatch_get_main_queue(), {
+//                    print("Authorized")
+//                    self.loading(true)
+//                    print("fail")
+//                    let image = NSData(contentsOfURL: NSURL(string:path)!)
+//                    
+//                    ALAssetsLibrary().writeImageDataToSavedPhotosAlbum(image, metadata: nil, completionBlock: { (assetURL: NSURL!, error: NSError!) -> Void in
+//                        print(assetURL)
+//                        if error == nil {
+//                            self.loading(false)
+//                            let alert = UIAlertView(title: "", message: self.appdelegate.ment["download_completed"].stringValue, delegate: nil, cancelButtonTitle: self.appdelegate.ment["popup_confirm"].stringValue)
+//                            alert.show()
+//                        }else {
+//                            self.loading(false)
+//                            let alert = UIAlertView(title: "", message: self.appdelegate.ment["download_fail"].stringValue, delegate: nil, cancelButtonTitle: self.appdelegate.ment["popup_confirm"].stringValue)
+//                            alert.show()
+//                        }
+//                        
+//                    })
+//                })
+//                break
+//            case .Denied:
+//                dispatch_async(dispatch_get_main_queue(), {
+//                    print("Denied")
+//                    let alert = UIAlertView(title: "", message: self.appdelegate.ment["access_error"].stringValue, delegate: nil, cancelButtonTitle: self.appdelegate.ment["popup_confirm"].stringValue)
+//                    alert.show()
+//                })
+//                break
+//            default:
+//                dispatch_async(dispatch_get_main_queue(), {
+//                    print("Default")
+//                })
+//                break
+//            }
+//        })
     }
     
     
