@@ -45,7 +45,7 @@ class SettingTableViewController: UITableViewController , UIAlertViewDelegate{
         alarmLabel.text = self.appdelegate.ment["settings_alarm"].stringValue
         socialNetwork.text = self.appdelegate.ment["settings_social"].stringValue
         searchFriend.text = self.appdelegate.ment["settings_find_friend"].stringValue
-        inviteFriend.text = self.appdelegate.ment["settings_find_friend"].stringValue
+        inviteFriend.text = self.appdelegate.ment["settings_invite"].stringValue
         
         
         if self.appdelegate.standardUserDefaults.valueForKey("push")as! Bool == true {

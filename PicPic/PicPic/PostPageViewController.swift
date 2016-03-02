@@ -135,15 +135,17 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
                     self.playCount.text = readData["play_cnt"].stringValue
                     self.postImage.post_id = readData["post_id"].stringValue
                     
-                    let profile = readData["profile_picture"].string!
-                    var url = NSURL(string:  self.imageURL.imageurl(profile))
-                    var data = NSData(contentsOfURL: url!)
-                    self.profileImage.image = UIImage(data: data!)
-                    if readData["last_com"]["profile_picture"].stringValue != "null" {
-                        url = NSURL(string: self.imageURL.imageurl(readData["last_com"]["profile_picture"].stringValue))
-                        data = NSData(contentsOfURL: url!)
-                        self.lastComProfile.image = UIImage(data: data!)
-                    }
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), { () -> Void in
+                        let profile = readData["profile_picture"].string!
+                        var url = NSURL(string:  self.imageURL.imageurl(profile))
+                        var data = NSData(contentsOfURL: url!)
+                        self.profileImage.image = UIImage(data: data!)
+                        if readData["last_com"]["profile_picture"].stringValue != "null" {
+                            url = NSURL(string: self.imageURL.imageurl(readData["last_com"]["profile_picture"].stringValue))
+                            data = NSData(contentsOfURL: url!)
+                            self.lastComProfile.image = UIImage(data: data!)
+                        }
+                    })
                     
                     //width height 값이 nil이면 파일정보가 없거나 파일이 없는것이다
                     if readData["width2"].stringValue != "null" || readData["width2"].stringValue != "" {
@@ -155,8 +157,8 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
                         self.likeImage.frame.origin = CGPoint(x: self.postImage.frame.size.width/2-50, y: self.postImage.frame.size.height/2-42.5 + self.postImage.frame.origin.y)
                         self.view.addSubview(self.likeImage)
                         self.view.bringSubviewToFront(self.likeImage)
-                        print("body frame before1",self.body.frame.origin.y)
-                        self.body.frame.origin.y = self.postImage.frame.size.height + 3
+                        print("body frame before1",self.postImage.frame)
+                        self.body.frame.origin.y = self.postImage.frame.origin.y + self.postImage.frame.size.height + 3
                         self.body.updateConstraints()
                         self.view.updateConstraints()
                     }
@@ -202,7 +204,7 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
 //                            self.likeImage.frame.origin = CGPoint(x: self.postImage.frame.size.width/2-50, y: self.postImage.frame.size.height/2-42.5 + self.postImage.frame.origin.y)
                             self.view.bringSubviewToFront(self.likeImage)
                             print("body frame before",self.body.frame.origin.y)
-                            self.body.frame.origin.y = self.postImage.frame.size.height + 3
+//                            self.body.frame.origin.y = self.postImage.frame.size.height + 3
                             self.view.updateConstraints()
                             print("body frame   ",self.body.frame.origin.y)
 //                        })
@@ -529,6 +531,7 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
         self.appdelegate.testNavi.pushViewController(comment, animated: true)
         self.appdelegate.main.view.hidden = true
         self.appdelegate.tabbar.view.hidden = true
+        self.postImage.enterBackground()
         UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
     }
     

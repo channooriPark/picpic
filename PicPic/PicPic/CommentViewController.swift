@@ -159,13 +159,6 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
             count = 0
         }
         let a = self.navigationController?.viewControllers[count] as! SubViewController
-        
-//        if a.type == "tag" || a.type == "post" || a.type == "user" || a.type == "search"{
-//            self.navigationController?.navigationBarHidden = true
-//        }else {
-//            self.navigationController?.navigationBarHidden = false
-//        }
-        
         if a.type == "post" {
             let post = self.navigationController?.viewControllers[count]as! PostPageViewController
             post.postImage.enterForeground()
@@ -182,8 +175,6 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
     
     func sendData(){
         let message : JSON = ["my_id":self.my_id,"post_id":self.post_id,"page":String(page)]
-        //        let connection = URLConnection(serviceCode: 321, message: message)
-        //        data = connection.connection()
         self.appdelegate.doIt(321, message: message) { (readData) -> () in
             self.getData(readData)
         }
@@ -249,8 +240,8 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
     }
     
     func deleteRow(indexPath:NSIndexPath){
+        print(self.dataArray.count ,"            data ", self.dataArray)
         self.dataArray.removeAtIndex(indexPath.row)
-        //        self.comTableView.reloadData()
         self.comTableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
     }
     
@@ -261,13 +252,12 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
             if let array = json["data"].array {
                 for data in  array{
                     log.log("\(data)")
-                    self.height.append(94)
+                    self.height.append(82)
                     dataArray.insert(data, atIndex: 0)
                 }
             }
         }
         comTableView.reloadData()
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -299,10 +289,12 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         cell.writType = self.writType
         cell.setBody()
         self.height[indexPath.row] = cell.height
+        print("self.height[\(indexPath.row)]",self.height[indexPath.row])
         if self.first {
             if self.dataArray.count-1 == indexPath.row {
                 tableView.reloadData()
                 self.first = false
+                print("cell row",indexPath.row)
             }
         }
         
@@ -436,23 +428,18 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
                                 self.dataArray.removeAll()
                                 self.getData(readData)
                                 self.comTextField.text = ""
+                                if self.imageComView.hidden == false {
+                                    self.imageComView.hidden = true
+                                }
+                                
+                                self.view.endEditing(true)
+                                self.comTextField.endEditing(true)
                             })
                         }
                     })
                 }
             }
         }
-        
-        
-        
-        
-        
-        if self.imageComView.hidden == false {
-            self.imageComView.hidden = true
-        }
-        
-        view.endEditing(true)
-        self.comTextField.endEditing(true)
     }
     
     
@@ -639,6 +626,12 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
                                     self.dataArray.removeAll()
                                     self.getData(readData)
                                     self.comTextField.text = ""
+                                    if self.imageComView.hidden == false {
+                                        self.imageComView.hidden = true
+                                    }
+                                    
+                                    self.view.endEditing(true)
+                                    self.comTextField.endEditing(true)
                                 })
                             }
                         })
@@ -719,23 +712,12 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
             let reply = data["reply_id"].string!
             
             let message : JSON = ["my_id":self.appdelegate.email,"com_id":reply,"post_id":self.post_id,"body":"","com_form":"D","user_tags":""]
-            
-            print("message    ",message)
-            //            let connection = URLConnection(serviceCode: 231, message: message)
-            //            let readData = connection.connection()
             self.appdelegate.doIt(231, message: message, callback: { (readData) -> () in
                 if readData["msg"].string! == "success" {
                     self.deleteRow(index)
                     if self.appdelegate.second.view.hidden == false {
-//                        if self.appdelegate.second.webState == "follow" {
-//                            self.appdelegate.second.following()
-//                        }else if self.appdelegate.second.webState == "all" {
-//                            self.appdelegate.second.all()
-//                        }else if self.appdelegate.second.webState == "category" {
-//                            self.appdelegate.second.category()
-//                        }
+                        self.appdelegate.second.refresh()
                     }
-                    
                 }
             })
             

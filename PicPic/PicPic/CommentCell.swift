@@ -31,7 +31,6 @@ class CommentCell: UITableViewCell {
     var writType : Int = 0
     var comType : Int = 0 // 0이면 내 댓글 1이면 남 댓글
     
-    
     let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var index = 0
     var data : JSON = ["like" : 0,
@@ -67,6 +66,11 @@ class CommentCell: UITableViewCell {
     var isFirst = true
     @IBOutlet weak var imageComView: UIImageView!
     @IBOutlet weak var imageComHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var bodyBottom: NSLayoutConstraint!
+    @IBOutlet weak var likeButtonBottom: NSLayoutConstraint!
+    
+    
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -93,7 +97,7 @@ class CommentCell: UITableViewCell {
         super.prepareForReuse()
         self.resetConstToZero(false, notifyDelegateDidClose: false)
         self.imageComHeight.constant = 0
-        self.height = 93
+        self.height = 82
     }
     
     
@@ -105,37 +109,48 @@ class CommentCell: UITableViewCell {
         }else {
             urlString = data["url"].stringValue
             urlState = true
-//            self.imageComView = UIImageView()
         }
-        bodyLabel.putText(data["body"].string!,url: urlString)
-        bodyLabel.textContainer.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        print(bodyLabel)
-        let fixedWidth = bodyLabel.frame.size.width
-        bodyLabel.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
-        let newSize = bodyLabel.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
-        var newFrame = bodyLabel.frame
-        newFrame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
-        bodyLabel.frame = newFrame;
+//        bodyLabel.putText(data["body"].string!,url: urlString)
+////        bodyLabel.textContainer.lineBreakMode = NSLineBreakMode.ByClipping
+//        print(bodyLabel)
+//        let fixedWidth = bodyLabel.frame.size.width
+//        bodyLabel.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
+//        let newSize = bodyLabel.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
+//        var newFrame = bodyLabel.frame
+//        newFrame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
+//        bodyLabel.frame = newFrame;
+//        bodyLabel.scrollEnabled = false
+//        bodyLabel.sizeToFit()
         
-        bodyLabel.scrollEnabled = false
-        bodyLabel.sizeToFit()
+        
+        self.bodyLabel.scrollEnabled = false
+        self.bodyLabel.putText(data["body"].stringValue,url: urlString)
+        self.bodyLabel.textContainer.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        self.bodyLabel.sizeToFit()
+        let fixedWidth = self.bodyLabel.frame.size.width
+        self.bodyLabel.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
+        let newSize = self.bodyLabel.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
+        var newFrame = self.bodyLabel.frame
+        let content = self.bodyLabel.contentSize
+        newFrame.size = CGSize(width: max(newSize.width, fixedWidth), height: content.height)
+        self.bodyLabel.scrollEnabled = false
+        
         
         
         if isFirst {
             self.bodyHeight = bodyLabel.frame.size.height
             print("setBody bodyHeight    :   ",self.bodyHeight)
-            self.height = 94 + (bodyLabel.frame.size.height - 50)
+            self.height = 82 + (self.bodyHeight - 29)
+            print("self.height : ",self.height, "   ",self.bodyBottom.constant,"   ",self.likeButtonBottom.constant)
             if urlState {
                 print("이미지 댓글 있어",urlState)
                 let width = self.upperContentView.frame.size.width - 56 - 10
                 let height = width/3*4
                 self.bodyHeight = bodyLabel.frame.size.height + bodyLabel.frame.origin.y
-//                upperContentView.addSubview(imageComView)
                 imageComView.frame = CGRectMake(bodyLabel.frame.origin.x, bodyHeight, width, height)
-                self.height = 109 + (bodyLabel.frame.size.height - 60) + imageComView.frame.size.height + 10
+                self.height = 109 + (self.bodyHeight - 29) + imageComView.frame.size.height + 10
                 self.imageComHeight.constant = height
             }
-            isFirst = false
         }
         
         //업로드 시간
@@ -215,6 +230,7 @@ class CommentCell: UITableViewCell {
                 self.comType = 1
             }
         }
+        self.upperContentView.bringSubviewToFront(self.userIDText)
     }
     
     
