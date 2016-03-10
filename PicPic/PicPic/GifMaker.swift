@@ -624,7 +624,7 @@ class GifMaker {
     
     
     
-    func make2(photoDataArr:[[UIImage]], delayTime:Float, gifPath:String, workFolder:String,subtitle:[[MyView]]?,warterMark : Bool,imageCheck : [Int:Int]?, canvas : UIView?,playType : Int,allText:[MyView]?) {
+    func make2(photoDataArr:[[UIImage]], delayTime:Float, gifPath:String, workFolder:String,subtitle:[[MyView]]?,warterMark : Bool,imageCheck : [Int:Int]?, canvas : UIView?,playType : Int,allText:[MyView]?,eraserD : Bool) {
         
         var saveArr = photoDataArr
         var saveArr1 = [UIImage]()
@@ -666,13 +666,13 @@ class GifMaker {
                         //                            ghost_img!.drawInRect(areaSize, blendMode: CGBlendMode.Multiply, alpha: Config.getInstance().ghostAlpha)
                         //                        }
                         
-                        if fileManager.fileExistsAtPath(scratchPath) {
-                            print("scratchPath exist")
-                            let scratch_img = eraserImage
-                            scratch_img.drawInRect(areaSize)
+                        if eraserD {
+                            if fileManager.fileExistsAtPath(scratchPath) {
+                                print("scratchPath exist")
+                                let scratch_img = eraserImage
+                                scratch_img.drawInRect(areaSize)
+                            }
                         }
-                        
-                        
                         var newImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()
                         UIGraphicsEndImageContext()
                         

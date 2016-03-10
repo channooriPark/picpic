@@ -461,7 +461,7 @@ class MyFeedNativeViewController: UIViewController, UICollectionViewDelegate, UI
     @IBAction func moreButtonTouched() {
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let moreother = appdelegate.storyboard.instantiateViewControllerWithIdentifier("MoreOtherViewController")as! MoreOtherViewController
-        moreother.post_id = appdelegate.email
+        moreother.email = appdelegate.email
         
         self.addChildViewController(moreother)
         self.view.addSubview(moreother.view)

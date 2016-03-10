@@ -13,6 +13,7 @@ class MoreOtherViewController: UIViewController {
 
     let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var post_id : String!
+    var email : String!
     
     @IBOutlet weak var blockButton: UIButton!
     @IBOutlet weak var reportButton: UIButton!
@@ -55,26 +56,32 @@ class MoreOtherViewController: UIViewController {
     }
     
     @IBAction func block(sender: AnyObject) {
-        var message : JSON = ["my_id":self.appdelegate.email,"post_id":self.post_id]
-        self.appdelegate.doIt(504, message: message) { (readData) -> () in
-            if readData["msg"].string! == "success" {
-                message = ["my_id":self.appdelegate.email,"user_id":readData["email"].string!]
-                self.appdelegate.doIt(216, message: message, callback: { (readData) -> () in
-                    if readData["msg"].string == "success" {
-                        if self.appdelegate.locale == "ko_KR" {
-                            let alert = UIAlertView(title: "사용자 차단", message: "차단이 완료되었습니다", delegate: nil, cancelButtonTitle: "확인")
-                            alert.show()
-                        }else {
-                            let alert = UIAlertView(title: "User Block", message: "User Blocked", delegate: nil, cancelButtonTitle: "OK")
-                            alert.show()
-                        }
+        let alert = UIAlertController(title: "", message: self.appdelegate.ment["user_block_confirm"].stringValue, preferredStyle: UIAlertControllerStyle.Alert)
+        let ok = UIAlertAction(title: self.appdelegate.ment["popup_confirm"].stringValue, style: UIAlertActionStyle.Default) { (ok) -> Void in
+            var message : JSON = ["my_id":self.appdelegate.email,"user_id":self.email]
+            self.appdelegate.doIt(216, message: message, callback: { (readData) -> () in
+                print("readData : ",readData)
+                if readData["msg"].string == "success" {
+                    if self.appdelegate.locale == "ko_KR" {
+                        let alert = UIAlertView(title: "사용자 차단", message: "차단이 완료되었습니다", delegate: nil, cancelButtonTitle: "확인")
+                        alert.show()
+                    }else {
+                        let alert = UIAlertView(title: "User Block", message: "User Blocked", delegate: nil, cancelButtonTitle: "OK")
+                        alert.show()
                     }
-                })
-                
-            }
+                }
+            })
+            self.appdelegate.moreToggle = false
+            self.view.removeFromSuperview()
         }
-        appdelegate.moreToggle = false
-        self.view.removeFromSuperview()
+        
+        let cancel = UIAlertAction(title: self.appdelegate.ment["popup_cancel"].stringValue, style: UIAlertActionStyle.Default) { (cancel) -> Void in
+            
+        }
+        
+        alert.addAction(ok)
+        alert.addAction(cancel)
+        self.presentViewController(alert, animated: true, completion: nil)
     }
 
     @IBAction func report(sender: AnyObject) {

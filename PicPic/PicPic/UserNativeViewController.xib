@@ -48,6 +48,16 @@
                         <action selector="moreButtonTouched" destination="-1" eventType="touchUpInside" id="0ww-A6-7Xd"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o4N-1c-gaS">
+                    <rect key="frame" x="237" y="40.5" width="34" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="34" id="fk5-bG-quo"/>
+                    </constraints>
+                    <state key="normal" image="icon_my_share"/>
+                    <connections>
+                        <action selector="userShareButtonTouched:" destination="-1" eventType="touchUpInside" id="j3O-Yx-Yma"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -58,13 +68,16 @@
                 <constraint firstItem="JSK-ji-QqK" firstAttribute="leading" secondItem="Zsh-HA-LQj" secondAttribute="trailing" constant="-41" id="ZCx-73-jan"/>
                 <constraint firstItem="Zsh-HA-LQj" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="cUw-Tb-eDH"/>
                 <constraint firstItem="Zsh-HA-LQj" firstAttribute="leading" secondItem="agX-rg-YHd" secondAttribute="trailing" constant="-41" id="ddc-W3-fBV"/>
+                <constraint firstItem="JSK-ji-QqK" firstAttribute="leading" secondItem="o4N-1c-gaS" secondAttribute="trailing" constant="8" symbolic="YES" id="hk2-T3-ZWe"/>
                 <constraint firstItem="Zsh-HA-LQj" firstAttribute="top" secondItem="JSK-ji-QqK" secondAttribute="bottom" constant="-64" id="tLL-bv-1aU"/>
+                <constraint firstItem="o4N-1c-gaS" firstAttribute="baseline" secondItem="JSK-ji-QqK" secondAttribute="baseline" constant="10" id="trJ-OG-oqj"/>
             </constraints>
             <point key="canvasLocation" x="280" y="259"/>
         </view>
     </objects>
     <resources>
         <image name="back_white" width="50" height="50"/>
+        <image name="icon_my_share" width="19" height="24"/>
         <image name="icon_timeline_more_c" width="21" height="3"/>
     </resources>
 </document>

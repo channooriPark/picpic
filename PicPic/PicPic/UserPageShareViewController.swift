@@ -47,10 +47,11 @@ class UserPageShareViewController: UIViewController,UIAlertViewDelegate {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "DismissKeyboard")
         backView.addGestureRecognizer(tap)
         
-        let message : JSON = ["my_id":appdelegate.email,"user_id":userId]
-        appdelegate.doIt(406, message: message) { (readData) -> () in
-            self.log.log("\(readData)")
-        }
+//        let message : JSON = ["my_id":appdelegate.email,"user_id":userId]
+//        print(message)
+//        appdelegate.doIt(406, message: message) { (readData) -> () in
+//            self.log.log("\(readData)")
+//        }
         
         
     }
@@ -61,16 +62,6 @@ class UserPageShareViewController: UIViewController,UIAlertViewDelegate {
     }
     
     func DismissKeyboard(){
-        var count = (self.navigationController?.viewControllers.count)!-2
-        if count < 0 {
-            count = 0
-        }
-        //        print(count)
-        let a = self.navigationController?.viewControllers[count] as! SubViewController
-        if a.type == "post" {
-            let post = self.navigationController?.viewControllers[count]as! PostPageViewController
-            post.postImage.enterForeground()
-        }
         self.view.removeFromSuperview()
     }
     
@@ -102,15 +93,16 @@ class UserPageShareViewController: UIViewController,UIAlertViewDelegate {
     }
     
     @IBAction func facebook(sender: AnyObject) {
+        print("facebook")
         let content: FBSDKShareLinkContent = FBSDKShareLinkContent()
         content.contentTitle = "PicPic"
-        content.contentDescription = ""
+        content.contentURL = NSURL(string: "picpic://user_name")
         let dialog = FBSDKShareDialog()
         dialog.fromViewController = self
         dialog.shareContent = content
         dialog.mode = FBSDKShareDialogMode.Automatic
         dialog.show()
-        self.view.removeFromSuperview()
+        DismissKeyboard()
     }
     
     @IBAction func twitter(sender: AnyObject) {

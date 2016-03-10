@@ -66,16 +66,11 @@ class ContentViewController: SubViewController {
     func refresh() {
         print("refresh()")
         if appdelegate.main.view.hidden == false {
-            //appdelegate.main.wkwebView.scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
             appdelegate.main.refresh()
         }else if appdelegate.second.view.hidden == false {
-//            appdelegate.second.wkwebView.scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
-//            if appdelegate.second.followT {
-//                appdelegate.second.following()
-//            }else if appdelegate.second.allT {
-//                appdelegate.second.all()
-//            }
             appdelegate.second.refresh()
+        }else if appdelegate.alram.view.hidden == false {
+            appdelegate.alram.refresh()
         }
     }
     

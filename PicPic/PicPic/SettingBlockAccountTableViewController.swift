@@ -21,9 +21,9 @@ class SettingBlockAccountTableViewController: UITableViewController {
         self.navigationItem.title = self.appdelegate.ment["settings_protect_id_manage"].stringValue
         self.tableView.delegate = self
         let message : JSON = ["my_id":self.appdelegate.email]
-//        let connection = URLConnection(serviceCode: 410, message: message)
-//        let readData = connection.connection()
+        print(message)
         self.appdelegate.doIt(410, message: message) { (readData) -> () in
+            print("readData :  ",readData)
             self.getData(readData)
         }
         

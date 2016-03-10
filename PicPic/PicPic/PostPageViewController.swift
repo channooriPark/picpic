@@ -570,6 +570,7 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
             let moreother = self.storyboard!.instantiateViewControllerWithIdentifier("MoreOtherViewController")as! MoreOtherViewController
             moreother.delegate = self
             moreother.post_id = data["post_id"].stringValue
+            moreother.email = data["email"].stringValue
             self.appdelegate.testNavi.viewControllers[count].addChildViewController(moreother)
             self.appdelegate.testNavi.viewControllers[count].view.addSubview(moreother.view)
         }

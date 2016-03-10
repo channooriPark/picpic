@@ -51,6 +51,7 @@ class BirthViewController: UIViewController {
         
         datePickerView.datePickerMode = UIDatePickerMode.Date
         datePickerView.setDate(date!, animated: true)
+        datePickerView.addTarget(self, action: "dateChange:", forControlEvents: UIControlEvents.ValueChanged)
         if self.appdelegate.locale == "ko_KR" {
             datePickerView.locale = NSLocale(localeIdentifier: "ko_KR")
         }else {
@@ -68,6 +69,37 @@ class BirthViewController: UIViewController {
         nextButton.enabled = true
         nextButton.setTitleColor(UIColor(colorLiteralRed: 0.41, green: 0.50, blue: 1.0, alpha: 1.0), forState: .Normal)
     }
+    
+    func dateChange(sender:UIDatePicker) {
+        print("did change ", sender.date)
+        
+        let fomatter : NSDateFormatter = NSDateFormatter()
+        
+        //현재날자보다 크면 반환
+        fomatter.dateFormat = "yyyyMMdd"
+        let time = Int(fomatter.stringFromDate(datePickerView.date))
+        let current = Int(fomatter.stringFromDate(NSDate()))
+        if time > current {
+            let alert = UIAlertView(title: "", message: self.appdelegate.ment["join_birthday_errorMessage"].stringValue, delegate: nil, cancelButtonTitle: self.appdelegate.ment["popup_confirm"].stringValue)
+            alert.show()
+            return
+        }
+        
+        if self.appdelegate.locale == "ko_KR" {
+            fomatter.dateFormat = "yyyy년 MM월 dd일"
+        }else {
+            fomatter.dateFormat = "MM/dd/yyyy"
+        }
+        self.birthText.text = NSString(format: "%@", fomatter.stringFromDate(datePickerView.date)) as String
+        fomatter.dateFormat = "yyyy/MM/dd"
+        self.birth = fomatter.stringFromDate(datePickerView.date)
+        let birthArray : NSArray = self.birth.componentsSeparatedByString("/")
+        self.appdelegate.userData["bir_year"].string = birthArray[0] as? String
+        self.appdelegate.userData["bir_mon"].string = birthArray[1] as? String
+        self.appdelegate.userData["bir_day"].string = birthArray[2] as? String
+    }
+    
+    
     
     func ShowSelectedDate(){
         let fomatter : NSDateFormatter = NSDateFormatter()

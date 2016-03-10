@@ -1035,7 +1035,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             dispatch_async(dispatch_get_main_queue(), {
                 path = String(format: "%@/%@", arguments: [self.gifsFolder!,self.gifName!])
                 if self.textArr.count > 0 {
-                    self.gifMaker.make2(tempArr, delayTime: self.sliderDelay.value, gifPath: path, workFolder: self.workFolder!, subtitle: self.textArr, warterMark: self.waterToggle, imageCheck: self.imageCheck, canvas: self.canvas,playType: self.playType,allText: self.allText)
+                    self.gifMaker.make2(tempArr, delayTime: self.sliderDelay.value, gifPath: path, workFolder: self.workFolder!, subtitle: self.textArr, warterMark: self.waterToggle, imageCheck: self.imageCheck, canvas: self.canvas,playType: self.playType,allText: self.allText,eraserD: self.eraserD)
                     
                 }
 //                let gif = NSData(contentsOfFile: path)
@@ -1280,6 +1280,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
     func remove(sender:UIButton!){
         text.hidden = true
         isTextRemove = true
+        self.actCancle(sender)
     }
     
     func didSelect(sender : UIButton) {
@@ -1847,7 +1848,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             
             dispatch_async(dispatch_get_main_queue(), {
                 if self.textArr.count > 0 {
-                    self.gifMaker.make2(tempArr, delayTime: self.sliderDelay.value, gifPath: path, workFolder: self.workFolder!, subtitle: self.textArr, warterMark: self.waterToggle, imageCheck: self.imageCheck, canvas: self.canvas,playType: self.playType,allText: self.allText)
+                    self.gifMaker.make2(tempArr, delayTime: self.sliderDelay.value, gifPath: path, workFolder: self.workFolder!, subtitle: self.textArr, warterMark: self.waterToggle, imageCheck: self.imageCheck, canvas: self.canvas,playType: self.playType,allText: self.allText, eraserD: self.eraserD)
                     
                 }
                 let gifVC = self.storyboard?.instantiateViewControllerWithIdentifier("gifVC") as? GIFViewController
@@ -2117,7 +2118,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             previewTimer = nil
             previewTimer = NSTimer.scheduledTimerWithTimeInterval(interval, target: self, selector: Selector("nextImage"), userInfo: nil, repeats: true)
         }else if self.eraserView.hidden == false {
-            //editorview
+            // eraserView
             self.canvas.hidden = false
             self.btnNext.enabled = true
             self.btnPre.enabled = true
@@ -2131,6 +2132,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             self.eraserView.hidden = true
             self.frontImage.removeFromSuperview()
             self.view.bringSubviewToFront(self.waterMark)
+            print("eraserD : ",eraserD)
         }
         self.waterMark.enabled = true
         self.view.bringSubviewToFront(self.waterMark)
@@ -2144,14 +2146,16 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             if previewTimer != nil {
                 previewTimer?.invalidate()
                 previewTimer = nil
+            }else {
+                if selectedCellIndex == 0 {
+                    allText.removeAtIndex(text.index)
+                }else if selectedCellIndex > 0 {
+                    log.log("select text remove index \(text.index)")
+                    textArr[selectedCellIndex-1].removeAtIndex(text.index)
+                }
             }
             log.log("remove GIFMAKERVIEWCONTROLLER")
-            if selectedCellIndex == 0 {
-                allText.removeAtIndex(text.index)
-            }else if selectedCellIndex > 0 {
-                log.log("select text remove index \(text.index)")
-                textArr[selectedCellIndex-1].removeAtIndex(text.index)
-            }
+            
             
             self.text = nil
             
@@ -2261,6 +2265,7 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                     
                 }
             }
+            print(eraserD)
         }
         self.view.bringSubviewToFront(canvas)
         self.view.bringSubviewToFront(btnNext)

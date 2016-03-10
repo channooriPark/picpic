@@ -87,18 +87,20 @@ class MoreMeViewController: UIViewController {
         self.view.removeFromSuperview()
     }
     @IBAction func postDelete(sender: AnyObject) {
-        var count = (self.navigationController?.viewControllers.count)!-1
-        if count < 0 {
-            count = 0
-        }
-        //        print(count)
-        let a = self.navigationController?.viewControllers[count] as! SubViewController
-        if a.type == "post" {
-            let post = self.navigationController?.viewControllers[count]as! PostPageViewController
-            post.postImage.enterBackground()
-        }
-        var tag = ""
-        log.log(self.body)
+        let alert = UIAlertController(title: "", message: self.appdelegate.ment["post_delete_confirm"].stringValue, preferredStyle: .Alert)
+        let ok = UIAlertAction(title: self.appdelegate.ment["popup_confirm"].stringValue, style: .Default) { (ok) -> Void in
+            var count = (self.navigationController?.viewControllers.count)!-1
+            if count < 0 {
+                count = 0
+            }
+            //        print(count)
+            let a = self.navigationController?.viewControllers[count] as! SubViewController
+            if a.type == "post" {
+                let post = self.navigationController?.viewControllers[count]as! PostPageViewController
+                post.postImage.enterBackground()
+            }
+            var tag = ""
+            self.log.log(self.body)
             if let newString : String = self.body.stringByReplacingOccurrencesOfString(", #", withString: " #", options: NSStringCompareOptions.LiteralSearch, range: nil) {
                 let body = newString.stringByReplacingOccurrencesOfString(",#", withString: " #", options: NSStringCompareOptions.LiteralSearch, range: nil)
                 let fullNameArr = body.componentsSeparatedByString(" ");
@@ -114,52 +116,53 @@ class MoreMeViewController: UIViewController {
                     tag = tag.stringByReplacingOccurrencesOfString("#", withString: "")
                 }
             }
-        log.log(self.body)
-        log.log(self.url)
-        log.log(tag)
-        log.log(self.post_id)
-        
-        
-        
-        let message : JSON = ["myId":self.appdelegate.email,"body":body,"url":self.url,"tags":tag,"user_tags":"","and_tag":"","type":"D","post_id":self.post_id]
-        self.appdelegate.doIt(232, message: message) { (readData) -> () in
-            if readData["msg"].string! == "success" {
-                if self.appdelegate.second.view.hidden == false {
-//                    if self.appdelegate.second.webState == "follow" {
-//                        self.appdelegate.second.following()
-//                    }else if self.appdelegate.second.webState == "all" {
-//                        self.appdelegate.second.all()
-//                    }
+            self.log.log(self.body)
+            self.log.log(self.url)
+            self.log.log(tag)
+            self.log.log(self.post_id)
+            
+            
+            
+            let message : JSON = ["myId":self.appdelegate.email,"body":self.body,"url":self.url,"tags":tag,"user_tags":"","and_tag":"","type":"D","post_id":self.post_id]
+            self.appdelegate.doIt(232, message: message) { (readData) -> () in
+                if readData["msg"].string! == "success" {
+                    if self.appdelegate.second.view.hidden == false {
+                        self.appdelegate.second.refresh()
+                    }
+                    if self.appdelegate.myfeed.view.hidden == false {
+                        self.appdelegate.myfeed.fire()
+                    }
+                    
+                    
+                    
+                    var count = (self.navigationController?.viewControllers.count)!-2
+                    if count < 0 {
+                        count = 0
+                    }
+                    self.log.log("1 \(self.navigationController?.viewControllers)")
+                    let a = self.navigationController?.viewControllers[count] as! SubViewController
+                    
+                    if a.type == "tag_name" || a.type == "post" || a.type == "user" || a.type == "search"{
+                        self.navigationController?.navigationBarHidden = true
+                    }else {
+                        self.navigationController?.navigationBarHidden = false
+                    }
+                    if !self.appdelegate.myfeed.view.hidden {
+                        self.navigationController?.navigationBarHidden = true
+                    }
+                    self.navigationController?.popViewControllerAnimated(true)
                 }
-                
-                if self.appdelegate.myfeed.view.hidden == false {
-                    self.appdelegate.myfeed.fire()
-                }
-                
-                
-                
-                var count = (self.navigationController?.viewControllers.count)!-2
-                if count < 0 {
-                    count = 0
-                }
-                self.log.log("1 \(self.navigationController?.viewControllers)")
-                let a = self.navigationController?.viewControllers[count] as! SubViewController
-                
-                if a.type == "tag_name" || a.type == "post" || a.type == "user" || a.type == "search"{
-                    self.navigationController?.navigationBarHidden = true
-                }else {
-                    self.navigationController?.navigationBarHidden = false
-                }
-                if !self.appdelegate.myfeed.view.hidden {
-                    self.navigationController?.navigationBarHidden = true
-                }
-                self.navigationController?.popViewControllerAnimated(true)
-                
-                
             }
+            self.appdelegate.moreToggle = false
+            self.view.removeFromSuperview()
         }
-        self.appdelegate.moreToggle = false
-        self.view.removeFromSuperview()
+        
+        let cancel = UIAlertAction(title: self.appdelegate.ment["popup_cancel"].stringValue, style: .Default) { (cancel) -> Void in
+            
+        }
+        alert.addAction(ok)
+        alert.addAction(cancel)
+        self.presentViewController(alert, animated: true, completion: nil)
     }
 
 }

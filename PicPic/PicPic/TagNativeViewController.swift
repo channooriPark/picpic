@@ -327,6 +327,9 @@ class TagNativeViewController: SubViewController, UICollectionViewDelegate, UICo
             cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.width / 2
             cell.profileImageView.layer.masksToBounds = true
             
+            cell.lastCommentImageView.layer.cornerRadius = cell.lastCommentImageView.frame.width / 2
+            cell.lastCommentImageView.layer.masksToBounds = true
+            
             cell.likeCountButton.setTitle(String(format: "\(self.appdelegate.ment["like"].stringValue) %d\(self.appdelegate.ment["timeline_count"].stringValue)", dic["like_cnt"] as! Int), forState: .Normal)
             cell.commentCountButton.setTitle(String(format: "\(self.appdelegate.ment["comment"].stringValue) %d\(self.appdelegate.ment["timeline_count"].stringValue)", dic["com_cnt"] as! Int), forState: .Normal)
             
@@ -596,8 +599,8 @@ class TagNativeViewController: SubViewController, UICollectionViewDelegate, UICo
     {
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let moreother = appdelegate.storyboard.instantiateViewControllerWithIdentifier("MoreOtherViewController")as! MoreOtherViewController
-        moreother.post_id = self.postInfos[indexPath.item]["post_id"] as! String
-        
+        moreother.email = self.postInfos[indexPath.item]["email"] as! String
+        print("email",self.postInfos[indexPath.item]["email"] as! String)
         self.addChildViewController(moreother)
         self.view.addSubview(moreother.view)
     }

@@ -272,24 +272,15 @@ class ShareViewController: UIViewController,UIAlertViewDelegate{
     }
     
     @IBAction func facebook(sender: AnyObject) {
-        
-        
         var path = imageURL.gifImageUrl(url)
         log.log("\(path)")
-//        let share : FBSDKShareLinkContent = FBSDKShareLinkContent()
-//        share.imageURL = NSURL(string: path)
-        
-        
         let content: FBSDKShareLinkContent = FBSDKShareLinkContent()
         content.contentTitle = "PicPic"
         content.contentURL = NSURL(string: path)
-//        content.imageURL = NSURL(string: path)
-        
         let dialog = FBSDKShareDialog()
         dialog.fromViewController = self
         dialog.shareContent = content
         dialog.mode = FBSDKShareDialogMode.Automatic
-//        FBSDKShareDialog.showFromViewController(self, withContent: content, delegate: nil)
         dialog.show()
         DismissKeyboard()
     }

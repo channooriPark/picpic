@@ -66,7 +66,9 @@ class FirstViewController: UIViewController , UIAlertViewDelegate{
                     }
                     
                     let message : JSON = ["email":FBSDKAccessToken.currentAccessToken().userID,"password":FBSDKAccessToken.currentAccessToken().userID,"register_form":register_form,"country":self.language,"device_id":self.appdelegate.deviceId,"push_token":self.appdelegate.token,"regist_day":currentDate]
+
                     
+                    // doit
                     self.appdelegate.doIt(202, message: message, callback: { (readData) -> () in
                         if readData["msg"].string! == "success" {
                             self.appdelegate.userData = readData["data"]
@@ -79,11 +81,53 @@ class FirstViewController: UIViewController , UIAlertViewDelegate{
                             if self.pushData != nil {
                                 self.appdelegate.URLopenPage(self.pushData)
                             }
+                            print("여기는 페이스북")
+                            let request = FBSDKGraphRequest(graphPath: "/me/friends", parameters: nil, HTTPMethod: "GET")
+                            request.startWithCompletionHandler({ (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
+                                if connection != nil {
+                                    print("result : ",connection)
+                                }
+                                
+                                if result != nil {
+                                    print("result : ",result)
+                                    let json : JSON = JSON(result)
+                                    print(json["paging"]["next"])
+                                    let request = FBSDKGraphRequest(graphPath: json["paging"]["next"].stringValue, parameters: nil, HTTPMethod: "GET")
+                                    
+                                }
+                                
+                                if error != nil {
+                                    print("result : ",error)
+                                }
+                                
+                            })
                         }else {
-                            let alert = UIAlertView(title: "로그인 실패", message: "로그인을 다시 해 주세요", delegate: self, cancelButtonTitle: "확인")
-                            alert.show()
+//                            let alert = UIAlertView(title: "로그인 실패", message: "로그인을 다시 해 주세요", delegate: self, cancelButtonTitle: "확인")
+//                            alert.show()
                         }
                     })
+                    
+//                    self.appdelegate.doItSocket(202, message: message, callback: { (readData) -> () in
+//                        if readData["msg"].string! == "success" {
+//                            self.appdelegate.userData = readData["data"]
+//                            self.log.log("\(self.appdelegate.userData)")
+//                            self.appdelegate.email = readData["data"]["email"].string!
+//                            self.appdelegate.controller.append(self.appdelegate.contentview)
+//                            //                            self.appdelegate.contentview.index = self.appdelegate.controller.count-1
+//                            self.appdelegate.contentview.type = "content"
+//                            self.appdelegate.window?.rootViewController = self.appdelegate.testNavi
+//                            if self.pushData != nil {
+//                                self.appdelegate.URLopenPage(self.pushData)
+//                            }
+//                        }else {
+//                            let alert = UIAlertView(title: "로그인 실패", message: "로그인을 다시 해 주세요", delegate: self, cancelButtonTitle: "확인")
+//                            alert.show()
+//                        }
+//                    })
+                    
+                    
+                    
+                    
                     //타임라인으로 화면 넘기기
                     
                     
@@ -117,6 +161,8 @@ class FirstViewController: UIViewController , UIAlertViewDelegate{
                 
                 let message : JSON = ["email":self.dec(appdelegate.standardUserDefaults.valueForKey("id")as! String),"password":self.dec(appdelegate.standardUserDefaults.valueForKey("password") as! String),"register_form":"10003","country":language,"device_id":self.appdelegate.deviceId,"push_token":self.appdelegate.token,"regist_day":currentDate]
                 //                let message : JSON = ["email":self.dec(appdelegate.standardUserDefaults.valueForKey("id")as! String),"password":self.dec(appdelegate.standardUserDefaults.valueForKey("password") as! String),"register_form":"10001","country":language,"device_id":"","push_token":"","regist_day":currentDate]
+                
+                // doit
                 self.appdelegate.doIt(202, message: message, callback: { (readData) -> () in
                     if readData["msg"].string! == "success" {
                         self.appdelegate.email = readData["data"]["email"].string!
@@ -136,6 +182,30 @@ class FirstViewController: UIViewController , UIAlertViewDelegate{
                         self.appdelegate.window?.rootViewController = viewController
                     }
                 })
+                
+//                self.appdelegate.doItSocket(202, message: message, callback: { (readData) -> () in
+//                    if readData["msg"].string! == "success" {
+//                        self.appdelegate.email = readData["data"]["email"].string!
+//                        self.appdelegate.userData = readData["data"]
+//                        self.log.log("\(self.appdelegate.userData)")
+//                        self.appdelegate.controller.append(self.appdelegate.contentview)
+//                        //                        self.appdelegate.contentview.index = self.appdelegate.controller.count-1
+//                        self.appdelegate.contentview.type = "content"
+//                        self.appdelegate.window?.rootViewController = self.appdelegate.testNavi
+//                        if self.pushData != nil {
+//                            self.appdelegate.URLopenPage(self.pushData)
+//                        }
+//                    }
+//                        //
+//                    else{
+//                        let viewController : UINavigationController = self.storyboard?.instantiateViewControllerWithIdentifier("signinNavigationController")as! UINavigationController
+//                        self.appdelegate.window?.rootViewController = viewController
+//                    }
+//                })
+                
+                
+                
+                
             }
             else {
                 print("일반 로그인")
@@ -160,25 +230,43 @@ class FirstViewController: UIViewController , UIAlertViewDelegate{
                 
                 let message : JSON = ["email":self.dec(appdelegate.standardUserDefaults.valueForKey("id")as! String),"password":self.dec(appdelegate.standardUserDefaults.valueForKey("password") as! String),"register_form":"10001","country":language,"device_id":self.appdelegate.deviceId,"push_token":self.appdelegate.token,"regist_day":currentDate]
 //                let message : JSON = ["email":self.dec(appdelegate.standardUserDefaults.valueForKey("id")as! String),"password":self.dec(appdelegate.standardUserDefaults.valueForKey("password") as! String),"register_form":"10001","country":language,"device_id":"","push_token":"","regist_day":currentDate]
+                
+                
+                //doit
                 self.appdelegate.doIt(202, message: message, callback: { (readData) -> () in
                     if readData["msg"].string! == "success" {
                         self.appdelegate.email = readData["data"]["email"].string!
                         self.appdelegate.userData = readData["data"]
                         self.log.log("\(self.appdelegate.userData)")
                         self.appdelegate.controller.append(self.appdelegate.contentview)
-//                        self.appdelegate.contentview.index = self.appdelegate.controller.count-1
                         self.appdelegate.contentview.type = "content"
                         self.appdelegate.window?.rootViewController = self.appdelegate.testNavi
                         if self.pushData != nil {
                             self.appdelegate.URLopenPage(self.pushData)
                         }
-                    }
-                        //
-                    else{
+                    }else{
                         let viewController : UINavigationController = self.storyboard?.instantiateViewControllerWithIdentifier("signinNavigationController")as! UINavigationController
                         self.appdelegate.window?.rootViewController = viewController
                     }
                 })
+                
+//                self.appdelegate.doItSocket(202, message: message, callback: { (readData) -> () in
+//                    if readData["msg"].string! == "success" {
+//                        self.appdelegate.email = readData["data"]["email"].string!
+//                        self.appdelegate.userData = readData["data"]
+//                        self.log.log("\(self.appdelegate.userData)")
+//                        self.appdelegate.controller.append(self.appdelegate.contentview)
+//                        //                        self.appdelegate.contentview.index = self.appdelegate.controller.count-1
+//                        self.appdelegate.contentview.type = "content"
+//                        self.appdelegate.window?.rootViewController = self.appdelegate.testNavi
+//                        if self.pushData != nil {
+//                            self.appdelegate.URLopenPage(self.pushData)
+//                        }
+//                    }else{
+//                        let viewController : UINavigationController = self.storyboard?.instantiateViewControllerWithIdentifier("signinNavigationController")as! UINavigationController
+//                        self.appdelegate.window?.rootViewController = viewController
+//                    }
+//                })
                 
             }
             

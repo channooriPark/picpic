@@ -238,6 +238,16 @@ class AlramViewController: SubViewController ,UITableViewDataSource , UITableVie
         follow()
     }
     
+    func refresh() {
+        if allT {
+            all()
+        }else if myT {
+            my()
+        }else if followT {
+            follow()
+        }
+    }
+    
     
     func all() {
         if isGetData {

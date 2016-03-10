@@ -109,6 +109,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
         
         
         
+        
+        
         if standardUserDefaults.valueForKey("uuid") == nil {
             var uuid = UIDevice.currentDevice().identifierForVendor?.UUIDString
             uuid = uuid?.stringByReplacingOccurrencesOfString("-", withString: "")
@@ -745,17 +747,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
     
     var alert : UIAlertView!
     func doIt(serviceCode: Int,  message: JSON, callback: (JSON) -> ()) {
-        
+        print("doit  ")
         if self.reachability.currentReachabilityStatus() == NotReachable {
             let temp = self.ment["network_error_message"].stringValue.componentsSeparatedByString("&")
-            log.log("\(temp)")
+            log.log("네트워크 에러 메세지    :  \(temp)")
             let alert = UIAlertView(title: self.ment["network_error_title"].stringValue, message: "\(temp[0])\n\(temp[1])", delegate: nil, cancelButtonTitle: self.ment["popup_confirm"].stringValue)
             alert.show()
         }else {
             let url = NSURL(string: "https://ios.picpic.world/_app2/socket.jsp")!
 //            let url = NSURL(string: "https://192.168.0.54:8443/_app2/socket.jsp")!
+            print("request start")
             Alamofire.request(.POST, url, parameters: ["code": "\(serviceCode)","message":String(message)])
                 .responseJSON { response in
+                    print("request end")
                     self.log.log("\(response.result.value)")
                     switch response.result {
                     case .Success:
@@ -765,7 +769,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
                                 callback(json)
                             })
                         }
-                    case .Failure(let error): break
+                    case .Failure(let error):
+                        
+                        print(error)
+                        
+                        break
 //                        self.alert = UIAlertView(title: "", message: self.ment["app_error"].stringValue, delegate: self, cancelButtonTitle: nil)
 //                        self.alert.show()
 //                        NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("clearAlert:"), userInfo: nil, repeats: false)
@@ -862,7 +870,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
 //                        connection.disconnect() })
 //                })
 //            })
-            //
             
             
             let completionHandler = {(data: NSData?, success: Bool, error: NSError?) in
@@ -890,9 +897,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
             let session = NSURLSession.sharedSession()
             if #available(iOS 9.0, *) {
                 let task = session.streamTaskWithHostName(ip, port: 34100)
-                task.writeData(NSData(bytes: sendData), timeout: 4.0, completionHandler: {_ in })
+                task.writeData(NSData(bytes: sendData), timeout: 5.0, completionHandler: {_ in })
                 
-                task.readDataOfMinLength(1024, maxLength: 30000, timeout: 4.0, completionHandler: completionHandler)
+                task.readDataOfMinLength(1024, maxLength: 30000, timeout: 5.0, completionHandler: completionHandler)
                 task.resume()
             } else {
                 // Fallback on earlier versions
@@ -908,6 +915,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
             alert = nil
         }
     }
+    
+    
     
     
     

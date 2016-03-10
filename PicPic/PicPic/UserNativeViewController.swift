@@ -16,6 +16,7 @@ class UserNativeViewController: SubViewController, UICollectionViewDelegate, UIC
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var backButton: UIButton!
     var userEmail: String!
+    var userData : JSON!
     
     var statusbar: UIView!
     var infoDic: [String : AnyObject] = [:]
@@ -90,7 +91,9 @@ class UserNativeViewController: SubViewController, UICollectionViewDelegate, UIC
         let message : JSON = ["my_id":appdelegate.email,"user_id":self.userEmail]
         
         appdelegate.doIt(406, message: message, callback: {(json) in
+            
             self.infoDic = json.dictionaryObject!
+            self.userData = json
             print("json data ",self.infoDic)
             
             if let string = json["withdraw_yn"].string {
@@ -558,18 +561,28 @@ class UserNativeViewController: SubViewController, UICollectionViewDelegate, UIC
     }
     
     @IBAction func backButtonTouched() {
-        
         self.navigationController?.popViewControllerAnimated(true)
     }
     
     @IBAction func moreButtonTouched() {
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let moreother = appdelegate.storyboard.instantiateViewControllerWithIdentifier("MoreOtherViewController")as! MoreOtherViewController
-        moreother.post_id = self.userEmail
+        moreother.email = self.userEmail
         
         self.addChildViewController(moreother)
         self.view.addSubview(moreother.view)
     }
+    
+    
+    @IBAction func userShareButtonTouched(sender: AnyObject) {
+        let share = self.appdelegate.storyboard.instantiateViewControllerWithIdentifier("UserPageShareViewController")as! UserPageShareViewController
+        share.userId = self.userData["id"].stringValue
+        self.addChildViewController(share)
+        self.view.addSubview(share.view)
+    }
+    
+    
+    
     
     //TagListCellDelegate
     func userViewTouched(indexPath: NSIndexPath)
@@ -693,7 +706,7 @@ class UserNativeViewController: SubViewController, UICollectionViewDelegate, UIC
     {
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let moreother = appdelegate.storyboard.instantiateViewControllerWithIdentifier("MoreOtherViewController")as! MoreOtherViewController
-        moreother.post_id = self.postInfos[indexPath.item]["post_id"] as! String
+        moreother.email = self.postInfos[indexPath.item]["email"] as! String
         
         self.addChildViewController(moreother)
         self.view.addSubview(moreother.view)

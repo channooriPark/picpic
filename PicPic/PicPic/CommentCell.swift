@@ -110,18 +110,6 @@ class CommentCell: UITableViewCell {
             urlString = data["url"].stringValue
             urlState = true
         }
-//        bodyLabel.putText(data["body"].string!,url: urlString)
-////        bodyLabel.textContainer.lineBreakMode = NSLineBreakMode.ByClipping
-//        print(bodyLabel)
-//        let fixedWidth = bodyLabel.frame.size.width
-//        bodyLabel.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
-//        let newSize = bodyLabel.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
-//        var newFrame = bodyLabel.frame
-//        newFrame.size = CGSize(width: max(newSize.width, fixedWidth), height: newSize.height)
-//        bodyLabel.frame = newFrame;
-//        bodyLabel.scrollEnabled = false
-//        bodyLabel.sizeToFit()
-        
         
         self.bodyLabel.scrollEnabled = false
         self.bodyLabel.putText(data["body"].stringValue,url: urlString)

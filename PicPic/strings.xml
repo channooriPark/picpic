@@ -555,5 +555,9 @@
     <string name="recommend_friend">추천친구를 팔로워 해보아요!</string>
     <string name="friend_count">명</string>
     <string name="giflist_not">GIF가 없습니다</string>
+    
+    <string name="post_delete_confirm">정말 삭제하시겠습니까?</string>
+    <string name="user_block_confirm">사용자를 차단하시겠습니까?</string>
+    
 
 </resources>
