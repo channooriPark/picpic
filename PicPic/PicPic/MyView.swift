@@ -261,14 +261,15 @@ public class MyView: UIView , UITextViewDelegate{
     }
     
     public func textViewDidChange(textView: UITextView) {
-        let textLength = (textView.text as NSString).length
-        print("text length : ",textLength)
-        if CGFloat(textLength*30) > textView.frame.size.width {
-            self.input_text!.frame.size = CGSize(width: textView.frame.size.width+30, height: textView.frame.size.height)
-        }
+//        if CGFloat(textLength*30) > textView.frame.size.width {
+//            self.input_text!.frame.size = CGSize(width: textView.frame.size.width+30, height: textView.frame.size.height)
+//        }
         self.input_text?.sizeToFit()
         self.text = textView.text
         redraw()
+        print(icon1?.frame)
+        print(icon2?.frame)
+        
     }
     
     

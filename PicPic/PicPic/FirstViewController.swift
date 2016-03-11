@@ -9,10 +9,11 @@
 import UIKit
 import FBSDKLoginKit
 import FBSDKCoreKit
+import FBSDKShareKit
 import SwiftyJSON
 import CryptoSwift
 
-class FirstViewController: UIViewController , UIAlertViewDelegate{
+class FirstViewController: UIViewController , UIAlertViewDelegate,FBSDKAppInviteDialogDelegate{
     
     let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var language = NSLocale.preferredLanguages()[0]
@@ -81,26 +82,6 @@ class FirstViewController: UIViewController , UIAlertViewDelegate{
                             if self.pushData != nil {
                                 self.appdelegate.URLopenPage(self.pushData)
                             }
-                            print("여기는 페이스북")
-                            let request = FBSDKGraphRequest(graphPath: "/me/friends", parameters: nil, HTTPMethod: "GET")
-                            request.startWithCompletionHandler({ (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
-                                if connection != nil {
-                                    print("result : ",connection)
-                                }
-                                
-                                if result != nil {
-                                    print("result : ",result)
-                                    let json : JSON = JSON(result)
-                                    print(json["paging"]["next"])
-                                    let request = FBSDKGraphRequest(graphPath: json["paging"]["next"].stringValue, parameters: nil, HTTPMethod: "GET")
-                                    
-                                }
-                                
-                                if error != nil {
-                                    print("result : ",error)
-                                }
-                                
-                            })
                         }else {
 //                            let alert = UIAlertView(title: "로그인 실패", message: "로그인을 다시 해 주세요", delegate: self, cancelButtonTitle: "확인")
 //                            alert.show()
@@ -329,6 +310,16 @@ class FirstViewController: UIViewController , UIAlertViewDelegate{
         
         return String(res!)
     }
+    
+    func appInviteDialog(appInviteDialog: FBSDKAppInviteDialog!, didCompleteWithResults results: [NSObject : AnyObject]!) {
+        print(results)
+    }
+    
+    
+    func appInviteDialog(appInviteDialog: FBSDKAppInviteDialog!, didFailWithError error: NSError!) {
+        print(error)
+    }
+    
     
     
 
