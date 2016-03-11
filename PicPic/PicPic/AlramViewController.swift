@@ -75,13 +75,13 @@ class AlramViewController: SubViewController ,UITableViewDataSource , UITableVie
         self.view.frame = CGRectMake(0, 32, self.view.bounds.size.width, self.view.bounds.size.height-90)
         message = ["my_id":appdelegate.email,"type":"W","page":String(self.all_page)]
         self.isGetData = true
-        self.appdelegate.doIt(602, message: message) { (readData) -> () in
+        self.appdelegate.doItSocket(602, message: message) { (readData) -> () in
             if readData == "has error3" {
                 self.loading.stopAnimating()
             }else {
                 self.log.log("\(readData)")
                 self.message = ["my_id":self.appdelegate.email,"type":"M","page":String(self.my_page)]
-                self.appdelegate.doIt(602, message: self.message) { (readData) -> () in
+                self.appdelegate.doItSocket(602, message: self.message) { (readData) -> () in
                     //            print(readData)
                     if readData == "has error3" {
                         self.loading.stopAnimating()
@@ -89,7 +89,7 @@ class AlramViewController: SubViewController ,UITableViewDataSource , UITableVie
                         self.message = ["my_id":self.appdelegate.email,"type":"F","page":String(self.follow_page)]
                         //        connection = URLConnection(serviceCode: 602, message: message)
                         //        readData = connection.connection()
-                        self.appdelegate.doIt(602, message: self.message) { (readData) -> () in
+                        self.appdelegate.doItSocket(602, message: self.message) { (readData) -> () in
                             if readData == "has error3" {
                                 self.loading.stopAnimating()
                             }else {
@@ -301,7 +301,7 @@ class AlramViewController: SubViewController ,UITableViewDataSource , UITableVie
         //        message = ["my_id":appdelegate.email,"type":"W","page":String(all_page)]
         //        connection = URLConnection(serviceCode: 602, message: message)
         //        readData = connection.connection()
-        //        self.appdelegate.doIt(602, message: message) { (readData) -> () in
+        //        self.appdelegate.doItSocket(602, message: message) { (readData) -> () in
         //            print(readData)
         //
         //            self.getData(readData)
@@ -362,7 +362,7 @@ class AlramViewController: SubViewController ,UITableViewDataSource , UITableVie
         //        print(message)
         //        connection = URLConnection(serviceCode: 602, message: message)
         //        readData = connection.connection()
-        //        self.appdelegate.doIt(602, message: message) { (readData) -> () in
+        //        self.appdelegate.doItSocket(602, message: message) { (readData) -> () in
         //            print(readData)
         //            self.getData(readData)
         //            self.alarmtableview.reloadData()
@@ -420,7 +420,7 @@ class AlramViewController: SubViewController ,UITableViewDataSource , UITableVie
         //        message = ["my_id":appdelegate.email,"type":"F","page":String(follow_page)]
         //        connection = URLConnection(serviceCode: 602, message: message)
         //        readData = connection.connection()
-        //        self.appdelegate.doIt(602, message: message) { (readData) -> () in
+        //        self.appdelegate.doItSocket(602, message: message) { (readData) -> () in
         //            print(readData)
         //            self.getData(readData)
         //            self.alarmtableview.reloadData()
@@ -431,7 +431,7 @@ class AlramViewController: SubViewController ,UITableViewDataSource , UITableVie
     func sendData(type : String, page : String){
         loading.startAnimating()
         message = ["my_id":appdelegate.email,"type":type,"page":page]
-        self.appdelegate.doIt(602, message: message) { (readData) -> () in
+        self.appdelegate.doItSocket(602, message: message) { (readData) -> () in
             if readData == "has error3" {
                 self.loading.stopAnimating()
             }else {
@@ -471,7 +471,7 @@ class AlramViewController: SubViewController ,UITableViewDataSource , UITableVie
             comment.post_id = Rowdata["target_id_1"].string!
             
             let message : JSON = ["my_id":self.appdelegate.email,"post_id":Rowdata["target_id_1"].string!]
-            self.appdelegate.doIt(504, message: message, callback: { (readData) -> () in
+            self.appdelegate.doItSocket(504, message: message, callback: { (readData) -> () in
                 comment.postEmail = readData["email"].string!
                 self.appdelegate.tabbar.view.hidden = true
                 self.appdelegate.testNavi.pushViewController(comment, animated: true)

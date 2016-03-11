@@ -71,7 +71,7 @@ class SearchTagViewController: UIViewController, UITableViewDelegate, UITableVie
         let message = JSON(["tag_name" : str,"page" : "1"])
         
         
-        appdelegate.doIt(501, message: message, callback: {(json) in
+        appdelegate.doItSocket(501, message: message, callback: {(json) in
             if json["data"].type == .Null || json["data"].stringValue == "null"
             {
                 self.tagDatas = []

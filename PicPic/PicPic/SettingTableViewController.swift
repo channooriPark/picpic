@@ -63,7 +63,7 @@ class SettingTableViewController: UITableViewController , UIAlertViewDelegate{
     
     override func viewWillAppear(animated: Bool) {
         let message : JSON = ["my_id":self.appdelegate.email,"user_id":self.appdelegate.email]
-        self.appdelegate.doIt(406, message: message) { (readData) -> () in
+        self.appdelegate.doItSocket(406, message: message) { (readData) -> () in
             print("\(readData)")
             if readData["public_yn"].string! == "Y" {
                 self.accountSwitch.on = false
@@ -93,7 +93,7 @@ class SettingTableViewController: UITableViewController , UIAlertViewDelegate{
         }else {
             message["close_yn"].string = "N"
         }
-        self.appdelegate.doIt(219, message: message) { (readData) -> () in
+        self.appdelegate.doItSocket(219, message: message) { (readData) -> () in
             self.log.log("\(readData)")
             if readData["msg"].string == "success" {
                 if readData["close_yn"].string! == "Y" {

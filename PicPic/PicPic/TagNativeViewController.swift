@@ -85,7 +85,7 @@ class TagNativeViewController: SubViewController, UICollectionViewDelegate, UICo
         
         let message : JSON = ["my_id":appdelegate.email,"tag_str":tagName]
 
-        appdelegate.doIt(517, message: message, callback: {(json) in
+        appdelegate.doItSocket(517, message: message, callback: {(json) in
             self.infoDic = json.dictionaryObject!
             Alamofire.request(.GET, "http://gif.picpic.world/" + (self.infoDic["url"]! as! String), parameters: ["foo": "bar"]).response { request, response, data, error in
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
@@ -96,7 +96,7 @@ class TagNativeViewController: SubViewController, UICollectionViewDelegate, UICo
             
             let mes: JSON = ["my_id" :appdelegate.email,"type": "TT","user_id": "", "tag_id" : self.infoDic["tag_id"] as! String, "range" : "N", "str" : "", "page": "1"]
             
-            appdelegate.doIt(507, message: mes, callback: {(json) in
+            appdelegate.doItSocket(507, message: mes, callback: {(json) in
                 print(json)
                 if json["data"].type == .Null || json["data"].string == ""
                 {
@@ -137,7 +137,7 @@ class TagNativeViewController: SubViewController, UICollectionViewDelegate, UICo
         
         let mes: JSON = ["my_id" :appdelegate.email,"type": "TT","user_id": "", "tag_id" : self.infoDic["tag_id"] as! String, "range" : range, "str" : str, "page": "1"]
         
-        appdelegate.doIt(507, message: mes, callback: {(json) in
+        appdelegate.doItSocket(507, message: mes, callback: {(json) in
             if json["data"].type == .Null
             {
                 self._hud.hide(true)
@@ -162,7 +162,7 @@ class TagNativeViewController: SubViewController, UICollectionViewDelegate, UICo
         
         let mes: JSON = ["my_id" :appdelegate.email,"type": "TT","user_id": "", "tag_id" : self.infoDic["tag_id"] as! String, "range" : self.currentRange, "str" : self.currentString, "page": "\(newPage)"]
         
-        appdelegate.doIt(507, message: mes, callback: {(json) in
+        appdelegate.doItSocket(507, message: mes, callback: {(json) in
             if json["data"].type == .Null
             {
                 self._hud.hide(true)
@@ -307,7 +307,7 @@ class TagNativeViewController: SubViewController, UICollectionViewDelegate, UICo
             label.handleMentionTap({(string) in
                 let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
                 let msg = JSON(["my_id" : appdelegate.email, "user_id" : string.substringFromIndex(string.startIndex.advancedBy(1))])
-                appdelegate.doIt(518, message: msg, callback: {(json) in
+                appdelegate.doItSocket(518, message: msg, callback: {(json) in
                     let vc = UserNativeViewController()
                     
                     vc.userEmail = json["email"].stringValue
@@ -514,7 +514,7 @@ class TagNativeViewController: SubViewController, UICollectionViewDelegate, UICo
         }
         
         let message : JSON = ["myId":appdelegate.email,"email":[["email" : email]],"type":type]
-        appdelegate.doIt(402, message: message, callback: {(json) in
+        appdelegate.doItSocket(402, message: message, callback: {(json) in
             self.refreshWithoutProfileReload(self.currentRange, str: self.currentString)
         })
     }
@@ -554,7 +554,7 @@ class TagNativeViewController: SubViewController, UICollectionViewDelegate, UICo
         {
             self.postInfos[indexPath.item]["like_yn"] = "Y"
             self.postInfos[indexPath.item]["like_cnt"] = (self.postInfos[indexPath.item]["like_cnt"] as! Int) + 1
-            appdelegate.doIt(302, message: message, callback: { _ in
+            appdelegate.doItSocket(302, message: message, callback: { _ in
                 cell.likeCountButton.setTitle(String(format: "\(self.appdelegate.ment["like"].stringValue) %d\(self.appdelegate.ment["timeline_count"].stringValue)", self.postInfos[indexPath.item]["like_cnt"] as! Int), forState: .Normal)
             })
         }
@@ -562,7 +562,7 @@ class TagNativeViewController: SubViewController, UICollectionViewDelegate, UICo
         {
             self.postInfos[indexPath.item]["like_yn"] = "N"
             self.postInfos[indexPath.item]["like_cnt"] = (self.postInfos[indexPath.item]["like_cnt"] as! Int) - 1
-            appdelegate.doIt(303, message: message, callback: { _ in
+            appdelegate.doItSocket(303, message: message, callback: { _ in
                 cell.likeCountButton.setTitle(String(format: "\(self.appdelegate.ment["like"].stringValue) %d\(self.appdelegate.ment["timeline_count"].stringValue)", self.postInfos[indexPath.item]["like_cnt"] as! Int), forState: .Normal)
             })
         }
@@ -584,7 +584,7 @@ class TagNativeViewController: SubViewController, UICollectionViewDelegate, UICo
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let message = JSON(["my_id" : appdelegate.email, "post_id" : self.postInfos[indexPath.item]["post_id"] as! String])
         
-        appdelegate.doIt(504, message: message, callback: {(json) in
+        appdelegate.doItSocket(504, message: message, callback: {(json) in
 
             let share = appdelegate.storyboard.instantiateViewControllerWithIdentifier("ShareViewController")as! ShareViewController
             share.post_id = json.dictionaryObject!["post_id"] as! String

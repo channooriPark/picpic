@@ -125,7 +125,7 @@ class ViewController: UIViewController,GIDSignInDelegate, GIDSignInUIDelegate{
             settingData()
             var message:JSON = ["email":email]
             print("userId ",userId)
-            self.appdelegate.doIt(213, message: message, callback: { (readData) -> () in
+            self.appdelegate.doItSocket(213, message: message, callback: { (readData) -> () in
                 print(readData["register_form"].stringValue)
                 if readData["data"].stringValue == "1" && readData["register_form"].stringValue == "10001" {
                     print("있어 일반계정으로")
@@ -134,7 +134,7 @@ class ViewController: UIViewController,GIDSignInDelegate, GIDSignInUIDelegate{
                     return
                 }else if readData["data"].stringValue == "1" {
                     message = ["email":email,"password":userId,"register_form":"10003","country":self.language,"device_id":self.appdelegate.deviceId,"push_token":self.appdelegate.token,"regist_day":self.currentDate]
-                    self.appdelegate.doIt(202, message: message, callback: { (readData) -> () in
+                    self.appdelegate.doItSocket(202, message: message, callback: { (readData) -> () in
                         
                         if readData["msg"].string! == "success" {
                             //                        NSLog("success")
@@ -220,7 +220,7 @@ class ViewController: UIViewController,GIDSignInDelegate, GIDSignInUIDelegate{
                 let message : JSON = ["email":FBSDKAccessToken.currentAccessToken().userID,"password":FBSDKAccessToken.currentAccessToken().userID,"register_form":self.register_form,"country":self.language,"device_id":self.appdelegate.deviceId,"push_token":self.appdelegate.token,"regist_day":self.currentDate]
                 
                 self.log.log("\(message)")
-                self.appdelegate.doIt(202, message: message, callback: { (readData) -> () in
+                self.appdelegate.doItSocket(202, message: message, callback: { (readData) -> () in
                     if readData["msg"].string! == "success" {
                         self.log.log("success")
                         self.appdelegate.email = FBSDKAccessToken.currentAccessToken().userID

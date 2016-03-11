@@ -167,7 +167,7 @@ class OpenAccountTableViewController: UITableViewController {
         
 //        let connection = URLConnection(serviceCode: 210, message: message)
 //        let readData = connection.connection()
-        self.appdelegate.doIt(210, message: message) { (readData) -> () in
+        self.appdelegate.doItSocket(210, message: message) { (readData) -> () in
             if readData["msg"].string! == "success" {
                 self.appdelegate.testNavi.popViewControllerAnimated(true)
             }

@@ -141,7 +141,7 @@ class SelectProfilePictureViewController: UIViewController , UIAlertViewDelegate
     func myfeed(){
         let message : JSON = self.appdelegate.userData
         
-        self.appdelegate.doIt(201, message: message) { (readData) -> () in
+        self.appdelegate.doItSocket(201, message: message) { (readData) -> () in
             if readData["msg"].string! == "success" {
                 self.appdelegate.email = self.appdelegate.userData["email"].string!
                 

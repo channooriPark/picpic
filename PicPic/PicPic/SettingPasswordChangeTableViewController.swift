@@ -84,7 +84,7 @@ class SettingPasswordChangeTableViewController: UITableViewController ,UITextFie
                     let message : JSON = ["myId":self.appdelegate.email,"now_pw":current,"new_pw":new]
 //                    let connection = URLConnection(serviceCode: 208, message: message)
 //                    let readData = connection.connection()
-                    self.appdelegate.doIt(208, message: message, callback: { (readData) -> () in
+                    self.appdelegate.doItSocket(208, message: message, callback: { (readData) -> () in
                         if readData["msg"].string! == "success" {
 //                            print("success")
                             self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)

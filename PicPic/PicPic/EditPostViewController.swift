@@ -40,7 +40,7 @@ class EditPostViewController: UIViewController, UIScrollViewDelegate, UITextView
 //        messageView.becomeFirstResponder()
         imageWid.constant = self.view.frame.size.width
         var message : JSON = ["my_id":self.email,"post_id":post_id]
-        appdelegate.doIt(504, message: message) { (readData) -> () in
+        appdelegate.doItSocket(504, message: message) { (readData) -> () in
 //            print(readData)
             let imageURL = ImageURL()
             let temp = readData["url"].string!.componentsSeparatedByString("_2.")
@@ -179,7 +179,7 @@ class EditPostViewController: UIViewController, UIScrollViewDelegate, UITextView
 //        print("message : ",message)
 //        let connection = URLConnection(serviceCode: 232, message: message)
 //        let readData = connection.connection()
-        self.appdelegate.doIt(232, message: message) { (readData) -> () in
+        self.appdelegate.doItSocket(232, message: message) { (readData) -> () in
             if readData["msg"].string! == "success" {
 //                if self.appdelegate.myfeed.wkwebView != nil {
 //                    self.appdelegate.myfeed.fire()

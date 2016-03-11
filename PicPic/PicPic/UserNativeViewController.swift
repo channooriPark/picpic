@@ -30,7 +30,7 @@ class UserNativeViewController: SubViewController, UICollectionViewDelegate, UIC
     var _hud: MBProgressHUD = MBProgressHUD()
     
 //    let mes: JSON = ["my_id" :appdelegate.email,"type": "TT","user_id": self.userEmail, "range" : "N", "str" : "", "page": "1"]
-//    appdelegate.doIt(511, message: mes, callback: {(json) in print(json)})
+//    appdelegate.doItSocket(511, message: mes, callback: {(json) in print(json)})
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -90,7 +90,7 @@ class UserNativeViewController: SubViewController, UICollectionViewDelegate, UIC
         
         let message : JSON = ["my_id":appdelegate.email,"user_id":self.userEmail]
         
-        appdelegate.doIt(406, message: message, callback: {(json) in
+        appdelegate.doItSocket(406, message: message, callback: {(json) in
             
             self.infoDic = json.dictionaryObject!
             self.userData = json
@@ -113,7 +113,7 @@ class UserNativeViewController: SubViewController, UICollectionViewDelegate, UIC
             
             let mes: JSON = ["my_id" :appdelegate.email,"user_id": self.userEmail, "range" : "N", "str" : "", "page": "1"]
             
-            appdelegate.doIt(511, message: mes, callback: {(json) in
+            appdelegate.doItSocket(511, message: mes, callback: {(json) in
                 print(json)
                 
                 if json["data"].type == .Null || json["data"].rawValue.isKindOfClass(NSNull)
@@ -191,7 +191,7 @@ class UserNativeViewController: SubViewController, UICollectionViewDelegate, UIC
         
         let code = repic ? 510 : 511
         
-        appdelegate.doIt(code, message: mes, callback: {(json) in
+        appdelegate.doItSocket(code, message: mes, callback: {(json) in
             if json["data"].type == .Null
             {
                 self._hud.hide(true)
@@ -249,7 +249,7 @@ class UserNativeViewController: SubViewController, UICollectionViewDelegate, UIC
         let mes: JSON = ["my_id" :appdelegate.email,"user_id": self.userEmail, "range" : "N", "str" : self.currentString, "page": "\(newPage)"]
         let code = self.isRepic ? 510 : 511
         
-        appdelegate.doIt(code, message: mes, callback: {(json) in
+        appdelegate.doItSocket(code, message: mes, callback: {(json) in
             if json["data"].type == .Null
             {
                 self._hud.hide(true)
@@ -402,7 +402,7 @@ class UserNativeViewController: SubViewController, UICollectionViewDelegate, UIC
             label.handleMentionTap({(string) in
                 let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
                 let msg = JSON(["my_id" : appdelegate.email, "user_id" : string.substringFromIndex(string.startIndex.advancedBy(1))])
-                appdelegate.doIt(518, message: msg, callback: {(json) in
+                appdelegate.doItSocket(518, message: msg, callback: {(json) in
                     let vc = UserNativeViewController()
                     
                     vc.userEmail = json["email"].stringValue
@@ -621,7 +621,7 @@ class UserNativeViewController: SubViewController, UICollectionViewDelegate, UIC
         }
         
         let message : JSON = ["myId":appdelegate.email,"email":[["email" : email]],"type":type]
-        appdelegate.doIt(402, message: message, callback: {(json) in
+        appdelegate.doItSocket(402, message: message, callback: {(json) in
             self.refreshWithoutProfileReload(self.isRepic, str: self.currentString)
         })
     }
@@ -661,7 +661,7 @@ class UserNativeViewController: SubViewController, UICollectionViewDelegate, UIC
         {
             self.postInfos[indexPath.item]["like_yn"] = "Y"
             self.postInfos[indexPath.item]["like_cnt"] = (self.postInfos[indexPath.item]["like_cnt"] as! Int) + 1
-            appdelegate.doIt(302, message: message, callback: { _ in
+            appdelegate.doItSocket(302, message: message, callback: { _ in
                 cell.likeCountButton.setTitle(String(format: "\(self.appdelegate.ment["like"].stringValue) %d\(self.appdelegate.ment["timeline_count"].stringValue)", self.postInfos[indexPath.item]["like_cnt"] as! Int), forState: .Normal)
             })
         }
@@ -669,7 +669,7 @@ class UserNativeViewController: SubViewController, UICollectionViewDelegate, UIC
         {
             self.postInfos[indexPath.item]["like_yn"] = "N"
             self.postInfos[indexPath.item]["like_cnt"] = (self.postInfos[indexPath.item]["like_cnt"] as! Int) - 1
-            appdelegate.doIt(303, message: message, callback: { _ in
+            appdelegate.doItSocket(303, message: message, callback: { _ in
                 cell.likeCountButton.setTitle(String(format: "\(self.appdelegate.ment["like"].stringValue) %d\(self.appdelegate.ment["timeline_count"].stringValue)", self.postInfos[indexPath.item]["like_cnt"] as! Int), forState: .Normal)
             })
         }
@@ -691,7 +691,7 @@ class UserNativeViewController: SubViewController, UICollectionViewDelegate, UIC
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let message = JSON(["my_id" : appdelegate.email, "post_id" : self.postInfos[indexPath.item]["post_id"] as! String])
         
-        appdelegate.doIt(504, message: message, callback: {(json) in
+        appdelegate.doItSocket(504, message: message, callback: {(json) in
             
             let share = appdelegate.storyboard.instantiateViewControllerWithIdentifier("ShareViewController")as! ShareViewController
             share.post_id = json.dictionaryObject!["post_id"] as! String

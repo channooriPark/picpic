@@ -36,7 +36,7 @@ class CommentUserPageViewController: SubViewController,UIAlertViewDelegate,UIScr
         
         
         let message : JSON = ["my_id":myId,"user_id":userId]
-        appdelegate.doIt(518, message: message) { (readData) -> () in
+        appdelegate.doItSocket(518, message: message) { (readData) -> () in
 //            print("readData  :  ",readData)
             if readData["email"].stringValue == ""{
                 let alert = UIAlertView(title: "", message: self.appdelegate.ment["toast_msg_not_exists_user"].stringValue, delegate: self, cancelButtonTitle: self.appdelegate.ment["popup_confirm"].stringValue)

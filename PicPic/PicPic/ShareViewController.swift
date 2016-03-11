@@ -209,14 +209,14 @@ class ShareViewController: UIViewController,UIAlertViewDelegate{
         var message : JSON = ["myId":self.appdelegate.email,"post_id":self.post_id]
         
         if repicState {
-            self.appdelegate.doIt(206, message: message) { (readData) -> () in
+            self.appdelegate.doItSocket(206, message: message) { (readData) -> () in
                 self.log.log("repic response data : \(readData)")
                 self.alert = UIAlertView(title: "", message: self.appdelegate.ment["repic_del_complete"].stringValue, delegate: self, cancelButtonTitle: nil)
                 self.alert.show()
                 NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: Selector("clearAlert:"), userInfo: nil, repeats: false)
             }
         }else {
-            self.appdelegate.doIt(205, message: message) { (readData) -> () in
+            self.appdelegate.doItSocket(205, message: message) { (readData) -> () in
                 self.log.log("repic response data : \(readData)")
                 if readData["duplicate_yn"].string! == "Y" {
                     self.alert = UIAlertView(title: "", message: self.appdelegate.ment["repic_add_aleady"].stringValue, delegate: self, cancelButtonTitle: nil)

@@ -99,7 +99,7 @@ class UserNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
         }
         
         let message : JSON = ["myId":appdelegate.email,"email":[["email" : email]],"type":type]
-        appdelegate.doIt(402, message: message, callback: {(json) in self.parent.refreshWithoutProfileReload(self.parent.isRepic, str: self.parent.currentString)})
+        appdelegate.doItSocket(402, message: message, callback: {(json) in self.parent.refreshWithoutProfileReload(self.parent.isRepic, str: self.parent.currentString)})
     }
     
     @IBAction func tagTouched() {

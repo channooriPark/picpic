@@ -90,7 +90,7 @@ class UsernameViewController: UIViewController ,UITextFieldDelegate{
                 let message : JSON = ["id":id]
                 //            let connection = URLConnection(serviceCode: 214, message: message)
                 //            let readData = connection.connection()
-                self.appdelegate.doIt(214, message: message, callback: { (readData) -> () in
+                self.appdelegate.doItSocket(214, message: message, callback: { (readData) -> () in
                     if readData["data"].string == "1" {
                         self.check.text = self.appdelegate.ment["join_hint_id_already"].stringValue
                     }else {

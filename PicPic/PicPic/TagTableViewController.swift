@@ -111,7 +111,7 @@ class TagTableViewController: UIViewController ,UITableViewDataSource, UITableVi
         log.log("ddd")
         var page = 1
         let message : JSON = ["my_id":self.appdelegate.email,"str":str,"page":String(page)]
-        self.appdelegate.doIt(512, message: message) { (readData) -> () in
+        self.appdelegate.doItSocket(512, message: message) { (readData) -> () in
             if let post = readData["friend"].array {
                 if post.count != 0 {
                     self.data.removeAll()

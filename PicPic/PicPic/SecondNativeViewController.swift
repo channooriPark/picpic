@@ -107,7 +107,7 @@ class SecondNativeViewController: UIViewController, UICollectionViewDataSource, 
         
         let mes = JSON(["my_id" : appdelegate.email, "page" : "1"])
         let code = (self.followTabEnableView.backgroundColor == self.enabledColor) ? 508 : 521
-        appdelegate.doIt(code, message: mes, callback: {(json) in
+        appdelegate.doItSocket(code, message: mes, callback: {(json) in
             self.postInfos = json["data"].arrayObject! as! [[String: AnyObject]]
             self.collectionView.reloadData()
             self._hud.hide(true)
@@ -125,7 +125,7 @@ class SecondNativeViewController: UIViewController, UICollectionViewDataSource, 
         let mes: JSON = JSON(["my_id" : appdelegate.email, "page" : "\(newPage)"])
         let code = (self.followTabEnableView.backgroundColor == self.enabledColor) ? 508 : 521
         
-        appdelegate.doIt(code, message: mes, callback: {(json) in
+        appdelegate.doItSocket(code, message: mes, callback: {(json) in
             if json["data"].type == .Null
             {
                 self._hud.hide(true)
@@ -455,7 +455,7 @@ class SecondNativeViewController: UIViewController, UICollectionViewDataSource, 
         }
         
         let message : JSON = ["myId":appdelegate.email,"email":[["email" : email]],"type":type]
-        appdelegate.doIt(402, message: message, callback: {(json) in
+        appdelegate.doItSocket(402, message: message, callback: {(json) in
             self.refresh()
         })
     }
@@ -490,7 +490,7 @@ class SecondNativeViewController: UIViewController, UICollectionViewDataSource, 
         {
             self.postInfos[indexPath.item]["like_yn"] = "Y"
             self.postInfos[indexPath.item]["like_cnt"] = (self.postInfos[indexPath.item]["like_cnt"] as! Int) + 1
-            appdelegate.doIt(302, message: message, callback: { _ in
+            appdelegate.doItSocket(302, message: message, callback: { _ in
                 cell.likeCountLabel.text = "\(self.postInfos[indexPath.item]["like_cnt"] as! Int)"
             })
         }
@@ -498,7 +498,7 @@ class SecondNativeViewController: UIViewController, UICollectionViewDataSource, 
         {
             self.postInfos[indexPath.item]["like_yn"] = "N"
             self.postInfos[indexPath.item]["like_cnt"] = (self.postInfos[indexPath.item]["like_cnt"] as! Int) - 1
-            appdelegate.doIt(303, message: message, callback: { _ in
+            appdelegate.doItSocket(303, message: message, callback: { _ in
                 cell.likeCountLabel.text = "\(self.postInfos[indexPath.item]["like_cnt"] as! Int)"
             })
         }
@@ -520,7 +520,7 @@ class SecondNativeViewController: UIViewController, UICollectionViewDataSource, 
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let message = JSON(["my_id" : appdelegate.email, "post_id" : self.postInfos[indexPath.item]["post_id"] as! String])
         
-        appdelegate.doIt(504, message: message, callback: {(json) in
+        appdelegate.doItSocket(504, message: message, callback: {(json) in
             
             let share = appdelegate.storyboard.instantiateViewControllerWithIdentifier("ShareViewController")as! ShareViewController
             share.post_id = json.dictionaryObject!["post_id"] as! String

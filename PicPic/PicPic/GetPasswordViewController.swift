@@ -52,13 +52,13 @@ class GetPasswordViewController: UIViewController , UITextFieldDelegate{
         if emailText.text != "" {
             
             var message : JSON = ["email":self.emailText.text!]
-            self.appdelegate.doIt(213, message: message, callback: { (readData) -> () in
+            self.appdelegate.doItSocket(213, message: message, callback: { (readData) -> () in
                 if readData["data"].stringValue == "1" {
                     self.dismissViewControllerAnimated(true) { () -> Void in
                         message = ["my_id":self.emailText.text!]
                         //                let connection = URLConnection(serviceCode: 220, message: message)
                         //                let readData = connection.connection()
-                        self.appdelegate.doIt(220, message: message, callback: { (readData) -> () in
+                        self.appdelegate.doItSocket(220, message: message, callback: { (readData) -> () in
                             if readData["msg"].string! == "success" {
                                 let alert : UIAlertView = UIAlertView(title: "", message: self.appdelegate.ment["new_login_forgot_popup_up"].stringValue, delegate: nil, cancelButtonTitle: self.appdelegate.ment["popup_confirm"].stringValue)
                                 alert.show()

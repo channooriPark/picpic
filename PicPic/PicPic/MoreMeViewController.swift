@@ -35,7 +35,7 @@ class MoreMeViewController: UIViewController {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "DismissKeyboard")
         backView.addGestureRecognizer(tap)
         let message : JSON = ["":"","":""]
-        appdelegate.doIt(504, message: message) { (readData) -> () in
+        appdelegate.doItSocket(504, message: message) { (readData) -> () in
             self.body = readData["contents"].string!
             self.url = readData["url"].string!
         }
@@ -124,7 +124,7 @@ class MoreMeViewController: UIViewController {
             
             
             let message : JSON = ["myId":self.appdelegate.email,"body":self.body,"url":self.url,"tags":tag,"user_tags":"","and_tag":"","type":"D","post_id":self.post_id]
-            self.appdelegate.doIt(232, message: message) { (readData) -> () in
+            self.appdelegate.doItSocket(232, message: message) { (readData) -> () in
                 if readData["msg"].string! == "success" {
                     if self.appdelegate.second.view.hidden == false {
                         self.appdelegate.second.refresh()

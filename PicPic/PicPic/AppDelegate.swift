@@ -199,7 +199,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
         
         if self.email != nil {
             let message : JSON = ["email":self.email,"device_id":self.deviceId,"push_token":self.token]
-            self.doIt(221, message: message, callback: { (readData) -> () in
+            self.doItSocket(221, message: message, callback: { (readData) -> () in
                 print(readData)
             })
         }
@@ -495,14 +495,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
             
             
             let message : JSON = ["myId":self.email,"email":[["email":send_id]],"type":type]
-            self.doIt(402, message: message, callback: { (readData) -> () in
+            self.doItSocket(402, message: message, callback: { (readData) -> () in
                 
             })
             break;
         case "do_follow_tag":
             log.log("call do_follow_tag ")
             let message : JSON = ["myId":self.email,"tag_id":send_id]
-            self.doIt(403, message: message, callback: { (readData) -> () in
+            self.doItSocket(403, message: message, callback: { (readData) -> () in
                 
             })
             break;
@@ -517,7 +517,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
             }
             log.log("\(self.controller[count].type)")
             message = ["post_reply_id":send_id,"click_id":self.email,"like_form":"P"]
-            self.doIt(302, message: message, callback: { (readData) -> () in
+            self.doItSocket(302, message: message, callback: { (readData) -> () in
                 
                 self.log.log("\(readData)")
                 if readData["msg"].string! == "success"{
@@ -528,7 +528,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
         case "do_like_cancel":
             log.log("call do_like_cancel ")
             message = ["post_reply_id":send_id,"click_id":self.email,"like_form":"P"]
-            self.doIt(303, message: message, callback: { (readData) -> () in
+            self.doItSocket(303, message: message, callback: { (readData) -> () in
                 if readData["msg"].string! == "success"{
                     self.log.log("좋아요 취소")
                 }
@@ -579,7 +579,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
             
             
             let message : JSON = ["my_id":self.email,"user_id":send_id as String]
-            doIt(518, message: message, callback: { (readData) -> () in
+            doItSocket(518, message: message, callback: { (readData) -> () in
                 let vc = UserNativeViewController()
                 vc.userEmail = readData["email"].stringValue
                 self.testNavi.pushViewController(vc, animated: true)

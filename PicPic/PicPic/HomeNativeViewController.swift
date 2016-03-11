@@ -156,7 +156,7 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
         }
         
         let message : JSON = ["myId":appdelegate.email,"email":[["email" : email]],"type":type]
-        appdelegate.doIt(402, message: message, callback: {(json) in})
+        appdelegate.doItSocket(402, message: message, callback: {(json) in})
     }
     
     override func didReceiveMemoryWarning() {
