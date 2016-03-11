@@ -135,17 +135,15 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
                     self.playCount.text = readData["play_cnt"].stringValue
                     self.postImage.post_id = readData["post_id"].stringValue
                     
-                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), { () -> Void in
-                        let profile = readData["profile_picture"].string!
-                        var url = NSURL(string:  self.imageURL.imageurl(profile))
-                        var data = NSData(contentsOfURL: url!)
-                        self.profileImage.image = UIImage(data: data!)
-                        if readData["last_com"]["profile_picture"].stringValue != "null" {
-                            url = NSURL(string: self.imageURL.imageurl(readData["last_com"]["profile_picture"].stringValue))
-                            data = NSData(contentsOfURL: url!)
-                            self.lastComProfile.image = UIImage(data: data!)
-                        }
-                    })
+                    let profile = readData["profile_picture"].string!
+                    var url = NSURL(string:  self.imageURL.imageurl(profile))
+                    var data = NSData(contentsOfURL: url!)
+                    self.profileImage.image = UIImage(data: data!)
+                    
+                    
+//                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), { () -> Void in
+//                        
+//                    })
                     
                     //width height 값이 nil이면 파일정보가 없거나 파일이 없는것이다
                     if readData["width2"].stringValue != "null" || readData["width2"].stringValue != "" {
@@ -249,6 +247,14 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
                         self.likeImageButton.setImage(UIImage(named: "icon_timeline_like_c"), forState: .Normal)
                         self.likeToggle = true
                     }
+                    
+                    if readData["last_com"]["profile_picture"].stringValue != "null" {
+                        url = NSURL(string: self.imageURL.imageurl(readData["last_com"]["profile_picture"].stringValue))
+                        data = NSData(contentsOfURL: url!)
+                        self.lastComProfile.image = UIImage(data: data!)
+                    }
+                    
+                    
                 }else {
                     let alert = UIAlertView(title: "", message: self.appdelegate.ment["delete_post"].stringValue, delegate: self, cancelButtonTitle: self.appdelegate.ment["popup_confirm"].stringValue)
                     alert.show()
@@ -258,6 +264,9 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
                 let alert = UIAlertView(title: "", message: self.appdelegate.ment["data_error"].stringValue, delegate: self, cancelButtonTitle: self.appdelegate.ment["popup_confirm"].stringValue)
                 alert.show()
             }
+            
+            
+            
             
             
         }

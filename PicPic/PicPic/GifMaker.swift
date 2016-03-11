@@ -157,6 +157,7 @@ class GifMaker {
                     }
                 } else {
                     //갤러리에서 동영상 선택
+                    print("갤러리에서 동영상 선택 하하")
                     self.log.log("log.log img size\(img.size)")
                     if(img.size.width > img.size.height) { //가로로 자르기
                         let imgRatio = Float((img.size.width) / (img.size.height))
@@ -164,7 +165,7 @@ class GifMaker {
                         self.log.log("imgRatio  :  \(imgRatio) +- ratio : \(ratio)")
                         if imgRatio == ratio {
                             //16:9기준
-                            img = img.cropToBounds(720, height: 720)
+//                            img = img.cropToBounds(720, height: 720)
                             img = img.resizeImage(CGSize(width: 640, height: 360))
                         } else { // 4:3기준
                             var width = Double(img.size.width)
@@ -1069,5 +1070,7 @@ extension UIImage {
         //        print("image   ",image)
         return image
     }
+    
+    
     
 }

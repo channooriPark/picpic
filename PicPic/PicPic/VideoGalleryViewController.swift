@@ -13,6 +13,7 @@ import MediaPlayer
 
 
 private let DKVideoAssetIdentifier = "DKVideoAssetIdentifier"
+//"DKVideoAssetIdentifier"
 
 class VideoGalleryViewController : UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -76,7 +77,7 @@ class VideoGalleryViewController : UIViewController, UICollectionViewDelegate, U
         
         
         getImageManager().groupDataManager.assetGroupTypes = self.assetGroupTypes
-        
+        //PHAssetMediaType.Video.rawValue
         self.assetFetchOptions.predicate = NSPredicate(format: "mediaType == %d", PHAssetMediaType.Video.rawValue)
         
         getImageManager().groupDataManager.assetFetchOptions = self.assetFetchOptions;

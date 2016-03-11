@@ -3323,7 +3323,7 @@
                             <constraint firstItem="DsY-c0-YNT" firstAttribute="leading" secondItem="SdH-2H-JQp" secondAttribute="leadingMargin" constant="-11" id="PDG-BV-bWo"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="30856C96-AF11-485E-A648-9FDBD66FE03D" id="QqF-Li-2ct"/>
+                    <tabBarItem key="tabBarItem" title="" image="7011AE76-A096-489A-8D4F-1DFA505EB4F5" id="QqF-Li-2ct"/>
                     <navigationItem key="navigationItem" id="0aK-XR-PxR"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
@@ -7508,7 +7508,7 @@
                             <constraint firstItem="x9I-39-yvM" firstAttribute="leading" secondItem="Y3S-o4-VFB" secondAttribute="leadingMargin" constant="-11" id="Yxw-LI-fvC"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="BF2A2F15-AE46-4740-8B48-DE4EC8BFE953" id="urB-TV-Wsz"/>
+                    <tabBarItem key="tabBarItem" title="" image="0B970B47-A187-4F48-90F0-82778B623543" id="urB-TV-Wsz"/>
                     <navigationItem key="navigationItem" id="jnl-Uw-H5F"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
@@ -7956,10 +7956,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WkQ-Ul-hT8">
-                                <rect key="frame" x="270" y="380" width="33" height="33"/>
+                                <rect key="frame" x="262" y="372" width="41" height="41"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="33" id="aVo-dK-jRK"/>
-                                    <constraint firstAttribute="height" constant="33" id="yj4-XO-Fbw"/>
+                                    <constraint firstAttribute="width" constant="41" id="aVo-dK-jRK"/>
+                                    <constraint firstAttribute="height" constant="41" id="yj4-XO-Fbw"/>
                                 </constraints>
                                 <state key="normal" image="icon_camera_change"/>
                                 <connections>
@@ -7999,7 +7999,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="nRj-fk-zcZ" secondAttribute="trailing" constant="-24" id="OK7-iT-3ys"/>
                             <constraint firstItem="nRj-fk-zcZ" firstAttribute="leading" secondItem="bko-JG-u2N" secondAttribute="leadingMargin" id="Oea-m3-ZS8"/>
                             <constraint firstItem="BTP-Xn-Adh" firstAttribute="leading" secondItem="bko-JG-u2N" secondAttribute="leadingMargin" constant="-11" id="Phc-Cn-5PO"/>
-                            <constraint firstItem="WkQ-Ul-hT8" firstAttribute="top" secondItem="JiC-fU-k2N" secondAttribute="bottom" constant="-46.5" id="SUi-Jn-VWo"/>
+                            <constraint firstItem="WkQ-Ul-hT8" firstAttribute="top" secondItem="JiC-fU-k2N" secondAttribute="bottom" constant="-54" id="SUi-Jn-VWo"/>
                             <constraint firstItem="cX5-g6-Rz4" firstAttribute="leading" secondItem="bko-JG-u2N" secondAttribute="leading" id="TP6-iH-TMH"/>
                             <constraint firstItem="1L9-ud-Gby" firstAttribute="top" secondItem="bko-JG-u2N" secondAttribute="topMargin" id="TlZ-Ko-de1"/>
                             <constraint firstItem="cX5-g6-Rz4" firstAttribute="leading" secondItem="bko-JG-u2N" secondAttribute="leading" id="Vz7-wn-lnx"/>
@@ -8012,7 +8012,7 @@
                             <constraint firstAttribute="trailing" secondItem="cX5-g6-Rz4" secondAttribute="trailing" id="ef0-6b-RQa"/>
                             <constraint firstItem="soW-nB-SsL" firstAttribute="top" secondItem="1L9-ud-Gby" secondAttribute="bottom" id="gPF-RS-zbH"/>
                             <constraint firstItem="PTX-Tp-sDM" firstAttribute="leading" secondItem="bko-JG-u2N" secondAttribute="leadingMargin" constant="-24" id="hJR-Mw-IVu"/>
-                            <constraint firstItem="WkQ-Ul-hT8" firstAttribute="leading" secondItem="JiC-fU-k2N" secondAttribute="trailing" constant="-50" id="k6B-iV-n8A"/>
+                            <constraint firstItem="WkQ-Ul-hT8" firstAttribute="leading" secondItem="JiC-fU-k2N" secondAttribute="trailing" constant="-58" id="k6B-iV-n8A"/>
                             <constraint firstItem="PTX-Tp-sDM" firstAttribute="centerX" secondItem="bko-JG-u2N" secondAttribute="centerX" id="rbb-Oz-EXI"/>
                             <constraint firstItem="gQ3-uD-sTr" firstAttribute="centerY" secondItem="bko-JG-u2N" secondAttribute="centerY" id="tYN-2P-Qoi"/>
                             <constraint firstItem="cX5-g6-Rz4" firstAttribute="top" secondItem="PTX-Tp-sDM" secondAttribute="bottom" id="uGa-84-07Y"/>
@@ -10158,7 +10158,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="30856C96-AF11-485E-A648-9FDBD66FE03D" width="20" height="25">
+        <image name="0B970B47-A187-4F48-90F0-82778B623543" width="20" height="25">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -10242,7 +10242,7 @@ AKcAqQCrAK0AsgC1ALcAuQC7AL0AwgDZANsA3RFPEVQRXxFoEXsRfxGKEZMRmBGgEaMRqBG3EbsRwhHK
 EdcR3BHeEeAR5RHtEfAR9RH9EgASEhIVEhoAAAAAAAACAQAAAAAAAABBAAAAAAAAAAAAAAAAAAASHA
 </mutableData>
         </image>
-        <image name="BF2A2F15-AE46-4740-8B48-DE4EC8BFE953" width="20" height="25">
+        <image name="7011AE76-A096-489A-8D4F-1DFA505EB4F5" width="20" height="25">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

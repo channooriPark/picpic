@@ -389,5 +389,10 @@ class MoviePreviewViewController : SubViewController, UIImagePickerControllerDel
         btnPlaySetTitle()
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        print("경고경고경고!!!!!!!!!!!")
+    }
+    
     
 }

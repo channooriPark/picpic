@@ -219,6 +219,7 @@ public class MyView: UIView , UITextViewDelegate{
         self.icon1?.transform = CGAffineTransformScale(self.icon1!.transform, bttn_scale, bttn_scale)
         self.icon2?.transform = CGAffineTransformScale(self.icon2!.transform, bttn_scale, bttn_scale)
         self.label!.layer.borderWidth = self.label!.layer.borderWidth*bttn_scale
+        redraw()
         pinchGR.scale = 1.0
     }
     
@@ -261,15 +262,21 @@ public class MyView: UIView , UITextViewDelegate{
     }
     
     public func textViewDidChange(textView: UITextView) {
-//        if CGFloat(textLength*30) > textView.frame.size.width {
-//            self.input_text!.frame.size = CGSize(width: textView.frame.size.width+30, height: textView.frame.size.height)
-//        }
+        let textLength = (textView.text as NSString).length
+        if CGFloat(textLength*30) > textView.frame.size.width {
+            self.input_text!.frame.size = CGSize(width: textView.frame.size.width+30, height: textView.frame.size.height)
+            let posX = self.input_text!.frame.size.width // - button_size
+            let posY = self.input_text!.frame.size.height // - button_size
+            
+            let buttonSize = CGSize(width: button_size, height: button_size)
+            btn_remove?.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: buttonSize)
+            icon1?.frame = CGRect(origin: CGPoint(x: posX, y: 0), size: buttonSize)
+            icon2?.frame = CGRect(origin: CGPoint(x: 0, y: posY), size: buttonSize)
+        }
         self.input_text?.sizeToFit()
+        
         self.text = textView.text
         redraw()
-        print(icon1?.frame)
-        print(icon2?.frame)
-        
     }
     
     

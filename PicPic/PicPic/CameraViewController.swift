@@ -1077,6 +1077,7 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
             
             self.view.addSubview(view)
             self.view.bringSubviewToFront(view)
+            view.setConstsToOpenAll(0.1)
         }
         else if self.editBarViewBottomConst.constant == 30.0// toggle off
         {
@@ -1280,6 +1281,7 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+        print("경고경고경고")
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: AnyObject]){
