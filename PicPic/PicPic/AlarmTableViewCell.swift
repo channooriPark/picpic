@@ -138,7 +138,7 @@ class AlarmTableViewCell: UITableViewCell {
         
         
         let message : JSON = ["myId":self.appdelegate.email,"email":[["email":self.data["who_email"].string!]],"type":type]
-        self.appdelegate.doItSocket(402, message: message, callback: { (readData) -> () in
+        self.appdelegate.doIt(402, message: message, callback: { (readData) -> () in
             if readData["follow"].string! == "Y" {
                 self.oneButton.setImage(UIImage(named: "icon_find_plus_c"), forState: .Normal)
             }else {

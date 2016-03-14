@@ -32,8 +32,9 @@ class SearchFriendViewController: SubViewController ,UITableViewDataSource , UIT
     var fbT = true
     var recomT = false
     var ggT = false
-    
+    var id = "";
     var count = 0
+    var dict : NSDictionary!
     
     let friendData = NSMutableArray()
 
@@ -149,6 +150,8 @@ class SearchFriendViewController: SubViewController ,UITableViewDataSource , UIT
     func getFriendData(inwhere : Int) {
         
         
+        self.friendData.removeAllObjects();
+        
         var inWhereString:String!
         
         var count = 0
@@ -156,12 +159,66 @@ class SearchFriendViewController: SubViewController ,UITableViewDataSource , UIT
         switch (inwhere) {
             
         case 0: // fb
+            let message : JSON = ["my_id":self.appdelegate.email,"user_id":self.appdelegate.email]
+            self.appdelegate.doIt(406, message: message) { (readData) -> () in
+                print(self.appdelegate.email);
+                //self.id = readData["id"].string!
+            }
+            
+            //let dic = NSDictionary(objects: "location", forKeys: "with");
             inWhereString = self.appdelegate.ment["facebook_friend"].stringValue
+            
+            let params = ["fields": "id, name, first_name, last_name, picture.type(large), email"]
+            let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "/me/friends", parameters: params)
+            graphRequest.startWithCompletionHandler({ (connection : FBSDKGraphRequestConnection!, result : AnyObject!, error : NSError!) -> Void in
+                if(error == nil)
+                {
+                    self.dict = result as! NSDictionary;
+                    
+                    var ar = NSMutableArray();
+                    ar = self.dict.objectForKey("data") as! NSMutableArray
+                    
+                    print(result)
+                    
+                    for (var i = 0; i < ar.count; i++) {
+                        
+                        var d = NSDictionary();
+                        d = ar.objectAtIndex(i) as! NSDictionary;
+                        
+                        var profile = String();
+                        profile = d.objectForKey("picture")?.objectForKey("data")?.objectForKey("url") as! String
+                        
+                        let friend = FriendEntity(name: d.objectForKey("name") as! String, profile:profile, first: "", sencond: "", third: "", fourth: "");
+                        self.friendData.addObject(friend);
+                    }
+                    
+                    if (inwhere == 0 || inwhere == 1) {
+                        self.whereLabel.text = String(format: "%@ %d", inWhereString, self.friendData.count) + self.appdelegate.ment["friend_counter"].stringValue
+                    } else {
+                        self.whereLabel.text = inWhereString
+                    }
+                    
+                    self.tblFriend.reloadData()
+                }
+                else
+                {
+                    print(error)
+                }
+            });
             count = 10
             break;
             
         case 1: // google
             inWhereString = self.appdelegate.ment["google_friend"].stringValue
+            
+            /*var plusService: GTLServicePlus = GTLServicePlus()
+            plusService.retryEnabled = true
+            plusService.authorizer = GPPSignIn.sharedInstance().authentication;
+            let query = GTLQueryPlus.queryForActivitiesListWithUserId("me", collection: kGTLPlusCollectionVisible) as? GTLQueryPlus
+            
+            plusService.executeQuery(query, completionHandler: { (ticket, peopleFeed, error) -> Void in
+            
+            })*/
             count = 6
             break;
             
@@ -173,24 +230,6 @@ class SearchFriendViewController: SubViewController ,UITableViewDataSource , UIT
         default:
             break;
         }
-        
-        self.friendData.removeAllObjects();
-        
-        for (var i = 0; i < count; i++) {
-            
-            let friend = FriendEntity(name: String(format: "땅또롱%d", i), profile: "", first: "", sencond: "", third: "", fourth: "");
-            
-            friendData.addObject(friend);
-        }
-        
-        if (inwhere == 0 || inwhere == 1) {
-            whereLabel.text = String(format: "%@ %d", inWhereString, friendData.count) + self.appdelegate.ment["friend_counter"].stringValue
-        } else {
-            whereLabel.text = inWhereString
-        }
-        
-        self.tblFriend.reloadData()
-        
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

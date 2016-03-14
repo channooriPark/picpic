@@ -89,7 +89,7 @@ class GoogleprofileViewController: UIViewController ,UIImagePickerControllerDele
         //        let connection = URLConnection(serviceCode: 201, message: self.appdelegate.userData)
         //        let readData = connection.connection()
         log.log("\(self.appdelegate.userData)")
-        self.appdelegate.doItSocket(201, message: self.appdelegate.userData) { (readData) -> () in
+        self.appdelegate.doIt(201, message: self.appdelegate.userData) { (readData) -> () in
             if readData["msg"].string! == "success" {
                 self.log.log("success")
                 self.appdelegate.email = self.appdelegate.userData["email"].string!

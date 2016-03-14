@@ -114,7 +114,7 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
             print(message)
 //            let connection = URLConnection(serviceCode: 202, message: message)
 //            self.readData = connection.connection()
-            self.appdelegate.doItSocket(202, message: message, callback: { (readData) -> () in
+            self.appdelegate.doIt(202, message: message, callback: { (readData) -> () in
                 print(readData)
                 if readData["msg"].string! == "success" {
                     self.readData = readData

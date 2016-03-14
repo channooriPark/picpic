@@ -37,7 +37,7 @@ class CommentTagPageViewController: SubViewController,UIScrollViewDelegate,UIAle
         
         
         let message : JSON = ["my_id":self.appdelegate.email,"tag_str":tagId]
-        self.appdelegate.doItSocket(517, message: message) { (readData) -> () in
+        self.appdelegate.doIt(517, message: message) { (readData) -> () in
 //            print(readData)
             if readData["tag_id"].stringValue != "" {
                 if self.appdelegate.locale == "ko_KR" {

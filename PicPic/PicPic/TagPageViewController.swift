@@ -120,7 +120,7 @@ class TagPageViewController: SubViewController {
         
         
         let message : JSON = ["my_id":email,"tag_str":tagId]
-        self.appdelegate.doItSocket(517, message: message) { (readData) -> () in
+        self.appdelegate.doIt(517, message: message) { (readData) -> () in
             self.log.log("readData              \(readData)")
             
             if readData["msg"].string == "success" {
@@ -210,7 +210,7 @@ class TagPageViewController: SubViewController {
         let message : JSON = ["myId":appdelegate.email,"tag_id":data["tag_id"].stringValue]
         //            let connection = URLConnection(serviceCode: 403, message: message)
         //            let readData = connection.connection()
-        appdelegate.doItSocket(403, message: message, callback: { (readData) -> () in
+        appdelegate.doIt(403, message: message, callback: { (readData) -> () in
             if readData["follow"].stringValue == "Y" {
                 self.followButton.setBackgroundImage(UIImage(named: "btn_tegfeed_follow_c"), forState: .Normal)
             }else {

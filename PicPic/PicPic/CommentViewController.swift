@@ -102,7 +102,7 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         
         //내글의 댓글인지 남 글의 댓글인지 판단하기 위해서 사용
         let message : JSON = ["my_id":my_id,"post_id":post_id]
-        self.appdelegate.doItSocket(504, message: message) { (readData) -> () in
+        self.appdelegate.doIt(504, message: message) { (readData) -> () in
             if self.appdelegate.email == readData["email"].stringValue {
                 self.writType = 0
             }else {
@@ -175,7 +175,7 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
     
     func sendData(){
         let message : JSON = ["my_id":self.my_id,"post_id":self.post_id,"page":String(page)]
-        self.appdelegate.doItSocket(321, message: message) { (readData) -> () in
+        self.appdelegate.doIt(321, message: message) { (readData) -> () in
             self.getData(readData)
         }
     }
@@ -410,7 +410,7 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
         
         if filename == "" {
             var message : JSON = ["url":self.filename]
-            self.appdelegate.doItSocket(233, message: message, callback: { (readData) -> () in
+            self.appdelegate.doIt(233, message: message, callback: { (readData) -> () in
                 print(readData)
                 print("ok")
             })
@@ -421,10 +421,10 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
             if let text = self.comTextField.text {
                 if text != "" {
                     var message : JSON = ["my_id":self.appdelegate.email,"com_id":self.com_id,"post_id":self.post_id,"body":text,"com_form":com_form,"user_tags":"","url":self.filename]
-                    self.appdelegate.doItSocket(231, message: message, callback: { (readData) -> () in
+                    self.appdelegate.doIt(231, message: message, callback: { (readData) -> () in
                         if readData["msg"].string! == "success"{
                             message = ["my_id":self.appdelegate.email,"post_id":self.post_id,"page":"1"]
-                            self.appdelegate.doItSocket(321, message: message, callback: { (readData) -> () in
+                            self.appdelegate.doIt(321, message: message, callback: { (readData) -> () in
                                 self.dataArray.removeAll()
                                 self.getData(readData)
                                 self.comTextField.text = ""
@@ -606,7 +606,7 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
             print(responseString)
             if responseString == "success" {
                 var message : JSON = ["url":self.filename]
-                self.appdelegate.doItSocket(233, message: message, callback: { (readData) -> () in
+                self.appdelegate.doIt(233, message: message, callback: { (readData) -> () in
                     print(readData)
                     print("ok")
                 })
@@ -617,12 +617,12 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
                 if let text = self.comTextField.text {
                     if text != "" {
                         var message : JSON = ["my_id":self.appdelegate.email,"com_id":self.com_id,"post_id":self.post_id,"body":text,"com_form":com_form,"user_tags":"","url":self.filename]
-                        self.appdelegate.doItSocket(231, message: message, callback: { (readData) -> () in
+                        self.appdelegate.doIt(231, message: message, callback: { (readData) -> () in
                             if readData["msg"].string! == "success"{
                                 self.filename = ""
                                 self.comImage.image = nil
                                 message = ["my_id":self.appdelegate.email,"post_id":self.post_id,"page":"1"]
-                                self.appdelegate.doItSocket(321, message: message, callback: { (readData) -> () in
+                                self.appdelegate.doIt(321, message: message, callback: { (readData) -> () in
                                     self.dataArray.removeAll()
                                     self.getData(readData)
                                     self.comTextField.text = ""
@@ -712,7 +712,7 @@ class CommentViewController: SubViewController , UITableViewDataSource,UITableVi
             let reply = data["reply_id"].string!
             
             let message : JSON = ["my_id":self.appdelegate.email,"com_id":reply,"post_id":self.post_id,"body":"","com_form":"D","user_tags":""]
-            self.appdelegate.doItSocket(231, message: message, callback: { (readData) -> () in
+            self.appdelegate.doIt(231, message: message, callback: { (readData) -> () in
                 if readData["msg"].string! == "success" {
                     self.deleteRow(index)
                     if self.appdelegate.second.view.hidden == false {

@@ -139,7 +139,7 @@ class EmailViewController: UIViewController ,UITextViewDelegate,UITextFieldDeleg
             if isValidEmail(email) {
                 let message : JSON = ["email":email]
                 
-                self.appdelegate.doItSocket(213, message: message, callback: { (readData) -> () in
+                self.appdelegate.doIt(213, message: message, callback: { (readData) -> () in
                     if let data = readData["data"].string {
                         if data == "1" {
                             self.checklabel.text = self.appdelegate.ment["join_hint_email_already"].stringValue

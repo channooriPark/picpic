@@ -87,7 +87,7 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
         lastComProfile.clipsToBounds = true
         let message : JSON = ["my_id":email,"post_id":postId]
         
-        self.appdelegate.doItSocket(504, message: message) { (readData) -> () in
+        self.appdelegate.doIt(504, message: message) { (readData) -> () in
             //profile
             print("readData : ",readData)
 //            self.loading(false)
@@ -373,7 +373,7 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
                 self.likeImageButton.setImage(UIImage(named: "icon_timeline_like_c"), forState: .Normal)
                 
                 let message : JSON = ["post_reply_id":data["post_id"].stringValue,"click_id":self.email,"like_form":"P"]
-                self.appdelegate.doItSocket(302, message: message, callback: { (readData) -> () in
+                self.appdelegate.doIt(302, message: message, callback: { (readData) -> () in
                     if readData["msg"].string! == "success"{
                         if self.appdelegate.second.view.hidden == false {
                             self.appdelegate.second.refresh()
@@ -392,7 +392,7 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
             }else {
                 self.likeImageButton.setImage(UIImage(named: "icon_timeline_like"), forState: .Normal)
                 let message : JSON = ["post_reply_id":data["post_id"].stringValue,"click_id":self.email,"like_form":"P"]
-                self.appdelegate.doItSocket(303, message: message, callback: { (readData) -> () in
+                self.appdelegate.doIt(303, message: message, callback: { (readData) -> () in
                     if readData["msg"].string! == "success"{
                         if self.appdelegate.second.view.hidden == false {
                             self.appdelegate.second.refresh()
@@ -437,7 +437,7 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
             })
             self.likeImageButton.setImage(UIImage(named: "icon_timeline_like_c"), forState: .Normal)
             let message : JSON = ["post_reply_id":data["post_id"].stringValue,"click_id":self.email,"like_form":"P"]
-            self.appdelegate.doItSocket(302, message: message, callback: { (readData) -> () in
+            self.appdelegate.doIt(302, message: message, callback: { (readData) -> () in
                 if readData["msg"].string! == "success"{
                     
                 }
@@ -454,7 +454,7 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
         }else {
             self.likeImageButton.setImage(UIImage(named: "icon_timeline_like"), forState: .Normal)
             let message : JSON = ["post_reply_id":data["post_id"].stringValue,"click_id":self.email,"like_form":"P"]
-            self.appdelegate.doItSocket(303, message: message, callback: { (readData) -> () in
+            self.appdelegate.doIt(303, message: message, callback: { (readData) -> () in
                 if readData["msg"].string! == "success"{
                     self.likeToggle = false
                     self.likeCount--
@@ -612,7 +612,7 @@ class PostPageViewController: SubViewController , UIAlertViewDelegate,MoreOtherD
     
     func refreshData() {
         let message : JSON = ["my_id":email,"post_id":postId]
-        self.appdelegate.doItSocket(504, message: message) { (readData) -> () in
+        self.appdelegate.doIt(504, message: message) { (readData) -> () in
             if readData != nil {
                 self.data = readData
             }

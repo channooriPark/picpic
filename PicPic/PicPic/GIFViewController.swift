@@ -577,14 +577,14 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
                         tag += ","+categoryString
                         self.log.log("\(tag)")
                         var message : JSON = ["url":self.filename]
-                        self.appdelegate.doItSocket(233, message: message, callback: { (readData) -> () in
+                        self.appdelegate.doIt(233, message: message, callback: { (readData) -> () in
                             
                         })
                         message = ["my_id":self.appdelegate.email,"body":body,"url":self.filename,"tags":tag,"type":"W","user_tags":"","and_tag":"","post_id":""]
                         print("message : ",message)
                         //                        connection = URLConnection(serviceCode: 232, message: message)
                         //                        readData = connection.connection()
-                        self.appdelegate.doItSocket(232, message: message, callback: { (readData) -> () in
+                        self.appdelegate.doIt(232, message: message, callback: { (readData) -> () in
                             if readData["msg"].string! == "success" {
                                 self.post_id = readData["post_id"].stringValue
 //                                if self.appdelegate.myfeed.wkwebView != nil {

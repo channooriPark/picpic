@@ -47,7 +47,7 @@ class SearchHotUserViewController: UIViewController, UICollectionViewDataSource,
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
         let message = JSON(["my_id" : appdelegate.email])
-        appdelegate.doItSocket(513, message: message, callback: {(json) in
+        appdelegate.doIt(513, message: message, callback: {(json) in
             self.hotUserDatas = json["hot"].arrayObject as! Array<[String: AnyObject]>
             self.collectionView.reloadData()
         })
@@ -259,7 +259,7 @@ class SearchHotUserViewController: UIViewController, UICollectionViewDataSource,
         }
         
         let message : JSON = ["myId":appdelegate.email,"email":[["email" : email]],"type":type]
-        appdelegate.doItSocket(402, message: message, callback: {(json) in})
+        appdelegate.doIt(402, message: message, callback: {(json) in})
     }
 
 }

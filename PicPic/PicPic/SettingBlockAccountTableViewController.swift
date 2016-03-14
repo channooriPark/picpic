@@ -22,7 +22,7 @@ class SettingBlockAccountTableViewController: UITableViewController {
         self.tableView.delegate = self
         let message : JSON = ["my_id":self.appdelegate.email]
         print(message)
-        self.appdelegate.doItSocket(410, message: message) { (readData) -> () in
+        self.appdelegate.doIt(410, message: message) { (readData) -> () in
             print("readData :  ",readData)
             self.getData(readData)
         }
@@ -77,7 +77,7 @@ class SettingBlockAccountTableViewController: UITableViewController {
             let json = data[indexPath.row]
             
             let message : JSON = ["my_id":self.appdelegate.email,"user_id":json["email"].string!]
-            self.appdelegate.doItSocket(216, message: message, callback: { (readData) -> () in
+            self.appdelegate.doIt(216, message: message, callback: { (readData) -> () in
                 if readData["msg"].string! == "success" {
                     self.data.removeAtIndex(indexPath.row)
                     tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)

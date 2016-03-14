@@ -59,7 +59,7 @@ class MoreOtherViewController: UIViewController {
         let alert = UIAlertController(title: "", message: self.appdelegate.ment["user_block_confirm"].stringValue, preferredStyle: UIAlertControllerStyle.Alert)
         let ok = UIAlertAction(title: self.appdelegate.ment["popup_confirm"].stringValue, style: UIAlertActionStyle.Default) { (ok) -> Void in
             var message : JSON = ["my_id":self.appdelegate.email,"user_id":self.email]
-            self.appdelegate.doItSocket(216, message: message, callback: { (readData) -> () in
+            self.appdelegate.doIt(216, message: message, callback: { (readData) -> () in
                 print("readData : ",readData)
                 if readData["msg"].string == "success" {
                     if self.appdelegate.locale == "ko_KR" {

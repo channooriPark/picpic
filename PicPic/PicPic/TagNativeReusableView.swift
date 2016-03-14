@@ -85,7 +85,7 @@ class TagNativeReusableView: UICollectionReusableView, UISearchBarDelegate {
         }
         let message : JSON = ["myId":appdelegate.email,"tag_id":self.tagId]
 
-        appdelegate.doItSocket(403, message: message, callback: { (readData) -> () in
+        appdelegate.doIt(403, message: message, callback: { (readData) -> () in
 
             if (readData.dictionaryObject!["follow"] as! String == "Y")
             {

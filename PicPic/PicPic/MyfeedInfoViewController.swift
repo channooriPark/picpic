@@ -40,7 +40,7 @@ class MyfeedInfoViewController: UIViewController ,UITextFieldDelegate,UIAlertVie
         let message : JSON = ["my_id":self.appdelegate.email,"user_id":self.appdelegate.email]
 //        let connection = URLConnection(serviceCode: 406, message: message)
 //        let readData = connection.connection()
-        self.appdelegate.doItSocket(406, message: message) { (readData) -> () in
+        self.appdelegate.doIt(406, message: message) { (readData) -> () in
             dispatch_async(dispatch_get_main_queue()) { () -> Void in
                 if let url = NSURL(string: self.imageURL.imageurl(readData["profile_picture"].string!)){
                     if let data = NSData(contentsOfURL: url){
@@ -93,9 +93,9 @@ class MyfeedInfoViewController: UIViewController ,UITextFieldDelegate,UIAlertVie
             self.appdelegate.testNavi.popViewControllerAnimated(true)
         }else {
             var message : JSON = ["id":self.userID.text!]//["my_id":self.emailText,"new_id":self.userID.text!]
-            self.appdelegate.doItSocket(214, message: message, callback: { (readData) -> () in
+            self.appdelegate.doIt(214, message: message, callback: { (readData) -> () in
                 if readData["data"].stringValue == "0" {
-                    self.appdelegate.doItSocket(215, message: message, callback: { (readData) -> () in
+                    self.appdelegate.doIt(215, message: message, callback: { (readData) -> () in
                         message = ["my_id":self.emailText,"new_id":self.userID.text!]
                         if readData["msg"].string! == "success" {
                             let alert = UIAlertView(title: self.appdelegate.ment["popup_id_already_title"].stringValue, message: self.appdelegate.ment["popup_id_change_complete"].stringValue, delegate: self, cancelButtonTitle: self.appdelegate.ment["popup_confirm"].stringValue)

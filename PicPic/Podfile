@@ -11,3 +11,4 @@ pod 'AEXML'
 pod "SpringIndicator"
 pod 'Alamofire', '~> 3.0'
 pod 'Google/SignIn'
+pod 'Google/AppInvite', '~> 1.0.2'

@@ -70,7 +70,7 @@ class FirstViewController: UIViewController , UIAlertViewDelegate,FBSDKAppInvite
 
                     
                     // doit
-                    self.appdelegate.doItSocket(202, message: message, callback: { (readData) -> () in
+                    self.appdelegate.doIt(202, message: message, callback: { (readData) -> () in
                         if readData["msg"].string! == "success" {
                             self.appdelegate.userData = readData["data"]
                             self.log.log("\(self.appdelegate.userData)")
@@ -88,7 +88,7 @@ class FirstViewController: UIViewController , UIAlertViewDelegate,FBSDKAppInvite
                         }
                     })
                     
-//                    self.appdelegate.doItSocket(202, message: message, callback: { (readData) -> () in
+//                    self.appdelegate.doIt(202, message: message, callback: { (readData) -> () in
 //                        if readData["msg"].string! == "success" {
 //                            self.appdelegate.userData = readData["data"]
 //                            self.log.log("\(self.appdelegate.userData)")
@@ -144,7 +144,7 @@ class FirstViewController: UIViewController , UIAlertViewDelegate,FBSDKAppInvite
                 //                let message : JSON = ["email":self.dec(appdelegate.standardUserDefaults.valueForKey("id")as! String),"password":self.dec(appdelegate.standardUserDefaults.valueForKey("password") as! String),"register_form":"10001","country":language,"device_id":"","push_token":"","regist_day":currentDate]
                 
                 // doit
-                self.appdelegate.doItSocket(202, message: message, callback: { (readData) -> () in
+                self.appdelegate.doIt(202, message: message, callback: { (readData) -> () in
                     if readData["msg"].string! == "success" {
                         self.appdelegate.email = readData["data"]["email"].string!
                         self.appdelegate.userData = readData["data"]
@@ -164,7 +164,7 @@ class FirstViewController: UIViewController , UIAlertViewDelegate,FBSDKAppInvite
                     }
                 })
                 
-//                self.appdelegate.doItSocket(202, message: message, callback: { (readData) -> () in
+//                self.appdelegate.doIt(202, message: message, callback: { (readData) -> () in
 //                    if readData["msg"].string! == "success" {
 //                        self.appdelegate.email = readData["data"]["email"].string!
 //                        self.appdelegate.userData = readData["data"]
@@ -214,7 +214,7 @@ class FirstViewController: UIViewController , UIAlertViewDelegate,FBSDKAppInvite
                 
                 
                 //doit
-                self.appdelegate.doItSocket(202, message: message, callback: { (readData) -> () in
+                self.appdelegate.doIt(202, message: message, callback: { (readData) -> () in
                     if readData["msg"].string! == "success" {
                         self.appdelegate.email = readData["data"]["email"].string!
                         self.appdelegate.userData = readData["data"]
@@ -231,7 +231,7 @@ class FirstViewController: UIViewController , UIAlertViewDelegate,FBSDKAppInvite
                     }
                 })
                 
-//                self.appdelegate.doItSocket(202, message: message, callback: { (readData) -> () in
+//                self.appdelegate.doIt(202, message: message, callback: { (readData) -> () in
 //                    if readData["msg"].string! == "success" {
 //                        self.appdelegate.email = readData["data"]["email"].string!
 //                        self.appdelegate.userData = readData["data"]

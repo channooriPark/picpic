@@ -75,7 +75,7 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
         //514, 411
         let message = JSON(["my_id": appdelegate.email])
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),{
-            appdelegate.doItSocket(514, message: message, callback: {(json) in
+            appdelegate.doIt(514, message: message, callback: {(json) in
                 for dic in json["locale"].array!
                 {
                     self.tagData.append(dic.dictionaryObject as! [String : String])
@@ -84,13 +84,13 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
                 {
                     self.tagData.append(dic.dictionaryObject as! [String: String])
                 }
-                appdelegate.doItSocket(411, message: message, callback: {(json) in
+                appdelegate.doIt(411, message: message, callback: {(json) in
                     print(json)
                     for dic in json["friends"].array!
                     {
                         self.friendData.append(dic.dictionaryObject as! [String : String])
                     }
-                    appdelegate.doItSocket(411, message: message, callback: { (json) in
+                    appdelegate.doIt(411, message: message, callback: { (json) in
                         for dic in json["friends"].array!
                         {
                             self.friendData.append(dic.dictionaryObject as! [String : String])
@@ -156,7 +156,7 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
         }
         
         let message : JSON = ["myId":appdelegate.email,"email":[["email" : email]],"type":type]
-        appdelegate.doItSocket(402, message: message, callback: {(json) in})
+        appdelegate.doIt(402, message: message, callback: {(json) in})
     }
     
     override func didReceiveMemoryWarning() {

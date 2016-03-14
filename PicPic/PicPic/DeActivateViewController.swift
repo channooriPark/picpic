@@ -39,7 +39,7 @@ class DeActivateViewController: UIViewController {
     @IBAction func deactivate(sender: AnyObject) {
         let message : JSON = ["email":self.appdelegate.email]
         
-        self.appdelegate.doItSocket(218, message: message) { (readData) -> () in
+        self.appdelegate.doIt(218, message: message) { (readData) -> () in
             if readData["msg"].string! == "success" {
                 if FBSDKAccessToken.currentAccessToken() != nil {
                     let loginManager = FBSDKLoginManager()

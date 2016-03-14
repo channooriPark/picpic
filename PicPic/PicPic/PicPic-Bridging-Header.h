@@ -21,6 +21,7 @@
 #import "CHTCollectionViewWaterfallLayout.h"
 #import "UIScrollView+SVInfiniteScrolling.h"
 #import "UIImageView+WebCache.h"
-
+#import <Google/AppInvite.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 #endif /* createAniGIF_Bridging_Header_h */

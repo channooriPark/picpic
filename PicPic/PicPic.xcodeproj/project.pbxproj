@@ -131,6 +131,7 @@
 		E42CDF101BECF7D100C35419 /* AVAssetImageGeneratorTimePoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42CDF061BECF7D100C35419 /* AVAssetImageGeneratorTimePoints.swift */; };
 		E42CDF111BECF7D100C35419 /* Regift.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42CDF071BECF7D100C35419 /* Regift.swift */; };
 		E42CDF141BECFB0700C35419 /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = E42CDF131BECFB0700C35419 /* UIImage+animatedGIF.m */; };
+		E42D85EF1C9699300091C429 /* InviteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42D85EE1C9699300091C429 /* InviteTableViewController.swift */; };
 		E4364FE11C06938000B201C6 /* colorPalette.plist in Resources */ = {isa = PBXBuildFile; fileRef = E4364FE01C06938000B201C6 /* colorPalette.plist */; };
 		E4364FE31C06A06500B201C6 /* MyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4364FE21C06A06500B201C6 /* MyView.swift */; };
 		E4364FE71C06DF7F00B201C6 /* FontViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4364FE61C06DF7F00B201C6 /* FontViewController.swift */; };
@@ -650,6 +651,7 @@
 		E42CDF121BECFB0700C35419 /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+animatedGIF.h"; path = "../Alamofire/UIImage+animatedGIF.h"; sourceTree = "<group>"; };
 		E42CDF131BECFB0700C35419 /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+animatedGIF.m"; path = "../Alamofire/UIImage+animatedGIF.m"; sourceTree = "<group>"; };
 		E42CDF151BECFB3C00C35419 /* PicPic-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PicPic-Bridging-Header.h"; sourceTree = "<group>"; };
+		E42D85EE1C9699300091C429 /* InviteTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteTableViewController.swift; sourceTree = "<group>"; };
 		E4364FE01C06938000B201C6 /* colorPalette.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = colorPalette.plist; sourceTree = "<group>"; };
 		E4364FE21C06A06500B201C6 /* MyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyView.swift; sourceTree = "<group>"; };
 		E4364FE61C06DF7F00B201C6 /* FontViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontViewController.swift; sourceTree = "<group>"; };
@@ -2221,6 +2223,7 @@
 		E4DF1DF91BE73E7800451800 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				E42D85EE1C9699300091C429 /* InviteTableViewController.swift */,
 				E4F3DD241BE38EC20063F29B /* SettingTableViewController.swift */,
 				E466C2511BE8CD89004F65EF /* Personal */,
 				E40DA7BB1BE9B77000C0E7F1 /* program */,
@@ -2647,6 +2650,7 @@
 				E4D4EC8C1C112EAF00616C2E /* GPUImagePosterizeFilter.m in Sources */,
 				E4CF94071C55C4EE00B85F0D /* SearchFriendViewController.swift in Sources */,
 				6CF172671C6C3B4E004CCB95 /* SecondCategoryViewController.swift in Sources */,
+				E42D85EF1C9699300091C429 /* InviteTableViewController.swift in Sources */,
 				E4D4EC991C112EAF00616C2E /* GPUImageSharpenFilter.m in Sources */,
 				6C1B7C881C631DD200DE7710 /* SecondNativeViewController.swift in Sources */,
 				E4B6DE301BFD672F00F013A9 /* CommentTagPageViewController.swift in Sources */,

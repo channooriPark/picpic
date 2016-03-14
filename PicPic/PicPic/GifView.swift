@@ -182,7 +182,7 @@ class GifView : UIImageView {
                     self.startAnimating()
                     if post_id != "" {
                         let message : JSON = ["post_id":post_id]
-                        self.appdelegate.doItSocket(301, message: message, callback: { (readData) -> () in
+                        self.appdelegate.doIt(301, message: message, callback: { (readData) -> () in
                         })
                 }
             }

@@ -466,7 +466,7 @@ class CommentCell: UITableViewCell {
         
         let message : JSON = ["post_reply_id":self.data["reply_id"].string!,"click_id":self.appdelegate.email,"like_form":"R"]
         if self.data["like_yn"].string! == "Y" {
-            self.appdelegate.doItSocket(303, message: message, callback: { (readData) -> () in
+            self.appdelegate.doIt(303, message: message, callback: { (readData) -> () in
                 if readData["msg"].string! == "success" {
                     
                 }
@@ -486,7 +486,7 @@ class CommentCell: UITableViewCell {
             self.data["like"].int = self.count
             self.comment.dataArray[self.index] = self.data
         }else {
-            self.appdelegate.doItSocket(302, message: message, callback: { (readData) -> () in
+            self.appdelegate.doIt(302, message: message, callback: { (readData) -> () in
                 if readData["msg"].string! == "success" {
                 }
             })

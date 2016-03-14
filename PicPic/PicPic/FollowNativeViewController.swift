@@ -77,7 +77,7 @@ class FollowNativeViewController: SubViewController, UITableViewDelegate, UITabl
         {
         case .Follower:
             let message = JSON(["my_id" : self.email, "user_id" : self.tagId, "page" : "1"])
-            appdelegate.doItSocket(408, message: message, callback: {(json) in
+            appdelegate.doIt(408, message: message, callback: {(json) in
                 if json["data"].type == .Null {return}
                 if (json["data"].arrayObject!.first as! [String: String])["email"] != "null"
                 {
@@ -87,7 +87,7 @@ class FollowNativeViewController: SubViewController, UITableViewDelegate, UITabl
             })
         case .Following:
             let message = JSON(["my_id" : self.email, "user_id" : self.tagId, "page" : "1"])
-            appdelegate.doItSocket(404, message: message, callback: {(json) in
+            appdelegate.doIt(404, message: message, callback: {(json) in
                 if json["data"].type == .Null {return}
                 if (json["data"].arrayObject!.first as! [String: String])["email"] != "null"
                 {
@@ -97,7 +97,7 @@ class FollowNativeViewController: SubViewController, UITableViewDelegate, UITabl
             })
         case .Like:
             let message = JSON(["my_id" : self.email, "post_reply_id" : self.tagId, "page" : "1"])
-            appdelegate.doItSocket(320, message: message, callback: {(json) in
+            appdelegate.doIt(320, message: message, callback: {(json) in
                 if json["data"].type == .Null {return}
                 if (json["data"].arrayObject!.first as! [String: String])["email"] != "null"
                 {
@@ -107,7 +107,7 @@ class FollowNativeViewController: SubViewController, UITableViewDelegate, UITabl
             })
         case .TagFollower:
             let message = JSON(["my_id" : self.email, "tag_id" : self.tagId, "page" : "1"])
-            appdelegate.doItSocket(409, message: message, callback: {(json) in
+            appdelegate.doIt(409, message: message, callback: {(json) in
                 if json["data"].type == .Null {return}
                 if (json["data"].arrayObject!.first as! [String: String])["email"] != "null"
                 {
@@ -128,7 +128,7 @@ class FollowNativeViewController: SubViewController, UITableViewDelegate, UITabl
         {
         case .Follower:
             let message = JSON(["my_id" : self.email, "user_id" : self.tagId, "page" : "\(newPage)"])
-            appdelegate.doItSocket(408, message: message, callback: {(json) in
+            appdelegate.doIt(408, message: message, callback: {(json) in
                 if json["data"].type == .Null {
                     self._hud.hide(true)
                     self.tableView.infiniteScrollingView.stopAnimating()
@@ -147,7 +147,7 @@ class FollowNativeViewController: SubViewController, UITableViewDelegate, UITabl
             })
         case .Following:
             let message = JSON(["my_id" : self.email, "user_id" : self.tagId, "page" : "\(newPage)"])
-            appdelegate.doItSocket(404, message: message, callback: {(json) in
+            appdelegate.doIt(404, message: message, callback: {(json) in
                 if json["data"].type == .Null {
                     self._hud.hide(true)
                     self.tableView.infiniteScrollingView.stopAnimating()
@@ -166,7 +166,7 @@ class FollowNativeViewController: SubViewController, UITableViewDelegate, UITabl
             })
         case .Like:
             let message = JSON(["my_id" : self.email, "post_reply_id" : self.tagId, "page" : "\(newPage)"])
-            appdelegate.doItSocket(320, message: message, callback: {(json) in
+            appdelegate.doIt(320, message: message, callback: {(json) in
                 if json["data"].type == .Null {
                     self._hud.hide(true)
                     self.tableView.infiniteScrollingView.stopAnimating()
@@ -185,7 +185,7 @@ class FollowNativeViewController: SubViewController, UITableViewDelegate, UITabl
             })
         case .TagFollower:
             let message = JSON(["my_id" : self.email, "tag_id" : self.tagId, "page" : "\(newPage)"])
-            appdelegate.doItSocket(409, message: message, callback: {(json) in
+            appdelegate.doIt(409, message: message, callback: {(json) in
                 if json["data"].type == .Null {
                     self._hud.hide(true)
                     self.tableView.infiniteScrollingView.stopAnimating()
@@ -297,7 +297,7 @@ class FollowNativeViewController: SubViewController, UITableViewDelegate, UITabl
         }
         
         let message : JSON = ["myId":appdelegate.email,"email":[["email" : email]],"type":type]
-        appdelegate.doItSocket(402, message: message, callback: {(json) in
+        appdelegate.doIt(402, message: message, callback: {(json) in
             self.tableView.reloadData()
         })
     }

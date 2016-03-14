@@ -88,7 +88,7 @@ class SecondCategoryViewController: UIViewController, UICollectionViewDataSource
         
         let mes = JSON(["my_id" : appdelegate.email, "page" : "1", "category_num" : self.categoryNum])
 
-        appdelegate.doItSocket(522, message: mes, callback: {(json) in
+        appdelegate.doIt(522, message: mes, callback: {(json) in
             self.postInfos = json["data"].arrayObject! as! [[String: AnyObject]]
             self.collectionView.reloadData()
             self._hud.hide(true)
@@ -104,7 +104,7 @@ class SecondCategoryViewController: UIViewController, UICollectionViewDataSource
         
         let mes: JSON = JSON(["my_id" : appdelegate.email, "page" : "\(newPage)", "category_num" : self.categoryNum])
         
-        appdelegate.doItSocket(522, message: mes, callback: {(json) in
+        appdelegate.doIt(522, message: mes, callback: {(json) in
             if json["data"].type == .Null
             {
                 self._hud.hide(true)
@@ -326,7 +326,7 @@ class SecondCategoryViewController: UIViewController, UICollectionViewDataSource
         }
         
         let message : JSON = ["myId":appdelegate.email,"email":[["email" : email]],"type":type]
-        appdelegate.doItSocket(402, message: message, callback: {(json) in
+        appdelegate.doIt(402, message: message, callback: {(json) in
             self.refresh()
         })
     }
@@ -361,7 +361,7 @@ class SecondCategoryViewController: UIViewController, UICollectionViewDataSource
         {
             self.postInfos[indexPath.item]["like_yn"] = "Y"
             self.postInfos[indexPath.item]["like_cnt"] = (self.postInfos[indexPath.item]["like_cnt"] as! Int) + 1
-            appdelegate.doItSocket(302, message: message, callback: { _ in
+            appdelegate.doIt(302, message: message, callback: { _ in
                 cell.likeCountLabel.text = "\(self.postInfos[indexPath.item]["like_cnt"] as! Int)"
             })
         }
@@ -369,7 +369,7 @@ class SecondCategoryViewController: UIViewController, UICollectionViewDataSource
         {
             self.postInfos[indexPath.item]["like_yn"] = "N"
             self.postInfos[indexPath.item]["like_cnt"] = (self.postInfos[indexPath.item]["like_cnt"] as! Int) - 1
-            appdelegate.doItSocket(303, message: message, callback: { _ in
+            appdelegate.doIt(303, message: message, callback: { _ in
                 cell.likeCountLabel.text = "\(self.postInfos[indexPath.item]["like_cnt"] as! Int)"
             })
         }
@@ -391,7 +391,7 @@ class SecondCategoryViewController: UIViewController, UICollectionViewDataSource
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let message = JSON(["my_id" : appdelegate.email, "post_id" : self.postInfos[indexPath.item]["post_id"] as! String])
         
-        appdelegate.doItSocket(504, message: message, callback: {(json) in
+        appdelegate.doIt(504, message: message, callback: {(json) in
             
             let share = appdelegate.storyboard.instantiateViewControllerWithIdentifier("ShareViewController")as! ShareViewController
             share.post_id = json.dictionaryObject!["post_id"] as! String

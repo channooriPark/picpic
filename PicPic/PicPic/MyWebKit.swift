@@ -303,7 +303,7 @@ class MyWebKit : UIViewController, WKNavigationDelegate, WKUIDelegate{
             
             
             let message : JSON = ["myId":appdelegate.email,"email":[["email":send_id]],"type":type]
-            appdelegate.doItSocket(402, message: message, callback: { (readData) -> () in
+            appdelegate.doIt(402, message: message, callback: { (readData) -> () in
                 
             })
             break;
@@ -312,7 +312,7 @@ class MyWebKit : UIViewController, WKNavigationDelegate, WKUIDelegate{
             let message : JSON = ["myId":appdelegate.email,"tag_id":send_id]
             //            let connection = URLConnection(serviceCode: 403, message: message)
             //            let readData = connection.connection()
-            appdelegate.doItSocket(403, message: message, callback: { (readData) -> () in
+            appdelegate.doIt(403, message: message, callback: { (readData) -> () in
                 
             })
             break;
@@ -327,7 +327,7 @@ class MyWebKit : UIViewController, WKNavigationDelegate, WKUIDelegate{
             }
             log.log("\(appdelegate.controller[count].type)")
             message = ["post_reply_id":send_id,"click_id":appdelegate.email,"like_form":"P"]
-            appdelegate.doItSocket(302, message: message, callback: { (readData) -> () in
+            appdelegate.doIt(302, message: message, callback: { (readData) -> () in
                 
                 log.log("\(readData)")
                 if readData["msg"].string! == "success"{
@@ -340,7 +340,7 @@ class MyWebKit : UIViewController, WKNavigationDelegate, WKUIDelegate{
             message = ["post_reply_id":send_id,"click_id":appdelegate.email,"like_form":"P"]
             //            let connection = URLConnection(serviceCode: 303, message: message)
             //            let readData = connection.connection()
-            appdelegate.doItSocket(303, message: message, callback: { (readData) -> () in
+            appdelegate.doIt(303, message: message, callback: { (readData) -> () in
                 if readData["msg"].string! == "success"{
                     log.log("좋아요 취소")
                 }

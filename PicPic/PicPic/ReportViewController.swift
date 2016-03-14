@@ -150,7 +150,7 @@ class ReportViewController: UIViewController , UITextFieldDelegate{
         
         
         let message : JSON = ["post_id":self.post_id,"call_id":self.appdelegate.email,"reason":self.reason,"type":self.type,"reason_code":self.reason_code]
-        self.appdelegate.doItSocket(204, message: message) { (readData) -> () in
+        self.appdelegate.doIt(204, message: message) { (readData) -> () in
             if readData["msg"].string! == "success" {
                 var count = (self.navigationController?.viewControllers.count)!-2
                 if count < 0 {

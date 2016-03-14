@@ -90,6 +90,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
         
         var configureError: NSError?
         GGLContext.sharedInstance().configureWithError(&configureError)
+        GINInvite.applicationDidFinishLaunching()
         
         let settings: UIUserNotificationSettings =
         UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
@@ -199,7 +200,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
         
         if self.email != nil {
             let message : JSON = ["email":self.email,"device_id":self.deviceId,"push_token":self.token]
-            self.doItSocket(221, message: message, callback: { (readData) -> () in
+            self.doIt(221, message: message, callback: { (readData) -> () in
                 print(readData)
             })
         }
@@ -495,14 +496,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
             
             
             let message : JSON = ["myId":self.email,"email":[["email":send_id]],"type":type]
-            self.doItSocket(402, message: message, callback: { (readData) -> () in
+            self.doIt(402, message: message, callback: { (readData) -> () in
                 
             })
             break;
         case "do_follow_tag":
             log.log("call do_follow_tag ")
             let message : JSON = ["myId":self.email,"tag_id":send_id]
-            self.doItSocket(403, message: message, callback: { (readData) -> () in
+            self.doIt(403, message: message, callback: { (readData) -> () in
                 
             })
             break;
@@ -517,7 +518,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
             }
             log.log("\(self.controller[count].type)")
             message = ["post_reply_id":send_id,"click_id":self.email,"like_form":"P"]
-            self.doItSocket(302, message: message, callback: { (readData) -> () in
+            self.doIt(302, message: message, callback: { (readData) -> () in
                 
                 self.log.log("\(readData)")
                 if readData["msg"].string! == "success"{
@@ -528,7 +529,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
         case "do_like_cancel":
             log.log("call do_like_cancel ")
             message = ["post_reply_id":send_id,"click_id":self.email,"like_form":"P"]
-            self.doItSocket(303, message: message, callback: { (readData) -> () in
+            self.doIt(303, message: message, callback: { (readData) -> () in
                 if readData["msg"].string! == "success"{
                     self.log.log("좋아요 취소")
                 }
@@ -579,7 +580,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
             
             
             let message : JSON = ["my_id":self.email,"user_id":send_id as String]
-            doItSocket(518, message: message, callback: { (readData) -> () in
+            doIt(518, message: message, callback: { (readData) -> () in
                 let vc = UserNativeViewController()
                 vc.userEmail = readData["email"].stringValue
                 self.testNavi.pushViewController(vc, animated: true)
@@ -667,6 +668,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
             if url.scheme == "fb1610072682575169" {
                 return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: options[UIApplicationOpenURLOptionsSourceApplicationKey]as! String?, annotation: options[UIApplicationOpenURLOptionsAnnotationKey])
             }else {
+                
+                let invite = GINInvite.handleURL(url, sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]as! String?, annotation:options[UIApplicationOpenURLOptionsAnnotationKey])
+                if (invite != nil)
+                {
+                    GINInvite.completeInvitation()
+                    let matchType =
+                    (invite.matchType == GINReceivedInviteMatchType.Weak) ? "Weak" : "Strong"
+                    print("Invite received from: \(options[UIApplicationOpenURLOptionsSourceApplicationKey]as! String?) Deeplink: \(invite.deepLink)," +
+                        "Id: \(invite.inviteId), Type: \(matchType)")
+                    GINInvite.convertInvitation(invite.inviteId)
+                    return GIDSignIn.sharedInstance().handleURL(url,
+                        sourceApplication: options[UIApplicationOpenURLOptionsSourceApplicationKey]as! String?,
+                        annotation: options[UIApplicationOpenURLOptionsAnnotationKey])
+                }
+                
+                
                 return GIDSignIn.sharedInstance().handleURL(url,
                     sourceApplication: options[UIApplicationOpenURLOptionsSourceApplicationKey]as! String?,
                     annotation: options[UIApplicationOpenURLOptionsAnnotationKey])

@@ -44,7 +44,7 @@ class WriteSearchPageViewController: UIViewController ,UITableViewDataSource, UI
         
         
         let message : JSON = ["my_id":self.appdelegate.email,"user_id":self.appdelegate.email,"page":String(followPage)]
-        self.appdelegate.doItSocket(404, message: message) { (readData) -> () in
+        self.appdelegate.doIt(404, message: message) { (readData) -> () in
             if let post = readData["data"].array {
                 self.type = true
                 for data in post {
@@ -107,7 +107,7 @@ class WriteSearchPageViewController: UIViewController ,UITableViewDataSource, UI
         
         let page = 1
         let message : JSON = ["my_id":self.appdelegate.email,"str":str,"page":String(page)]
-        self.appdelegate.doItSocket(512, message: message) { (readData) -> () in
+        self.appdelegate.doIt(512, message: message) { (readData) -> () in
             if let post = readData["friend"].array {
                 if post.count != 0 {
                     self.data.removeAll()

@@ -90,7 +90,7 @@ class MyfeedProfileViewController: UIViewController , UIImagePickerControllerDel
         let message : JSON = ["myId":self.appdelegate.email,"url":filename]
 //        let connection = URLConnection(serviceCode: 207, message: message)
 //        let readData = connection.connection()
-        self.appdelegate.doItSocket(207, message: message) { (readData) -> () in
+        self.appdelegate.doIt(207, message: message) { (readData) -> () in
             if readData["msg"].string! == "success" {
                 let alert = UIAlertView(title: self.appdelegate.ment["settings_public_setting_change_profile"].stringValue, message: self.appdelegate.ment["profile_complete"].stringValue, delegate: self, cancelButtonTitle: self.appdelegate.ment["popup_confirm"].stringValue)
                 alert.show()

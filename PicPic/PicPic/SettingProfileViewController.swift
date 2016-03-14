@@ -39,7 +39,7 @@ class SettingProfileViewController: UIViewController ,UITextFieldDelegate,UIAler
 //        let connection = URLConnection(serviceCode: 406, message: message)
 //        let readData = connection.connection()
         
-        self.appdelegate.doItSocket(406, message: message) { (readData) -> () in
+        self.appdelegate.doIt(406, message: message) { (readData) -> () in
             dispatch_async(dispatch_get_main_queue()) { () -> Void in
                 if let url = NSURL(string: self.imageURL.imageurl(readData["profile_picture"].string!)){
                     if let data = NSData(contentsOfURL: url){
@@ -95,10 +95,10 @@ class SettingProfileViewController: UIViewController ,UITextFieldDelegate,UIAler
         }else {
             var message : JSON = ["id":self.userID.text!]//["my_id":self.emailText,"new_id":self.userID.text!]
             print(message)
-            self.appdelegate.doItSocket(214, message: message, callback: { (readData) -> () in
+            self.appdelegate.doIt(214, message: message, callback: { (readData) -> () in
                 if readData["data"].stringValue == "0" {
                     message = ["my_id":self.emailText,"new_id":self.userID.text!]
-                    self.appdelegate.doItSocket(215, message: message, callback: { (readData) -> () in
+                    self.appdelegate.doIt(215, message: message, callback: { (readData) -> () in
                         if readData["msg"].string! == "success" {
                             let alert = UIAlertView(title: self.appdelegate.ment["popup_id_already_title"].stringValue, message: self.appdelegate.ment["popup_id_change_complete"].stringValue, delegate: self, cancelButtonTitle: self.appdelegate.ment["popup_confirm"].stringValue)
                             alert.show()
