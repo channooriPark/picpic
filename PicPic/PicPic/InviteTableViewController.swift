@@ -23,6 +23,10 @@ class InviteTableViewController: UITableViewController, GIDSignInDelegate, GIDSi
     
     @IBOutlet weak var ui_imvInviteFb: UIImageView!
     
+    @IBOutlet weak var ui_lblNameFb: UILabel!
+    
+    @IBOutlet weak var ui_blbNameGg: UILabel!
+    
     @IBOutlet weak var ui_imvIconGg: UIImageView!
     
     @IBOutlet weak var ui_lblStateGg: UILabel!
@@ -30,10 +34,16 @@ class InviteTableViewController: UITableViewController, GIDSignInDelegate, GIDSi
     @IBOutlet weak var ui_imvInviteGg: UIImageView!
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        
+        self.navigationController?.navigationBar.topItem?.title = self.appdelegate.ment["settings_invite"].stringValue
+        self.ui_lblNameFb.text = self.appdelegate.ment["facebook_friend"].stringValue
+        self.ui_blbNameGg.text = self.appdelegate.ment["google_friend"].stringValue
         GIDSignIn.sharedInstance().signInSilently()
+        
+        
+        
+        
+        
     }
     
     func initValue() {

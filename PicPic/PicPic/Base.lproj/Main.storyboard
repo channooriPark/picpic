@@ -3323,7 +3323,7 @@
                             <constraint firstItem="DsY-c0-YNT" firstAttribute="leading" secondItem="SdH-2H-JQp" secondAttribute="leadingMargin" constant="-11" id="PDG-BV-bWo"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="894FB374-0A6C-47DC-87AE-1013EB7AC110" id="QqF-Li-2ct"/>
+                    <tabBarItem key="tabBarItem" title="" image="44D5911A-AC7C-43C1-BF59-B6C895901FFE" id="QqF-Li-2ct"/>
                     <navigationItem key="navigationItem" id="0aK-XR-PxR"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
@@ -4763,6 +4763,9 @@
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="JjK-t9-oFG">
                                                     <rect key="frame" x="263" y="14" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="twitter:" destination="d05-K2-nXz" eventType="valueChanged" id="NHv-1f-TPc"/>
+                                                    </connections>
                                                 </switch>
                                             </subviews>
                                             <constraints>
@@ -7508,7 +7511,7 @@
                             <constraint firstItem="x9I-39-yvM" firstAttribute="leading" secondItem="Y3S-o4-VFB" secondAttribute="leadingMargin" constant="-11" id="Yxw-LI-fvC"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="F2FCA27F-D5FC-4967-BA23-A1EFD0522F59" id="urB-TV-Wsz"/>
+                    <tabBarItem key="tabBarItem" title="" image="D5D4DEF2-20FB-47E0-A63B-72932A230448" id="urB-TV-Wsz"/>
                     <navigationItem key="navigationItem" id="jnl-Uw-H5F"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
@@ -9078,11 +9081,11 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ehW-Mv-AZy">
                                         <rect key="frame" x="8" y="10" width="90" height="20"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="all" translatesAutoresizingMaskIntoConstraints="NO" id="Icb-cb-HUg" userLabel="facebook">
-                                                <rect key="frame" x="12" y="4" width="11" height="13"/>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_find_facebook" translatesAutoresizingMaskIntoConstraints="NO" id="Icb-cb-HUg" userLabel="facebook">
+                                                <rect key="frame" x="2" y="0.0" width="20" height="20"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="13" id="gsV-DU-WFk"/>
-                                                    <constraint firstAttribute="width" constant="11" id="vPf-Yo-wOB"/>
+                                                    <constraint firstAttribute="height" constant="20" id="gsV-DU-WFk"/>
+                                                    <constraint firstAttribute="width" constant="20" id="vPf-Yo-wOB"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="페이스북" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vPk-c7-iE5">
@@ -9094,14 +9097,14 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="Icb-cb-HUg" firstAttribute="leading" secondItem="ehW-Mv-AZy" secondAttribute="leading" constant="12" id="1Fq-HU-d6S"/>
+                                            <constraint firstItem="Icb-cb-HUg" firstAttribute="leading" secondItem="ehW-Mv-AZy" secondAttribute="leading" constant="2" id="1Fq-HU-d6S"/>
                                             <constraint firstItem="Icb-cb-HUg" firstAttribute="centerY" secondItem="vPk-c7-iE5" secondAttribute="centerY" constant="0.5" id="B2k-3E-nht"/>
                                             <constraint firstAttribute="trailing" secondItem="vPk-c7-iE5" secondAttribute="trailing" id="Nss-eE-8Hw"/>
-                                            <constraint firstItem="vPk-c7-iE5" firstAttribute="leading" secondItem="Icb-cb-HUg" secondAttribute="trailing" constant="3" id="Uh1-gL-9kV"/>
+                                            <constraint firstItem="vPk-c7-iE5" firstAttribute="leading" secondItem="Icb-cb-HUg" secondAttribute="trailing" constant="4" id="Uh1-gL-9kV"/>
                                             <constraint firstAttribute="width" constant="90" id="eKY-bP-mfZ"/>
                                             <constraint firstItem="vPk-c7-iE5" firstAttribute="top" secondItem="ehW-Mv-AZy" secondAttribute="top" id="f01-HZ-Jvh"/>
                                             <constraint firstAttribute="height" constant="20" id="lry-Jq-1cE"/>
-                                            <constraint firstAttribute="bottom" secondItem="Icb-cb-HUg" secondAttribute="bottom" constant="3" id="yB1-V1-nb9"/>
+                                            <constraint firstAttribute="bottom" secondItem="Icb-cb-HUg" secondAttribute="bottom" id="yB1-V1-nb9"/>
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Mq-US-HYo">
@@ -10032,6 +10035,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="D4x-32-O7g">
+                            <rect key="frame" x="0.0" y="184" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
                         <sections>
                             <tableViewSection id="PRj-Yq-aTn">
                                 <cells>
@@ -10051,7 +10059,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="페이스북 친구" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4jB-aH-KAj">
                                                     <rect key="frame" x="70" y="12" width="192" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="연결안됨" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Poj-98-pGc">
@@ -10097,10 +10105,10 @@
                                                         <constraint firstAttribute="width" constant="42" id="Vcf-i1-d0n"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="구글+ 친구" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fRS-Se-8nk">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="구글 친구" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fRS-Se-8nk">
                                                     <rect key="frame" x="70" y="12" width="192" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="연결안됨" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bbV-Q8-Sdb">
@@ -10143,10 +10151,12 @@
                     </tableView>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="ui_blbNameGg" destination="fRS-Se-8nk" id="59Z-R7-Iyz"/>
                         <outlet property="ui_imvIconFb" destination="1sq-xU-XZ7" id="QyO-zv-Ldw"/>
                         <outlet property="ui_imvIconGg" destination="xT7-rp-O93" id="AMp-3h-QlT"/>
                         <outlet property="ui_imvInviteFb" destination="1QD-6u-YEU" id="WG7-KR-Jlf"/>
                         <outlet property="ui_imvInviteGg" destination="IpV-Nv-29S" id="q98-vJ-UDh"/>
+                        <outlet property="ui_lblNameFb" destination="4jB-aH-KAj" id="Rh6-XP-BBO"/>
                         <outlet property="ui_lblStateFb" destination="Poj-98-pGc" id="Nhz-8M-cYt"/>
                         <outlet property="ui_lblStateGg" destination="bbV-Q8-Sdb" id="XAj-ga-7Ma"/>
                         <outlet property="ui_tblView" destination="Wci-C7-oxD" id="P2z-ua-a1F"/>
@@ -10158,7 +10168,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="894FB374-0A6C-47DC-87AE-1013EB7AC110" width="20" height="25">
+        <image name="44D5911A-AC7C-43C1-BF59-B6C895901FFE" width="20" height="25">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw
@@ -10242,7 +10252,7 @@ AKcAqQCrAK0AsgC1ALcAuQC7AL0AwgDZANsA3RFPEVQRXxFoEXsRfxGKEZMRmBGgEaMRqBG3EbsRwhHK
 EdcR3BHeEeAR5RHtEfAR9RH9EgASEhIVEhoAAAAAAAACAQAAAAAAAABBAAAAAAAAAAAAAAAAAAASHA
 </mutableData>
         </image>
-        <image name="F2FCA27F-D5FC-4967-BA23-A1EFD0522F59" width="20" height="25">
+        <image name="D5D4DEF2-20FB-47E0-A63B-72932A230448" width="20" height="25">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGPT5YJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK4HCBMU
 GR4fIyQrLjE3OlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdzVk5TUmVw

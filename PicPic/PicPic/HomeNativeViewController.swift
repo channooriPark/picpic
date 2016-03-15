@@ -16,7 +16,7 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
     
     var tagData: Array<[String: String]>  = []
     var gifData: [String : UIImage] = [ : ]
-    var friendData: Array<[String: String]> = []{
+    var friendData: Array<[String: AnyObject]> = []{
         didSet{
             if friendData.count == 12 && self.tagData.count > 0
             {
@@ -88,12 +88,12 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
                     print(json)
                     for dic in json["friends"].array!
                     {
-                        self.friendData.append(dic.dictionaryObject as! [String : String])
+                        self.friendData.append(dic.dictionaryObject as [String : AnyObject]!)
                     }
                     appdelegate.doIt(411, message: message, callback: { (json) in
                         for dic in json["friends"].array!
                         {
-                            self.friendData.append(dic.dictionaryObject as! [String : String])
+                            self.friendData.append(dic.dictionaryObject as [String : AnyObject]!)
                         }
                         
 //                        for (index, dic) in self.tagData.enumerate()
@@ -133,7 +133,7 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
     
     func followClicked(indexPath: NSIndexPath) {
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        if self.friendData[indexPath.item]["follow_yn"] == "N"
+        if self.friendData[indexPath.item]["follow_yn"]as! String == "N"
         {
            self.friendData[indexPath.item]["follow_yn"] = "Y"
         }
@@ -143,7 +143,7 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
         }
 
         let type : String!
-        let email = self.friendData[indexPath.item]["email"]! as String
+        let email = self.friendData[indexPath.item]["email"]as! String
         
         if appdelegate.userData["register_form"].string == "10001" {
             type = "N"
@@ -255,16 +255,16 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
                 return cell
             }
 
-            cell.profileImageView.sd_setImageWithURL(NSURL(string: "http://gif.picpic.world/" + self.friendData[index]["profile_picture"]!), placeholderImage: UIImage(named: "noprofile"))
+            cell.profileImageView.sd_setImageWithURL(NSURL(string: "http://gif.picpic.world/" + (self.friendData[index]["profile_picture"]! as! String)), placeholderImage: UIImage(named: "noprofile"))
             cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.width / 2
             cell.profileImageView.layer.masksToBounds = true
             
-            cell.nameLabel.text = self.friendData[index]["id"]!
+            cell.nameLabel.text = self.friendData[index]["id"]as! String
             cell.nameLabel.sizeToFit()
             cell.nameLabel.center.x = cell.profileImageView.center.x
 
             
-            if self.friendData[index]["follow_yn"] != "N"
+            if self.friendData[index]["follow_yn"]as! String != "N"
             {
                 cell.followButton.setImage(UIImage(named: "icon_find_plus_c"), forState: .Normal)
             }
@@ -307,7 +307,7 @@ class HomeNativeViewController: UIViewController, UICollectionViewDataSource, UI
             if indexPath.section == 3 {index += 6}
             
             let vc = UserNativeViewController()
-            vc.userEmail = self.friendData[index]["email"]!
+            vc.userEmail = self.friendData[index]["email"]as! String
             
             self.navigationController?.pushViewController(vc, animated: true)
             

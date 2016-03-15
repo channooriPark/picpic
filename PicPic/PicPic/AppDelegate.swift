@@ -88,6 +88,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
         application.applicationIconBadgeNumber = 0
         
         
+        Fabric.with([Twitter.self])
+        
         var configureError: NSError?
         GGLContext.sharedInstance().configureWithError(&configureError)
         GINInvite.applicationDidFinishLaunching()

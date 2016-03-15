@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import TwitterKit
 
-class SocialNetworkTableViewController: UITableViewController {
+class SocialNetworkTableViewController: UITableViewController ,TWTRComposerViewControllerDelegate{
     
     
     let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -105,6 +106,19 @@ class SocialNetworkTableViewController: UITableViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
+    @IBAction func twitter(sender: AnyObject) {
+        if (sender as! UISwitch).on {
+            Twitter.sharedInstance().logInWithCompletion { (session, error) -> Void in
+                if session != nil {
+                    print("signed in ad ",session?.userName)
+                }else if error != nil {
+                    print("error : ",error?.localizedDescription)
+                }
+            }
+        }
+    }
+    
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections

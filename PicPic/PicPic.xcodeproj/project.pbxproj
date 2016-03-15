@@ -163,6 +163,9 @@
 		E47BEFF81C44BE01008E93E8 /* GoogleJoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47BEFF71C44BE01008E93E8 /* GoogleJoinViewController.swift */; };
 		E47BEFFA1C44C37A008E93E8 /* GoogleprofileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47BEFF91C44C37A008E93E8 /* GoogleprofileViewController.swift */; };
 		E48E98DA1BF5B466002CF561 /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48E98D91BF5B466002CF561 /* Secret.swift */; };
+		E490EDD51C97DF4A0004EC13 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E490EDD21C97DF4A0004EC13 /* Fabric.framework */; };
+		E490EDD61C97DF4A0004EC13 /* TwitterKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E490EDD31C97DF4A0004EC13 /* TwitterKit.framework */; };
+		E490EDD71C97DF4A0004EC13 /* TwitterCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E490EDD41C97DF4A0004EC13 /* TwitterCore.framework */; };
 		E4932B351BFF001C0056D4EF /* MoviePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4932B341BFF001C0056D4EF /* MoviePreviewViewController.swift */; };
 		E4932B381BFF007C0056D4EF /* RAReorderableLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4932B371BFF007C0056D4EF /* RAReorderableLayout.swift */; };
 		E4932B3A1BFF065E0056D4EF /* GifMakerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4932B391BFF065E0056D4EF /* GifMakerViewController.swift */; };
@@ -693,6 +696,9 @@
 		E47BEFF71C44BE01008E93E8 /* GoogleJoinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleJoinViewController.swift; sourceTree = "<group>"; };
 		E47BEFF91C44C37A008E93E8 /* GoogleprofileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleprofileViewController.swift; sourceTree = "<group>"; };
 		E48E98D91BF5B466002CF561 /* Secret.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
+		E490EDD21C97DF4A0004EC13 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		E490EDD31C97DF4A0004EC13 /* TwitterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterKit.framework; sourceTree = "<group>"; };
+		E490EDD41C97DF4A0004EC13 /* TwitterCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterCore.framework; sourceTree = "<group>"; };
 		E4932B341BFF001C0056D4EF /* MoviePreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviePreviewViewController.swift; sourceTree = "<group>"; };
 		E4932B361BFF007C0056D4EF /* RAReorderableLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RAReorderableLayout.h; path = animatedImage/RAReorderableLayout.h; sourceTree = "<group>"; };
 		E4932B371BFF007C0056D4EF /* RAReorderableLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RAReorderableLayout.swift; path = animatedImage/RAReorderableLayout.swift; sourceTree = "<group>"; };
@@ -814,7 +820,6 @@
 		E4AB452B1C16668C002EA053 /* waldenMap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = waldenMap.png; path = map/waldenMap.png; sourceTree = SOURCE_ROOT; };
 		E4AB452C1C16668C002EA053 /* xproMap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = xproMap.png; path = map/xproMap.png; sourceTree = SOURCE_ROOT; };
 		E4AB45571C166A90002EA053 /* IFFilterApply.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IFFilterApply.swift; sourceTree = "<group>"; };
-		E4AB455A1C166E98002EA053 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		E4AB455B1C166E98002EA053 /* TwitterKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterKit.framework; sourceTree = "<group>"; };
 		E4AB455C1C166E98002EA053 /* TwitterKitResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TwitterKitResources.bundle; path = TwitterKit.framework/Versions/A/Resources/TwitterKitResources.bundle; sourceTree = "<group>"; };
 		E4AB455D1C166E98002EA053 /* TwitterCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TwitterCore.framework; sourceTree = "<group>"; };
@@ -1229,10 +1234,13 @@
 				E4D5430A1C15985C00EC1BB0 /* Social.framework in Frameworks */,
 				E40E26501BEF001300591044 /* MobileCoreServices.framework in Frameworks */,
 				E40E264E1BEF000B00591044 /* QuartzCore.framework in Frameworks */,
+				E490EDD51C97DF4A0004EC13 /* Fabric.framework in Frameworks */,
 				E4CDA08A1C4CD28400A85C42 /* FBSDKLoginKit.framework in Frameworks */,
+				E490EDD71C97DF4A0004EC13 /* TwitterCore.framework in Frameworks */,
 				254009E8A84B58AD4A88908B /* Pods.framework in Frameworks */,
 				E41A137A1BF115BD00028971 /* KakaoOpenSDK.framework in Frameworks */,
 				E4CDA08B1C4CD28400A85C42 /* FBSDKShareKit.framework in Frameworks */,
+				E490EDD61C97DF4A0004EC13 /* TwitterKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1558,8 +1566,10 @@
 		E44580301BE3882000AF186C = {
 			isa = PBXGroup;
 			children = (
+				E490EDD21C97DF4A0004EC13 /* Fabric.framework */,
+				E490EDD31C97DF4A0004EC13 /* TwitterKit.framework */,
+				E490EDD41C97DF4A0004EC13 /* TwitterCore.framework */,
 				E47BEFF11C44842D008E93E8 /* GoogleService-Info.plist */,
-				E4AB455A1C166E98002EA053 /* Fabric.framework */,
 				E4AB455B1C166E98002EA053 /* TwitterKit.framework */,
 				E4AB455C1C166E98002EA053 /* TwitterKitResources.bundle */,
 				E4AB455D1C166E98002EA053 /* TwitterCore.framework */,
@@ -2586,7 +2596,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "";
+			shellScript = "./Fabric.framework/run 4abd861012b779eb956ca68061142961fac86188 7c55b167d6e9dc9d1790013a89514dae80b9a299dad9b9f01c0ebe2d76e4eabe\n";
 		};
 		F3651896A595C8362F98EB13 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
