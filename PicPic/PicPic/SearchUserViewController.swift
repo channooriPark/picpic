@@ -12,6 +12,8 @@ import SwiftyJSON
 class SearchUserViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, FollowerViewCellProtocol {
 
     @IBOutlet weak var tableView: UITableView!
+    var currentPage = "1"
+    var currentString = ""
     var userDatas: Array<[String: AnyObject]> = []
     
     override func viewDidLoad() {
@@ -21,6 +23,7 @@ class SearchUserViewController: UIViewController, UITableViewDataSource, UITable
         self.tableView.delegate = self
         self.tableView.dataSource = self
         // Do any additional setup after loading the view.
+        self.tableView.addInfiniteScrollingWithActionHandler({_ in self.refreshWithAdditionalPage(self.currentPage)})
     }
 
     override func didReceiveMemoryWarning() {
@@ -109,14 +112,42 @@ class SearchUserViewController: UIViewController, UITableViewDataSource, UITable
     func setTableWithNewString(str: String)
     {
         let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        currentString = str
+        
+        
         let message = JSON(["my_id" : appdelegate.email, "str" : str, "type" : "U", "page" : "1"])
         appdelegate.doIt(515, message: message, callback: {(json) in
             if json["msg"].stringValue == "success"
             {
                 self.userDatas = json["user"].arrayObject as! Array<[String : AnyObject]>
                 self.tableView.reloadData()
+                self.tableView.infiniteScrollingView.enabled = true
             }
         })
     }
     
+    
+    func refreshWithAdditionalPage(currentPage: String)
+    {
+        let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        let newPage = Int(self.currentPage)! + 1
+        let message = JSON(["my_id" : appdelegate.email, "str" : self.currentString, "type" : "U", "page" : "\(newPage)"])
+        
+        appdelegate.doIt(515, message: message, callback: {(json) in
+            if json["user"].type == .Null
+            {
+                self.tableView.infiniteScrollingView.stopAnimating()
+                self.tableView.infiniteScrollingView.enabled = false
+                return
+            }
+            let newData = json["user"].arrayObject as! Array<[String: AnyObject]>
+            self.currentPage = "\(newPage)"
+            self.userDatas.appendContentsOf(newData)
+            self.tableView.reloadData()
+            self.tableView.infiniteScrollingView.stopAnimating()
+            
+        })
+    }
 }
