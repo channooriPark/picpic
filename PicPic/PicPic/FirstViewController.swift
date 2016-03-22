@@ -40,223 +40,163 @@ class FirstViewController: UIViewController , UIAlertViewDelegate,FBSDKAppInvite
         
         if appdelegate.standardUserDefaults.objectForKey("id") != nil && appdelegate.standardUserDefaults.objectForKey("password") != nil{
             
-            
-            
-            //페이스북 로그인일 때
-            if FBSDKAccessToken.currentAccessToken() != nil {
-                if  self.dec(appdelegate.standardUserDefaults.valueForKey("id") as! String) == FBSDKAccessToken.currentAccessToken().userID {
-                    
-                    //데이터 셋팅
-                    let nation : NSArray = language.componentsSeparatedByString("-")
-                    let formatter : NSDateFormatter = NSDateFormatter()
-                    formatter.dateFormat = "yyyyMMddHHmmss"
-                    let date = NSDate()
-                    let currentDate = formatter.stringFromDate(date)
-                    self.language = checkNational(nation[0] as! String)
-                    let register_form = "10002"
-                    
-                    if self.appdelegate.standardUserDefaults.valueForKey("uuid") == nil {
-                        var uuid = UIDevice.currentDevice().identifierForVendor?.UUIDString
-                        uuid = uuid?.stringByReplacingOccurrencesOfString("-", withString: "")
-                        uuid = "iPhone"+uuid!+uuid!
-                        
-                        self.appdelegate.standardUserDefaults.setValue(uuid, forKey: "uuid")
-                        self.appdelegate.deviceId = uuid!
+            if self.appdelegate.standardUserDefaults.valueForKey("register_form") != nil {
+                if self.dec(self.appdelegate.standardUserDefaults.valueForKey("register_form")as! String) == "10001" {
+                    picpicLogin()
+                }else if self.dec(self.appdelegate.standardUserDefaults.valueForKey("register_form")as! String) == "10002" {
+                    self.facebookLogin()
+                }else if self.dec(self.appdelegate.standardUserDefaults.valueForKey("register_form")as! String) == "10003" {
+                    self.googleLogin()
+                }
+            }else {
+                //이전 버전의 로그인 형식 수정 2016 03 18 Fri
+                
+                //페이스북 로그인일 때
+                if FBSDKAccessToken.currentAccessToken() != nil {
+                    //10002
+                    if  self.dec(appdelegate.standardUserDefaults.valueForKey("id") as! String) == FBSDKAccessToken.currentAccessToken().userID {
+                        self.facebookLogin()
                     }else {
-                        self.appdelegate.deviceId = self.appdelegate.standardUserDefaults.valueForKey("uuid")as! String
-                    }
-                    
-                    let message : JSON = ["email":FBSDKAccessToken.currentAccessToken().userID,"password":FBSDKAccessToken.currentAccessToken().userID,"register_form":register_form,"country":self.language,"device_id":self.appdelegate.deviceId,"push_token":self.appdelegate.token,"regist_day":currentDate]
-
-                    
-                    // doit
-                    self.appdelegate.doIt(202, message: message, callback: { (readData) -> () in
-                        if readData["msg"].string! == "success" {
-                            self.appdelegate.userData = readData["data"]
-                            self.log.log("\(self.appdelegate.userData)")
-                            self.appdelegate.email = readData["data"]["email"].string!
-                            self.appdelegate.controller.append(self.appdelegate.contentview)
-//                            self.appdelegate.contentview.index = self.appdelegate.controller.count-1
-                            self.appdelegate.contentview.type = "content"
-                            self.appdelegate.window?.rootViewController = self.appdelegate.testNavi
-                            if self.pushData != nil {
-                                self.appdelegate.URLopenPage(self.pushData)
-                            }
+                        if self.appdelegate.standardUserDefaults.objectForKey("register_form") != nil {
+                            googleLogin()
                         }else {
-//                            let alert = UIAlertView(title: "로그인 실패", message: "로그인을 다시 해 주세요", delegate: self, cancelButtonTitle: "확인")
-//                            alert.show()
-                        }
-                    })
-                    
-//                    self.appdelegate.doIt(202, message: message, callback: { (readData) -> () in
-//                        if readData["msg"].string! == "success" {
-//                            self.appdelegate.userData = readData["data"]
-//                            self.log.log("\(self.appdelegate.userData)")
-//                            self.appdelegate.email = readData["data"]["email"].string!
-//                            self.appdelegate.controller.append(self.appdelegate.contentview)
-//                            //                            self.appdelegate.contentview.index = self.appdelegate.controller.count-1
-//                            self.appdelegate.contentview.type = "content"
-//                            self.appdelegate.window?.rootViewController = self.appdelegate.testNavi
-//                            if self.pushData != nil {
-//                                self.appdelegate.URLopenPage(self.pushData)
-//                            }
-//                        }else {
-//                            let alert = UIAlertView(title: "로그인 실패", message: "로그인을 다시 해 주세요", delegate: self, cancelButtonTitle: "확인")
-//                            alert.show()
-//                        }
-//                    })
-                    
-                    
-                    
-                    
-                    //타임라인으로 화면 넘기기
-                    
-                    
-                    
-                }
-                    //저장되어 있는 아이디가 페이스북 아이디와 다를 경우
-                else {
-                    let intro : IntroMainViewController = self.storyboard?.instantiateViewControllerWithIdentifier("IntroMainViewController")as! IntroMainViewController
-                    appdelegate.window?.rootViewController = intro
-                }
-                
-            }else if self.appdelegate.standardUserDefaults.objectForKey("register_form") != nil {
-                print("google")
-                let nation : NSArray = language.componentsSeparatedByString("-")
-                let formatter : NSDateFormatter = NSDateFormatter()
-                formatter.dateFormat = "yyyyMMddHHmmss"
-                let date = NSDate()
-                let currentDate = formatter.stringFromDate(date)
-                self.language = checkNational(nation[0] as! String)
-                
-                if self.appdelegate.standardUserDefaults.valueForKey("uuid") == nil {
-                    var uuid = UIDevice.currentDevice().identifierForVendor?.UUIDString
-                    uuid = uuid?.stringByReplacingOccurrencesOfString("-", withString: "")
-                    uuid = "iPhone"+uuid!+uuid!
-                    
-                    self.appdelegate.standardUserDefaults.setValue(uuid, forKey: "uuid")
-                    self.appdelegate.deviceId = uuid!
-                }else {
-                    self.appdelegate.deviceId = self.appdelegate.standardUserDefaults.valueForKey("uuid")as! String
-                }
-                
-                let message : JSON = ["email":self.dec(appdelegate.standardUserDefaults.valueForKey("id")as! String),"password":self.dec(appdelegate.standardUserDefaults.valueForKey("password") as! String),"register_form":"10003","country":language,"device_id":self.appdelegate.deviceId,"push_token":self.appdelegate.token,"regist_day":currentDate]
-                //                let message : JSON = ["email":self.dec(appdelegate.standardUserDefaults.valueForKey("id")as! String),"password":self.dec(appdelegate.standardUserDefaults.valueForKey("password") as! String),"register_form":"10001","country":language,"device_id":"","push_token":"","regist_day":currentDate]
-                
-                // doit
-                self.appdelegate.doIt(202, message: message, callback: { (readData) -> () in
-                    if readData["msg"].string! == "success" {
-                        self.appdelegate.email = readData["data"]["email"].string!
-                        self.appdelegate.userData = readData["data"]
-                        self.log.log("\(self.appdelegate.userData)")
-                        self.appdelegate.controller.append(self.appdelegate.contentview)
-                        //                        self.appdelegate.contentview.index = self.appdelegate.controller.count-1
-                        self.appdelegate.contentview.type = "content"
-                        self.appdelegate.window?.rootViewController = self.appdelegate.testNavi
-                        if self.pushData != nil {
-                            self.appdelegate.URLopenPage(self.pushData)
+                            picpicLogin()
                         }
                     }
-                        //
-                    else{
-                        let viewController : UINavigationController = self.storyboard?.instantiateViewControllerWithIdentifier("signinNavigationController")as! UINavigationController
-                        self.appdelegate.window?.rootViewController = viewController
-                    }
-                })
-                
-//                self.appdelegate.doIt(202, message: message, callback: { (readData) -> () in
-//                    if readData["msg"].string! == "success" {
-//                        self.appdelegate.email = readData["data"]["email"].string!
-//                        self.appdelegate.userData = readData["data"]
-//                        self.log.log("\(self.appdelegate.userData)")
-//                        self.appdelegate.controller.append(self.appdelegate.contentview)
-//                        //                        self.appdelegate.contentview.index = self.appdelegate.controller.count-1
-//                        self.appdelegate.contentview.type = "content"
-//                        self.appdelegate.window?.rootViewController = self.appdelegate.testNavi
-//                        if self.pushData != nil {
-//                            self.appdelegate.URLopenPage(self.pushData)
-//                        }
-//                    }
-//                        //
-//                    else{
-//                        let viewController : UINavigationController = self.storyboard?.instantiateViewControllerWithIdentifier("signinNavigationController")as! UINavigationController
-//                        self.appdelegate.window?.rootViewController = viewController
-//                    }
-//                })
-                
-                
-                
-                
+                }else if self.appdelegate.standardUserDefaults.objectForKey("register_form") != nil {
+                    //10003
+                    print("google")
+                    self.googleLogin()
+                }
+                else { //10001
+                    print("일반 로그인")
+                    self.picpicLogin()
+                }
             }
-            else {
-                print("일반 로그인")
-                //일반로그인일때 AccessToken이 nil일 때
-                let nation : NSArray = language.componentsSeparatedByString("-")
-                let formatter : NSDateFormatter = NSDateFormatter()
-                formatter.dateFormat = "yyyyMMddHHmmss"
-                let date = NSDate()
-                let currentDate = formatter.stringFromDate(date)
-                self.language = checkNational(nation[0] as! String)
-                
-                if self.appdelegate.standardUserDefaults.valueForKey("uuid") == nil {
-                    var uuid = UIDevice.currentDevice().identifierForVendor?.UUIDString
-                    uuid = uuid?.stringByReplacingOccurrencesOfString("-", withString: "")
-                    uuid = "iPhone"+uuid!+uuid!
-                    
-                    self.appdelegate.standardUserDefaults.setValue(uuid, forKey: "uuid")
-                    self.appdelegate.deviceId = uuid!
-                }else {
-                    self.appdelegate.deviceId = self.appdelegate.standardUserDefaults.valueForKey("uuid")as! String
-                }
-                
-                let message : JSON = ["email":self.dec(appdelegate.standardUserDefaults.valueForKey("id")as! String),"password":self.dec(appdelegate.standardUserDefaults.valueForKey("password") as! String),"register_form":"10001","country":language,"device_id":self.appdelegate.deviceId,"push_token":self.appdelegate.token,"regist_day":currentDate]
-//                let message : JSON = ["email":self.dec(appdelegate.standardUserDefaults.valueForKey("id")as! String),"password":self.dec(appdelegate.standardUserDefaults.valueForKey("password") as! String),"register_form":"10001","country":language,"device_id":"","push_token":"","regist_day":currentDate]
-                
-                
-                //doit
-                self.appdelegate.doIt(202, message: message, callback: { (readData) -> () in
-                    if readData["msg"].string! == "success" {
-                        self.appdelegate.email = readData["data"]["email"].string!
-                        self.appdelegate.userData = readData["data"]
-                        self.log.log("\(self.appdelegate.userData)")
-                        self.appdelegate.controller.append(self.appdelegate.contentview)
-                        self.appdelegate.contentview.type = "content"
-                        self.appdelegate.window?.rootViewController = self.appdelegate.testNavi
-                        if self.pushData != nil {
-                            self.appdelegate.URLopenPage(self.pushData)
-                        }
-                    }else{
-                        let viewController : UINavigationController = self.storyboard?.instantiateViewControllerWithIdentifier("signinNavigationController")as! UINavigationController
-                        self.appdelegate.window?.rootViewController = viewController
-                    }
-                })
-                
-//                self.appdelegate.doIt(202, message: message, callback: { (readData) -> () in
-//                    if readData["msg"].string! == "success" {
-//                        self.appdelegate.email = readData["data"]["email"].string!
-//                        self.appdelegate.userData = readData["data"]
-//                        self.log.log("\(self.appdelegate.userData)")
-//                        self.appdelegate.controller.append(self.appdelegate.contentview)
-//                        //                        self.appdelegate.contentview.index = self.appdelegate.controller.count-1
-//                        self.appdelegate.contentview.type = "content"
-//                        self.appdelegate.window?.rootViewController = self.appdelegate.testNavi
-//                        if self.pushData != nil {
-//                            self.appdelegate.URLopenPage(self.pushData)
-//                        }
-//                    }else{
-//                        let viewController : UINavigationController = self.storyboard?.instantiateViewControllerWithIdentifier("signinNavigationController")as! UINavigationController
-//                        self.appdelegate.window?.rootViewController = viewController
-//                    }
-//                })
-                
-            }
-            
-            
-        }else {
+        }else { //단말기에 id와 password가 저장이 안되어 있을때에 로그인 화면으로 넘어간다
             appdelegate.window?.rootViewController = self.appdelegate.signin
         }
+    }
+    
+    
+    //페이스북 로그인 func
+    func facebookLogin(){
+        //데이터 셋팅
+        let nation : NSArray = language.componentsSeparatedByString("-")
+        let formatter : NSDateFormatter = NSDateFormatter()
+        formatter.dateFormat = "yyyyMMddHHmmss"
+        let date = NSDate()
+        let currentDate = formatter.stringFromDate(date)
+        self.language = checkNational(nation[0] as! String)
+        let register_form = "10002"
+        if self.appdelegate.standardUserDefaults.valueForKey("uuid") == nil {
+            var uuid = UIDevice.currentDevice().identifierForVendor?.UUIDString
+            uuid = uuid?.stringByReplacingOccurrencesOfString("-", withString: "")
+            uuid = "iPhone"+uuid!+uuid!
+            
+            self.appdelegate.standardUserDefaults.setValue(uuid, forKey: "uuid")
+            self.appdelegate.deviceId = uuid!
+        }else {
+            self.appdelegate.deviceId = self.appdelegate.standardUserDefaults.valueForKey("uuid")as! String
+        }
         
+        let message : JSON = ["email":FBSDKAccessToken.currentAccessToken().userID,"password":FBSDKAccessToken.currentAccessToken().userID,"register_form":register_form,"country":self.language,"device_id":self.appdelegate.deviceId,"push_token":self.appdelegate.token,"regist_day":currentDate]
+        // doit
+        self.appdelegate.doIt(202, message: message, callback: { (readData) -> () in
+            if readData["msg"].string! == "success" {
+                self.appdelegate.userData = readData["data"]
+                self.appdelegate.email = readData["data"]["email"].string!
+                self.appdelegate.standardUserDefaults.setValue(self.enc("10002"), forKey: "register_form")
+                self.appdelegate.controller.append(self.appdelegate.contentview)
+                self.appdelegate.contentview.type = "content"
+                self.appdelegate.window?.rootViewController = self.appdelegate.testNavi
+                if self.pushData != nil {
+                    self.appdelegate.URLopenPage(self.pushData)
+                }
+            }else { //Login fail
+                let viewController : UINavigationController = self.storyboard?.instantiateViewControllerWithIdentifier("signinNavigationController")as! UINavigationController
+                self.appdelegate.window?.rootViewController = viewController
+            }
+        })
+    }
+    //구글 로그인 func
+    func googleLogin(){
+        let nation : NSArray = language.componentsSeparatedByString("-")
+        let formatter : NSDateFormatter = NSDateFormatter()
+        formatter.dateFormat = "yyyyMMddHHmmss"
+        let date = NSDate()
+        let currentDate = formatter.stringFromDate(date)
+        self.language = checkNational(nation[0] as! String)
         
+        if self.appdelegate.standardUserDefaults.valueForKey("uuid") == nil {
+            var uuid = UIDevice.currentDevice().identifierForVendor?.UUIDString
+            uuid = uuid?.stringByReplacingOccurrencesOfString("-", withString: "")
+            uuid = "iPhone"+uuid!+uuid!
+            
+            self.appdelegate.standardUserDefaults.setValue(uuid, forKey: "uuid")
+            self.appdelegate.deviceId = uuid!
+        }else {
+            self.appdelegate.deviceId = self.appdelegate.standardUserDefaults.valueForKey("uuid")as! String
+        }
+        
+        let message : JSON = ["email":self.dec(appdelegate.standardUserDefaults.valueForKey("id")as! String),"password":self.dec(appdelegate.standardUserDefaults.valueForKey("password") as! String),"register_form":"10003","country":language,"device_id":self.appdelegate.deviceId,"push_token":self.appdelegate.token,"regist_day":currentDate]
+        // doit
+        self.appdelegate.doIt(202, message: message, callback: { (readData) -> () in
+            if readData["msg"].string! == "success" {
+                self.appdelegate.email = readData["data"]["email"].string!
+                self.appdelegate.userData = readData["data"]
+                self.appdelegate.controller.append(self.appdelegate.contentview)
+                self.appdelegate.contentview.type = "content"
+                self.appdelegate.window?.rootViewController = self.appdelegate.testNavi
+                self.appdelegate.standardUserDefaults.setValue(self.enc("10003"), forKey: "register_form")
+                if self.pushData != nil {
+                    self.appdelegate.URLopenPage(self.pushData)
+                }
+            }
+            else{//Login fail
+                let viewController : UINavigationController = self.storyboard?.instantiateViewControllerWithIdentifier("signinNavigationController")as! UINavigationController
+                self.appdelegate.window?.rootViewController = viewController
+            }
+        })
+    }
+    //일반로그인 func
+    func picpicLogin(){
+        //일반로그인일때 AccessToken이 nil일 때
+        let nation : NSArray = language.componentsSeparatedByString("-")
+        let formatter : NSDateFormatter = NSDateFormatter()
+        formatter.dateFormat = "yyyyMMddHHmmss"
+        let date = NSDate()
+        let currentDate = formatter.stringFromDate(date)
+        self.language = checkNational(nation[0] as! String)
+        
+        if self.appdelegate.standardUserDefaults.valueForKey("uuid") == nil {
+            var uuid = UIDevice.currentDevice().identifierForVendor?.UUIDString
+            uuid = uuid?.stringByReplacingOccurrencesOfString("-", withString: "")
+            uuid = "iPhone"+uuid!+uuid!
+            self.appdelegate.standardUserDefaults.setValue(uuid, forKey: "uuid")
+            self.appdelegate.deviceId = uuid!
+        }else {
+            self.appdelegate.deviceId = self.appdelegate.standardUserDefaults.valueForKey("uuid")as! String
+        }
+        
+        let message : JSON = ["email":self.dec(appdelegate.standardUserDefaults.valueForKey("id")as! String),"password":self.dec(appdelegate.standardUserDefaults.valueForKey("password") as! String),"register_form":"10001","country":language,"device_id":self.appdelegate.deviceId,"push_token":self.appdelegate.token,"regist_day":currentDate]
+        //doit
+        self.appdelegate.doIt(202, message: message, callback: { (readData) -> () in
+            if readData["msg"].string! == "success" {
+                self.appdelegate.email = readData["data"]["email"].string!
+                self.appdelegate.userData = readData["data"]
+                self.appdelegate.standardUserDefaults.setValue(self.enc("10001"), forKey: "register_form")
+                self.appdelegate.controller.append(self.appdelegate.contentview)
+                self.appdelegate.contentview.type = "content"
+                self.appdelegate.window?.rootViewController = self.appdelegate.testNavi
+                if self.pushData != nil {
+                    self.appdelegate.URLopenPage(self.pushData)
+                }
+            }else{//Login fail
+                let viewController : UINavigationController = self.storyboard?.instantiateViewControllerWithIdentifier("signinNavigationController")as! UINavigationController
+                self.appdelegate.window?.rootViewController = viewController
+            }
+        })
     }
     
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {

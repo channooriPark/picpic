@@ -377,57 +377,48 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
     func tweetWithImage(data:NSData)
     {
         
+        
+        
         let account = ACAccountStore()
-        let accountType = account.accountTypeWithAccountTypeIdentifier(
-            ACAccountTypeIdentifierTwitter)
+        let accountType = account.accountTypeWithAccountTypeIdentifier(ACAccountTypeIdentifierTwitter)
+        let message = "test twitter not showing dialog"
+        let arrayOfAccons = account.accountsWithAccountType(accountType)
+        print(arrayOfAccons.count)
+        for var acc in arrayOfAccons {
+            print(acc)
+        }
         
-        account.requestAccessToAccountsWithType(accountType, options: nil,
-            completion: {(success: Bool, error: NSError!) -> Void in
-                if success {
-                    let arrayOfAccounts =
-                    account.accountsWithAccountType(accountType)
+        let url = NSURL(string: "https://api.twitter.com/1.1/statuses/user_timeline.json")
+        let params : NSDictionary = ["screen_name":message,"forKey":"status","trim_user":"1","count":"1"]
+        
+        account.requestAccessToAccountsWithType(accountType, options: nil, completion: { (granted, error) -> Void in
+            if granted {
+                print("granted in  true")
+                let arrayOfAccounts = account.accountsWithAccountType(accountType)
+                if arrayOfAccons.count > 0 {
+                    let acct = arrayOfAccounts[0]
+                    var postRequest = SLRequest(forServiceType: SLServiceTypeTwitter, requestMethod: SLRequestMethod.POST, URL: NSURL(string: "https://api.twitter.com/1.1/statuses/update_with_media.json"), parameters: NSDictionary(dictionary: ["status":message]) as [NSObject : AnyObject])
+                    postRequest.addMultipartData(data, withName: "media", type: "image/gif", filename: nil)
                     
-                    if arrayOfAccounts.count > 0 {
-                        let twitterAccount = arrayOfAccounts.first as! ACAccount
-                        var message = Dictionary<String, AnyObject>()
-                        let requestURL = NSURL(string:"https://api.twitter.com/1.1/statuses/update_with_media.json")
-                        let postRequest = SLRequest(forServiceType:
-                            SLServiceTypeTwitter,
-                            requestMethod: SLRequestMethod.POST,
-                            URL: requestURL,
-                            parameters: message)
-                        
-                        postRequest.account = twitterAccount
-                        postRequest.addMultipartData(data, withName: "media", type: nil, filename: nil)
-                        
-                        postRequest.performRequestWithHandler({
-                            (responseData: NSData!,
-                            urlResponse: NSHTTPURLResponse!,
-                            error: NSError!) -> Void in
-                            
-                            if let err = error {
-                                let alert = UIAlertView(title: "Twitter", message: "Error : \(err.localizedDescription)", delegate: nil, cancelButtonTitle: "확인")
-                                alert.show()
-                            } else {
-                                self.tumblr()
-                            }
-                            
-                            print("Twitter HTTP response \(urlResponse.statusCode)")
-                            
-                        })
-                    } else {
-                        let alert = UIAlertView(title: "Twitter", message: "You have no twitter account", delegate: nil, cancelButtonTitle: "OK")
-                        alert.show()
-                    }
+                    postRequest.account = acct as! ACAccount
+                    postRequest.performRequestWithHandler({ (responseData, urlResponse, error) -> Void in
+                        if error != nil {
+                            print(error.localizedDescription)
+                        }else {
+                            print("Twitter response, HTTP response : ",urlResponse.statusCode)
+                            self.tumblr()
+                        }
+                    })
                 }
-                else
-                {
-                    let alert = UIAlertView(title: "Twitter", message: "Permission not granted", delegate: nil, cancelButtonTitle: "OK")
-                    alert.show()
-                }
+            }else {
+                print("granted false")
+            }
+            
+            if error != nil {
+                print(error.localizedDescription)
+            }
+            
         })
-        
-        
     }
     
     func tumblr() {

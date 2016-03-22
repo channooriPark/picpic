@@ -137,13 +137,12 @@ class UserPageShareViewController: UIViewController,UIAlertViewDelegate {
                     
                     if arrayOfAccounts.count > 0 {
                         let twitterAccount = arrayOfAccounts.first as! ACAccount
-                        var message = Dictionary<String, AnyObject>()
+                        var message = Dictionary<NSObject, AnyObject>()
                         let requestURL = NSURL(string:"https://api.twitter.com/1.1/statuses/update_with_media.json")
-                        let postRequest = SLRequest(forServiceType:
-                            SLServiceTypeTwitter,
-                            requestMethod: SLRequestMethod.POST,
-                            URL: requestURL,
-                            parameters: message)
+                        let requestMethod : SLRequestMethod = SLRequestMethod.POST
+                        
+                        let postRequest = SLRequest()
+                        
                         
                         postRequest.account = twitterAccount
                         postRequest.addMultipartData(data, withName: "media", type: nil, filename: nil)

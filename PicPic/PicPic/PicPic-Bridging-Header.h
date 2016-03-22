@@ -23,5 +23,7 @@
 #import "UIImageView+WebCache.h"
 #import <Google/AppInvite.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <TMTumblrSDK/TMAPIClient.h>
+#import <TMTumblrSDK/TMTumblrAppClient.h>
 
 #endif /* createAniGIF_Bridging_Header_h */

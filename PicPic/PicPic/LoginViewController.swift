@@ -146,15 +146,12 @@ class LoginViewController: UIViewController ,UITextFieldDelegate{
             if appdelegate.standardUserDefaults.objectForKey("id") == nil {
                 appdelegate.standardUserDefaults.setValue(self.enc(id), forKey: "id")
                 appdelegate.standardUserDefaults.setValue(self.enc(password), forKey: "password")
-//                //print("alsdjfef;oiajsfi;oejasd;fe;io\(self.enc(id))")
-//                //print("alsdjfef;oiajsfi;oejasd;fe;io\(self.enc(password))")
+                self.appdelegate.standardUserDefaults.setValue(self.enc("10001"), forKey: "register_form")
                 appdelegate.standardUserDefaults.synchronize()
             }
             appdelegate.userData = self.readData["data"]
             log.log("\(appdelegate.userData)")
-//            print(appdelegate.userData)
             appdelegate.controller.append(appdelegate.contentview)
-//            appdelegate.contentview.index = appdelegate.controller.count-1
             appdelegate.contentview.type = "content"
             appdelegate.window?.rootViewController = appdelegate.testNavi
         }else {

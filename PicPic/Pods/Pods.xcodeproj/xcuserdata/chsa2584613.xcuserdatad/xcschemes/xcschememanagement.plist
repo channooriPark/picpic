@@ -19,7 +19,22 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>JXHTTP.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>OAuthSwift.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Spectacles.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -34,15 +49,30 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>TMTumblrSDK.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>07C29B50F2219E933C028C27D2884B25</key>
+		<key>08C33CD8F4E84082D7CFB87C399755C1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>369A9982D31A013E51B36A47C54BE284</key>
+		<key>2FBFF6A15D1406B6EDC5724B3F063ECC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>43D9508A6F1039055FD07F1579FA265F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6F4DAE9A1DB241AF132F523B5A2BAE83</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -52,17 +82,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>9EFB841EAF7DB167B232DF744E40EEE7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A94C10728B4351DB84C367AC4E1D39F4</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>B9A04D3C9B208813656510FDA8ADAE02</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BC1D3B16E5B0DED2DA9564E98D9855E1</key>
+		<key>BAFC8A23DE126E84CA0096AF76C8BC8A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C0490AA03463E2BD363669120688A906</key>
+		<key>E5F205F2D67ACE2904D64018F10BAA08</key>
 		<dict>
 			<key>primary</key>
 			<true/>

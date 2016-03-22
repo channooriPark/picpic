@@ -123,7 +123,7 @@ final class SHA2 : HashProtocol {
         }
 		
         // append message length, in a 64-bit big-endian integer. So now the message length is a multiple of 512 bits.
-        tmpMessage += (message.count * 8).bytes(64 / 8)
+        tmpMessage += (message.count * 8).bytes1(64 / 8)
         
         // Process the message in successive 512-bit chunks:
         let chunkSizeBytes = 512 / 8 // 64
@@ -206,7 +206,7 @@ final class SHA2 : HashProtocol {
 		
   
         // append message length, in a 64-bit big-endian integer. So now the message length is a multiple of 512 bits.
-        tmpMessage += (message.count * 8).bytes(64 / 8)
+        tmpMessage += (message.count * 8).bytes1(64 / 8)
         
         // Process the message in successive 1024-bit chunks:
         let chunkSizeBytes = 1024 / 8 // 128

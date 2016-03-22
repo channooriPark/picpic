@@ -546,7 +546,7 @@
     
     <string name="delete_post">삭제된 게시물입니다</string>
     
-    
+    <string name="allFollow">모두 팔로우</string>
     
     <string name="camera_edit_partial">부분GIF를 적용한 상태로 필터를 적용 할 시, 적용된 부분GIF가 사라집니다.&amp; 필터를 적용하시겠습니까?</string>
 

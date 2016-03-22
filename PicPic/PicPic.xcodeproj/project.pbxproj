@@ -279,6 +279,7 @@
 		E4CDA0891C4CD28400A85C42 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4CDA0861C4CD28400A85C42 /* FBSDKCoreKit.framework */; };
 		E4CDA08A1C4CD28400A85C42 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4CDA0871C4CD28400A85C42 /* FBSDKLoginKit.framework */; };
 		E4CDA08B1C4CD28400A85C42 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4CDA0881C4CD28400A85C42 /* FBSDKShareKit.framework */; };
+		E4CE788B1CA0FF4000678FCC /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4D543091C15985C00EC1BB0 /* Social.framework */; };
 		E4CF94051C55C4EE00B85F0D /* FriendEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CF94021C55C4EE00B85F0D /* FriendEntity.swift */; };
 		E4CF94061C55C4EE00B85F0D /* SearchFriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CF94031C55C4EE00B85F0D /* SearchFriendTableViewCell.swift */; };
 		E4CF94071C55C4EE00B85F0D /* SearchFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CF94041C55C4EE00B85F0D /* SearchFriendViewController.swift */; };
@@ -451,7 +452,6 @@
 		E4D4ECBD1C112EAF00616C2E /* GPUImageWhiteBalanceFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D4EC171C112EAF00616C2E /* GPUImageWhiteBalanceFilter.m */; };
 		E4D4ECBE1C112EAF00616C2E /* GPUImageXYDerivativeFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D4EC191C112EAF00616C2E /* GPUImageXYDerivativeFilter.m */; };
 		E4D4ECBF1C112EAF00616C2E /* GPUImageZoomBlurFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D4EC1B1C112EAF00616C2E /* GPUImageZoomBlurFilter.m */; };
-		E4D5430A1C15985C00EC1BB0 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4D543091C15985C00EC1BB0 /* Social.framework */; };
 		E4D888B01C2046870060AB0A /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D888AF1C2046870060AB0A /* LaunchViewController.swift */; };
 		E4DCBE101C2BA8440095F84A /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4DCBE0F1C2BA8440095F84A /* AssetsLibrary.framework */; };
 		E4DF1DFB1BE7421C00451800 /* LogoutAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DF1DFA1BE7421C00451800 /* LogoutAlertViewController.swift */; };
@@ -483,6 +483,7 @@
 		E4F435151BF245F900AC3308 /* MyfeedInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F435141BF245F900AC3308 /* MyfeedInfoViewController.swift */; };
 		E4F435171BF2460900AC3308 /* MyfeedProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F435161BF2460900AC3308 /* MyfeedProfileViewController.swift */; };
 		E4F4A7181BF59F5200ACE67C /* LogPrint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F4A7171BF59F5200ACE67C /* LogPrint.swift */; };
+		E4FA320C1C98FB5A0090DD78 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4FA320B1C98FB5A0090DD78 /* Accounts.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1219,6 +1220,7 @@
 		E4F435141BF245F900AC3308 /* MyfeedInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyfeedInfoViewController.swift; sourceTree = "<group>"; };
 		E4F435161BF2460900AC3308 /* MyfeedProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyfeedProfileViewController.swift; sourceTree = "<group>"; };
 		E4F4A7171BF59F5200ACE67C /* LogPrint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogPrint.swift; sourceTree = "<group>"; };
+		E4FA320B1C98FB5A0090DD78 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1226,12 +1228,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4CE788B1CA0FF4000678FCC /* Social.framework in Frameworks */,
+				E4FA320C1C98FB5A0090DD78 /* Accounts.framework in Frameworks */,
 				E40E264C1BEEFFE800591044 /* ImageIO.framework in Frameworks */,
 				E40E264A1BEEFFE200591044 /* AVFoundation.framework in Frameworks */,
 				6C9897991C5083F600AD6292 /* libfingramagifencoder.a in Frameworks */,
 				E4DCBE101C2BA8440095F84A /* AssetsLibrary.framework in Frameworks */,
 				E4CDA0891C4CD28400A85C42 /* FBSDKCoreKit.framework in Frameworks */,
-				E4D5430A1C15985C00EC1BB0 /* Social.framework in Frameworks */,
 				E40E26501BEF001300591044 /* MobileCoreServices.framework in Frameworks */,
 				E40E264E1BEF000B00591044 /* QuartzCore.framework in Frameworks */,
 				E490EDD51C97DF4A0004EC13 /* Fabric.framework in Frameworks */,
@@ -1451,6 +1454,7 @@
 		A439FDD749F1A27F780551FA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E4FA320B1C98FB5A0090DD78 /* Accounts.framework */,
 				6C9897981C5083F600AD6292 /* libfingramagifencoder.a */,
 				E4DCBE0F1C2BA8440095F84A /* AssetsLibrary.framework */,
 				E4D543091C15985C00EC1BB0 /* Social.framework */,

@@ -46,8 +46,27 @@ PODS:
     - GoogleParsingUtilities (~> 1.0)
     - GoogleSignIn (~> 2)
     - GoogleUtilities (~> 1.0)
+  - JXHTTP (3.0.2)
+  - OAuthSwift (0.5.1)
+  - Spectacles (1.0.1)
   - SpringIndicator (1.2.1)
   - SwiftyJSON (2.3.2)
+  - TMTumblrSDK (4.0.4):
+    - TMTumblrSDK/Activity (= 4.0.4)
+    - TMTumblrSDK/APIClient (= 4.0.4)
+    - TMTumblrSDK/AppClient (= 4.0.4)
+    - TMTumblrSDK/Core (= 4.0.4)
+  - TMTumblrSDK/Activity (4.0.4)
+  - TMTumblrSDK/APIClient (4.0.4):
+    - JXHTTP
+    - TMTumblrSDK/APIClient/Authentication (= 4.0.4)
+  - TMTumblrSDK/APIClient/Authentication (4.0.4):
+    - JXHTTP
+    - TMTumblrSDK/Core
+  - TMTumblrSDK/AppClient (4.0.4):
+    - TMTumblrSDK/Core
+  - TMTumblrSDK/Core (4.0.4):
+    - Spectacles (~> 1.0)
 
 DEPENDENCIES:
   - AEXML
@@ -55,8 +74,10 @@ DEPENDENCIES:
   - CryptoSwift
   - Google/AppInvite (~> 1.0.2)
   - Google/SignIn
+  - OAuthSwift (~> 0.5.0)
   - SpringIndicator
   - SwiftyJSON (~> 2.3.0)
+  - TMTumblrSDK
 
 SPEC CHECKSUMS:
   AEXML: 0e2f657fdc67e17905682a06d55583a863d80803
@@ -74,7 +95,11 @@ SPEC CHECKSUMS:
   GoogleSymbolUtilities: 82ad9f93d3615244b3f4ce440f5ab2515e8b4f56
   GoogleUtilities: 8ed9134debe11719097881711464752900668f10
   GPPCore: 228fdd19eba0e83cba6817004f0d6431d8396d64
+  JXHTTP: c37120f210cd2dfcb3470d70239f5253335e2f1a
+  OAuthSwift: d63f7f329f49787319a7e35974c18b10865fe636
+  Spectacles: 8dc60711140320653724560e2d6bbb8a8f0940e4
   SpringIndicator: 2e66169e2595c00cc3ab34329d6bdbeab90680f0
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  TMTumblrSDK: 7b253e968a31f515aee0ee5f7e5faa8b7b0d0470
 
 COCOAPODS: 0.38.2

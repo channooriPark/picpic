@@ -14,8 +14,8 @@ import AEXML
 import Alamofire
 import Fabric
 import TwitterKit
-
-
+import OAuthSwift
+import CryptoSwift
 
 
 @UIApplicationMain
@@ -669,6 +669,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
             }
             if url.scheme == "fb1610072682575169" {
                 return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: options[UIApplicationOpenURLOptionsSourceApplicationKey]as! String?, annotation: options[UIApplicationOpenURLOptionsAnnotationKey])
+            }else if url.host == "oauth-callback" {
+                OAuthSwift.handleOpenURL(url)
+                return true
             }else {
                 
                 let invite = GINInvite.handleURL(url, sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]as! String?, annotation:options[UIApplicationOpenURLOptionsAnnotationKey])
@@ -740,7 +743,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
             launch = storyboard.instantiateViewControllerWithIdentifier("LaunchViewController")as! LaunchViewController
             launch.type = "first"
             self.window?.rootViewController = launch
-            
         }else {
             self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
             launch = storyboard.instantiateViewControllerWithIdentifier("LaunchViewController")as! LaunchViewController
@@ -857,20 +859,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
             sendMsg["ct"].stringValue = dateFormatter.stringFromDate(NSDate())
             sendMsg["dm"].stringValue = keyTxt
             
-            
             let data1 = [UInt8](sendMsg.description.stringByReplacingOccurrencesOfString("\n", withString: "").utf8)//(try! sendMsg.aesEncrypt(SECRETKEY, iv: SECRETKEYIV).utf8)
             
             var sendData: [UInt8] = []
             
             sendData.append(0x02)
-            sendData.append(serviceCode.bytes()[4])
-            sendData.append(serviceCode.bytes()[5])
-            sendData.append(serviceCode.bytes()[6])
-            sendData.append(serviceCode.bytes()[7])
-            sendData.append(data1.count.bytes()[4])
-            sendData.append(data1.count.bytes()[5])
-            sendData.append(data1.count.bytes()[6])
-            sendData.append(data1.count.bytes()[7])
+            sendData.append(serviceCode.bytes1()[4])
+            sendData.append(serviceCode.bytes1()[5])
+            sendData.append(serviceCode.bytes1()[6])
+            sendData.append(serviceCode.bytes1()[7])
+            sendData.append(data1.count.bytes1()[4])
+            sendData.append(data1.count.bytes1()[5])
+            sendData.append(data1.count.bytes1()[6])
+            sendData.append(data1.count.bytes1()[7])
             
             sendData += data1
             
@@ -925,6 +926,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
             }
         }
     }
+    
+    
 
     
     func clearAlert(timer : NSTimer) {
@@ -963,6 +966,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
 //            print("Unknown")
         }
     }
+    
+    
+    let key: String = "secret0key000000"
+    let iv: String = "0123456789012345"
+    
+    func enc(str: String) -> String
+    {
+        let encryptedBytes: [UInt8] = try! str.encrypt(AES(key: key, iv: iv, blockMode: .CBC))
+        let base64Enc = NSData(bytes: encryptedBytes).base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
+        return base64Enc
+    }
+    
+    func dec(str: String) -> String
+    {
+        //let res: String = ""
+        let decodedData = NSData(base64EncodedString: str, options: .IgnoreUnknownCharacters)
+        
+        let count = decodedData!.length / sizeof(UInt8)
+        var byteArray = [UInt8](count: count, repeatedValue: 0)
+        decodedData!.getBytes(&byteArray, length:count * sizeof(UInt8))
+        
+        let decodeStr: [UInt8] = try! byteArray.decrypt(AES(key: key, iv: iv, blockMode: .CBC))
+        let data = NSData(bytes: decodeStr, length: Int(decodeStr.count))
+        let res = try! NSString(data: data, encoding: NSUTF8StringEncoding)
+        
+        return String(res!)
+    }
+    
+    
     
 
 }

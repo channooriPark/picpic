@@ -148,6 +148,7 @@ class SelectProfilePictureViewController: UIViewController , UIAlertViewDelegate
                 if self.appdelegate.standardUserDefaults.objectForKey("id") == nil {
                     self.appdelegate.standardUserDefaults.setValue(self.enc(self.appdelegate.userData["email"].string!), forKey: "id")
                     self.appdelegate.standardUserDefaults.setValue(self.enc(self.appdelegate.userData["password"].string!), forKey: "password")
+                    self.appdelegate.standardUserDefaults.setValue(self.enc("10001"), forKey: "register_form")
                     self.appdelegate.standardUserDefaults.synchronize()
                 }
                 self.appdelegate.controller.append(self.appdelegate.contentview)

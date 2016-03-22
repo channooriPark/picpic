@@ -18,8 +18,10 @@ class FriendEntity {
     var secondImageUrl:String!
     var thirdImageUrl:String!
     var fourthImageUrl:String!
+    var follow_yn:String!
+    var email : String!
     
-    init(name:String, profile:String, first:String, sencond:String, third:String, fourth:String) {
+    init(name:String, profile:String, first:String, sencond:String, third:String, fourth:String, follow_yn:String,email : String) {
         
         self.name = name;
         self.profileUrl = profile
@@ -27,6 +29,8 @@ class FriendEntity {
         self.secondImageUrl = sencond
         self.thirdImageUrl = third
         self.fourthImageUrl = fourth
+        self.follow_yn = follow_yn
+        self.email = email
     }
     
     

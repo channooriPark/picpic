@@ -68,7 +68,6 @@ class SearchHotUserViewController: UIViewController, UICollectionViewDataSource,
     
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        
         if indexPath.item % 10 == 0 || indexPath.item % 10 == 7 // users
         {
             let cell = self.collectionView.dequeueReusableCellWithReuseIdentifier("hotUserCell", forIndexPath: indexPath) as! HotUserCell

@@ -14,18 +14,14 @@ class InviteTableViewController: UITableViewController, GIDSignInDelegate, GIDSi
     
     
     let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-
+    
     @IBOutlet var ui_tblView: UITableView!
     
     @IBOutlet weak var ui_imvIconFb: UIImageView!
-
+    
     @IBOutlet weak var ui_lblStateFb: UILabel!
     
     @IBOutlet weak var ui_imvInviteFb: UIImageView!
-    
-    @IBOutlet weak var ui_lblNameFb: UILabel!
-    
-    @IBOutlet weak var ui_blbNameGg: UILabel!
     
     @IBOutlet weak var ui_imvIconGg: UIImageView!
     
@@ -34,16 +30,55 @@ class InviteTableViewController: UITableViewController, GIDSignInDelegate, GIDSi
     @IBOutlet weak var ui_imvInviteGg: UIImageView!
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-        self.navigationController?.navigationBar.topItem?.title = self.appdelegate.ment["settings_invite"].stringValue
-        self.ui_lblNameFb.text = self.appdelegate.ment["facebook_friend"].stringValue
-        self.ui_blbNameGg.text = self.appdelegate.ment["google_friend"].stringValue
+        
         GIDSignIn.sharedInstance().signInSilently()
         
+        if(GIDSignIn.sharedInstance().hasAuthInKeychain()) {
+            ui_lblStateGg.text = "연결됨"
+            ui_imvIconGg.image = UIImage(named: "icon_find_google_s")
+        }
+        else {
+            ui_lblStateGg.text = "연결안됨"
+            ui_imvIconGg.image = UIImage(named: "icon_find_google")
+        }
+        
+        if(FBSDKAccessToken.currentAccessToken() != nil) {
+            ui_lblStateFb.text = "연결됨"
+            ui_imvIconFb.image = UIImage(named: "icon_find_facebook_s")
+        }
+        else {
+            ui_lblStateFb.text = "연결안됨"
+            ui_imvIconFb.image = UIImage(named: "icon_find_facebook")
+        }
         
         
         
         
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated);
+        
+        if(GIDSignIn.sharedInstance().hasAuthInKeychain()) {
+            ui_lblStateGg.text = "연결됨"
+            ui_imvIconGg.image = UIImage(named: "icon_find_google_s")
+        }
+        else {
+            ui_lblStateGg.text = "연결안됨"
+            ui_imvIconGg.image = UIImage(named: "icon_find_google")
+        }
+        
+        // 앱내에서 로그인여부 판단(웹상으로 로그인이 되어있을경우 판단 불가)
+        if(FBSDKAccessToken.currentAccessToken() != nil) {
+            ui_lblStateFb.text = "연결됨"
+            ui_imvIconFb.image = UIImage(named: "icon_find_facebook_s")
+        }
+        else {
+            ui_lblStateFb.text = "연결안됨"
+            ui_imvIconFb.image = UIImage(named: "icon_find_facebook")
+        }
     }
     
     func initValue() {
@@ -106,12 +141,12 @@ class InviteTableViewController: UITableViewController, GIDSignInDelegate, GIDSi
         if (error == nil) {
             print("Invitations sent")
         }
-        // 싪패
+            // 실패
         else {
             print("Failed: " + error.localizedDescription)
         }
     }
-
+    
     func signIn(signIn: GIDSignIn!, didSignInForUser user: GIDGoogleUser!, withError error: NSError!) {
         if (error != nil)
         {

@@ -85,7 +85,7 @@ class TagNativeViewController: SubViewController, UICollectionViewDelegate, UICo
         
         let message : JSON = ["my_id":appdelegate.email,"tag_str":tagName]
 
-        appdelegate.doIt(517, message: message, callback: {(json) in
+        appdelegate.doItSocket(517, message: message, callback: {(json) in
             self.infoDic = json.dictionaryObject!
             Alamofire.request(.GET, "http://gif.picpic.world/" + (self.infoDic["url"]! as! String), parameters: ["foo": "bar"]).response { request, response, data, error in
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
@@ -96,7 +96,7 @@ class TagNativeViewController: SubViewController, UICollectionViewDelegate, UICo
             
             let mes: JSON = ["my_id" :appdelegate.email,"type": "TT","user_id": "", "tag_id" : self.infoDic["tag_id"] as! String, "range" : "N", "str" : "", "page": "1"]
             
-            appdelegate.doIt(507, message: mes, callback: {(json) in
+            appdelegate.doItSocket(507, message: mes, callback: {(json) in
                 print(json)
                 if json["data"].type == .Null || json["data"].string == ""
                 {

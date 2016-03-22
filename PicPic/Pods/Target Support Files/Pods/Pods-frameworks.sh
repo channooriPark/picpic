@@ -55,13 +55,21 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework 'Pods/AEXML.framework'
   install_framework 'Pods/Alamofire.framework'
   install_framework 'Pods/CryptoSwift.framework'
+  install_framework 'Pods/JXHTTP.framework'
+  install_framework 'Pods/OAuthSwift.framework'
+  install_framework 'Pods/Spectacles.framework'
   install_framework 'Pods/SpringIndicator.framework'
   install_framework 'Pods/SwiftyJSON.framework'
+  install_framework 'Pods/TMTumblrSDK.framework'
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework 'Pods/AEXML.framework'
   install_framework 'Pods/Alamofire.framework'
   install_framework 'Pods/CryptoSwift.framework'
+  install_framework 'Pods/JXHTTP.framework'
+  install_framework 'Pods/OAuthSwift.framework'
+  install_framework 'Pods/Spectacles.framework'
   install_framework 'Pods/SpringIndicator.framework'
   install_framework 'Pods/SwiftyJSON.framework'
+  install_framework 'Pods/TMTumblrSDK.framework'
 fi

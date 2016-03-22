@@ -17,7 +17,6 @@ import Accounts
 
 
 
-
 class ShareViewController: UIViewController,UIAlertViewDelegate{
 
     let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate

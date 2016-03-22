@@ -30,7 +30,8 @@ class TestSecondViewController: SubViewController , UIScrollViewDelegate{
     let log = LogPrint()
     var webState = ""
     var currentPoint:CGFloat!
-    
+    let selectFont = UIFontDescriptor(name: "Helvetica-Bold", size: 15)
+    let deSelectFont = UIFontDescriptor(name: "Helvetica", size: 15)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -124,9 +125,11 @@ class TestSecondViewController: SubViewController , UIScrollViewDelegate{
         followingButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
         allButton.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
         categoryButton.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
-        followingButton.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 15)
-        allButton.titleLabel?.font = UIFont(name: "Helvetica", size: 15)
-        categoryButton.titleLabel?.font = UIFont(name: "Helvetica", size: 15)
+        
+        
+        followingButton.titleLabel?.font = UIFont(descriptor: self.selectFont, size: 15)
+        allButton.titleLabel?.font = UIFont(descriptor: self.deSelectFont, size: 15)
+        categoryButton.titleLabel?.font = UIFont(descriptor: self.deSelectFont, size: 15)
         
         self.view.bringSubviewToFront(followingButton)
         self.view.bringSubviewToFront(allButton)
@@ -173,9 +176,9 @@ class TestSecondViewController: SubViewController , UIScrollViewDelegate{
         followingButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
         allButton.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
         categoryButton.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
-        followingButton.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 14)
-        allButton.titleLabel?.font = UIFont(name: "Helvetica", size: 14)
-        categoryButton.titleLabel?.font = UIFont(name: "Helvetica", size: 14)
+        followingButton.titleLabel?.font = UIFont(descriptor: self.selectFont, size: 14)
+        allButton.titleLabel?.font = UIFont(descriptor: self.deSelectFont, size: 14)
+        categoryButton.titleLabel?.font = UIFont(descriptor: self.deSelectFont, size: 14)
         
         self.urlPath = self.servicePath+language+"list_by_follow.jsp"
         self.jScript = String(format:"fire('%@')", arguments : [email])
@@ -194,9 +197,9 @@ class TestSecondViewController: SubViewController , UIScrollViewDelegate{
         followingButton.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
         allButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
         categoryButton.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
-        followingButton.titleLabel?.font = UIFont(name: "Helvetica", size: 14)
-        allButton.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 14)
-        categoryButton.titleLabel?.font = UIFont(name: "Helvetica", size: 14)
+        followingButton.titleLabel?.font = UIFont(descriptor: self.deSelectFont, size: 14)
+        allButton.titleLabel?.font = UIFont(descriptor: self.selectFont, size: 14)
+        categoryButton.titleLabel?.font = UIFont(descriptor: self.deSelectFont, size: 14)
         
         
         self.urlPath = self.servicePath+language+"list_by_all.jsp"
@@ -216,9 +219,9 @@ class TestSecondViewController: SubViewController , UIScrollViewDelegate{
         followingButton.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
         allButton.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
         categoryButton.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        followingButton.titleLabel?.font = UIFont(name: "Helvetica", size: 14)
-        allButton.titleLabel?.font = UIFont(name: "Helvetica", size: 14)
-        categoryButton.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 14)
+        followingButton.titleLabel?.font = UIFont(descriptor: self.deSelectFont, size: 14)
+        allButton.titleLabel?.font = UIFont(descriptor: self.deSelectFont, size: 14)
+        categoryButton.titleLabel?.font = UIFont(descriptor: self.selectFont, size: 14)
         
         self.wkwebView.scrollView.bounces = false
         self.urlPath = self.servicePath+language+"category.html"

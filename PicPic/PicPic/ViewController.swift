@@ -144,7 +144,7 @@ class ViewController: UIViewController,GIDSignInDelegate, GIDSignInUIDelegate{
                                 self.appdelegate.email = email
                                 self.appdelegate.standardUserDefaults.setValue(self.enc(email), forKey: "id")
                                 self.appdelegate.standardUserDefaults.setValue(self.enc(userId), forKey: "password")
-                                self.appdelegate.standardUserDefaults.setValue("10003", forKey: "register_form")
+                                self.appdelegate.standardUserDefaults.setValue(self.enc("10003"), forKey: "register_form")
                                 self.appdelegate.standardUserDefaults.synchronize()
                             }
                             self.appdelegate.window?.rootViewController = self.appdelegate.testNavi
@@ -228,6 +228,7 @@ class ViewController: UIViewController,GIDSignInDelegate, GIDSignInUIDelegate{
                             self.appdelegate.email = FBSDKAccessToken.currentAccessToken().userID
                             self.appdelegate.standardUserDefaults.setValue(self.enc(FBSDKAccessToken.currentAccessToken().userID), forKey: "id")
                             self.appdelegate.standardUserDefaults.setValue(self.enc(FBSDKAccessToken.currentAccessToken().userID), forKey: "password")
+                            self.appdelegate.standardUserDefaults.setValue(self.enc("10002"), forKey: "register_form")
                             self.appdelegate.standardUserDefaults.synchronize()
                         }
                         self.appdelegate.window?.rootViewController = self.appdelegate.testNavi

@@ -97,6 +97,7 @@ class FacebookJoinViewController: UIViewController ,UIImagePickerControllerDeleg
                 self.appdelegate.email = self.appdelegate.userData["email"].string!
                 self.appdelegate.standardUserDefaults.setValue(self.enc(FBSDKAccessToken.currentAccessToken().userID), forKey: "id")
                 self.appdelegate.standardUserDefaults.setValue(self.enc(FBSDKAccessToken.currentAccessToken().userID), forKey: "password")
+                self.appdelegate.standardUserDefaults.setValue(self.enc("10002"), forKey: "register_form")
                 self.appdelegate.standardUserDefaults.synchronize()
                 self.appdelegate.controller.append(self.appdelegate.contentview)
 //                self.appdelegate.contentview.index = self.appdelegate.controller.count-1

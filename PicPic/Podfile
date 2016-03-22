@@ -12,3 +12,5 @@ pod "SpringIndicator"
 pod 'Alamofire', '~> 3.0'
 pod 'Google/SignIn'
 pod 'Google/AppInvite', '~> 1.0.2'
+pod 'TMTumblrSDK'
+pod "OAuthSwift", "~> 0.5.0"

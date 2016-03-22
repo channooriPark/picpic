@@ -8,6 +8,10 @@
 
 import UIKit
 import TwitterKit
+import Accounts
+import TMTumblrSDK
+import JXHTTP
+import OAuthSwift
 
 class SocialNetworkTableViewController: UITableViewController ,TWTRComposerViewControllerDelegate{
     
@@ -119,6 +123,41 @@ class SocialNetworkTableViewController: UITableViewController ,TWTRComposerViewC
         }
     }
     
+    @IBAction func tumblr(sender: AnyObject) {
+        if (sender as! UISwitch).on {
+            TMAPIClient.sharedInstance().OAuthConsumerKey = "oBJJofWSIO85DX23USoW52ZYkkMQEiHePYthDrLDsePZ9UAwK6"
+            TMAPIClient.sharedInstance().OAuthConsumerSecret = "y2w9Au8SGcU0PEnCJvJX6TQYwggPEpCgyZiGoCqdDpAuINCKAL"
+            let consumerKey = "oBJJofWSIO85DX23USoW52ZYkkMQEiHePYthDrLDsePZ9UAwK6"
+            let secretKey = "y2w9Au8SGcU0PEnCJvJX6TQYwggPEpCgyZiGoCqdDpAuINCKAL"
+            
+            //tumblr로그인은 이걸로 사용하면 되는데 지금 콜백 URL이 구성이 안되어져 있어서 값이 안들어 온다
+            let oauthSwift = OAuth1Swift(consumerKey: consumerKey, consumerSecret: secretKey, requestTokenUrl: "https://www.tumblr.com/oauth/request_token", authorizeUrl: "https://www.tumblr.com/oauth/authorize", accessTokenUrl: "https://www.tumblr.com/oauth/access_token")
+            oauthSwift.authorizeWithCallbackURL(NSURL(string: "")!, success: { (credential, response, parameters) -> Void in
+                    print("success  :  ",response)
+                print("credential : ",credential)
+                print("parameters : ",parameters)
+                }, failure: { (error) -> Void in
+                    print("error : ",error)
+            })
+            
+            let temp = TMAPIClient.sharedInstance().userInfoRequest()
+            print(temp)
+            
+            
+            TMAPIClient.sharedInstance().userInfo({ (result, error) -> Void in
+                if error != nil {
+                    print(error.localizedDescription)
+                }
+                
+                if result != nil {
+                    print(result)
+                }
+            })
+        }
+    }
+    
+    
+   
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
