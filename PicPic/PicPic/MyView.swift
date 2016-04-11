@@ -97,6 +97,7 @@ public class MyView: UIView , UITextViewDelegate{
         input_text!.frame = CGRect(x:15,y:15,width:input_width,height:50)
         input_text!.backgroundColor = UIColor.clearColor()
         input_text?.delegate = self
+        input_text?.scrollEnabled = false
         self.addSubview(input_text!)
         
         label = UIButton()

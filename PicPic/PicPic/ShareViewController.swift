@@ -12,8 +12,8 @@ import FBSDKShareKit
 import Photos
 import SpringIndicator
 import AssetsLibrary
-import Social
 import Accounts
+import Social
 
 
 
@@ -322,7 +322,7 @@ class ShareViewController: UIViewController,UIAlertViewDelegate{
                         let twitterAccount = arrayOfAccounts.first as! ACAccount
                         var message = Dictionary<String, AnyObject>()
                         let requestURL = NSURL(string:"https://api.twitter.com/1.1/statuses/update_with_media.json")
-                        let postRequest = SLRequest(forServiceType:
+                        let postRequest = Social.SLRequest(forServiceType:
                             SLServiceTypeTwitter,
                             requestMethod: SLRequestMethod.POST,
                             URL: requestURL,

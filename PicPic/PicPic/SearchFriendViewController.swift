@@ -44,6 +44,7 @@ class SearchFriendViewController: SubViewController ,UITableViewDataSource , UIT
     var friendData = [FriendEntity]()
     var cells = [SearchFriendTableViewCell]()
     var posts = [[String]]()
+    var allFollowT = true
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -64,8 +65,8 @@ class SearchFriendViewController: SubViewController ,UITableViewDataSource , UIT
         
         allFollow.setTitle(self.appdelegate.ment["allFollow"].stringValue, forState: .Normal)
         fbText.text = self.appdelegate.ment["find_friend_facebook"].stringValue
-        //ggText.text = self.appdelegate.ment["find_friend_google"].stringValue
         recomText.text = self.appdelegate.ment["find_friend_recommend"].stringValue
+        
         
         if self.appdelegate.locale != "ko_KR" {
             fbText.font = UIFont(name: "Helvetica", size: 12)
@@ -108,6 +109,9 @@ class SearchFriendViewController: SubViewController ,UITableViewDataSource , UIT
         fbImage.image = UIImage(named: "icon_find_facebook_s")
         recomImage.image = UIImage(named: "icon_timeline_picpic")
         
+        self.whereLabel.text = self.appdelegate.ment["facebook_friend"].stringValue
+        
+        
         if(FBSDKAccessToken.currentAccessToken() != nil)
         {
             getFriendData(0);
@@ -147,6 +151,8 @@ class SearchFriendViewController: SubViewController ,UITableViewDataSource , UIT
         fbImage.image = UIImage(named: "icon_find_facebook")
         recomImage.image = UIImage(named: "icon_timeline_picpic_c")
         
+        self.whereLabel.text = self.appdelegate.ment["recommend_friend"].stringValue
+        
         getFriendData(1);
     }
     
@@ -161,6 +167,8 @@ class SearchFriendViewController: SubViewController ,UITableViewDataSource , UIT
             
         case 0: // fb
             self.posts.removeAll()
+            self.friendData.removeAll()
+            self.tblFriend.reloadData()
             inWhereString = self.appdelegate.ment["facebook_friend"].stringValue
             let params = ["fields": "id, name, first_name, last_name, picture.type(large), email"]
             let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "/me/friends", parameters: params)
@@ -213,7 +221,18 @@ class SearchFriendViewController: SubViewController ,UITableViewDataSource , UIT
                             }
                             self.tblFriend.reloadData()
                         }
-                        
+                        for i in 0 ..< self.friendData.count {
+                            if self.friendData[i].follow_yn == "N" {
+                                self.allFollowT = false
+                                self.allFollow.setBackgroundImage(UIImage(named: "btn_join_next"), forState: .Normal)
+                                self.allFollow.setTitleColor(Config.getInstance().color, forState: .Normal)
+                            }
+                        }
+                        if self.allFollowT {
+                            self.allFollow.setBackgroundImage(UIImage(named: "btn_join_next_c"), forState: .Normal)
+                            self.allFollow.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+                        }
+                        self.tblFriend.reloadData()
                     })
                 }
                 else
@@ -226,6 +245,8 @@ class SearchFriendViewController: SubViewController ,UITableViewDataSource , UIT
             
         case 1: // recommend
             self.posts.removeAll()
+            self.friendData.removeAll()
+            self.tblFriend.reloadData()
             inWhereString = self.appdelegate.ment["recommend_friend"].stringValue
             count = 3
             
@@ -265,6 +286,17 @@ class SearchFriendViewController: SubViewController ,UITableViewDataSource , UIT
                     } else {
                         self.whereLabel.text = inWhereString
                     }
+                    for i in 0 ..< self.friendData.count {
+                        if self.friendData[i].follow_yn == "N" {
+                            self.allFollowT = false
+                            self.allFollow.setBackgroundImage(UIImage(named: "btn_join_next"), forState: .Normal)
+                            self.allFollow.setTitleColor(Config.getInstance().color, forState: .Normal)
+                        }
+                    }
+                    if self.allFollowT {
+                        self.allFollow.setBackgroundImage(UIImage(named: "btn_join_next_c"), forState: .Normal)
+                        self.allFollow.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+                    }
                     self.tblFriend.reloadData()
                 }
             })
@@ -303,16 +335,19 @@ class SearchFriendViewController: SubViewController ,UITableViewDataSource , UIT
         
         let friend = friendData[row]
         cell.friendname.text = friend.name
-        if isEqual(friend.follow_yn == "Y") {
+        print(friend.follow_yn)
+        if friend.follow_yn == "Y" {
             cell.btnPlus.setImage(UIImage(named: "icon_find_plus_c"), forState: .Normal)
             cell.followYN = true
         }else {
             cell.btnPlus.setImage(UIImage(named: "icon_find_plus"), forState: .Normal)
             cell.followYN = false
         }
+        print("팔로우 상태는 ? : ",cell.followYN)
         cell.email = friend.email
         cell.index = indexPath.row
         cell.delegate = self
+        cell.parent = self
         let s = (friend.profileUrl)! as String
         let firstImageUrl = (friend.firstImageUrl)! as String
         let secondImageUrl = (friend.secondImageUrl)! as String
@@ -399,6 +434,14 @@ class SearchFriendViewController: SubViewController ,UITableViewDataSource , UIT
     
     
     @IBAction func allFollowTouched(sender: AnyObject) {
+        if self.allFollowT {
+            return
+        }else {
+            self.allFollow.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+            self.allFollow.setBackgroundImage(UIImage(named: "btn_join_next_c"), forState: .Normal)
+            self.allFollowT = true
+        }
+        
         var type = ""
         if fbT {
             type = "F"
@@ -414,10 +457,28 @@ class SearchFriendViewController: SubViewController ,UITableViewDataSource , UIT
         print(message)
         self.appdelegate.doIt(402, message: message, callback: { (readData) -> () in
             print("follow   ",readData)
+            if readData["follow"].stringValue == "Y" {
+                for i in 0..<self.cells.count {
+                    self.cells[i].btnPlus.setImage(UIImage(named: "icon_find_plus_c"), forState: .Normal)
+                    
+                }
+            }else {
+                for i in 0..<self.cells.count {
+                    self.cells[i].btnPlus.setImage(UIImage(named: "icon_find_plus"), forState: .Normal)
+                }
+            }
         })
     }
     
-    
+    func allFollowCheck() {
+        for i in 0 ..< self.friendData.count {
+            if self.friendData[i].follow_yn == "N" {
+                self.allFollowT = false
+                self.allFollow.setBackgroundImage(UIImage(named: "btn_join_next"), forState: .Normal)
+                self.allFollow.setTitleColor(Config.getInstance().color, forState: .Normal)
+            }
+        }
+    }
     
     
 }

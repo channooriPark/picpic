@@ -376,12 +376,9 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
     
     func tweetWithImage(data:NSData)
     {
-        
-        
-        
         let account = ACAccountStore()
         let accountType = account.accountTypeWithAccountTypeIdentifier(ACAccountTypeIdentifierTwitter)
-        let message = "test twitter not showing dialog"
+        let message = self.messageView.text
         let arrayOfAccons = account.accountsWithAccountType(accountType)
         print(arrayOfAccons.count)
         for var acc in arrayOfAccons {
@@ -397,7 +394,8 @@ class GIFViewController: SubViewController, UIScrollViewDelegate, UITextViewDele
                 let arrayOfAccounts = account.accountsWithAccountType(accountType)
                 if arrayOfAccons.count > 0 {
                     let acct = arrayOfAccounts[0]
-                    var postRequest = SLRequest(forServiceType: SLServiceTypeTwitter, requestMethod: SLRequestMethod.POST, URL: NSURL(string: "https://api.twitter.com/1.1/statuses/update_with_media.json"), parameters: NSDictionary(dictionary: ["status":message]) as [NSObject : AnyObject])
+                    let dic = ["status":message]as [NSObject:AnyObject]
+                    var postRequest = Social.SLRequest(forServiceType: SLServiceTypeTwitter, requestMethod: SLRequestMethod.POST, URL: NSURL(string: "https://api.twitter.com/1.1/statuses/update_with_media.json"), parameters: dic)
                     postRequest.addMultipartData(data, withName: "media", type: "image/gif", filename: nil)
                     
                     postRequest.account = acct as! ACAccount
@@ -1040,6 +1038,5 @@ extension GIFViewController {
         } else if(text_type == TEXT_TYPE_MARKING) {
             
         }
-        //        realDelegate.textViewDidChange(self)
     }
 }

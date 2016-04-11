@@ -17,19 +17,19 @@ PODS:
   - Google/SignIn (1.0.7):
     - Google/Core
     - GoogleSignIn (~> 2.0)
-  - GoogleAppUtilities (1.0.0):
+  - GoogleAppUtilities (1.1.0):
     - GoogleSymbolUtilities (~> 1.0)
   - GoogleAuthUtilities (1.0.1):
     - GoogleNetworkingUtilities (~> 1.0)
     - GoogleSymbolUtilities (~> 1.0)
-  - GoogleInterchangeUtilities (1.1.0):
+  - GoogleInterchangeUtilities (1.2.0):
     - GoogleSymbolUtilities (~> 1.0)
-  - GoogleNetworkingUtilities (1.0.0):
+  - GoogleNetworkingUtilities (1.2.0):
     - GoogleSymbolUtilities (~> 1.0)
-  - GoogleParsingUtilities (1.0.0):
+  - GoogleParsingUtilities (1.1.0):
     - GoogleNetworkingUtilities (~> 1.0)
     - GoogleSymbolUtilities (~> 1.0)
-  - GooglePlusUtilities (1.0.0):
+  - GooglePlusUtilities (1.1.0):
     - GoogleParsingUtilities (~> 1.0)
     - GoogleSymbolUtilities (~> 1.0)
   - GoogleSignIn (2.4.0):
@@ -37,9 +37,9 @@ PODS:
     - GoogleAuthUtilities (~> 1.0)
     - GoogleNetworkingUtilities (~> 1.0)
     - GoogleUtilities (~> 1.0)
-  - GoogleSymbolUtilities (1.0.3)
-  - GoogleUtilities (1.1.0):
-    - GoogleSymbolUtilities (~> 1.0.0)
+  - GoogleSymbolUtilities (1.1.0)
+  - GoogleUtilities (1.2.0):
+    - GoogleSymbolUtilities (~> 1.0)
   - GPPCore (1.8.1):
     - GoogleAppUtilities (~> 1.0)
     - GoogleAuthUtilities (~> 1.0)
@@ -76,7 +76,7 @@ DEPENDENCIES:
   - Google/SignIn
   - OAuthSwift (~> 0.5.0)
   - SpringIndicator
-  - SwiftyJSON (~> 2.3.0)
+  - SwiftyJSON
   - TMTumblrSDK
 
 SPEC CHECKSUMS:
@@ -85,15 +85,15 @@ SPEC CHECKSUMS:
   AppInvites: d2852d42e22714a67decc8e5809c8c63cc7b8b8f
   CryptoSwift: b2bf37b8e7cc6d682ef3365cb966bc5ae5174aa5
   Google: 875f5a8ade86dd02e36586e4a54814843938c7f6
-  GoogleAppUtilities: c01c6a5671e9da8b9d690fdaec5959d6c2aac699
+  GoogleAppUtilities: 974598e8ed618c74ead33541d9caffbc3d144266
   GoogleAuthUtilities: 049ffd3a297cdffd271451b82fd4e75304f15ef3
-  GoogleInterchangeUtilities: d7f7174176fbcf9710f696f1acebad4dbd98ac03
-  GoogleNetworkingUtilities: 292992ab31b7b4ba32809a0e8b40e324cdfb2c0c
-  GoogleParsingUtilities: 9158b059542c2314294cda34fb0384d80456e030
-  GooglePlusUtilities: 380340708aa89c1743735273b293d11db5524f6a
+  GoogleInterchangeUtilities: 427382e42d8a340038bec37c6fdfd316e14b5fa2
+  GoogleNetworkingUtilities: ec1e9911aca811eb18b7144394fee6168b607785
+  GoogleParsingUtilities: db7ded00e831ba27d30c8c51ebc13668e1d33729
+  GooglePlusUtilities: b59634ae4c7e07df40284c83ccd0d04b943481db
   GoogleSignIn: 79929b51e6299c69f1197bbd9c7a1367d523ecd8
-  GoogleSymbolUtilities: 82ad9f93d3615244b3f4ce440f5ab2515e8b4f56
-  GoogleUtilities: 8ed9134debe11719097881711464752900668f10
+  GoogleSymbolUtilities: eb3965ea12710569c7b80db198a39e39b18613f7
+  GoogleUtilities: 85f8ad6b251544286a97163133d042ec95f889c5
   GPPCore: 228fdd19eba0e83cba6817004f0d6431d8396d64
   JXHTTP: c37120f210cd2dfcb3470d70239f5253335e2f1a
   OAuthSwift: d63f7f329f49787319a7e35974c18b10865fe636

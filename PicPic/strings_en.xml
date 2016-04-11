@@ -612,11 +612,11 @@
     <string name="timeline_all">All</string>
     <string name="timeline_category">Category</string>
     
+    <string name="allFollow">Follow All</string>
+    
     <string name="camera_edit_partial">What you have worked on partial GIFs will be erased when applying filters after partial GIFs.&amp; Would you like to continue?</string>
     
-    <string name="facebook_friend">페이스북에 있는 친구</string>
-    <string name="google_friend">구굴+에 있는 친구</string>
-    <string name="recommend_friend">추천친구를 팔로워 해보아요!</string>
-    <string name="friend_count">명</string>
+    <string name="facebook_friend">Friends from Facebook</string>
+    <string name="recommend_friend">Try following more friends</string>
     
 </resources>

@@ -12,6 +12,9 @@ import MobileCoreServices
 import AssetsLibrary
 import SpringIndicator
 import SwiftyJSON
+import Foundation
+import Photos
+import MediaPlayer
 
 class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate ,UIAlertViewDelegate {
     var tmpFolder:String?
@@ -588,20 +591,10 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         
         
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.SavedPhotosAlbum){
-            //            print("Galeria Imagen")
-            
-            //            imagePicker!.delegate = self
-            //            imagePicker!.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-            //            imagePicker!.mediaTypes = [kUTTypeMovie as String] // 5s 이상에서 연사 지원하므로, 연사 옵션 넣어야 함.
-            //            imagePicker!.allowsEditing = false
-            //            imagePicker?.navigationBar.barTintColor = Config.getInstance().color
-            //            imagePicker?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
-            
-            
-            
             print("videopicker            adsf;lejfioadsjfeakldjsfe;ioj")
             let videoPicker = self.storyboard?.instantiateViewControllerWithIdentifier("VideoGalleryViewController") as? VideoGalleryViewController
-            videoPicker?.cameradelegate = self;
+            videoPicker?.cameradelegate = self
+            videoPicker?.workFolder = self.workFolder
             self.presentViewController(videoPicker!, animated: true, completion: nil);
         }
     }
@@ -660,65 +653,6 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
                 self.view.layoutIfNeeded()
             })
         }
-        
-        /*self.session.stopRunning()
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-        if Config.getInstance().videoRatio == "1:1" {
-        //self.cameraViewPosY.constant = (Config.getInstance().wid/8)*2
-        //self.cameraView.bounds.origin.y = (Config.getInstance().wid/8)*2
-        //self.cameraView.frame.origin.y = (Config.getInstance().wid/8)*2
-        }else {
-        //self.cameraViewPosY.constant = 0
-        //self.cameraView.bounds.origin.y = 0
-        //self.cameraView.frame.origin.y = 0
-        }
-        let rootLayer :CALayer = self.cameraView.layer
-        rootLayer.masksToBounds=true
-        self.previewLayer.frame = self.cameraView.bounds
-        self.cameraView.clipsToBounds = true
-        
-        //print("\(self.previewLayer.frame)     camera View      \(self.cameraView)")
-        
-        rootLayer.addSublayer(self.previewLayer)
-        if self.session.running == false {
-        self.session.startRunning()
-        }
-        
-        if(self.gridLayer != nil) {
-        self.gridLayer.removeFromSuperview();
-        self.gridLayer = nil
-        self.make_grid();
-        }
-        })*/
-        
-        /*dispatch_after(dispatch_time_t(300), dispatch_get_main_queue(), {
-        if Config.getInstance().videoRatio == "1:1" {
-        self.cameraViewPosY.constant = (Config.getInstance().wid/8)*2
-        self.cameraView.bounds.origin.y = (Config.getInstance().wid/8)*2
-        self.cameraView.frame.origin.y = (Config.getInstance().wid/8)*2
-        }else {
-        self.cameraViewPosY.constant = 0
-        self.cameraView.bounds.origin.y = 0
-        self.cameraView.frame.origin.y = 0
-        }
-        let rootLayer :CALayer = self.cameraView.layer
-        rootLayer.masksToBounds=true
-        self.previewLayer.frame = self.cameraView.bounds
-        self.cameraView.clipsToBounds = true
-        
-        //print("\(self.previewLayer.frame)     camera View      \(self.cameraView)")
-        
-        rootLayer.addSublayer(self.previewLayer)
-        if self.session.running == false {
-        self.session.startRunning()
-        }
-        
-        if(self.gridLayer != nil) {
-        self.gridLayer.removeFromSuperview();
-        self.gridLayer = nil
-        self.make_grid();
-        }
-        })*/
     }
     
     // 이전 버튼 눌렀을 때
@@ -1383,6 +1317,70 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
     }
     
     
+    func selectImage(image : UIImage!,type : imageType) {
+        do {
+            var fileName = String(format: "%@/00",arguments:[workFolder!])
+            
+            if(!fileManager.fileExistsAtPath(fileName)) {
+                fileName = fileName + ".mov"
+                fileManager.createFileAtPath(fileName, contents: nil, attributes: nil)
+                fileName = String(format: "%@/00",arguments:[workFolder!])
+                try fileManager.createDirectoryAtPath(fileName, withIntermediateDirectories: false, attributes: nil)
+                if fileManager.fileExistsAtPath(fileName) {
+                    let savePath = String(format: "%@/00/000.jpg", arguments: [self.workFolder!])
+                    UIImageJPEGRepresentation(image, 100)!.writeToFile(savePath, atomically: true)
+                    
+                    
+                    let cameraVC = self.storyboard?.instantiateViewControllerWithIdentifier("GifMakerViewController") as? GifMakerViewController
+                    self.editBar.setImage(UIImage(named: "plus"), forState: .Normal)
+                    self.editBarView.hidden = true
+                    self.btnLoad.enabled = true
+                    if self.ghostToggle {
+                        self.ghostToggle = false
+                        self.ghostLayer.removeFromSuperview()
+                        self.ghostLayer = nil
+                    }
+                    cameraVC?.workFolder = self.workFolder
+                    cameraVC?.gifsFolder = self.gifsFolder
+                    cameraVC?.gifName = self.gifName
+                    self.workFolder = nil
+                    btnGhost.setImage(UIImage(named: "icon_camera_ghost"), forState: .Normal)
+                    editBar.setImage(UIImage(named: "plus"), forState: .Normal)
+                    editBarView.hidden = true
+                    
+                    self.appdelegate.testNavi.navigationBarHidden = true
+                    self.appdelegate.testNavi.pushViewController(cameraVC!, animated: true)
+                }
+            }
+        }catch {}
+    }
+    
+    func selectGIF(url : NSURL){
+        
+        let cameraVC = self.storyboard?.instantiateViewControllerWithIdentifier("GifMakerViewController") as? GifMakerViewController
+        self.editBar.setImage(UIImage(named: "plus"), forState: .Normal)
+        self.editBarView.hidden = true
+        self.btnLoad.enabled = true
+        if self.ghostToggle {
+            self.ghostToggle = false
+            self.ghostLayer.removeFromSuperview()
+            self.ghostLayer = nil
+        }
+        cameraVC?.workFolder = self.workFolder
+        print("cameraVC?.workFolder     :     ",cameraVC?.workFolder)
+        cameraVC?.gifsFolder = self.gifsFolder
+        cameraVC?.gifName = self.gifName
+        self.workFolder = nil
+        btnGhost.setImage(UIImage(named: "icon_camera_ghost"), forState: .Normal)
+        editBar.setImage(UIImage(named: "plus"), forState: .Normal)
+        editBarView.hidden = true
+        
+        self.appdelegate.testNavi.navigationBarHidden = true
+        self.appdelegate.testNavi.pushViewController(cameraVC!, animated: true)
+    }
+    
+    
+    
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         print("imagepickercontroller cancel")
         self.btn_picker.enabled = true
@@ -1390,9 +1388,6 @@ class CameraViewController: SubViewController, AVCaptureFileOutputRecordingDeleg
         self.videoRatioBtn.enabled = true
         self.dismissViewControllerAnimated(false, completion: nil)
     }
-    
-    
-    
     
     func capturePictureWithCompletition(imageCompletition: (UIImage?, NSError?) -> Void) {
         dispatch_async(self.sessionQueue, {

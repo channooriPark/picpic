@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A427AFF3AE2A418FE27613B4"
+               BlueprintIdentifier = "52CA6C15EEF474CD203229B3"
                BuildableName = "SpringIndicator.framework"
                BlueprintName = "SpringIndicator"
                ReferencedContainer = "container:Pods.xcodeproj">

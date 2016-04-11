@@ -2,8 +2,8 @@
 //  UserPageShareViewController.swift
 //  PicPic
 //
-//  Created by 찬누리 박 on 2015. 12. 21..
-//  Copyright © 2015년 찬누리 박. All rights reserved.
+//  Created by 찬누리 박 on 2016. 3. 24..
+//  Copyright © 2016년 찬누리 박. All rights reserved.
 //
 
 import UIKit
@@ -12,19 +12,20 @@ import FBSDKShareKit
 import Photos
 import SpringIndicator
 import AssetsLibrary
-import Social
 import Accounts
+import Social
 
-class UserPageShareViewController: UIViewController,UIAlertViewDelegate {
 
+class UserPageShareViewController: UIViewController ,UIAlertViewDelegate {
     
     let appdelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-//    var post_id : String!
-//    var url : String!
+    //    var post_id : String!
+    //    var url : String!
     var userId : String!
     let imageURL = ImageURL()
     let log = LogPrint()
     var alert : UIAlertView!
+    var profileURL : String!
     @IBOutlet weak var spring: SpringIndicator!
     @IBOutlet weak var backView: UIView!
     @IBOutlet weak var kakaoButton: UIButton!
@@ -46,16 +47,8 @@ class UserPageShareViewController: UIViewController,UIAlertViewDelegate {
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "DismissKeyboard")
         backView.addGestureRecognizer(tap)
-        
-//        let message : JSON = ["my_id":appdelegate.email,"user_id":userId]
-//        print(message)
-//        appdelegate.doIt(406, message: message) { (readData) -> () in
-//            self.log.log("\(readData)")
-//        }
-        
-        
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -76,27 +69,21 @@ class UserPageShareViewController: UIViewController,UIAlertViewDelegate {
     }
     
     @IBAction func kakao(sender: AnyObject) {
-        let alert = UIAlertView(title: "", message: self.appdelegate.ment["not_supported_kakao"].stringValue, delegate: self, cancelButtonTitle: self.appdelegate.ment["popup_confirm"].stringValue, otherButtonTitles: self.appdelegate.ment["popup_cancel"].stringValue)
-        alert.show()
+        let action = KakaoTalkLinkAction.createAppAction(.IOS, devicetype: .Phone, execparam: ["user_name":"\(self.userId)"])
+        let android = KakaoTalkLinkAction.createAppAction(.Android, devicetype: .Phone, execparam: nil)
+        let applink : KakaoTalkLinkObject = KakaoTalkLinkObject.createAppButton("PicPic", actions: [action,android])
+        let message : KakaoTalkLinkObject = KakaoTalkLinkObject.createLabel("PicPic에서 " + self.userId + "님을 팔로우 해 보세요")
+        let image : KakaoTalkLinkObject = KakaoTalkLinkObject.createImage(imageURL.imageurl(self.profileURL), width: 80, height: 80)
+        
+        KOAppCall.openKakaoTalkAppLink([applink,message,image])
+        self.view.removeFromSuperview()
     }
     
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-    if buttonIndex == alertView.cancelButtonIndex {
-    let action = KakaoTalkLinkAction.createAppAction(.IOS, devicetype: .Phone, execparam: ["user":"\(self.userId)"])
-    let android = KakaoTalkLinkAction.createAppAction(.Android, devicetype: .Phone, execparam: nil)
-    //            let image : KakaoTalkLinkObject = KakaoTalkLinkObject.createImage(url, width: 138, height: 80)
-    let applink : KakaoTalkLinkObject = KakaoTalkLinkObject.createAppButton("PicPic", actions: [action,android])
-    
-    KOAppCall.openKakaoTalkAppLink([applink])
-    self.view.removeFromSuperview()
-    }
-    }
     
     @IBAction func facebook(sender: AnyObject) {
         print("facebook")
         let content: FBSDKShareLinkContent = FBSDKShareLinkContent()
         content.contentTitle = "PicPic"
-        content.contentURL = NSURL(string: "picpic://user_name")
         let dialog = FBSDKShareDialog()
         dialog.fromViewController = self
         dialog.shareContent = content
@@ -106,95 +93,57 @@ class UserPageShareViewController: UIViewController,UIAlertViewDelegate {
     }
     
     @IBAction func twitter(sender: AnyObject) {
-        let twitter : SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
-//        let path = imageURL.gifImageUrl(url)
-//        let data = NSData(contentsOfURL: NSURL(string: path)!)!
-//        let im = UIImage.gifWithData(data)
-//        twitter.addImage(im)
-//        twitter.addURL(NSURL(string: path))
-        twitter.completionHandler = {
-            (result:SLComposeViewControllerResult) in
-            if result == SLComposeViewControllerResult.Done {
-                self.view.removeFromSuperview()
-            }
-            
-        }
-        self.presentViewController(twitter, animated: true, completion: nil)
+        let data = NSData(contentsOfURL: NSURL(string: imageURL.imageurl(self.profileURL))!)
+        tweetWithImage(data)
     }
     
-    func tweetWithImage(data:NSData)
+    func tweetWithImage(data:NSData!)
     {
-        
         let account = ACAccountStore()
-        let accountType = account.accountTypeWithAccountTypeIdentifier(
-            ACAccountTypeIdentifierTwitter)
+        let accountType = account.accountTypeWithAccountTypeIdentifier(ACAccountTypeIdentifierTwitter)
+        let message = "PicPic에서 " + self.userId + "님을 팔로우 해 보세요"
+        let arrayOfAccons = account.accountsWithAccountType(accountType)
+        print(arrayOfAccons.count)
+        for var acc in arrayOfAccons {
+            print(acc)
+        }
         
-        account.requestAccessToAccountsWithType(accountType, options: nil,
-            completion: {(success: Bool, error: NSError!) -> Void in
-                if success {
-                    let arrayOfAccounts =
-                    account.accountsWithAccountType(accountType)
+        let url = NSURL(string: "https://api.twitter.com/1.1/statuses/user_timeline.json")
+        let params : NSDictionary = ["screen_name":message,"forKey":"status","trim_user":"1","count":"1"]
+        
+        account.requestAccessToAccountsWithType(accountType, options: nil, completion: { (granted, error) -> Void in
+            if granted {
+                print("granted in  true")
+                let arrayOfAccounts = account.accountsWithAccountType(accountType)
+                if arrayOfAccons.count > 0 {
+                    let acct = arrayOfAccounts[0]
+                    var postRequest = Social.SLRequest(forServiceType: SLServiceTypeTwitter, requestMethod: SLRequestMethod.POST, URL: NSURL(string: "https://api.twitter.com/1.1/statuses/update_with_media.json"), parameters: ["status":message]as [NSObject:AnyObject])
+                    postRequest.addMultipartData(data, withName: "media", type: "image/gif", filename: nil)
                     
-                    if arrayOfAccounts.count > 0 {
-                        let twitterAccount = arrayOfAccounts.first as! ACAccount
-                        var message = Dictionary<NSObject, AnyObject>()
-                        let requestURL = NSURL(string:"https://api.twitter.com/1.1/statuses/update_with_media.json")
-                        let requestMethod : SLRequestMethod = SLRequestMethod.POST
-                        
-                        let postRequest = SLRequest()
-                        
-                        
-                        postRequest.account = twitterAccount
-                        postRequest.addMultipartData(data, withName: "media", type: nil, filename: nil)
-                        
-                        postRequest.performRequestWithHandler({
-                            (responseData: NSData!,
-                            urlResponse: NSHTTPURLResponse!,
-                            error: NSError!) -> Void in
-                            if let err = error {
-                                print("Error : \(err.localizedDescription)")
-                            }
-                            if urlResponse.statusCode == 200 {
-                                let alert = UIAlertView(title: "\(urlResponse.statusCode)", message: "", delegate: nil, cancelButtonTitle: "확인")
-                                alert.show()
-                                self.loading(false)
-                            }else {
-                                let alert = UIAlertView(title: "\(urlResponse.statusCode)", message: "", delegate: nil, cancelButtonTitle: "확인")
-                                alert.show()
-                                self.loading(false)
-                            }
-                            
-                            
-                            print("Twitter HTTP response \(urlResponse.statusCode)")
-                            
-                        })
-                    }
+                    postRequest.account = acct as! ACAccount
+                    postRequest.performRequestWithHandler({ (responseData, urlResponse, error) -> Void in
+                        if error != nil {
+                            print(error.localizedDescription)
+                        }else {
+                            print("Twitter response, HTTP response : ",urlResponse.statusCode)
+                        }
+                    })
                 }
-                else
-                {
-                }
+            }else {
+                print("granted false")
+            }
+            
+            if error != nil {
+                print(error.localizedDescription)
+            }
+            
         })
     }
     
     @IBAction func pinterest(sender: AnyObject) {
-//        let path = imageURL.gifImageUrl(self.url)
-//        let imageaddr = "https://www.pinterest.com/pin/create/button/?url=http%3A%2F%2Fwww.picpic.world%2Fpic%2F\(self.post_id)&media=http%3A%2F%2Fgif.picpic.world%2F\(self.url)"
-//        let url = NSURL(string: imageaddr)
-//        let request = NSURLRequest(URL: url!)
-//        if(request.URL?.scheme == "http" || request.URL?.scheme == "https") {
-//            UIApplication.sharedApplication().openURL(request.URL!)
-//        }
     }
     
     @IBAction func tumblr(sender: AnyObject) {
-//        let path = imageURL.gifImageUrl(self.url)
-//        let imageaddr = "https://www.tumblr.com/widgets/share/tool?shareSource=legacy&canonicalUrl=&url=http://www.picpic.world/pic/\(self.post_id)&posttype=photo&content=http://gif.picpic.world/\(self.url)&caption=www.picpic.world"
-//        let url = NSURL(string: imageaddr)
-//        let request = NSURLRequest(URL: url!)
-//        if(request.URL?.scheme == "http" || request.URL?.scheme == "https") {
-//            UIApplication.sharedApplication().openURL(request.URL!)
-//        }
     }
-    
-    
+
 }

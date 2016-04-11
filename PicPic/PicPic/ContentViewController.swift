@@ -54,6 +54,9 @@ class ContentViewController: SubViewController {
         
         appdelegate.second.parent = self
         
+        if let url = appdelegate.urlInput {
+            appdelegate.URLopenPage(url)
+        }
         
         print("contentView Controller")
     }

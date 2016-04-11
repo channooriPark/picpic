@@ -119,6 +119,7 @@
 		E418CCAD1C59F3DC00DD1CFA /* RangeSliderTrackLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E418CCAA1C59F3DC00DD1CFA /* RangeSliderTrackLayer.swift */; };
 		E41A137A1BF115BD00028971 /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E41A13791BF115BD00028971 /* KakaoOpenSDK.framework */; };
 		E41B09AB1C05D9E8001171A2 /* TextAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41B09AA1C05D9E8001171A2 /* TextAddViewController.swift */; };
+		E41BBFC91CA2990D00BD369F /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4AA40401CA26FFB00FDE4D8 /* Social.framework */; };
 		E420D7F31C045661007E530B /* SaveListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E420D7F21C045661007E530B /* SaveListViewController.swift */; };
 		E42600401BFC0A7D00D495B6 /* RichTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E426003F1BFC0A7D00D495B6 /* RichTextView.swift */; };
 		E42CDE981BEC7FFA00C35419 /* NoticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42CDE971BEC7FFA00C35419 /* NoticsViewController.swift */; };
@@ -170,7 +171,6 @@
 		E4932B381BFF007C0056D4EF /* RAReorderableLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4932B371BFF007C0056D4EF /* RAReorderableLayout.swift */; };
 		E4932B3A1BFF065E0056D4EF /* GifMakerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4932B391BFF065E0056D4EF /* GifMakerViewController.swift */; };
 		E4A3717C1C19A27100D69DDE /* MyWebKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A3717B1C19A27100D69DDE /* MyWebKit.swift */; };
-		E4A414BE1C27A6090087F450 /* UserPageShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A414BD1C27A6090087F450 /* UserPageShareViewController.swift */; };
 		E4A414C01C27AB1C0087F450 /* mask.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E4A414BF1C27AB1C0087F450 /* mask.jpg */; };
 		E4A8C7381BEF5ABF008EA6F7 /* TestSecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A8C7371BEF5ABF008EA6F7 /* TestSecondViewController.swift */; };
 		E4A8C73A1BEF7B1D008EA6F7 /* MyFeedPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A8C7391BEF7B1D008EA6F7 /* MyFeedPageViewController.swift */; };
@@ -279,7 +279,8 @@
 		E4CDA0891C4CD28400A85C42 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4CDA0861C4CD28400A85C42 /* FBSDKCoreKit.framework */; };
 		E4CDA08A1C4CD28400A85C42 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4CDA0871C4CD28400A85C42 /* FBSDKLoginKit.framework */; };
 		E4CDA08B1C4CD28400A85C42 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4CDA0881C4CD28400A85C42 /* FBSDKShareKit.framework */; };
-		E4CE788B1CA0FF4000678FCC /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4D543091C15985C00EC1BB0 /* Social.framework */; };
+		E4CE644D1CA37C5C0009A282 /* TestSocialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CE644C1CA37C5B0009A282 /* TestSocialViewController.swift */; };
+		E4CE644F1CA37DFC0009A282 /* UserPageShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CE644E1CA37DFC0009A282 /* UserPageShareViewController.swift */; };
 		E4CF94051C55C4EE00B85F0D /* FriendEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CF94021C55C4EE00B85F0D /* FriendEntity.swift */; };
 		E4CF94061C55C4EE00B85F0D /* SearchFriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CF94031C55C4EE00B85F0D /* SearchFriendTableViewCell.swift */; };
 		E4CF94071C55C4EE00B85F0D /* SearchFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CF94041C55C4EE00B85F0D /* SearchFriendViewController.swift */; };
@@ -705,11 +706,12 @@
 		E4932B371BFF007C0056D4EF /* RAReorderableLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RAReorderableLayout.swift; path = animatedImage/RAReorderableLayout.swift; sourceTree = "<group>"; };
 		E4932B391BFF065E0056D4EF /* GifMakerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GifMakerViewController.swift; sourceTree = "<group>"; };
 		E4A3717B1C19A27100D69DDE /* MyWebKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyWebKit.swift; sourceTree = "<group>"; };
-		E4A414BD1C27A6090087F450 /* UserPageShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserPageShareViewController.swift; sourceTree = "<group>"; };
 		E4A414BF1C27AB1C0087F450 /* mask.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mask.jpg; sourceTree = "<group>"; };
 		E4A8C7371BEF5ABF008EA6F7 /* TestSecondViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSecondViewController.swift; sourceTree = "<group>"; };
 		E4A8C7391BEF7B1D008EA6F7 /* MyFeedPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyFeedPageViewController.swift; sourceTree = "<group>"; };
 		E4AA368A1BEC2D5C00EDD164 /* UserPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserPageViewController.swift; sourceTree = "<group>"; };
+		E4AA40401CA26FFB00FDE4D8 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		E4AA40421CA271DB00FDE4D8 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "../../../Library/Developer/Xcode/DerivedData/PicPic-egmypnitptaresfrorpntaipvbik/Build/Products/Debug-iphoneos/SwiftyJSON.framework"; sourceTree = "<group>"; };
 		E4AB449D1C166679002EA053 /* GLProgram1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GLProgram1.h; path = IFfilter/GLProgram1.h; sourceTree = SOURCE_ROOT; };
 		E4AB449E1C166679002EA053 /* GLProgram1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GLProgram1.m; path = IFfilter/GLProgram1.m; sourceTree = SOURCE_ROOT; };
 		E4AB449F1C166679002EA053 /* GPUImage1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPUImage1.h; path = IFfilter/GPUImage1.h; sourceTree = SOURCE_ROOT; };
@@ -851,6 +853,8 @@
 		E4CDA0861C4CD28400A85C42 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		E4CDA0871C4CD28400A85C42 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		E4CDA0881C4CD28400A85C42 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
+		E4CE644C1CA37C5B0009A282 /* TestSocialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestSocialViewController.swift; sourceTree = "<group>"; };
+		E4CE644E1CA37DFC0009A282 /* UserPageShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserPageShareViewController.swift; sourceTree = "<group>"; };
 		E4CF94021C55C4EE00B85F0D /* FriendEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendEntity.swift; sourceTree = "<group>"; };
 		E4CF94031C55C4EE00B85F0D /* SearchFriendTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFriendTableViewCell.swift; sourceTree = "<group>"; };
 		E4CF94041C55C4EE00B85F0D /* SearchFriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFriendViewController.swift; sourceTree = "<group>"; };
@@ -1188,7 +1192,6 @@
 		E4D4EC191C112EAF00616C2E /* GPUImageXYDerivativeFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageXYDerivativeFilter.m; sourceTree = "<group>"; };
 		E4D4EC1A1C112EAF00616C2E /* GPUImageZoomBlurFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPUImageZoomBlurFilter.h; sourceTree = "<group>"; };
 		E4D4EC1B1C112EAF00616C2E /* GPUImageZoomBlurFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPUImageZoomBlurFilter.m; sourceTree = "<group>"; };
-		E4D543091C15985C00EC1BB0 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		E4D888AF1C2046870060AB0A /* LaunchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		E4DCBE0F1C2BA8440095F84A /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		E4DF1DFA1BE7421C00451800 /* LogoutAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutAlertViewController.swift; sourceTree = "<group>"; };
@@ -1228,7 +1231,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E4CE788B1CA0FF4000678FCC /* Social.framework in Frameworks */,
+				E41BBFC91CA2990D00BD369F /* Social.framework in Frameworks */,
 				E4FA320C1C98FB5A0090DD78 /* Accounts.framework in Frameworks */,
 				E40E264C1BEEFFE800591044 /* ImageIO.framework in Frameworks */,
 				E40E264A1BEEFFE200591044 /* AVFoundation.framework in Frameworks */,
@@ -1454,10 +1457,11 @@
 		A439FDD749F1A27F780551FA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E4AA40421CA271DB00FDE4D8 /* SwiftyJSON.framework */,
+				E4AA40401CA26FFB00FDE4D8 /* Social.framework */,
 				E4FA320B1C98FB5A0090DD78 /* Accounts.framework */,
 				6C9897981C5083F600AD6292 /* libfingramagifencoder.a */,
 				E4DCBE0F1C2BA8440095F84A /* AssetsLibrary.framework */,
-				E4D543091C15985C00EC1BB0 /* Social.framework */,
 				E40E264F1BEF001300591044 /* MobileCoreServices.framework */,
 				E40E264D1BEF000B00591044 /* QuartzCore.framework */,
 				E40E264B1BEEFFE800591044 /* ImageIO.framework */,
@@ -1623,6 +1627,7 @@
 				E42CDF151BECFB3C00C35419 /* PicPic-Bridging-Header.h */,
 				E44580431BE3882000AF186C /* Assets.xcassets */,
 				E44580481BE3882000AF186C /* Info.plist */,
+				E4CE644C1CA37C5B0009A282 /* TestSocialViewController.swift */,
 			);
 			path = PicPic;
 			sourceTree = "<group>";
@@ -1694,9 +1699,9 @@
 				E4498EFC1C08334500243D82 /* LikeListViewController.swift */,
 				E4C510F91C0D549000E0642B /* PostPageViewController.swift */,
 				E4D230A51C17177000B838C3 /* CategoryViewController.swift */,
-				E4A414BD1C27A6090087F450 /* UserPageShareViewController.swift */,
 				E4C6C33D1C2ABF690075038A /* TagPageViewController.swift */,
 				E416CC1B1C38F2BF001E488E /* GifListViewController.swift */,
+				E4CE644E1CA37DFC0009A282 /* UserPageShareViewController.swift */,
 			);
 			name = subView;
 			sourceTree = "<group>";
@@ -2695,6 +2700,7 @@
 				E418CCAC1C59F3DC00DD1CFA /* RangeSliderThumbLayer.swift in Sources */,
 				E4D4EC641C112EAF00616C2E /* GPUImageLaplacianFilter.m in Sources */,
 				E4D4EC7E1C112EAF00616C2E /* GPUImageOpacityFilter.m in Sources */,
+				E4CE644F1CA37DFC0009A282 /* UserPageShareViewController.swift in Sources */,
 				E4D230A61C17177000B838C3 /* CategoryViewController.swift in Sources */,
 				6C616EF21C5C96FA000932DB /* UIImage+GIF.m in Sources */,
 				E4D888B01C2046870060AB0A /* LaunchViewController.swift in Sources */,
@@ -2746,7 +2752,6 @@
 				E4D4EC391C112EAF00616C2E /* GPUImageCrosshatchFilter.m in Sources */,
 				E44985E91BF0F00D00BC21EE /* MoreMeViewController.swift in Sources */,
 				E4D4EC2A1C112EAF00616C2E /* GPUImageCannyEdgeDetectionFilter.m in Sources */,
-				E4A414BE1C27A6090087F450 /* UserPageShareViewController.swift in Sources */,
 				E4D4EC7F1C112EAF00616C2E /* GPUImageOpeningFilter.m in Sources */,
 				E4932B351BFF001C0056D4EF /* MoviePreviewViewController.swift in Sources */,
 				E4AB44F41C16667A002EA053 /* IFLomofiFilter.m in Sources */,
@@ -2842,6 +2847,7 @@
 				E4D4EC681C112EAF00616C2E /* GPUImageLineGenerator.m in Sources */,
 				6CDC96FA1C58E3680077EE4A /* TagListCell.swift in Sources */,
 				E4D4EC851C112EAF00616C2E /* GPUImagePicture+TextureSubimage.m in Sources */,
+				E4CE644D1CA37C5C0009A282 /* TestSocialViewController.swift in Sources */,
 				E4D4EC411C112EAF00616C2E /* GPUImageEmbossFilter.m in Sources */,
 				E4D4EC461C112EAF00616C2E /* GPUImageFASTCornerDetectionFilter.m in Sources */,
 				E4CDA0721C4CB7F300A85C42 /* VideoGalleryViewController.swift in Sources */,

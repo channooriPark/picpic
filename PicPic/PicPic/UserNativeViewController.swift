@@ -577,6 +577,7 @@ class UserNativeViewController: SubViewController, UICollectionViewDelegate, UIC
     @IBAction func userShareButtonTouched(sender: AnyObject) {
         let share = self.appdelegate.storyboard.instantiateViewControllerWithIdentifier("UserPageShareViewController")as! UserPageShareViewController
         share.userId = self.userData["id"].stringValue
+        share.profileURL = self.userData["profile_picture"].stringValue
         self.addChildViewController(share)
         self.view.addSubview(share.view)
     }

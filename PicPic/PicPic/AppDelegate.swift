@@ -73,7 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
     let subscriptionTopic = "/topics/global"
     var deviceId = ""
     var notiType = 0 //0이면 일반 1이면 알림을 통해서
-    
+    var urlInput : NSURL!
 
 //    var application : UIApplication!
 
@@ -81,6 +81,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
         
         
         if launchOptions != nil {
+            if let URL = launchOptions?[UIApplicationLaunchOptionsURLKey] as? NSURL {
+                self.urlInput = URL
+            }
             if let noti = launchOptions![UIApplicationLaunchOptionsRemoteNotificationKey] {
                 notiType = 1
             }
@@ -329,6 +332,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
     }
     
     func URLopenPage(url:NSURL) {
+        if self.email == nil || self.email == ""{
+            return
+        }
+        
         send_id = url.path
         log.log("query : \(url.query)")
         log.log("url : \(url)")
@@ -340,8 +347,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
             let urlString:String = String(url)
             var urlStringArr = urlString.componentsSeparatedByString("?")
             urlStringArr = urlStringArr[1].componentsSeparatedByString("=")
+            let tempStr : NSString = urlStringArr[1]
+            let sendID = tempStr.stringByReplacingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
+            print(sendID)
             act = urlStringArr[0]
-            send_id = urlStringArr[1]
+            send_id = sendID
+            
+            print(act,"                ",send_id)
         }
         log.log(send_id)
         
@@ -671,6 +683,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
                 return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: options[UIApplicationOpenURLOptionsSourceApplicationKey]as! String?, annotation: options[UIApplicationOpenURLOptionsAnnotationKey])
             }else if url.host == "oauth-callback" {
                 OAuthSwift.handleOpenURL(url)
+                return true
+            }else if url.scheme == "kakao8ec460cd84b247fd1c99577845da2950" {
+                URLopenPage(url)
                 return true
             }else {
                 

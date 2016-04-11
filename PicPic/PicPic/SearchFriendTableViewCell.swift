@@ -24,6 +24,7 @@ class SearchFriendTableViewCell: UITableViewCell {
     var email : String!
     var followYN : Bool!
     var index : Int!
+    var parent : SearchFriendViewController!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,36 +37,19 @@ class SearchFriendTableViewCell: UITableViewCell {
         
     }
     
-//    func setUp1() {
-//        let tap = UITapGestureRecognizer(target: self, action: "firstTouched")
-//        firstimage.addGestureRecognizer(tap)
-//    }
-//    
-//    func setUp2() {
-//        let tap1 = UITapGestureRecognizer(target: self, action: "secondTouched")
-//        secondimage.addGestureRecognizer(tap1)
-//    }
-//    
-//    func setUp3() {
-//        let tap2 = UITapGestureRecognizer(target: self, action: "thirdTouched")
-//        thirdimage.addGestureRecognizer(tap2)
-//    }
-//    
-//    func setUp4() {
-//        let tap3 = UITapGestureRecognizer(target: self, action: "fourthTouched")
-//        fourthimage.addGestureRecognizer(tap3)
-//    }
-    
-    
     @IBAction func onPlus(sender: AnyObject) {
         if (followYN != nil) == true {
             //yes -> no
             btnPlus.setImage(UIImage(named: "icon_find_plus_c"), forState: .Normal)
             self.followYN = false
+            self.parent.friendData[self.index].follow_yn = "N"
+            self.delegate.allFollowCheck()
         }else {
             //no -> yes
             btnPlus.setImage(UIImage(named: "icon_find_plus"), forState: .Normal)
             self.followYN = true
+            self.parent.friendData[self.index].follow_yn = "Y"
+            self.delegate.allFollowCheck()
         }
         print(self.email)
         self.delegate.follow(self.email)
@@ -93,6 +77,7 @@ class SearchFriendTableViewCell: UITableViewCell {
 protocol SearchFriendDelegate {
     func imageTouched(index : Int, secondIndex : Int)
     func follow(email : String)
+    func allFollowCheck()
 }
 
 

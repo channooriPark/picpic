@@ -524,17 +524,13 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                         playType = 0
                     } else {
                         playType = 1
-                        //                    images = images.reverse()
                         imagePaths = imagePaths.reverse()
                     }
                     if(json["filter"].string! != "None") {
-                        //                    var tmepImage = self.ghostLayer?.image!
                         self.filterCurrent = json["filter"].string!
                         let filter = getFilterByName(self.filterCurrent)
                         image.image = UIImage(contentsOfFile: imagePaths[0])
                         applyFilter(&image.image!, filterName: self.filterCurrent)
-                        //                    applyFilter(&tmepImage!, filterName: self.filterCurrent)
-                        //                    self.ghostLayer!.image = tmepImage
                     } else {
                         make_gif()
                     }
@@ -593,14 +589,17 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
                 }
                 make_gif()
             } else {
+                print("als;djfdl;jad;fje;lajfiejvdskfljgjodifjas;ldfjaew;fijasdoifejlsdjfeizjlekjdf;oeiajsdlfkj")
+                print(workFolder!)
                 let enumerator:NSDirectoryEnumerator = fileManager.enumeratorAtPath(workFolder!)!
                 movNames = [String]()
                 imageArr = [[UIImage]]()
                 imagePathArr = [[String]]()
                 
                 while let element = enumerator.nextObject() as? String {
+                    print(element)
                     if element.hasSuffix("mov") {
-                        
+                        print("엠오브이")
                         var arr:[UIImage] = []
                         var pathArr:[String] = []
                         var imgPath = element.stringByReplacingOccurrencesOfString(".mov", withString: "")
@@ -736,12 +735,9 @@ class GifMakerViewController : SubViewController, UIImagePickerControllerDelegat
             }
             // workFolder에 mask.jpg가 저장되어있으면 해당 mask를 로드한다. 필터 처리되었으면 필터처리함.
             // 필터를 변경시에 front이미지에 필터를 처리하고, mask()를 실행하여 처리..
-            
-            
             frameIndex = 0
             currentIndex1 = 0
             previewTimer = NSTimer.scheduledTimerWithTimeInterval(interval, target: self, selector: Selector("nextImage"), userInfo: nil, repeats: true)
-            
         }
         
         filterButtonName.append("None")
