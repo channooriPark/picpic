@@ -38,12 +38,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
     //MainView
     var contentview : ContentViewController!
     var tabbar : TabBarTestViewController!
-    var main : HomeNativeViewController! //MainInterViewController!
+    var main : HomeNativeViewController!
     var testNavi : UINavigationController!
     var alram : AlramViewController!
     var second : SecondNativeViewController!
     var camera : CameraViewController!
-    var myfeed : MyFeedNativeViewController! //MyFeedPageViewController!
+    var myfeed : MyFeedNativeViewController!
     var signin : UINavigationController!
     var launch : LaunchViewController!
     
@@ -75,8 +75,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
     var notiType = 0 //0이면 일반 1이면 알림을 통해서
     var urlInput : NSURL!
 
-//    var application : UIApplication!
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         
@@ -102,9 +100,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
         application.registerUserNotificationSettings(settings)
         application.registerForRemoteNotifications()
         
-        print("알림 상태      :     ",application.currentUserNotificationSettings()?.types.rawValue)
-        
-        
         if application.currentUserNotificationSettings()?.types.rawValue == 0 {
             print("Not Notification")
             self.standardUserDefaults.setBool(false, forKey: "push")
@@ -112,10 +107,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
             print("Accept Notification")
             self.standardUserDefaults.setBool(true, forKey: "push")
         }
-        
-        
-        
-        
         
         if standardUserDefaults.valueForKey("uuid") == nil {
             var uuid = UIDevice.currentDevice().identifierForVendor?.UUIDString
@@ -241,9 +232,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate , UIAlertViewDelegate {
     
     //    {"aps" : {"alert" : "You got your emails.","badge" : 1,"sound" : "default"}}
     
-//    {aps: {acme1 = (post,POST0000455109); alert = {"loc-args" = ("Jun__Bae") "loc-key" = PL},badge = 1,sound = default}}
+    //    {aps: {acme1 = (post,POST0000455109); alert = {"loc-args" = ("Jun__Bae") "loc-key" = PL},badge = 1,sound = default}}
     
-//    {"aps" : {"alert" : {"loc-args" : [ "Jun__Bae" ],"loc-key" : "PL"},"badge" : 1,"sound" : "default"},"push" : [ "post", "POST0000455109" ]}
+    //    {"aps" : {"alert" : {"loc-args" : [ "Jun__Bae" ],"loc-key" : "PL"},"badge" : 1,"sound" : "default"},"push" : [ "post", "POST0000455109" ]}
     
     
     func application( application: UIApplication,
